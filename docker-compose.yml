@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  backend:
+    image: node:12
+    container_name: lequiz.io-backend
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./backend:/home/node/app
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    command: "npm start"
+
+  database:
+    image: postgres:13
+    container_name: lequiz.io-database
+    restart: always
+      #volumes:
+    #- ./sql/import.sql:/docker-entrypoint-initdb.d/import.sql
+    environment:
+      POSTGRES_DB: lequiz-io
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+
+  frontend:
+    image: node:12
+    container_name: lequiz.io-frontend
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/home/node/app
+    #depends_on:
+    ports:
+      - 80:3000
+    command: "npm start"
+
+  adminer:
+    image: adminer:standalone
+    container_name: lequiz.io-adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: database
+    depends_on:
+      - database
+    ports:
+      - 8080:8080
