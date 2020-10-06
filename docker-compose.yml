@@ -13,7 +13,7 @@ services:
       - database
     ports:
       - 3000:3000
-    command: "npm start"
+    command: sh -c "./scripts/wait-database.sh database:5432 && npm start"
 
   database:
     image: postgres:13

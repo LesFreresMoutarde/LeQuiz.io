@@ -1,0 +1,2 @@
+# Convertis les sauts de ligne des .sh en lf
+*.sh text eol=lf
