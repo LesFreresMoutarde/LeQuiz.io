@@ -12,9 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.Subscription, {
         foreignKey: 'user_id',
-        as: 'subscriptions'
-      })
+        as: 'subscriptions',
+        onDelete: 'RESTRICT'
+      });
 
+      this.hasMany(models.UserReview, {
+        foreignKey: 'reviewer_id',
+        as: 'reviews',
+        onDelete: 'RESTRICT'
+      });
+
+      this.hasMany(models.CustomQuiz, {
+        foreignKey: 'author_id',
+        as: 'customQuizzes',
+        onDelete: 'RESTRICT'
+      });
     }
   };
   User.init({

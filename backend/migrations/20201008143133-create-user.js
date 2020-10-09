@@ -65,6 +65,6 @@ module.exports = {
     await queryInterface.addIndex('user', ['plan']);
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('user');
   }
 };

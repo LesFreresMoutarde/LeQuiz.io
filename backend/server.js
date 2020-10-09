@@ -23,8 +23,9 @@ const db = require('./models/db_models');
 
 testModel = async () => {
     try {
+        // Faire une transaction quand tous les modèles seront init
         let user = await db.User.create({
-            username: 'totefo',
+            username: 'toto',
             email: 'email@dd.fr',
             password: 'boob',
             plan: 'prolo',
@@ -34,13 +35,35 @@ testModel = async () => {
             isBanned: false
         });
         let subscription = await db.Subscription.create({
-            reference: 'tnb,n,bn,oto',
+            reference: 'ref',
             userId: user.id,
             startDate: Sequelize.literal('CURRENT_DATE'),
             expirationDate: Sequelize.literal('CURRENT_DATE')
         });
-        console.log('l user', user);
-        console.log("la subscription", subscription);
+        let category = await db.Category.create({
+            name: 'Questions sur la reproduction des Limaces du Gers'
+        });
+        let customQuiz = await db.CustomQuiz.create({
+            title: 'Qui est le boss ?',
+            authorId: user.id,
+            reviewsRequested: true,
+            status: 'approved',
+        });
+        await customQuiz.addCategory(category);
+        let userReview = await db.UserReview.create({
+            reviewerId: user.id,
+            customQuizId: customQuiz.id,
+            status: 'positive',
+            comment: 'Really interesting quiz'
+        });
+        //console.log('fetchedfoo', fetchedFoo.toJSON());
+        console.log('l user', user.toJSON());
+        console.log("la subscription", subscription.toJSON());
+        console.log("la categorie", category.toJSON());
+        console.log('le custom quiz', customQuiz.toJSON());
+        console.log('la categorie du custom quiz', await customQuiz.getCategories());
+        console.log('les subs de l user', await user.getSubscriptions());
+        console.log('la user review', userReview.toJSON());
     } catch (error) {
         console.error(error);
     }
