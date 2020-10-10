@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class CategoryCustomQuiz extends Model {
+    class CategoryQuestion extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -15,28 +15,28 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'category'
             });
 
-            this.belongsTo(models.CustomQuiz, {
-                foreignKey: 'customQuizId',
-                as: 'customQuiz'
+            this.belongsTo(models.Question, {
+                foreignKey: 'questionId',
+                as: 'question'
             });
         }
     };
-    CategoryCustomQuiz.init({
+    CategoryQuestion.init({
         categoryId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true,
+            primaryKey: true
         },
-        customQuizId: {
+        questionId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true,
+            primaryKey: true
         }
     }, {
         sequelize,
-        modelName: 'CategoryCustomQuiz',
-        tableName: 'category_custom_quiz',
+        modelName: 'CategoryQuestion',
+        tableName: 'category_question',
     });
-    CategoryCustomQuiz.removeAttribute('id');
-    return CategoryCustomQuiz;
+    CategoryQuestion.removeAttribute('id');
+    return CategoryQuestion;
 };

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('category_custom_quiz', {
+        await queryInterface.createTable('category_question', {
             /*id: {
               allowNull: false,
               autoIncrement: true,
@@ -14,10 +14,10 @@ module.exports = {
                 references: {model: 'category', key: 'id'},
                 onDelete: 'RESTRICT',
             },
-            customQuizId: {
+            questionId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                references: {model: 'custom_quiz', key: 'id'},
+                references: {model: 'question', key: 'id'},
                 onDelete: 'RESTRICT',
             },
             createdAt: {
@@ -29,9 +29,9 @@ module.exports = {
                 type: Sequelize.DATE,
             }
         });
-        await queryInterface.sequelize.query('ALTER TABLE "category_custom_quiz" ADD CONSTRAINT "category_custom_quiz_pkey" PRIMARY KEY ("categoryId", "customQuizId")');
+        await queryInterface.sequelize.query('ALTER TABLE "category_question" ADD CONSTRAINT "category_question_pkey" PRIMARY KEY ("categoryId", "questionId")')
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('category_custom_quiz');
+        await queryInterface.dropTable('category_question');
     }
 };
