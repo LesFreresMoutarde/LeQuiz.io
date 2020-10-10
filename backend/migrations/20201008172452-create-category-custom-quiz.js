@@ -2,12 +2,6 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('category_custom_quiz', {
-            /*id: {
-              allowNull: false,
-              autoIncrement: true,
-              primaryKey: true,
-              type: Sequelize.INTEGER
-            },*/
             categoryId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
