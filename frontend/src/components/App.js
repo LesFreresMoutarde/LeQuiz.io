@@ -11,8 +11,8 @@ import Header from "./Header";
 function App() {
     return (
         <div className="app">
-            <Header />
             <div className="content-wrapper">
+                <Header />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/create-room" component={CreateRoom} />
