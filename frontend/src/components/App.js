@@ -8,13 +8,18 @@ import JoinRoom from "./pages/JoinRoom";
 
 function App() {
     return (
-        <div className="App">
-            <p>Toujours là</p>
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/create-room" component={CreateRoom} />
-                <Route exact path="/join-room" component={JoinRoom} />
-            </Switch>
+        <div className="app">
+            <div className="content-wrapper">
+                <p>Toujours là</p>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/create-room" component={CreateRoom} />
+                    <Route exact path="/join-room" component={JoinRoom} />
+                </Switch>
+            </div>
+            <footer>
+                Ceci est le footer
+            </footer>
         </div>
     );
 }
