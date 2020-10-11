@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/minireset.min.css';
 import '../css/style.css';
 import {Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
