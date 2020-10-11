@@ -1,22 +1,19 @@
 import React from 'react';
 import '../css/style.css';
+import {Switch, Route} from "react-router-dom";
+import Home from "./pages/Home";
+import CreateRoom from "./pages/CreateRoom";
+import JoinRoom from "./pages/JoinRoom";
 
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
+            <p>Toujours là</p>
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/create-room" component={CreateRoom} />
+                <Route exact path="/join-room" component={JoinRoom} />
+            </Switch>
         </div>
     );
 }
