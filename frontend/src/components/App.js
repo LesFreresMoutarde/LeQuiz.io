@@ -6,10 +6,12 @@ import Home from "./pages/Home";
 import CreateRoom from "./pages/CreateRoom";
 import JoinRoom from "./pages/JoinRoom";
 import Footer from "./Footer";
+import Header from "./Header";
 
 function App() {
     return (
         <div className="app">
+            <Header />
             <div className="content-wrapper">
                 <Switch>
                     <Route exact path="/" component={Home} />
