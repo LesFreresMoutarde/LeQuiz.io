@@ -9,7 +9,7 @@ const sequelize = new Sequelize("lequiz-io", "admin", "admin",{
     dialect: "postgres"
 });
 
-const db = require('./models/db_models');
+const db = require('./models/dbModels');
 
 (async () => {
     try {
