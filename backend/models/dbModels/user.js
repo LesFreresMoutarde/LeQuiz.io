@@ -74,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'User',
         tableName: 'user',
+        paranoid: true,
         indexes: [{
             fields: ['username', 'email', 'plan']
         }]

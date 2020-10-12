@@ -52,6 +52,9 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
+            },
+            deletedAt: {
+                type: Sequelize.DATE,
             }
         });
         await queryInterface.addIndex('user', ['username']);
