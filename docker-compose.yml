@@ -13,7 +13,7 @@ services:
       - database
     ports:
       - 3000:3000
-    command: sh -c "./scripts/wait-database.sh database:5432 && npm start"
+    command: sh -c "./scripts/wait-database.sh database:5432 && ./scripts/start.sh"
 
   database:
     image: postgres:13
@@ -37,7 +37,7 @@ services:
     #depends_on:
     ports:
       - 80:3000
-    command: "npm start"
+    command: sh -c "./scripts/start.sh"
     stdin_open: true
 
   adminer:
