@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   backend:
-    image: node:12
+    image: node:14
     container_name: lequiz.io-backend
     working_dir: /home/node/app
     environment:
@@ -27,7 +27,7 @@ services:
       POSTGRES_PASSWORD: admin
 
   frontend:
-    image: node:12
+    image: node:14
     container_name: lequiz.io-frontend
     working_dir: /home/node/app
     environment:
