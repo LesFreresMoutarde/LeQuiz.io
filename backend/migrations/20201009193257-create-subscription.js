@@ -4,9 +4,10 @@ module.exports = {
         await queryInterface.createTable('subscription', {
             id: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                unique: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4
             },
             reference: {
                 type: Sequelize.STRING,
@@ -14,7 +15,7 @@ module.exports = {
                 unique: true,
             },
             userId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
                 allowNull: false,
                 references: {model: 'user', key: 'id'},
                 onDelete: 'RESTRICT',

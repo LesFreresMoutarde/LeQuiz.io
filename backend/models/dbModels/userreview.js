@@ -22,11 +22,18 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     UserReview.init({
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            allowNull: false,
+            unique: true,
+            defaultValue: DataTypes.UUIDV4
+        },
         reviewerId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
         },
         customQuizId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
         },
         status: {
