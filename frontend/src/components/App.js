@@ -4,6 +4,7 @@ import {Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import CreateRoom from "./pages/CreateRoom";
 import JoinRoom from "./pages/JoinRoom";
+import Util from "../util/Util";
 
 class App extends React.Component {
     render = () => {
@@ -20,7 +21,7 @@ class App extends React.Component {
     }
 
     componentDidMount = () => {
-        console.log('did mount');
+        Util.onApplicationLoad();
     }
 }
 

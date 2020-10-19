@@ -1,6 +1,15 @@
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const app = express();
 const port = 3000;
+
+app.all('*', (req, res, next) => {
+    console.log(req.method, req.url);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    next();
+})
 
 const { Sequelize, DataTypes } = require('sequelize');
 
@@ -212,6 +221,48 @@ app.get('/', async (req, res) => {
     res.statusCode = 200;
     res.send('lequiz.io-backend container');
 });
+
+/**
+ * AUTH JWT - TODO ROUTER
+ */
+
+const jwtSecret = 'superSecret'; // TODO config
+
+app.get('/auth/verify-access-token', (req, res) => {
+    const accessToken = req.headers.authorization;
+    res.status(200);
+    try {
+        const payload = jwt.verify(accessToken, jwtSecret);
+        console.log(payload);
+    } catch(e) {
+        res.status(401);
+        switch(e.constructor.name) {
+            case 'JsonWebTokenError': // Token malformed
+                break;
+            case 'TokenExpiredError':
+                break;
+            case 'NotBeforeError':
+                break;
+            default:
+                throw e;
+        }
+    }
+
+    res.send();
+});
+
+// TODO from refresh token
+app.get('/auth/access-token', (req, res) => {
+    const accessToken = jwt.sign({
+        'hello': 'world'
+    }, jwtSecret, {
+        'expiresIn': 120,
+    });
+
+    res.send({
+        'accessToken': accessToken,
+    })
+})
 
 app.listen(port,() => {
     console.log(`Server running at http://localhost:${port}`);
