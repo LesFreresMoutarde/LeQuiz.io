@@ -33,6 +33,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(40),
             allowNull: false,
         },
+        difficulty: {
+          type: DataTypes.STRING(30),
+        },
         content: {
             type: DataTypes.TEXT,
             allowNull: false,
@@ -56,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Question',
         tableName: 'question',
         indexes: [{
-            fields: ['type', 'status', 'customQuizId']
+            fields: ['type', 'difficulty', 'status', 'customQuizId']
         }]
     });
     return Question;
