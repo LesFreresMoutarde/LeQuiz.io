@@ -12,6 +12,9 @@ module.exports = {
                 type: Sequelize.STRING(40),
                 allowNull: false
             },
+            difficulty: {
+                type: Sequelize.STRING(30),
+            },
             content: {
                 type: Sequelize.TEXT,
                 allowNull: false,
@@ -42,6 +45,7 @@ module.exports = {
             }
         });
         await queryInterface.addIndex('question', ['type']);
+        await queryInterface.addIndex('question', ['difficulty']);
         await queryInterface.addIndex('question', ['status']);
         await queryInterface.addIndex('question', ['customQuizId']);
     },
