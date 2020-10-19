@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     };
     CategoryQuestion.init({
         categoryId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
             primaryKey: true
         },
         questionId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
             primaryKey: true
         }

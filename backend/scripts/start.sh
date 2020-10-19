@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-npm update --verbose
+npm install --verbose
 npm start

@@ -29,12 +29,19 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     Question.init({
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            allowNull: false,
+            unique: true,
+            defaultValue: DataTypes.UUIDV4
+        },
         type: {
             type: DataTypes.STRING(40),
             allowNull: false,
         },
         difficulty: {
-          type: DataTypes.STRING(30),
+            type: DataTypes.STRING(30),
         },
         content: {
             type: DataTypes.TEXT,
@@ -52,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSON,
         },
         customQuizId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
         }
     }, {
         sequelize,

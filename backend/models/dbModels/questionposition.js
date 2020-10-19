@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     QuestionPosition.init({
         questionId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
             unique: true,
             primaryKey: true,
