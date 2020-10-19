@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         difficulty: {
-          type: DataTypes.STRING(20),
+          type: DataTypes.STRING(30),
         },
         content: {
             type: DataTypes.TEXT,
