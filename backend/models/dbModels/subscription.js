@@ -17,13 +17,20 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Subscription.init({
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            allowNull: false,
+            unique: true,
+            defaultValue: DataTypes.UUIDV4
+        },
         reference: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
         },
         userId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
         },
         startDate: {

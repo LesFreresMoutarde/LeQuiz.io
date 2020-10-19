@@ -24,6 +24,13 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Category.init({
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            allowNull: false,
+            unique: true,
+            defaultValue: DataTypes.UUIDV4
+        },
         name: {
             type: DataTypes.STRING(50),
             allowNull: false

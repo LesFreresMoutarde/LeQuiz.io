@@ -3,13 +3,13 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('category_question', {
             categoryId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
                 allowNull: false,
                 references: {model: 'category', key: 'id'},
                 onDelete: 'RESTRICT',
             },
             questionId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
                 allowNull: false,
                 references: {model: 'question', key: 'id'},
                 onDelete: 'RESTRICT',

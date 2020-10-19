@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     };
     CategoryCustomQuiz.init({
         categoryId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
             primaryKey: true,
         },
         customQuizId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
             primaryKey: true,
         }

@@ -35,12 +35,19 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     CustomQuiz.init({
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            allowNull: false,
+            unique: true,
+            defaultValue: DataTypes.UUIDV4
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false
         },
         authorId: {
-            type: DataTypes.INTEGER
+            type: DataTypes.UUID
         },
         reviewsRequested: {
             type: DataTypes.BOOLEAN,

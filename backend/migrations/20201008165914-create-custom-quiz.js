@@ -4,16 +4,17 @@ module.exports = {
         await queryInterface.createTable('custom_quiz', {
             id: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                unique: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4
             },
             title: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
             authorId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
                 references: {model: 'user', key: 'id'},
                 onDelete: 'RESTRICT',
             },

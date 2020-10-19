@@ -4,9 +4,10 @@ module.exports = {
         await queryInterface.createTable('question', {
             id: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                unique: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4
             },
             type: {
                 type: Sequelize.STRING(40),
@@ -31,7 +32,7 @@ module.exports = {
                 type: Sequelize.JSONB,
             },
             customQuizId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
                 references: {model: 'custom_quiz', key: 'id'},
                 onDelete: 'RESTRICT',
             },
