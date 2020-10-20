@@ -57,8 +57,6 @@ class Util {
             }
         }
 
-        console.log(Util.accessToken);
-        console.log(Util.refreshToken);
         Util.verbose('Access token payload', Util.getJwtPayloadContent(Util.accessToken));
         Util.verbose('Refresh token payload', Util.getJwtPayloadContent(Util.refreshToken));
     }
@@ -85,7 +83,7 @@ class Util {
 
         const responseJson = await response.json();
 
-        Util.verbose('Access token verification response', responseJson);
+        Util.verbose('Access token verification response', response.status, responseJson);
 
         if(responseJson.valid && responseJson.type !== 'accessToken') {
             Util.verbose(`Token type ${responseJson.type} is not valid`);
@@ -103,7 +101,7 @@ class Util {
         const response = await fetch(Util.getBackendFullUrl('/auth/access-token'));
 
         const responseJson = await response.json();
-        Util.verbose('New access token generation response', responseJson);
+        Util.verbose('New access token generation response', response.status, responseJson);
         Util.accessToken = responseJson.accessToken;
         Util.refreshToken = responseJson.refreshToken;
     }
@@ -114,7 +112,7 @@ class Util {
         const response = await fetch(Util.getBackendFullUrl(`/auth/access-token?refreshToken=${Util.refreshToken}`));
 
         const responseJson = await response.json();
-        Util.verbose('Refresh access token response', responseJson);
+        Util.verbose('Refresh access token response', response.status, responseJson);
 
         if(response.status === 200) {
             Util.accessToken = responseJson.accessToken;
@@ -123,6 +121,7 @@ class Util {
             return true;
         }
 
+        Util.verbose('Refresh access token failed');
         return false;
     }
 
@@ -138,6 +137,8 @@ class Util {
         return JSON.parse(decoded);
     }
 }
+
+window.util = Util;
 
 Util.APP_BACKEND_URL = "http://localhost:3000"; // TODO ENV
 

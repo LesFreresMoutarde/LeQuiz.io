@@ -369,6 +369,7 @@ app.get('/auth/access-token', (req, res) => {
         const verification = verifyToken(inputRefreshToken, 'refreshToken');
         if(!verification.verified) {
             response.error = verification.error
+            res.status(400);
             res.send(response);
             return;
         }
