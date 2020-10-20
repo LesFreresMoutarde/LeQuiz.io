@@ -1,6 +1,15 @@
 class Util {
+    static isVerbose = true; // TODO env
+
     static accessToken = null;
     static refreshToken = null;
+
+    static verbose = (...items) => {
+        if(!Util.isVerbose) {
+            return;
+        }
+        console.log('%c[v]', 'color: orange', ...items);
+    }
 
     /**
      * Removes the accessToken and refreshToken from localStorage to hide it,
@@ -34,13 +43,24 @@ class Util {
     }
 
     static onApplicationLoad = async () => {
-        console.log('application load');
-        console.log(Util.accessToken);
+        Util.verbose('Application load');
+        Util.verbose('Access token', Util.accessToken);
+        Util.verbose('Refresh token', Util.refreshToken);
 
         if(Util.accessToken === null || !(await Util.verifyAccessToken())) {
-            // TODO try to refresh with refresh token before creating a new empty token
-            Util.getNewAccessToken();
+            if(Util.refreshToken !== null) {
+                if(!(await Util.refreshAccessToken())) {
+                    await Util.getNewAccessToken();
+                }
+            } else {
+                await Util.getNewAccessToken();
+            }
         }
+
+        console.log(Util.accessToken);
+        console.log(Util.refreshToken);
+        Util.verbose('Access token payload', Util.getJwtPayloadContent(Util.accessToken));
+        Util.verbose('Refresh token payload', Util.getJwtPayloadContent(Util.refreshToken));
     }
 
     static getBackendFullUrl = (shortUrl) => {
@@ -56,28 +76,66 @@ class Util {
      * @returns {Promise<boolean>}
      */
     static verifyAccessToken = async () => {
-        const response = await fetch(Util.getBackendFullUrl('/auth/verify-access-token'), {
+        Util.verbose('Verifying stored access token');
+        const response = await fetch(Util.getBackendFullUrl('/auth/verify-token'), {
             headers: new Headers({
                 'Authorization': Util.accessToken
             }),
         });
 
-        return response.status === 200;
+        const responseJson = await response.json();
+
+        Util.verbose('Access token verification response', responseJson);
+
+        if(responseJson.valid && responseJson.type !== 'accessToken') {
+            Util.verbose(`Token type ${responseJson.type} is not valid`);
+            return false;
+        }
+
+        Util.verbose(responseJson.valid ? 'Access token is valid' : `Access token is not valid: ${responseJson.error}`);
+
+        return responseJson.valid === true;
     }
 
     static getNewAccessToken = async() => {
+        Util.verbose('Getting new access token');
+
         const response = await fetch(Util.getBackendFullUrl('/auth/access-token'));
 
         const responseJson = await response.json();
+        Util.verbose('New access token generation response', responseJson);
         Util.accessToken = responseJson.accessToken;
+        Util.refreshToken = responseJson.refreshToken;
     }
 
     static refreshAccessToken = async() => {
-        const response = await fetch(Util.getBackendFullUrl('/auth/access-token'), {
-            // TODO
-        });
+        Util.verbose('Getting new access token from refresh token');
 
-        // TODO
+        const response = await fetch(Util.getBackendFullUrl(`/auth/access-token?refreshToken=${Util.refreshToken}`));
+
+        const responseJson = await response.json();
+        Util.verbose('Refresh access token response', responseJson);
+
+        if(response.status === 200) {
+            Util.accessToken = responseJson.accessToken;
+            Util.refreshToken = responseJson.refreshToken;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    static getJwtPayloadContent = (jwtToken) => {
+        const tokenParts = jwtToken.split('.');
+        if(tokenParts.length !== 3) {
+            throw new Error('Malformed token');
+        }
+
+        const partToDecode = tokenParts[1];
+        const decoded = atob(partToDecode);
+
+        return JSON.parse(decoded);
     }
 }
 
