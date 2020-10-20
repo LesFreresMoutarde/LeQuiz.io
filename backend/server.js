@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-
+const mainRouter = require('./routes/mainRouter');
 const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize("lequiz-io", "admin", "admin",{
@@ -12,8 +12,7 @@ const sequelize = new Sequelize("lequiz-io", "admin", "admin",{
 const db = require('./models/dbModels');
 
 /** Routing */
-const mainRouter = require('./routes/mainRouter')(app);
-
+app.use('/', mainRouter);
 
 (async () => {
     try {
