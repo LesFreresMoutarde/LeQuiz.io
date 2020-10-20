@@ -11,6 +11,10 @@ const sequelize = new Sequelize("lequiz-io", "admin", "admin",{
 
 const db = require('./models/dbModels');
 
+/** Routing */
+const mainRouter = require('./routes/mainRouter')(app);
+
+
 (async () => {
     try {
         await sequelize.authenticate();
@@ -208,7 +212,7 @@ testModel = async () => {
 
 
 app.get('/', async (req, res) => {
-    await testModel();
+   // await testModel();
     res.statusCode = 200;
     res.send('lequiz.io-backend container');
 });
