@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const InvalidTokenTypeError = require('../exceptions/auth/InvalidTokenTypeError');
+const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 
 class AuthController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
