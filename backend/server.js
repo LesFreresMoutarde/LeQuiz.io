@@ -4,29 +4,15 @@ const port = 3000;
 const mainRouter = require('./routes/mainRouter');
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize("lequiz-io", "admin", "admin",{
-    host: "database",
-    dialect: "postgres"
-});
-
 const db = require('./models/dbModels');
 
 /** Routing */
 app.use('/', mainRouter);
 
-(async () => {
-    try {
-        await sequelize.authenticate();
-        console.log("Connection is Good");
-
-    } catch (error) {
-        console.error('Unable to connect : ', error);
-    }
-})();
 
 testModel = async () => {
     // J'initialise une transaction. Cet variable sera passé à chaque requete
-    const transaction = await sequelize.transaction();
+    const transaction = await db.sequelize.transaction();
     try {
 
         // Création d'un User et d'une Subscription associé
@@ -211,7 +197,7 @@ testModel = async () => {
 
 
 app.get('/', async (req, res) => {
-   // await testModel();
+    await testModel();
     res.statusCode = 200;
     res.send('lequiz.io-backend container');
 });
