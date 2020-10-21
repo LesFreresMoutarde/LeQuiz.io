@@ -50,3 +50,15 @@ services:
       - database
     ports:
       - 8080:8080
+
+  fileserver:
+    image: halverneus/static-file-server:dev
+    container_name: lequiz.io-fileserver
+    restart: always
+    environment:
+      CORS: 'false'
+      URL_PREFIX: /resources
+    volumes:
+      - ./fileserver:/web
+    ports:
+      - 8081:8080

@@ -6,11 +6,13 @@ import CreateRoom from "./pages/CreateRoom";
 import JoinRoom from "./pages/JoinRoom";
 import Util from "../util/Util";
 
+
 class App extends React.Component {
     render = () => {
         return (
             <div className="App">
                 <p>Toujours là</p>
+                <img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/create-room" component={CreateRoom} />
@@ -23,6 +25,7 @@ class App extends React.Component {
     componentDidMount = () => {
         Util.onApplicationLoad();
     }
+
 }
 
 export default App;
