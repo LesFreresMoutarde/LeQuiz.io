@@ -19,8 +19,8 @@ services:
     image: postgres:13
     container_name: lequiz.io-database
     restart: always
-      #volumes:
-    #- ./sql/import.sql:/docker-entrypoint-initdb.d/import.sql
+    volumes:
+      - ./sql/import.sql:/docker-entrypoint-initdb.d/import.sql
     environment:
       POSTGRES_DB: lequiz-io
       POSTGRES_USER: admin

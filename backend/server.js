@@ -11,6 +11,7 @@ const sequelize = new Sequelize("lequiz-io", "admin", "admin",{
 
 const db = require('./models/dbModels');
 
+
 (async () => {
     try {
         await sequelize.authenticate();

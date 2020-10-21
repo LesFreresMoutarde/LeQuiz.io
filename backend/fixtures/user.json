@@ -1,0 +1,159 @@
+[
+  {
+    "model": "User",
+    "data": {
+      "username": "user1",
+      "email": "user1@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "member",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user2",
+      "email": "user2@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "member",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user3",
+      "email": "user3@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "member",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user4",
+      "email": "user4@lequiz.com",
+      "password": "password",
+      "plan": "vip",
+      "role": "member",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user5",
+      "email": "user5@lequiz.com",
+      "password": "password",
+      "plan": "premium",
+      "role": "member",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user6",
+      "email": "user6@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "member",
+      "isActive": false,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user7",
+      "email": "user7@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "member",
+      "isActive": false,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user8",
+      "email": "user8@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "member",
+      "isActive": true,
+      "isBanned": true,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "user9",
+      "email": "user9@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "member",
+      "isActive": true,
+      "isBanned": true,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "reviewer1",
+      "email": "reviewer1@lequiz.com",
+      "password": "password",
+      "plan": "free",
+      "role": "reviewer",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "reviewer2",
+      "email": "reviewer2@lequiz.com",
+      "password": "password",
+      "plan": "vip",
+      "role": "reviewer",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "admin1",
+      "email": "admin1@lequiz.com",
+      "password": "password",
+      "plan": "vip",
+      "role": "admin",
+      "isActive": true,
+      "isBanned": false,
+      "isTrustyWriter": false
+    }
+  }
+
+]

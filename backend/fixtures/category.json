@@ -1,0 +1,38 @@
+[
+  {
+    "model": "Category",
+    "data": {
+      "name": "Histoire"
+    }
+  },
+  {
+    "model": "Category",
+    "data": {
+      "name": "Sport"
+    }
+  },
+  {
+    "model": "Category",
+    "data": {
+      "name": "Jeu-Vidéo"
+    }
+  },
+  {
+    "model": "Category",
+    "data": {
+      "name": "Cinéma"
+    }
+  },
+  {
+    "model": "Category",
+    "data": {
+      "name": "Musique"
+    }
+  },
+  {
+    "model": "Category",
+    "data": {
+      "name": "Automobile"
+    }
+  }
+]
