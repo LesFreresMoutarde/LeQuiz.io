@@ -1,5 +1,5 @@
 const authRouter = require('express').Router();
-const AuthController = require('../../controllers/authController');
+const AuthController = require('../../controllers/AuthController');
 
 
 authRouter.get('/access-token', (req, res) => {
