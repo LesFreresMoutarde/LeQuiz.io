@@ -1,13 +1,14 @@
 const authRouter = require('express').Router();
+const authController = require('../../controllers/authController');
 
 
-// authRouter.get('/access-token', (req, res) => {
-//     res.json({endpoint: 'GET /auth/access-token'});
-// });
+authRouter.get('/access-token', (req, res) => {
+    authController.actionAccessToken(req, res);
+});
 
-// authRouter.get('/verify-access-token', (req, res) => {
-//     res.json({endpoint: 'GET /auth/verify-access-token'})
-// });
+authRouter.get('/verify-token', (req, res) => {
+    authController.actionVerifyToken(req, res);
+});
 
 authRouter.post('/register', (req, res) => {
     res.json({endpoint: 'POST /auth/register'})
