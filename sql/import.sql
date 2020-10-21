@@ -19,6 +19,46 @@ INSERT INTO "SequelizeMeta" ("name") VALUES
 ('20201009193257-create-subscription.js'),
 ('20201010112122-create-category-question.js');
 
+DROP TABLE IF EXISTS "user";
+CREATE TABLE "public"."user" (
+    "id" uuid NOT NULL,
+    "username" character varying(30) NOT NULL,
+    "email" character varying(191) NOT NULL,
+    "password" character varying(255) NOT NULL,
+    "plan" character varying(30) NOT NULL,
+    "role" character varying(30) NOT NULL,
+    "isTrustyWriter" boolean NOT NULL,
+    "isActive" boolean NOT NULL,
+    "isBanned" boolean NOT NULL,
+    "unbanDate" timestamptz,
+    "createdAt" timestamptz NOT NULL,
+    "updatedAt" timestamptz NOT NULL,
+    "deletedAt" timestamptz,
+    CONSTRAINT "user_email_key" UNIQUE ("email"),
+    CONSTRAINT "user_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "user_username_key" UNIQUE ("username")
+) WITH (oids = false);
+
+CREATE INDEX "user_email" ON "public"."user" USING btree ("email");
+
+CREATE INDEX "user_plan" ON "public"."user" USING btree ("plan");
+
+CREATE INDEX "user_username" ON "public"."user" USING btree ("username");
+
+INSERT INTO "user" ("id", "username", "email", "password", "plan", "role", "isTrustyWriter", "isActive", "isBanned", "unbanDate", "createdAt", "updatedAt", "deletedAt") VALUES
+('826c7f20-9b3d-4725-bcdb-b1f8b6bd2031',	'user1',	'user1@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.099+00',	'2020-10-21 15:33:24.099+00',	NULL),
+('7d1a9992-05e0-4d09-ae5b-6ba9dc3d3fb3',	'user2',	'user2@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.116+00',	'2020-10-21 15:33:24.116+00',	NULL),
+('71c5c670-f12e-450d-9541-46f5ac6b6c9d',	'user3',	'user3@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.131+00',	'2020-10-21 15:33:24.131+00',	NULL),
+('2e00add0-4d92-4986-8d3c-4bb631f527c4',	'user4',	'user4@lequiz.com',	'password',	'vip',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.141+00',	'2020-10-21 15:33:24.141+00',	NULL),
+('efee900e-f089-4f08-aacf-3bdd12f67957',	'user5',	'user5@lequiz.com',	'password',	'premium',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.157+00',	'2020-10-21 15:33:24.157+00',	NULL),
+('8ec8e880-792f-4c7e-8cad-580f42384fa8',	'user6',	'user6@lequiz.com',	'password',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.167+00',	'2020-10-21 15:33:24.167+00',	NULL),
+('ea3ab88d-9864-4e60-bad6-a0d0567e6f84',	'user7',	'user7@lequiz.com',	'password',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.177+00',	'2020-10-21 15:33:24.177+00',	NULL),
+('2e041c75-d5c3-4d1e-9823-e3d426a88d88',	'user8',	'user8@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.187+00',	'2020-10-21 15:33:24.187+00',	NULL),
+('170ba076-8ec3-428f-a8f5-ceda0e9eaa36',	'user9',	'user9@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.199+00',	'2020-10-21 15:33:24.199+00',	NULL),
+('f76c2f1a-822f-48a3-b881-2a927e40cbf3',	'reviewer1',	'reviewer1@lequiz.com',	'password',	'free',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.209+00',	'2020-10-21 15:33:24.209+00',	NULL),
+('59f7d770-2366-4079-9675-0512e21424e3',	'reviewer2',	'reviewer2@lequiz.com',	'password',	'vip',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.226+00',	'2020-10-21 15:33:24.226+00',	NULL),
+('b6b28fe5-36a3-4710-bb3b-ee1b23390791',	'admin1',	'admin1@lequiz.com',	'password',	'vip',	'admin',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.237+00',	'2020-10-21 15:33:24.237+00',	NULL);
+
 DROP TABLE IF EXISTS "category";
 CREATE TABLE "public"."category" (
     "id" uuid NOT NULL,
@@ -37,85 +77,6 @@ INSERT INTO "category" ("id", "name", "createdAt", "updatedAt") VALUES
 ('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'Cinéma',	'2020-10-21 15:33:22.753+00',	'2020-10-21 15:33:22.753+00'),
 ('47128e24-e31e-432e-b248-e6a86339c1f0',	'Musique',	'2020-10-21 15:33:22.763+00',	'2020-10-21 15:33:22.763+00'),
 ('1677996a-6859-4524-8e67-d88307e6648e',	'Automobile',	'2020-10-21 15:33:22.773+00',	'2020-10-21 15:33:22.773+00');
-
-DROP TABLE IF EXISTS "category_custom_quiz";
-CREATE TABLE "public"."category_custom_quiz" (
-    "categoryId" uuid NOT NULL,
-    "customQuizId" uuid NOT NULL,
-    "createdAt" timestamptz NOT NULL,
-    "updatedAt" timestamptz NOT NULL,
-    CONSTRAINT "category_custom_quiz_pkey" PRIMARY KEY ("categoryId", "customQuizId"),
-    CONSTRAINT "category_custom_quiz_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES category(id) ON DELETE RESTRICT NOT DEFERRABLE,
-    CONSTRAINT "category_custom_quiz_customQuizId_fkey" FOREIGN KEY ("customQuizId") REFERENCES custom_quiz(id) ON DELETE RESTRICT NOT DEFERRABLE
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "category_question";
-CREATE TABLE "public"."category_question" (
-    "categoryId" uuid NOT NULL,
-    "questionId" uuid NOT NULL,
-    "createdAt" timestamptz NOT NULL,
-    "updatedAt" timestamptz NOT NULL,
-    CONSTRAINT "category_question_pkey" PRIMARY KEY ("categoryId", "questionId"),
-    CONSTRAINT "category_question_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES category(id) ON DELETE RESTRICT NOT DEFERRABLE,
-    CONSTRAINT "category_question_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES question(id) ON DELETE RESTRICT NOT DEFERRABLE
-) WITH (oids = false);
-
-INSERT INTO "category_question" ("categoryId", "questionId", "createdAt", "updatedAt") VALUES
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'07b931e7-4ce3-4d76-8970-1277ab76c4c1',	'2020-10-21 15:33:22.8+00',	'2020-10-21 15:33:22.8+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'05eab47f-5915-42ea-86b4-73909c79c680',	'2020-10-21 15:33:22.827+00',	'2020-10-21 15:33:22.827+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'eb23b5ef-564e-4fb4-9ccd-f8c7ccd65ee3',	'2020-10-21 15:33:22.855+00',	'2020-10-21 15:33:22.855+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'8565553f-5b43-4123-bd07-0c1a48358d45',	'2020-10-21 15:33:22.878+00',	'2020-10-21 15:33:22.878+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'a420ef64-84b5-4317-b6d6-41f811eef1e9',	'2020-10-21 15:33:22.902+00',	'2020-10-21 15:33:22.902+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'b0d0b66f-5f2e-4ea0-ada2-f4adf4288c4b',	'2020-10-21 15:33:22.926+00',	'2020-10-21 15:33:22.926+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'5d620b5b-ba5d-493c-9498-7b4ef97435e4',	'2020-10-21 15:33:22.948+00',	'2020-10-21 15:33:22.948+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'8ff65267-0ebe-4458-906e-9f677358327e',	'2020-10-21 15:33:22.973+00',	'2020-10-21 15:33:22.973+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'5e4c14c6-14cd-432f-98cd-35e03d671db1',	'2020-10-21 15:33:23.006+00',	'2020-10-21 15:33:23.006+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'94537999-371a-4cec-aa02-8df866c8e5fc',	'2020-10-21 15:33:23.028+00',	'2020-10-21 15:33:23.028+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'4c707cc5-3535-414a-9837-3e5dc5aff745',	'2020-10-21 15:33:23.051+00',	'2020-10-21 15:33:23.051+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'aaa325b9-4cdd-432a-bb3e-52a37dfcad34',	'2020-10-21 15:33:23.075+00',	'2020-10-21 15:33:23.075+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'91567340-ca61-414b-88fa-b2854c435d72',	'2020-10-21 15:33:23.103+00',	'2020-10-21 15:33:23.103+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'e04a4873-ff9d-4beb-9416-0164c4bf0331',	'2020-10-21 15:33:23.124+00',	'2020-10-21 15:33:23.124+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'73fd65f2-ab84-40d6-ac94-e5487975f259',	'2020-10-21 15:33:23.145+00',	'2020-10-21 15:33:23.145+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'e21daf03-3164-47af-909d-36ab6b10177e',	'2020-10-21 15:33:23.17+00',	'2020-10-21 15:33:23.17+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'521ac924-d6ae-4c1c-9f47-696626a1bac9',	'2020-10-21 15:33:23.198+00',	'2020-10-21 15:33:23.198+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'02c8d418-c8f1-4ee2-bbd6-e67d9f36c038',	'2020-10-21 15:33:23.225+00',	'2020-10-21 15:33:23.225+00'),
-('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'7112fd3f-0a25-4ec9-8671-c8e3a18ec0ed',	'2020-10-21 15:33:23.259+00',	'2020-10-21 15:33:23.259+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'e0d9d813-98a4-415f-b4cd-fe63789b8a14',	'2020-10-21 15:33:23.28+00',	'2020-10-21 15:33:23.28+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'75f3bdf2-38a4-44b9-92c3-b869efb86ff5',	'2020-10-21 15:33:23.304+00',	'2020-10-21 15:33:23.304+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'ecda0b6a-cfd4-4e1d-835b-69fac918b567',	'2020-10-21 15:33:23.328+00',	'2020-10-21 15:33:23.328+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'6be59c13-4109-49c1-81f7-7829162161f6',	'2020-10-21 15:33:23.349+00',	'2020-10-21 15:33:23.349+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'd6c0e162-d085-4604-87ce-70dcac39479d',	'2020-10-21 15:33:23.372+00',	'2020-10-21 15:33:23.372+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'd9a78015-015b-49f7-ba07-a289cb5eec42',	'2020-10-21 15:33:23.395+00',	'2020-10-21 15:33:23.395+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'ebdc2c9c-020f-431f-a849-eca78162af89',	'2020-10-21 15:33:23.427+00',	'2020-10-21 15:33:23.427+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'e309c9d1-e77d-4c12-acb0-2cf32fd57bb5',	'2020-10-21 15:33:23.453+00',	'2020-10-21 15:33:23.453+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'53946baa-5ca1-4dd4-a738-172a08ff6b61',	'2020-10-21 15:33:23.475+00',	'2020-10-21 15:33:23.475+00'),
-('47128e24-e31e-432e-b248-e6a86339c1f0',	'28b4699f-76f1-4781-9759-78faba008bc2',	'2020-10-21 15:33:23.498+00',	'2020-10-21 15:33:23.498+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'f0329413-3ad4-4558-becd-fd7dd5b5af22',	'2020-10-21 15:33:23.53+00',	'2020-10-21 15:33:23.53+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'fa1189a9-130a-4f03-8d2d-861db3411bc9',	'2020-10-21 15:33:23.556+00',	'2020-10-21 15:33:23.556+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'cfb26bc2-ae22-4196-a2f1-b1519904b68d',	'2020-10-21 15:33:23.578+00',	'2020-10-21 15:33:23.578+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'f8ec28c2-7980-4b71-a9cd-0abb40fa8e05',	'2020-10-21 15:33:23.598+00',	'2020-10-21 15:33:23.598+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'99aa7938-639c-418e-a3ff-ba654aaded85',	'2020-10-21 15:33:23.629+00',	'2020-10-21 15:33:23.629+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'2150cff1-fe9f-4984-836b-7f295021d7a9',	'2020-10-21 15:33:23.658+00',	'2020-10-21 15:33:23.658+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'466db58e-2401-4b1b-b5d8-897b1c47c2ab',	'2020-10-21 15:33:23.684+00',	'2020-10-21 15:33:23.684+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'1cfba762-cb68-47aa-bd38-c2b56d5edfce',	'2020-10-21 15:33:23.706+00',	'2020-10-21 15:33:23.706+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'8751d0a2-9134-45fe-8cbe-e261bf0f2c0b',	'2020-10-21 15:33:23.727+00',	'2020-10-21 15:33:23.727+00'),
-('1677996a-6859-4524-8e67-d88307e6648e',	'8d4754bb-4643-44e1-8972-ce62aa218baa',	'2020-10-21 15:33:23.756+00',	'2020-10-21 15:33:23.756+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'7c7280df-696f-4dc2-aed0-6b3f33720429',	'2020-10-21 15:33:23.78+00',	'2020-10-21 15:33:23.78+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'08d6d4ed-d023-46eb-9fe6-2998407f0290',	'2020-10-21 15:33:23.802+00',	'2020-10-21 15:33:23.802+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'aac01b4d-6d49-46d1-8fe7-64edfcb1de17',	'2020-10-21 15:33:23.824+00',	'2020-10-21 15:33:23.824+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'23fc9788-6c19-4567-b43f-69e0906151ca',	'2020-10-21 15:33:23.851+00',	'2020-10-21 15:33:23.851+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'7a6d5dce-c0ea-48e1-b9d7-3fa6395a2a00',	'2020-10-21 15:33:23.881+00',	'2020-10-21 15:33:23.881+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'3930bd12-44a3-406b-926e-eccb940a66db',	'2020-10-21 15:33:23.904+00',	'2020-10-21 15:33:23.904+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'653287aa-c5d4-4e04-abea-1e4297905897',	'2020-10-21 15:33:23.929+00',	'2020-10-21 15:33:23.929+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'01a4c2e7-7152-454a-af2a-ea2d74635c62',	'2020-10-21 15:33:23.95+00',	'2020-10-21 15:33:23.95+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'37c65e96-5885-4da1-98b4-1417ff516662',	'2020-10-21 15:33:23.977+00',	'2020-10-21 15:33:23.977+00'),
-('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'95cf0737-8bda-4231-b51a-f23e5ca0e18c',	'2020-10-21 15:33:24.001+00',	'2020-10-21 15:33:24.001+00'),
-('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'bc09a157-dceb-43b9-af40-23744c290fee',	'2020-10-21 15:33:24.022+00',	'2020-10-21 15:33:24.022+00'),
-('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'2c75d8ba-20a7-4948-ab91-755edf1bef58',	'2020-10-21 15:33:24.047+00',	'2020-10-21 15:33:24.047+00'),
-('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'4b9d6ff3-dca8-4abf-83c6-e480b90f0d0e',	'2020-10-21 15:33:24.067+00',	'2020-10-21 15:33:24.067+00'),
-('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'01d0daca-bd0b-48af-89ac-893aa0bda117',	'2020-10-21 15:33:24.089+00',	'2020-10-21 15:33:24.089+00'),
-('9bde0fff-731d-4fe2-939e-f737e926bd70',	'c4889952-bd5f-430b-997a-a35d482e099f',	'2020-10-21 15:34:44.946863+00',	'2020-10-21 15:34:44.946863+00');
 
 DROP TABLE IF EXISTS "custom_quiz";
 CREATE TABLE "public"."custom_quiz" (
@@ -138,6 +99,36 @@ CREATE INDEX "custom_quiz_status" ON "public"."custom_quiz" USING btree ("status
 
 CREATE INDEX "custom_quiz_title" ON "public"."custom_quiz" USING btree ("title");
 
+DROP TABLE IF EXISTS "category_custom_quiz";
+CREATE TABLE "public"."category_custom_quiz" (
+    "categoryId" uuid NOT NULL,
+    "customQuizId" uuid NOT NULL,
+    "createdAt" timestamptz NOT NULL,
+    "updatedAt" timestamptz NOT NULL,
+    CONSTRAINT "category_custom_quiz_pkey" PRIMARY KEY ("categoryId", "customQuizId"),
+    CONSTRAINT "category_custom_quiz_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES category(id) ON DELETE RESTRICT NOT DEFERRABLE,
+    CONSTRAINT "category_custom_quiz_customQuizId_fkey" FOREIGN KEY ("customQuizId") REFERENCES custom_quiz(id) ON DELETE RESTRICT NOT DEFERRABLE
+) WITH (oids = false);
+
+DROP TABLE IF EXISTS "user_review";
+CREATE TABLE "public"."user_review" (
+    "id" uuid NOT NULL,
+    "reviewerId" uuid,
+    "customQuizId" uuid NOT NULL,
+    "status" character varying(50) NOT NULL,
+    "comment" text,
+    "createdAt" timestamptz NOT NULL,
+    "updatedAt" timestamptz NOT NULL,
+    CONSTRAINT "user_review_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "user_review_customQuizId_fkey" FOREIGN KEY ("customQuizId") REFERENCES custom_quiz(id) ON DELETE RESTRICT NOT DEFERRABLE,
+    CONSTRAINT "user_review_reviewerId_fkey" FOREIGN KEY ("reviewerId") REFERENCES "user"(id) ON DELETE RESTRICT NOT DEFERRABLE
+) WITH (oids = false);
+
+CREATE INDEX "user_review_custom_quiz_id" ON "public"."user_review" USING btree ("customQuizId");
+
+CREATE INDEX "user_review_reviewer_id" ON "public"."user_review" USING btree ("reviewerId");
+
+CREATE INDEX "user_review_status" ON "public"."user_review" USING btree ("status");
 
 DROP TABLE IF EXISTS "question";
 CREATE TABLE "public"."question" (
@@ -231,7 +222,6 @@ CREATE TABLE "public"."question_position" (
 
 CREATE INDEX "question_position_position" ON "public"."question_position" USING btree ("position");
 
-
 DROP TABLE IF EXISTS "subscription";
 CREATE TABLE "public"."subscription" (
     "id" uuid NOT NULL,
@@ -250,66 +240,72 @@ CREATE INDEX "subscription_expiration_date" ON "public"."subscription" USING btr
 
 CREATE INDEX "subscription_user_id" ON "public"."subscription" USING btree ("userId");
 
-
-DROP TABLE IF EXISTS "user";
-CREATE TABLE "public"."user" (
-    "id" uuid NOT NULL,
-    "username" character varying(30) NOT NULL,
-    "email" character varying(191) NOT NULL,
-    "password" character varying(255) NOT NULL,
-    "plan" character varying(30) NOT NULL,
-    "role" character varying(30) NOT NULL,
-    "isTrustyWriter" boolean NOT NULL,
-    "isActive" boolean NOT NULL,
-    "isBanned" boolean NOT NULL,
-    "unbanDate" timestamptz,
+DROP TABLE IF EXISTS "category_question";
+CREATE TABLE "public"."category_question" (
+    "categoryId" uuid NOT NULL,
+    "questionId" uuid NOT NULL,
     "createdAt" timestamptz NOT NULL,
     "updatedAt" timestamptz NOT NULL,
-    "deletedAt" timestamptz,
-    CONSTRAINT "user_email_key" UNIQUE ("email"),
-    CONSTRAINT "user_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "user_username_key" UNIQUE ("username")
+    CONSTRAINT "category_question_pkey" PRIMARY KEY ("categoryId", "questionId"),
+    CONSTRAINT "category_question_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES category(id) ON DELETE RESTRICT NOT DEFERRABLE,
+    CONSTRAINT "category_question_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES question(id) ON DELETE RESTRICT NOT DEFERRABLE
 ) WITH (oids = false);
 
-CREATE INDEX "user_email" ON "public"."user" USING btree ("email");
-
-CREATE INDEX "user_plan" ON "public"."user" USING btree ("plan");
-
-CREATE INDEX "user_username" ON "public"."user" USING btree ("username");
-
-INSERT INTO "user" ("id", "username", "email", "password", "plan", "role", "isTrustyWriter", "isActive", "isBanned", "unbanDate", "createdAt", "updatedAt", "deletedAt") VALUES
-('826c7f20-9b3d-4725-bcdb-b1f8b6bd2031',	'user1',	'user1@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.099+00',	'2020-10-21 15:33:24.099+00',	NULL),
-('7d1a9992-05e0-4d09-ae5b-6ba9dc3d3fb3',	'user2',	'user2@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.116+00',	'2020-10-21 15:33:24.116+00',	NULL),
-('71c5c670-f12e-450d-9541-46f5ac6b6c9d',	'user3',	'user3@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.131+00',	'2020-10-21 15:33:24.131+00',	NULL),
-('2e00add0-4d92-4986-8d3c-4bb631f527c4',	'user4',	'user4@lequiz.com',	'password',	'vip',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.141+00',	'2020-10-21 15:33:24.141+00',	NULL),
-('efee900e-f089-4f08-aacf-3bdd12f67957',	'user5',	'user5@lequiz.com',	'password',	'premium',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.157+00',	'2020-10-21 15:33:24.157+00',	NULL),
-('8ec8e880-792f-4c7e-8cad-580f42384fa8',	'user6',	'user6@lequiz.com',	'password',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.167+00',	'2020-10-21 15:33:24.167+00',	NULL),
-('ea3ab88d-9864-4e60-bad6-a0d0567e6f84',	'user7',	'user7@lequiz.com',	'password',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.177+00',	'2020-10-21 15:33:24.177+00',	NULL),
-('2e041c75-d5c3-4d1e-9823-e3d426a88d88',	'user8',	'user8@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.187+00',	'2020-10-21 15:33:24.187+00',	NULL),
-('170ba076-8ec3-428f-a8f5-ceda0e9eaa36',	'user9',	'user9@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.199+00',	'2020-10-21 15:33:24.199+00',	NULL),
-('f76c2f1a-822f-48a3-b881-2a927e40cbf3',	'reviewer1',	'reviewer1@lequiz.com',	'password',	'free',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.209+00',	'2020-10-21 15:33:24.209+00',	NULL),
-('59f7d770-2366-4079-9675-0512e21424e3',	'reviewer2',	'reviewer2@lequiz.com',	'password',	'vip',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.226+00',	'2020-10-21 15:33:24.226+00',	NULL),
-('b6b28fe5-36a3-4710-bb3b-ee1b23390791',	'admin1',	'admin1@lequiz.com',	'password',	'vip',	'admin',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.237+00',	'2020-10-21 15:33:24.237+00',	NULL);
-
-DROP TABLE IF EXISTS "user_review";
-CREATE TABLE "public"."user_review" (
-    "id" uuid NOT NULL,
-    "reviewerId" uuid,
-    "customQuizId" uuid NOT NULL,
-    "status" character varying(50) NOT NULL,
-    "comment" text,
-    "createdAt" timestamptz NOT NULL,
-    "updatedAt" timestamptz NOT NULL,
-    CONSTRAINT "user_review_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "user_review_customQuizId_fkey" FOREIGN KEY ("customQuizId") REFERENCES custom_quiz(id) ON DELETE RESTRICT NOT DEFERRABLE,
-    CONSTRAINT "user_review_reviewerId_fkey" FOREIGN KEY ("reviewerId") REFERENCES "user"(id) ON DELETE RESTRICT NOT DEFERRABLE
-) WITH (oids = false);
-
-CREATE INDEX "user_review_custom_quiz_id" ON "public"."user_review" USING btree ("customQuizId");
-
-CREATE INDEX "user_review_reviewer_id" ON "public"."user_review" USING btree ("reviewerId");
-
-CREATE INDEX "user_review_status" ON "public"."user_review" USING btree ("status");
+INSERT INTO "category_question" ("categoryId", "questionId", "createdAt", "updatedAt") VALUES
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'07b931e7-4ce3-4d76-8970-1277ab76c4c1',	'2020-10-21 15:33:22.8+00',	'2020-10-21 15:33:22.8+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'05eab47f-5915-42ea-86b4-73909c79c680',	'2020-10-21 15:33:22.827+00',	'2020-10-21 15:33:22.827+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'eb23b5ef-564e-4fb4-9ccd-f8c7ccd65ee3',	'2020-10-21 15:33:22.855+00',	'2020-10-21 15:33:22.855+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'8565553f-5b43-4123-bd07-0c1a48358d45',	'2020-10-21 15:33:22.878+00',	'2020-10-21 15:33:22.878+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'a420ef64-84b5-4317-b6d6-41f811eef1e9',	'2020-10-21 15:33:22.902+00',	'2020-10-21 15:33:22.902+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'b0d0b66f-5f2e-4ea0-ada2-f4adf4288c4b',	'2020-10-21 15:33:22.926+00',	'2020-10-21 15:33:22.926+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'5d620b5b-ba5d-493c-9498-7b4ef97435e4',	'2020-10-21 15:33:22.948+00',	'2020-10-21 15:33:22.948+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'8ff65267-0ebe-4458-906e-9f677358327e',	'2020-10-21 15:33:22.973+00',	'2020-10-21 15:33:22.973+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'5e4c14c6-14cd-432f-98cd-35e03d671db1',	'2020-10-21 15:33:23.006+00',	'2020-10-21 15:33:23.006+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'94537999-371a-4cec-aa02-8df866c8e5fc',	'2020-10-21 15:33:23.028+00',	'2020-10-21 15:33:23.028+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'4c707cc5-3535-414a-9837-3e5dc5aff745',	'2020-10-21 15:33:23.051+00',	'2020-10-21 15:33:23.051+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'aaa325b9-4cdd-432a-bb3e-52a37dfcad34',	'2020-10-21 15:33:23.075+00',	'2020-10-21 15:33:23.075+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'91567340-ca61-414b-88fa-b2854c435d72',	'2020-10-21 15:33:23.103+00',	'2020-10-21 15:33:23.103+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'e04a4873-ff9d-4beb-9416-0164c4bf0331',	'2020-10-21 15:33:23.124+00',	'2020-10-21 15:33:23.124+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'73fd65f2-ab84-40d6-ac94-e5487975f259',	'2020-10-21 15:33:23.145+00',	'2020-10-21 15:33:23.145+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'e21daf03-3164-47af-909d-36ab6b10177e',	'2020-10-21 15:33:23.17+00',	'2020-10-21 15:33:23.17+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'521ac924-d6ae-4c1c-9f47-696626a1bac9',	'2020-10-21 15:33:23.198+00',	'2020-10-21 15:33:23.198+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'02c8d418-c8f1-4ee2-bbd6-e67d9f36c038',	'2020-10-21 15:33:23.225+00',	'2020-10-21 15:33:23.225+00'),
+('3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3',	'7112fd3f-0a25-4ec9-8671-c8e3a18ec0ed',	'2020-10-21 15:33:23.259+00',	'2020-10-21 15:33:23.259+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'e0d9d813-98a4-415f-b4cd-fe63789b8a14',	'2020-10-21 15:33:23.28+00',	'2020-10-21 15:33:23.28+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'75f3bdf2-38a4-44b9-92c3-b869efb86ff5',	'2020-10-21 15:33:23.304+00',	'2020-10-21 15:33:23.304+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'ecda0b6a-cfd4-4e1d-835b-69fac918b567',	'2020-10-21 15:33:23.328+00',	'2020-10-21 15:33:23.328+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'6be59c13-4109-49c1-81f7-7829162161f6',	'2020-10-21 15:33:23.349+00',	'2020-10-21 15:33:23.349+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'd6c0e162-d085-4604-87ce-70dcac39479d',	'2020-10-21 15:33:23.372+00',	'2020-10-21 15:33:23.372+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'd9a78015-015b-49f7-ba07-a289cb5eec42',	'2020-10-21 15:33:23.395+00',	'2020-10-21 15:33:23.395+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'ebdc2c9c-020f-431f-a849-eca78162af89',	'2020-10-21 15:33:23.427+00',	'2020-10-21 15:33:23.427+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'e309c9d1-e77d-4c12-acb0-2cf32fd57bb5',	'2020-10-21 15:33:23.453+00',	'2020-10-21 15:33:23.453+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'53946baa-5ca1-4dd4-a738-172a08ff6b61',	'2020-10-21 15:33:23.475+00',	'2020-10-21 15:33:23.475+00'),
+('47128e24-e31e-432e-b248-e6a86339c1f0',	'28b4699f-76f1-4781-9759-78faba008bc2',	'2020-10-21 15:33:23.498+00',	'2020-10-21 15:33:23.498+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'f0329413-3ad4-4558-becd-fd7dd5b5af22',	'2020-10-21 15:33:23.53+00',	'2020-10-21 15:33:23.53+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'fa1189a9-130a-4f03-8d2d-861db3411bc9',	'2020-10-21 15:33:23.556+00',	'2020-10-21 15:33:23.556+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'cfb26bc2-ae22-4196-a2f1-b1519904b68d',	'2020-10-21 15:33:23.578+00',	'2020-10-21 15:33:23.578+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'f8ec28c2-7980-4b71-a9cd-0abb40fa8e05',	'2020-10-21 15:33:23.598+00',	'2020-10-21 15:33:23.598+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'99aa7938-639c-418e-a3ff-ba654aaded85',	'2020-10-21 15:33:23.629+00',	'2020-10-21 15:33:23.629+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'2150cff1-fe9f-4984-836b-7f295021d7a9',	'2020-10-21 15:33:23.658+00',	'2020-10-21 15:33:23.658+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'466db58e-2401-4b1b-b5d8-897b1c47c2ab',	'2020-10-21 15:33:23.684+00',	'2020-10-21 15:33:23.684+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'1cfba762-cb68-47aa-bd38-c2b56d5edfce',	'2020-10-21 15:33:23.706+00',	'2020-10-21 15:33:23.706+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'8751d0a2-9134-45fe-8cbe-e261bf0f2c0b',	'2020-10-21 15:33:23.727+00',	'2020-10-21 15:33:23.727+00'),
+('1677996a-6859-4524-8e67-d88307e6648e',	'8d4754bb-4643-44e1-8972-ce62aa218baa',	'2020-10-21 15:33:23.756+00',	'2020-10-21 15:33:23.756+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'7c7280df-696f-4dc2-aed0-6b3f33720429',	'2020-10-21 15:33:23.78+00',	'2020-10-21 15:33:23.78+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'08d6d4ed-d023-46eb-9fe6-2998407f0290',	'2020-10-21 15:33:23.802+00',	'2020-10-21 15:33:23.802+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'aac01b4d-6d49-46d1-8fe7-64edfcb1de17',	'2020-10-21 15:33:23.824+00',	'2020-10-21 15:33:23.824+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'23fc9788-6c19-4567-b43f-69e0906151ca',	'2020-10-21 15:33:23.851+00',	'2020-10-21 15:33:23.851+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'7a6d5dce-c0ea-48e1-b9d7-3fa6395a2a00',	'2020-10-21 15:33:23.881+00',	'2020-10-21 15:33:23.881+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'3930bd12-44a3-406b-926e-eccb940a66db',	'2020-10-21 15:33:23.904+00',	'2020-10-21 15:33:23.904+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'653287aa-c5d4-4e04-abea-1e4297905897',	'2020-10-21 15:33:23.929+00',	'2020-10-21 15:33:23.929+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'01a4c2e7-7152-454a-af2a-ea2d74635c62',	'2020-10-21 15:33:23.95+00',	'2020-10-21 15:33:23.95+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'37c65e96-5885-4da1-98b4-1417ff516662',	'2020-10-21 15:33:23.977+00',	'2020-10-21 15:33:23.977+00'),
+('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',	'95cf0737-8bda-4231-b51a-f23e5ca0e18c',	'2020-10-21 15:33:24.001+00',	'2020-10-21 15:33:24.001+00'),
+('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'bc09a157-dceb-43b9-af40-23744c290fee',	'2020-10-21 15:33:24.022+00',	'2020-10-21 15:33:24.022+00'),
+('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'2c75d8ba-20a7-4948-ab91-755edf1bef58',	'2020-10-21 15:33:24.047+00',	'2020-10-21 15:33:24.047+00'),
+('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'4b9d6ff3-dca8-4abf-83c6-e480b90f0d0e',	'2020-10-21 15:33:24.067+00',	'2020-10-21 15:33:24.067+00'),
+('e8075ae3-cd03-42dd-a0d2-adda7d47488a',	'01d0daca-bd0b-48af-89ac-893aa0bda117',	'2020-10-21 15:33:24.089+00',	'2020-10-21 15:33:24.089+00'),
+('9bde0fff-731d-4fe2-939e-f737e926bd70',	'c4889952-bd5f-430b-997a-a35d482e099f',	'2020-10-21 15:34:44.946863+00',	'2020-10-21 15:34:44.946863+00');
 
 
 -- 2020-10-21 15:35:24.374802+00
