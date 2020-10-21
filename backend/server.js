@@ -1,6 +1,15 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+
+app.all('*', (req, res, next) => {
+    console.log(req.method, req.url);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    next();
+})
+
 const mainRouter = require('./routes/mainRouter');
 const { Sequelize, DataTypes } = require('sequelize');
 
