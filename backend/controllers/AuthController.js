@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
+const MainController = require('./mainController/MainController');
 
-class AuthController {
+class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
     static TOKEN_TYPE_REFRESH_TOKEN = 'refreshToken';
 
@@ -11,14 +12,6 @@ class AuthController {
     static REFRESH_TOKEN_LIFETIME = 6; // seconds
 
     static refreshTokens = [];
-
-    // TODO extend from a main controller
-    response = null;
-    statusCode = 200;
-
-    constructor() {
-
-    }
 
     actionVerifyToken = (token) => {
         const response = {
