@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken');
 const InvalidTokenTypeError = require('../exceptions/auth/InvalidTokenTypeError');
 
 class AuthController {
+    static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
+    static TOKEN_TYPE_REFRESH_TOKEN = 'refreshToken';
+
     static refreshTokens = [];
 
     constructor() {
@@ -17,7 +20,7 @@ class AuthController {
         const response = {
             valid: true,
         };
-        const verification = this.verifyToken(token, ['accessToken', 'refreshToken']);
+        const verification = this.verifyToken(token, [AuthController.TOKEN_TYPE_ACCESS_TOKEN, AuthController.TOKEN_TYPE_REFRESH_TOKEN]);
         if(verification.verified) {
             response.valid = true;
             response.type = verification.payload.type;
@@ -46,7 +49,7 @@ class AuthController {
                 return;
             }
 
-            const verification = this.verifyToken(inputRefreshToken, 'refreshToken');
+            const verification = this.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
             if(!verification.verified) {
                 response.error = verification.error
                 res.status(400);
@@ -56,8 +59,8 @@ class AuthController {
 
             const refreshTokenPayload = verification.payload;
 
-            const newAccessToken = this.generateToken('accessToken', refreshTokenPayload);
-            const newRefreshToken = this.generateToken('refreshToken', refreshTokenPayload);
+            const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, refreshTokenPayload);
+            const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, refreshTokenPayload);
 
             this.invalidateRefreshToken(inputRefreshToken);
             this.saveRefreshToken(newRefreshToken);
@@ -70,8 +73,8 @@ class AuthController {
 
         const fakeUserId = Math.ceil(Math.random() * 10000);
 
-        const accessToken = this.generateToken('accessToken', {userId: fakeUserId});
-        const refreshToken = this.generateToken('refreshToken', {userId: fakeUserId});
+        const accessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, {userId: fakeUserId});
+        const refreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, {userId: fakeUserId});
 
         this.saveRefreshToken(refreshToken);
 
@@ -155,10 +158,10 @@ class AuthController {
     generateToken = (type, initialPayload = {}) => {
         let expiresIn;
         switch(type) {
-            case 'accessToken':
+            case AuthController.TOKEN_TYPE_ACCESS_TOKEN:
                 expiresIn = this.accessTokenLifetime;
                 break;
-            case 'refreshToken':
+            case AuthController.TOKEN_TYPE_REFRESH_TOKEN:
                 expiresIn = this.refreshTokenLifetime;
                 break;
             default:
