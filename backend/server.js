@@ -2,18 +2,16 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+const mainRouter = require('./routes/mainRouter');
+const db = require('./models/dbModels');
+
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     next();
-})
-
-const mainRouter = require('./routes/mainRouter');
-const { Sequelize, DataTypes } = require('sequelize');
-
-const db = require('./models/dbModels');
+});
 
 /** Routing */
 app.use('/', mainRouter);
@@ -37,8 +35,8 @@ testModel = async () => {
             subscriptions: [
                 {
                     reference: 'ref0213',
-                    startDate: Sequelize.literal('CURRENT_DATE'),
-                    expirationDate: Sequelize.literal('CURRENT_DATE')
+                    startDate: db.Sequelize.literal('CURRENT_DATE'),
+                    expirationDate: db.Sequelize.literal('CURRENT_DATE')
                 }
             ]
         }, {
