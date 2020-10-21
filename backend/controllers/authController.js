@@ -129,20 +129,20 @@ class AuthController {
     /**
      * Verifies the type contained in a JWT token payload
      * @param tokenPayload object
-     * @param expectedType string|string[]
+     * @param expectedTypes string|string[]
      * @throw InvalidTokenTypeError if token type does not match
      */
-    verifyTokenType = (tokenPayload, expectedType) => {
+    verifyTokenType = (tokenPayload, expectedTypes) => {
         if(!tokenPayload.hasOwnProperty('type')) {
             throw new InvalidTokenTypeError('Token type not found in payload');
         }
 
-        if(typeof expectedType === 'string') {
-            expectedType = [expectedType];
+        if(typeof expectedTypes === 'string') {
+            expectedTypes = [expectedTypes];
         }
 
-        if(!expectedType.includes(tokenPayload.type)) {
-            throw new InvalidTokenTypeError(`Type ${tokenPayload.type} does not match any expected type (${expectedType.join(', ')})`);
+        if(!expectedTypes.includes(tokenPayload.type)) {
+            throw new InvalidTokenTypeError(`Type ${tokenPayload.type} does not match any expected type (${expectedTypes.join(', ')})`);
         }
     }
 
