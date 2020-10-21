@@ -5,18 +5,22 @@ class AuthController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
     static TOKEN_TYPE_REFRESH_TOKEN = 'refreshToken';
 
+    // TODO from a config (env...)
+    static JWT_SECRET = 'superSecret';
+    static ACCESS_TOKEN_LIFETIME = 3; // seconds
+    static REFRESH_TOKEN_LIFETIME = 6; // seconds
+
     static refreshTokens = [];
 
+    // TODO extend from a main controller
+    response = null;
+    statusCode = 200;
+
     constructor() {
-        // TODO From config (env...)
-        this.jwtSecret = 'superSecret';
-        this.accessTokenLifetime = 3;
-        this.refreshTokenLifetime = 6;
+
     }
 
-    actionVerifyToken = (req, res) => {
-        const token = req.headers.authorization;
-        res.status(200);
+    actionVerifyToken = (token) => {
         const response = {
             valid: true,
         };
@@ -29,31 +33,30 @@ class AuthController {
             response.error = verification.error;
         }
 
-        res.send(response);
+        this.response = response;
     }
 
-    actionAccessToken = (req, res) => {
+    actionAccessToken = (inputRefreshToken = null) => {
         let fromRefreshToken = false;
-        if(req.query.refreshToken !== undefined) {
+        if(inputRefreshToken !== null) {
             fromRefreshToken = true;
         }
 
         if(fromRefreshToken) {
-            const inputRefreshToken = req.query.refreshToken;
             const response = {};
 
             if(!AuthController.refreshTokens.includes(inputRefreshToken)) {
-                res.status(400);
                 response.error = 'Unknown refresh token';
-                res.send(response);
+                this.response = response;
+                this.statusCode = 400;
                 return;
             }
 
             const verification = this.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
             if(!verification.verified) {
                 response.error = verification.error
-                res.status(400);
-                res.send(response);
+                this.response = response;
+                this.statusCode = 400;
                 return;
             }
 
@@ -67,7 +70,7 @@ class AuthController {
 
             response.accessToken = newAccessToken;
             response.refreshToken = newRefreshToken;
-            res.send(response);
+            this.response = response;
             return;
         }
 
@@ -78,10 +81,10 @@ class AuthController {
 
         this.saveRefreshToken(refreshToken);
 
-        res.send({
+        this.response = {
             'accessToken': accessToken,
             'refreshToken': refreshToken,
-        });
+        };
     }
 
     /**
@@ -98,7 +101,7 @@ class AuthController {
         const result = {};
 
         try {
-            const payload = jwt.verify(token, this.jwtSecret);
+            const payload = jwt.verify(token, AuthController.JWT_SECRET);
             if(type !== null) { // Verify token type (accessToken/refreshToken)
                 this.verifyTokenType(payload, type);
             }
@@ -159,10 +162,10 @@ class AuthController {
         let expiresIn;
         switch(type) {
             case AuthController.TOKEN_TYPE_ACCESS_TOKEN:
-                expiresIn = this.accessTokenLifetime;
+                expiresIn = AuthController.ACCESS_TOKEN_LIFETIME;
                 break;
             case AuthController.TOKEN_TYPE_REFRESH_TOKEN:
-                expiresIn = this.refreshTokenLifetime;
+                expiresIn = AuthController.REFRESH_TOKEN_LIFETIME;
                 break;
             default:
                 throw new InvalidTokenTypeError();
@@ -175,7 +178,7 @@ class AuthController {
 
         payload.type = type;
 
-        return jwt.sign(payload, this.jwtSecret, {
+        return jwt.sign(payload, AuthController.JWT_SECRET, {
             expiresIn,
         });
     }
@@ -192,4 +195,4 @@ class AuthController {
     }
 }
 
-module.exports = new AuthController();
+module.exports = AuthController;
