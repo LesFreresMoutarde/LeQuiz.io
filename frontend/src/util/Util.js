@@ -138,8 +138,6 @@ class Util {
     }
 }
 
-window.util = Util;
-
 Util.APP_BACKEND_URL = "http://localhost:3000"; // TODO ENV
 
 export default Util;
