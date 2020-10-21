@@ -9,6 +9,7 @@ function App() {
     return (
         <div className="App">
             <p>Toujours là</p>
+            <img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/create-room" component={CreateRoom} />
