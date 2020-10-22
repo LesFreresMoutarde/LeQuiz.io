@@ -4,6 +4,12 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class UserReview extends Model {
+
+        static STATUS_POSITIVE = 'positive';
+        static STATUS_NEUTRAL = 'neutral';
+        static STATUS_NEGATIVE = 'negative';
+        static STATUSES = [UserReview.STATUS_POSITIVE, UserReview.STATUS_NEUTRAL, UserReview.STATUS_NEGATIVE];
+
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.

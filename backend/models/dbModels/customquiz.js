@@ -4,6 +4,12 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class CustomQuiz extends Model {
+
+        static STATUS_APPROVED = 'approved';
+        static STATUS_PENDING = 'pending';
+        static STATUS_DISAPPROVED = 'disapproved';
+        static STATUSES = [CustomQuiz.STATUS_APPROVED, CustomQuiz.STATUS_PENDING, CustomQuiz.STATUS_DISAPPROVED];
+
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.

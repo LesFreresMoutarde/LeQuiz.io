@@ -4,6 +4,17 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
+
+        static PLAN_FREE = 'free';
+        static PLAN_PREMIUM = 'premium';
+        static PLAN_VIP = 'vip';
+        static PLANS = [User.PLAN_FREE, User.PLAN_PREMIUM, User.PLAN_VIP];
+
+        static ROLE_MEMBER = 'member';
+        static ROLE_REVIEWER = 'reviewer';
+        static ROLE_ADMIN = 'admin';
+        static ROLES = [User.ROLE_MEMBER, User.ROLE_REVIEWER, User.ROLE_ADMIN];
+
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
