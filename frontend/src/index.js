@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
+import Util from "./util/Util";
+
+Util.initializeTokensStorage();
 
 ReactDOM.render(
     <React.StrictMode>
