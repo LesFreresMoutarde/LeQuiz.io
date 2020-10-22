@@ -150,6 +150,28 @@ class Util {
         return Util.APP_BACKEND_URL + shortUrl;
     }
 
+    static sendJsonToAPI = async (url, data = {}, init = {}) => {
+        if(!init.hasOwnProperty('method')) {
+            init.method = 'POST';
+        }
+
+        if(init.hasOwnProperty('headers')) {
+            if(!(init.headers instanceof Headers)) {
+                // The headers received in function param should be an object containing the HTTP headers,
+                // or an instance of
+                init.headers = new Headers(init.headers);
+            }
+        } else {
+            init.headers = new Headers();
+        }
+
+        init.headers.set('Content-Type', 'application/json');
+
+        init.body = JSON.stringify(data);
+
+        return await Util.performAPIRequest(url, init);
+    }
+
     /**
      * Try to perform a request to the backend API with the access token in Authorization header.
      * If the request results in a 401 Unauthorized response, the access token is refreshed and then the same request is re-sent.

@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
@@ -8,10 +9,12 @@ const db = require('./models/dbModels');
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     next();
 });
+
+app.use(bodyParser.json());
 
 /** Routing */
 app.use('/', mainRouter);

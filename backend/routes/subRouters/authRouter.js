@@ -29,6 +29,9 @@ authRouter.post('/register', (req, res) => {
 });
 
 authRouter.post('/login', (req, res) => {
+    const controller = new AuthController();
+
+    console.log(req.body);
     res.json({endpoint: 'POST /auth/login'})
 });
 
