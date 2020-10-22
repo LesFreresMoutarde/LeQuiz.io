@@ -11,27 +11,59 @@ import Util from "../util/Util";
 import Loader from "./misc/Loader";
 
 class App extends React.Component {
+
+    state = {
+        isLoading: true,
+    }
+
     render = () => {
-        return (
-            <div className="app">
-                <div className="content-wrapper">
-                    <Header/>
-                    {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
-                    <Loader width="80" />
-                    <Switch>
-                        <Route exact path="/" component={Home}/>
-                        <Route exact path="/create-room" component={CreateRoom}/>
-                        <Route exact path="/join-room" component={JoinRoom}/>
-                    </Switch>
+        if(this.state.isLoading) {
+            return (
+                <div className="app loading">
+                    <div className="app-loader">
+                        <Loader width="max(8vw, 100px)" />
+                    </div>
                 </div>
-                <Footer/>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div className="app">
+                    <div className="content-wrapper">
+                        <Header/>
+                        {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
+                        <Switch>
+                            <Route exact path="/" component={Home}/>
+                            <Route exact path="/create-room" component={CreateRoom}/>
+                            <Route exact path="/join-room" component={JoinRoom}/>
+                        </Switch>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                        <p>Du contenu</p>
+                    </div>
+                    <Footer/>
+                </div>
+            );
+        }
     }
 
     componentDidMount = async () => {
         await Util.onApplicationLoad();
-        Util.verbose('Application loaded', 'TODO hide loader and reveal page');
+        Util.verbose('Application loaded');
+        this.setState({
+            isLoading: false,
+        });
     }
 }
 
