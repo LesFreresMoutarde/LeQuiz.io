@@ -8,6 +8,7 @@ import JoinRoom from "./pages/JoinRoom";
 import Footer from "./Footer";
 import Header from "./Header";
 import Util from "../util/Util";
+import Loader from "./misc/Loader";
 
 class App extends React.Component {
     render = () => {
@@ -16,6 +17,7 @@ class App extends React.Component {
                 <div className="content-wrapper">
                     <Header/>
                     {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
+                    <Loader width="80" />
                     <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/create-room" component={CreateRoom}/>
@@ -27,8 +29,9 @@ class App extends React.Component {
         );
     }
 
-    componentDidMount = () => {
-        Util.onApplicationLoad();
+    componentDidMount = async () => {
+        await Util.onApplicationLoad();
+        Util.verbose('Application loaded', 'TODO hide loader and reveal page');
     }
 }
 
