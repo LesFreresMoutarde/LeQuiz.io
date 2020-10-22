@@ -311,7 +311,9 @@ INSERT INTO "category_question" ("categoryId", "questionId", "createdAt", "updat
 DROP TABLE IF EXISTS "refresh_token";
 CREATE TABLE "public"."refresh_token" (
     "token" text NOT NULL,
-    CONSTRAINT "refresh_token_token" PRIMARY KEY ("token")
+    "userId" uuid NOT NULL,
+    CONSTRAINT "refresh_token_token" PRIMARY KEY ("token"),
+    CONSTRAINT "refresh_token_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"(id) ON UPDATE RESTRICT ON DELETE RESTRICT NOT DEFERRABLE
 ) WITH (oids = false);
 
 -- 2020-10-21 15:35:24.374802+00
