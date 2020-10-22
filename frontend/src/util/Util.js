@@ -150,6 +150,14 @@ class Util {
         return Util.APP_BACKEND_URL + shortUrl;
     }
 
+    /**
+     * Try to perform a request to the backend API {@see Util.performAPIRequest} JSON-encoded data
+     * Default method is POST if not overrided in init object
+     * @param url
+     * @param data
+     * @param init
+     * @returns {Promise<Response>}
+     */
     static sendJsonToAPI = async (url, data = {}, init = {}) => {
         if(!init.hasOwnProperty('method')) {
             init.method = 'POST';
