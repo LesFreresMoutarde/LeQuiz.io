@@ -1,7 +1,7 @@
 const GameMode = require('./GameMode')
 
 class Survivant extends GameMode {
-    constructor(){
+    constructor() {
         super()
     }
 

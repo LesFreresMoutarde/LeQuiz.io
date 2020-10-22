@@ -1,7 +1,7 @@
 const GameMode = require('./GameMode')
 
 class Serie extends GameMode {
-    constructor(){
+    constructor() {
         super()
     }
 
