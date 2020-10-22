@@ -308,4 +308,10 @@ INSERT INTO "category_question" ("categoryId", "questionId", "createdAt", "updat
 ('9bde0fff-731d-4fe2-939e-f737e926bd70',	'c4889952-bd5f-430b-997a-a35d482e099f',	'2020-10-21 15:34:44.946863+00',	'2020-10-21 15:34:44.946863+00');
 
 
+DROP TABLE IF EXISTS "refresh_token";
+CREATE TABLE "public"."refresh_token" (
+    "token" text NOT NULL,
+    CONSTRAINT "refresh_token_token" PRIMARY KEY ("token")
+) WITH (oids = false);
+
 -- 2020-10-21 15:35:24.374802+00
