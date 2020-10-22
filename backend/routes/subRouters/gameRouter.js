@@ -1,8 +1,10 @@
 const gameRouter = require('express').Router();
+const GameController = require('../../controllers/GameController');
 
-
-gameRouter.get('/modes', (req, res) => {
-    res.json({endpoint: 'GET /game/modes'});
+gameRouter.post('/modes', (req, res) => {
+    console.log("la requete", req.body);
+    //GameController
+    res.json({endpoint: 'POST /game/modes'});
 });
 
 gameRouter.get('/categories', (req, res) => {
