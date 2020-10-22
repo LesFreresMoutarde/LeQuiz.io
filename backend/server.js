@@ -2,29 +2,24 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const { Sequelize, DataTypes } = require('sequelize');
-
-const sequelize = new Sequelize("lequiz-io", "admin", "admin",{
-    host: "database",
-    dialect: "postgres"
-});
-
+const mainRouter = require('./routes/mainRouter');
 const db = require('./models/dbModels');
 
+app.all('*', (req, res, next) => {
+    console.log(req.method, req.url);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    next();
+});
 
-(async () => {
-    try {
-        await sequelize.authenticate();
-        console.log("Connection is Good");
+/** Routing */
+app.use('/', mainRouter);
 
-    } catch (error) {
-        console.error('Unable to connect : ', error);
-    }
-})();
 
 testModel = async () => {
     // J'initialise une transaction. Cet variable sera passé à chaque requete
-    const transaction = await sequelize.transaction();
+    const transaction = await db.sequelize.transaction();
     try {
 
         // Création d'un User et d'une Subscription associé
@@ -40,8 +35,8 @@ testModel = async () => {
             subscriptions: [
                 {
                     reference: 'ref0213',
-                    startDate: Sequelize.literal('CURRENT_DATE'),
-                    expirationDate: Sequelize.literal('CURRENT_DATE')
+                    startDate: db.Sequelize.literal('CURRENT_DATE'),
+                    expirationDate: db.Sequelize.literal('CURRENT_DATE')
                 }
             ]
         }, {
