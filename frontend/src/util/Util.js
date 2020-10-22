@@ -64,14 +64,6 @@ class Util {
         Util.verbose('Refresh token payload', Util.refreshTokenPayload);
     }
 
-    static getBackendFullUrl = (shortUrl) => {
-        if(!shortUrl.startsWith('/')) {
-            shortUrl = '/' + shortUrl;
-        }
-
-        return Util.APP_BACKEND_URL + shortUrl;
-    }
-
     /**
      * Returns true if stored access token is valid, otherwise returns false
      * @returns {Promise<boolean>}
@@ -148,6 +140,66 @@ class Util {
         const decoded = atob(partToDecode);
 
         return JSON.parse(decoded);
+    }
+
+    static getBackendFullUrl = (shortUrl) => {
+        if(!shortUrl.startsWith('/')) {
+            shortUrl = '/' + shortUrl;
+        }
+
+        return Util.APP_BACKEND_URL + shortUrl;
+    }
+
+    /**
+     * Try to perform a request to the backend API with the access token in Authorization header.
+     * If the request results in a 401 Unauthorized response, the access token is refreshed and then the same request is re-sent.
+     * @param url string
+     * @param init object|Headers If set, the Authorization header will be overrided
+     * @returns {Promise<Response>}
+     * TODO try/catch, in case of error log it and return nothing ?
+     */
+    static performAPIRequest = async (url, init = {}) => {
+        if(!url.startsWith(Util.APP_BACKEND_URL)) {
+            url = Util.getBackendFullUrl(url);
+        }
+
+        if(init.hasOwnProperty('headers')) {
+            if(!(init.headers instanceof Headers)) {
+                // The headers received in function param should be an object containing the HTTP headers,
+                // or an instance of
+                init.headers = new Headers(init.headers);
+            }
+        } else {
+            init.headers = new Headers();
+        }
+
+        init.headers.set('Authorization', Util.accessToken);
+
+        Util.verbose(`Performing API request to ${url}`);
+
+        let response = await fetch(url, init);
+
+        Util.verbose(`API request to ${url} response`, response.status);
+
+        if(response.status !== 401) {
+            return response;
+        }
+
+        Util.verbose(`API request to ${url} resulted in 401 Unauthorized response, refreshing access token before retry`);
+
+        if(!(await Util.refreshAccessToken())) {
+            throw new Error('Unable to refresh access token'); // TODO log error and return nothing ?
+        }
+
+        init.headers.set('Authorization', Util.accessToken);
+
+        Util.verbose(`Performing API request to ${url}`);
+
+        response = await fetch(url, init);
+
+        Util.verbose(`API request to ${url} response`, response.status);
+
+        return response;
     }
 }
 
