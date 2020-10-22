@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/minireset.min.css';
 import '../css/style.css';
+import '../css/util.css';
 import {Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import CreateRoom from "./pages/CreateRoom";
@@ -9,13 +10,17 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Util from "../util/Util";
 import Loader from "./misc/Loader";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 class App extends React.Component {
-
-    state = {
-        isLoading: true,
-        userId: null,
-        userName: null,
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+            userId: null,
+            userName: null,
+        }
     }
 
     render = () => {
@@ -33,11 +38,15 @@ class App extends React.Component {
                     <div className="content-wrapper">
                         <Header/>
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
-                        <Switch>
-                            <Route exact path="/" component={Home}/>
-                            <Route exact path="/create-room" component={CreateRoom}/>
-                            <Route exact path="/join-room" component={JoinRoom}/>
-                        </Switch>
+                        <div id="page-content">
+                            <Switch>
+                                <Route exact path="/" component={Home}/>
+                                <Route exact path="/login" component={Login}/>
+                                <Route exact path="/register" component={Register}/>
+                                <Route exact path="/create-room" component={CreateRoom}/>
+                                <Route exact path="/join-room" component={JoinRoom}/>
+                            </Switch>
+                        </div>
                     </div>
                     <Footer/>
                 </div>

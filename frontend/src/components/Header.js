@@ -17,6 +17,7 @@ class Header extends React.Component {
                         </Link>
                     </div>
                 </div>
+                <div className="clearfix"/>
             </header>
         )
     }
