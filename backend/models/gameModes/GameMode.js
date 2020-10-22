@@ -1,6 +1,6 @@
-class Serie extends GameMode {
+class GameMode {
     constructor(){
-        super()
+
     }
 
     getWinCondition(){
@@ -8,4 +8,4 @@ class Serie extends GameMode {
     }
 }
 
-
+module.exports = GameMode;

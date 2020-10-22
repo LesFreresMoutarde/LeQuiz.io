@@ -1,3 +1,5 @@
+const GameMode = require('./GameMode');
+
 class Ascension extends  GameMode {
     constructor() {
         super()
@@ -7,3 +9,5 @@ class Ascension extends  GameMode {
         return true;
     }
 }
+
+module.exports = Ascension;

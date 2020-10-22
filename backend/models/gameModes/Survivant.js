@@ -1,3 +1,5 @@
+const GameMode = require('./GameMode')
+
 class Survivant extends GameMode {
     constructor(){
         super()
@@ -7,3 +9,5 @@ class Survivant extends GameMode {
         return true;
     }
 }
+
+module.exports = Survivant;
