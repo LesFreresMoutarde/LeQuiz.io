@@ -14,6 +14,8 @@ class App extends React.Component {
 
     state = {
         isLoading: true,
+        userId: null,
+        userName: null,
     }
 
     render = () => {
@@ -36,21 +38,6 @@ class App extends React.Component {
                             <Route exact path="/create-room" component={CreateRoom}/>
                             <Route exact path="/join-room" component={JoinRoom}/>
                         </Switch>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
-                        <p>Du contenu</p>
                     </div>
                     <Footer/>
                 </div>
@@ -61,9 +48,19 @@ class App extends React.Component {
     componentDidMount = async () => {
         await Util.onApplicationLoad();
         Util.verbose('Application loaded');
-        this.setState({
+
+        const newState = {
             isLoading: false,
-        });
+        };
+
+        const accessTokenPayload = Util.accessTokenPayload;
+
+        if(accessTokenPayload.hasOwnProperty('user')) {
+            newState.userId = accessTokenPayload.user.id;
+            newState.userName = accessTokenPayload.user.username;
+        }
+
+        this.setState(newState);
     }
 }
 
