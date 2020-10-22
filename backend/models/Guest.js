@@ -3,3 +3,5 @@ class Guest {
         this.name = username
     }
 }
+
+module.exports = Guest;

@@ -1,6 +1,6 @@
 const GameMode = require('./GameMode');
 
-class Ascension extends  GameMode {
+class Ascension extends GameMode {
     constructor() {
         super()
     }
