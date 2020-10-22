@@ -175,11 +175,7 @@ class Util {
 
         init.headers.set('Authorization', Util.accessToken);
 
-        Util.verbose(`Performing API request to ${url}`);
-
-        let response = await fetch(url, init);
-
-        Util.verbose(`API request to ${url} response`, response.status);
+        let response = await Util.fetch(url, init);
 
         if(response.status !== 401) {
             return response;
@@ -195,9 +191,30 @@ class Util {
 
         Util.verbose(`Performing API request to ${url}`);
 
-        response = await fetch(url, init);
+        response = await Util.fetch(url, init);
 
         Util.verbose(`API request to ${url} response`, response.status);
+
+        return response;
+    }
+
+    /**
+     * Fetch minimal verbose wrapper
+     * @param url
+     * @param init
+     * @returns {Promise<Response>}
+     */
+    static fetch = async (url, init) => {
+        let method = 'GET';
+        if(init.hasOwnProperty('method')) {
+            method = init.method.toUpperCase();
+        }
+
+        Util.verbose(`Performing request ${method} ${url}`);
+
+        const response = await fetch(url, init);
+
+        Util.verbose(`${method} ${url} response code:`, response.status);
 
         return response;
     }
