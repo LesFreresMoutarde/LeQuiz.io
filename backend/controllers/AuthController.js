@@ -67,10 +67,8 @@ class AuthController extends MainController {
             return;
         }
 
-        const fakeUserId = Math.ceil(Math.random() * 10000);
-
-        const accessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, {userId: fakeUserId});
-        const refreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, {userId: fakeUserId});
+        const accessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN);
+        const refreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN);
 
         this.saveRefreshToken(refreshToken);
 

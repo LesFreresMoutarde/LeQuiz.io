@@ -4,6 +4,9 @@ class Util {
     static accessToken = null;
     static refreshToken = null;
 
+    static accessTokenPayload = null;
+    static refreshTokenPayload = null;
+
     static verbose = (...items) => {
         if(!Util.isVerbose) {
             return;
@@ -21,11 +24,11 @@ class Util {
         const localStorageRefreshToken = localStorage.getItem('refreshToken');
 
         if(localStorageAccessToken !== null) {
-            Util.accessToken = localStorageAccessToken;
+            Util.setAccesstoken(localStorageAccessToken);
         }
 
         if(localStorageRefreshToken !== null) {
-            Util.refreshToken = localStorageRefreshToken;
+            Util.setRefreshToken(localStorageRefreshToken);
         }
 
         localStorage.removeItem('accessToken');
@@ -57,8 +60,8 @@ class Util {
             }
         }
 
-        Util.verbose('Access token payload', Util.getJwtPayloadContent(Util.accessToken));
-        Util.verbose('Refresh token payload', Util.getJwtPayloadContent(Util.refreshToken));
+        Util.verbose('Access token payload', Util.accessTokenPayload);
+        Util.verbose('Refresh token payload', Util.refreshTokenPayload);
     }
 
     static getBackendFullUrl = (shortUrl) => {
@@ -102,8 +105,8 @@ class Util {
 
         const responseJson = await response.json();
         Util.verbose('New access token generation response', response.status, responseJson);
-        Util.accessToken = responseJson.accessToken;
-        Util.refreshToken = responseJson.refreshToken;
+        Util.setAccesstoken(responseJson.accessToken);
+        Util.setRefreshToken(responseJson.refreshToken);
     }
 
     static refreshAccessToken = async() => {
@@ -115,14 +118,24 @@ class Util {
         Util.verbose('Refresh access token response', response.status, responseJson);
 
         if(response.status === 200) {
-            Util.accessToken = responseJson.accessToken;
-            Util.refreshToken = responseJson.refreshToken;
+            Util.setAccesstoken(responseJson.accessToken);
+            Util.setRefreshToken(responseJson.refreshToken);
 
             return true;
         }
 
         Util.verbose('Refresh access token failed');
         return false;
+    }
+
+    static setAccesstoken = (token) => {
+        Util.accessToken = token;
+        Util.accessTokenPayload = Util.getJwtPayloadContent(token);
+    }
+
+    static setRefreshToken = (token) => {
+        Util.refreshToken = token;
+        Util.refreshTokenPayload = Util.getJwtPayloadContent(token);
     }
 
     static getJwtPayloadContent = (jwtToken) => {

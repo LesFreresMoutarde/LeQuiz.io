@@ -1,41 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+    position: relative;
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.App {
-    text-align: center;
-}
-
-.App-header {
-    background-color: #282c34;
+    background-color: #2FB0DD;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
+    margin-bottom: -60px;
+
+    font-family: 'Lato', sans-serif;
     color: white;
 }
 
-.App-link {
-    color: #61dafb;
+a {
+    color: inherit;
+    text-decoration: underline;
+
+    transition: color 0.1s ease-out;
 }
 
-@keyframes App-logo-spin {
+a:hover {
+    color: #b1e7fa;
+}
+
+.app:not(.loading) {
+    /*opacity: 1;*/
+    /*transform: none;*/
+
+    animation: loaded-app-fadein 0.6s cubic-bezier(.35,.85,.45,1);
+}
+
+@keyframes loaded-app-fadein {
     from {
-        transform: rotate(0deg);
+        transform: scale(0.95);
+        opacity: 0;
     }
     to {
-        transform: rotate(360deg);
+        transform: scale(1);
+        opacity: 1;
     }
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 60px);
+    font-size: 1.1em;
+}
+
+.app-header {
+    padding: 20px;
+}
+
+.header-user {
+    float: right;
+    display: table;
+}
+
+.header-user > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.header-user-settings-cog {
+    padding-left: 10px;
+    font-size: 1.3em;
+}
+
+.header-user-settings-cog a svg {
+    transition: transform 0.1s ease-out;
+}
+
+.header-user-settings-cog a:hover {
+    color: inherit;
+}
+
+.header-user-settings-cog a:hover svg {
+    transform: rotate(30deg);
+}
+
+.app-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+
+    animation: app-loader-fadein 1s;
+}
+
+.app-loader > svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes app-loader-fadein {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.app > footer {
+    width: 100%;
+    height: 60px;
+
+    display: table;
+}
+
+.app > footer .footer-text {
+    display: table-cell;
+    vertical-align: middle;
+
+    text-align: center;
+}
+
+.app > footer .footer-text-item {
+    margin-left: 5px;
+    margin-right: 5px;
 }
