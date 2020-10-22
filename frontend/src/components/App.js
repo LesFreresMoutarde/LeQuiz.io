@@ -3,12 +3,14 @@ import '../css/minireset.min.css';
 import '../css/style.css';
 import {Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
-import CreateRoom from "./pages/CreateRoom";
+//import CreateRoom from "./pages/CreateRoom";
+import CreateGame from "./pages/CreateGame";
 import JoinRoom from "./pages/JoinRoom";
 import Footer from "./Footer";
 import Header from "./Header";
 import Util from "../util/Util";
 import Loader from "./misc/Loader";
+import ChooseCategories from "./views/CreateGame/ChooseCategories";
 
 class App extends React.Component {
 
@@ -35,8 +37,9 @@ class App extends React.Component {
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <Switch>
                             <Route exact path="/" component={Home}/>
-                            <Route exact path="/create-room" component={CreateRoom}/>
+                            <Route exact path="/create-room/game-mode" component={CreateGame}/>
                             <Route exact path="/join-room" component={JoinRoom}/>
+                            {/*<Route exact path="/choose-categories" component={ChooseCategories}/>*/}
                         </Switch>
                     </div>
                     <Footer/>
