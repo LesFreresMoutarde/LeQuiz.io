@@ -195,7 +195,6 @@ testModel = async () => {
         });
         res.map((result) => console.log(result.toJSON()));
         console.log("la souscription de l'utilisateur", await user.getSubscriptions());
-        console.log("les plans possibles", db.User.userPlans);
     } catch (error) {
         // Rollback si erreur
         await transaction.rollback();

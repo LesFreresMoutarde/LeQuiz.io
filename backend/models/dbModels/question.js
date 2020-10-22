@@ -4,6 +4,25 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Question extends Model {
+
+        static TYPE_QCM = 'qcm';
+        static TYPE_INPUT = 'input';
+        static TYPE_POINT_AND_CLICK = 'point_and_click';
+        static TYPE_BLIND_TEST_QCM = 'blind_test_qcm';
+        static TYPE_BLIND_TEST_INPUT = 'blind_test_input';
+        static TYPES = [
+            Question.TYPE_QCM,
+            Question.TYPE_INPUT,
+            Question.TYPE_POINT_AND_CLICK,
+            Question.TYPE_BLIND_TEST_QCM,
+            Question.TYPE_BLIND_TEST_INPUT
+        ];
+
+        static STATUS_APPROVED = 'approved';
+        static STATUS_PENDING = 'pending';
+        static STATUS_DISAPPROVED = 'disapproved';
+        static STATUSES = [Question.STATUS_APPROVED, Question.STATUS_PENDING, Question.STATUS_DISAPPROVED];
+
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
