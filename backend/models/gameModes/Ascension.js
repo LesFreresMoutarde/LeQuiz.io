@@ -5,7 +5,7 @@ class Ascension extends GameMode {
         super()
     }
 
-    getWinCondition(){
+    getWinCondition() {
         return true;
     }
 }

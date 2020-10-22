@@ -5,7 +5,7 @@ class Serie extends GameMode {
         super()
     }
 
-    getWinCondition(){
+    getWinCondition() {
         return true;
     }
 }

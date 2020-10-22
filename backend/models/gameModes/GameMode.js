@@ -3,7 +3,7 @@ class GameMode {
 
     }
 
-    getWinCondition(){
+    getWinCondition() {
         return true;
     }
 }

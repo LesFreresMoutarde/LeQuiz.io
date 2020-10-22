@@ -5,7 +5,7 @@ class Blitz extends GameMode {
         super()
     }
 
-    getWinCondition(){
+    getWinCondition() {
         return true;
     }
 }

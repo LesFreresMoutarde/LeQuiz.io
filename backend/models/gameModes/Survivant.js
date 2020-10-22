@@ -5,7 +5,7 @@ class Survivant extends GameMode {
         super()
     }
 
-    getWinCondition(){
+    getWinCondition() {
         return true;
     }
 }
