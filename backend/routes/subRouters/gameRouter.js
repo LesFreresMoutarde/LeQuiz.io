@@ -2,9 +2,12 @@ const gameRouter = require('express').Router();
 const GameController = require('../../controllers/GameController');
 
 gameRouter.post('/modes', (req, res) => {
-    console.log("la requete", req.body);
-    //GameController
-    res.json({endpoint: 'POST /game/modes'});
+    const gameController = new GameController();
+
+    gameController.actionModes(req.body.role);
+
+    res.status(gameController.statusCode);
+    res.json(gameController.response);
 });
 
 gameRouter.get('/categories', (req, res) => {

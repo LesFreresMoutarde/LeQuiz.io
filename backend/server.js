@@ -1,10 +1,10 @@
+db = require('./models/dbModels');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
 const mainRouter = require('./routes/mainRouter');
-const db = require('./models/dbModels');
 
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
@@ -207,7 +207,7 @@ testModel = async () => {
 
 
 app.get('/', async (req, res) => {
-    await testModel();
+   // await testModel();
     res.statusCode = 200;
     res.send('lequiz.io-backend container');
 });
