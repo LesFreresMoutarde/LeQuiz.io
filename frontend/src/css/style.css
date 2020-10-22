@@ -191,6 +191,7 @@ label.checkbox > input + span::after {
     left: 6px;
     border-bottom: 3px solid #2FB0DD;
     border-right: 3px solid #2FB0DD;
+    border-bottom-right-radius: 2px;
 
     transform: rotate(40deg);
 
