@@ -10,25 +10,16 @@ class AuthController extends MainController {
 
     // TODO from a config (env...)
     static JWT_SECRET = 'superSecret';
-    static ACCESS_TOKEN_LIFETIME = 3; // seconds
-    static REFRESH_TOKEN_LIFETIME = 6; // seconds
+    static ACCESS_TOKEN_LIFETIME = 300; // seconds
+    static REFRESH_TOKEN_LIFETIME = 60 * 60 * 24; // 1 day
+    static REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN = 60 * 60 * 24 * 365 // 1 year
 
     static refreshTokens = [];
 
-    actionVerifyToken = (token) => {
-        const response = {
-            valid: true,
-        };
-        const verification = this.verifyToken(token, [AuthController.TOKEN_TYPE_ACCESS_TOKEN, AuthController.TOKEN_TYPE_REFRESH_TOKEN]);
-        if(verification.verified) {
-            response.valid = true;
-            response.type = verification.payload.type;
-        } else {
-            response.valid = false;
-            response.error = verification.error;
-        }
+    actionVerifyToken = () => {
+        // Access token is already verified in previous middleware, if we are here then the token is OK !
 
-        this.response = response;
+        this.response = {valid: true};
     }
 
     actionAccessToken = (inputRefreshToken = null) => {
@@ -47,7 +38,7 @@ class AuthController extends MainController {
                 return;
             }
 
-            const verification = this.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
+            const verification = AuthController.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
             if(!verification.verified) {
                 response.error = verification.error
                 this.response = response;
@@ -80,7 +71,7 @@ class AuthController extends MainController {
         };
     }
 
-    actionLogin = async (requestBody) => {
+    actionLogin = async (requestBody, accessTokenPayload) => {
         const requiredBodyFields = ['username', 'password', 'stayLoggedIn'];
         const missingFields = [];
         const badCredentialsResponse = {
@@ -124,6 +115,8 @@ class AuthController extends MainController {
             return;
         }
 
+        console.log(accessTokenPayload);
+
         // TODO update access token with user info
 
         console.log(userPasswordHash);
@@ -139,13 +132,13 @@ class AuthController extends MainController {
      *     error: string
      * }}
      */
-    verifyToken = (token, type = null) => {
+    static verifyToken = (token, type = null) => {
         const result = {};
 
         try {
             const payload = jwt.verify(token, AuthController.JWT_SECRET);
             if(type !== null) { // Verify token type (accessToken/refreshToken)
-                this.verifyTokenType(payload, type);
+                AuthController.verifyTokenType(payload, type);
             }
 
             result.verified = true;
@@ -180,7 +173,7 @@ class AuthController extends MainController {
      * @param expectedTypes string|string[]
      * @throw InvalidTokenTypeError if token type does not match
      */
-    verifyTokenType = (tokenPayload, expectedTypes) => {
+    static verifyTokenType = (tokenPayload, expectedTypes) => {
         if(!tokenPayload.hasOwnProperty('type')) {
             throw new InvalidTokenTypeError('Token type not found in payload');
         }

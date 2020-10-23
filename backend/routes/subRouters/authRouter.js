@@ -18,7 +18,7 @@ authRouter.get('/access-token', (req, res) => {
 
 authRouter.get('/verify-token', (req, res) => {
     const controller = new AuthController();
-    controller.actionVerifyToken(req.headers.authorization);
+    controller.actionVerifyToken();
 
     res.status(controller.statusCode);
     res.send(controller.response);
@@ -30,7 +30,7 @@ authRouter.post('/register', (req, res) => {
 
 authRouter.post('/login', async (req, res) => {
     const controller = new AuthController();
-    await controller.actionLogin(req.body);
+    await controller.actionLogin(req.body, req.accessTokenPayload);
 
     res.status(controller.statusCode);
     res.send(controller.response);
