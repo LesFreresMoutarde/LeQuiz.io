@@ -46,18 +46,18 @@ CREATE INDEX "user_plan" ON "public"."user" USING btree ("plan");
 CREATE INDEX "user_username" ON "public"."user" USING btree ("username");
 
 INSERT INTO "user" ("id", "username", "email", "password", "plan", "role", "isTrustyWriter", "isActive", "isBanned", "unbanDate", "createdAt", "updatedAt", "deletedAt") VALUES
-('826c7f20-9b3d-4725-bcdb-b1f8b6bd2031',	'user1',	'user1@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.099+00',	'2020-10-21 15:33:24.099+00',	NULL),
-('7d1a9992-05e0-4d09-ae5b-6ba9dc3d3fb3',	'user2',	'user2@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.116+00',	'2020-10-21 15:33:24.116+00',	NULL),
-('71c5c670-f12e-450d-9541-46f5ac6b6c9d',	'user3',	'user3@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.131+00',	'2020-10-21 15:33:24.131+00',	NULL),
-('2e00add0-4d92-4986-8d3c-4bb631f527c4',	'user4',	'user4@lequiz.com',	'password',	'vip',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.141+00',	'2020-10-21 15:33:24.141+00',	NULL),
-('efee900e-f089-4f08-aacf-3bdd12f67957',	'user5',	'user5@lequiz.com',	'password',	'premium',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.157+00',	'2020-10-21 15:33:24.157+00',	NULL),
-('8ec8e880-792f-4c7e-8cad-580f42384fa8',	'user6',	'user6@lequiz.com',	'password',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.167+00',	'2020-10-21 15:33:24.167+00',	NULL),
-('ea3ab88d-9864-4e60-bad6-a0d0567e6f84',	'user7',	'user7@lequiz.com',	'password',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.177+00',	'2020-10-21 15:33:24.177+00',	NULL),
-('2e041c75-d5c3-4d1e-9823-e3d426a88d88',	'user8',	'user8@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.187+00',	'2020-10-21 15:33:24.187+00',	NULL),
-('170ba076-8ec3-428f-a8f5-ceda0e9eaa36',	'user9',	'user9@lequiz.com',	'password',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.199+00',	'2020-10-21 15:33:24.199+00',	NULL),
-('f76c2f1a-822f-48a3-b881-2a927e40cbf3',	'reviewer1',	'reviewer1@lequiz.com',	'password',	'free',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.209+00',	'2020-10-21 15:33:24.209+00',	NULL),
-('59f7d770-2366-4079-9675-0512e21424e3',	'reviewer2',	'reviewer2@lequiz.com',	'password',	'vip',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.226+00',	'2020-10-21 15:33:24.226+00',	NULL),
-('b6b28fe5-36a3-4710-bb3b-ee1b23390791',	'admin1',	'admin1@lequiz.com',	'password',	'vip',	'admin',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.237+00',	'2020-10-21 15:33:24.237+00',	NULL);
+('826c7f20-9b3d-4725-bcdb-b1f8b6bd2031',	'user1',	'user1@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.099+00',	'2020-10-21 15:33:24.099+00',	NULL),
+('7d1a9992-05e0-4d09-ae5b-6ba9dc3d3fb3',	'user2',	'user2@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.116+00',	'2020-10-21 15:33:24.116+00',	NULL),
+('71c5c670-f12e-450d-9541-46f5ac6b6c9d',	'user3',	'user3@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'member',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.131+00',	'2020-10-21 15:33:24.131+00',	NULL),
+('2e00add0-4d92-4986-8d3c-4bb631f527c4',	'user4',	'user4@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'vip',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.141+00',	'2020-10-21 15:33:24.141+00',	NULL),
+('efee900e-f089-4f08-aacf-3bdd12f67957',	'user5',	'user5@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'premium',	'member',	'1',	'1',	'0',	NULL,	'2020-10-21 15:33:24.157+00',	'2020-10-21 15:33:24.157+00',	NULL),
+('8ec8e880-792f-4c7e-8cad-580f42384fa8',	'user6',	'user6@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.167+00',	'2020-10-21 15:33:24.167+00',	NULL),
+('ea3ab88d-9864-4e60-bad6-a0d0567e6f84',	'user7',	'user7@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'member',	'0',	'0',	'0',	NULL,	'2020-10-21 15:33:24.177+00',	'2020-10-21 15:33:24.177+00',	NULL),
+('2e041c75-d5c3-4d1e-9823-e3d426a88d88',	'user8',	'user8@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.187+00',	'2020-10-21 15:33:24.187+00',	NULL),
+('170ba076-8ec3-428f-a8f5-ceda0e9eaa36',	'user9',	'user9@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'member',	'0',	'1',	'1',	NULL,	'2020-10-21 15:33:24.199+00',	'2020-10-21 15:33:24.199+00',	NULL),
+('f76c2f1a-822f-48a3-b881-2a927e40cbf3',	'reviewer1',	'reviewer1@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'free',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.209+00',	'2020-10-21 15:33:24.209+00',	NULL),
+('59f7d770-2366-4079-9675-0512e21424e3',	'reviewer2',	'reviewer2@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'vip',	'reviewer',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.226+00',	'2020-10-21 15:33:24.226+00',	NULL),
+('b6b28fe5-36a3-4710-bb3b-ee1b23390791',	'admin1',	'admin1@lequiz.com',	'$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA',	'vip',	'admin',	'0',	'1',	'0',	NULL,	'2020-10-21 15:33:24.237+00',	'2020-10-21 15:33:24.237+00',	NULL);
 
 DROP TABLE IF EXISTS "category";
 CREATE TABLE "public"."category" (
