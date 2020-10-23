@@ -28,9 +28,9 @@ authRouter.post('/register', (req, res) => {
     res.json({endpoint: 'POST /auth/register'})
 });
 
-authRouter.post('/login', (req, res) => {
+authRouter.post('/login', async (req, res) => {
     const controller = new AuthController();
-    controller.actionLogin(req.body);
+    await controller.actionLogin(req.body);
 
     res.status(controller.statusCode);
     res.send(controller.response);

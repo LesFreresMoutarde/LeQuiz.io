@@ -78,7 +78,7 @@ class AuthController extends MainController {
         };
     }
 
-    actionLogin = (requestBody) => {
+    actionLogin = async (requestBody) => {
         const requiredBodyFields = ['username', 'password', 'stayLoggedIn'];
         const missingFields = [];
 
@@ -96,7 +96,14 @@ class AuthController extends MainController {
             return;
         }
 
+        const user = await db.User.findOne({
+            where: {
+                username: requestBody.username,
+            },
+        })
+
         console.log(requestBody);
+        console.log(user);
     }
 
     /**
