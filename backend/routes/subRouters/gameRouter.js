@@ -1,4 +1,5 @@
 const gameRouter = require('express').Router();
+const GameController = require('../../controllers/GameController');
 
 
 gameRouter.get('/modes', (req, res) => {

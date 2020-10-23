@@ -4,7 +4,7 @@ const port = 3000;
 
 const mainRouter = require('./routes/mainRouter');
 const db = require('./models/dbModels');
-
+const GameController = require('./controllers/GameController');
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -204,9 +204,12 @@ testModel = async () => {
 
 
 app.get('/', async (req, res) => {
+    const controller = new GameController();
+    let codeRoom = controller.generateCodeRoom();
+
     await testModel();
     res.statusCode = 200;
-    res.send('lequiz.io-backend container');
+    res.send(codeRoom);
 });
 
 app.listen(port,() => {
