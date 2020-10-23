@@ -30,9 +30,10 @@ authRouter.post('/register', (req, res) => {
 
 authRouter.post('/login', (req, res) => {
     const controller = new AuthController();
+    controller.actionLogin(req.body);
 
-    console.log(req.body);
-    res.json({endpoint: 'POST /auth/login'})
+    res.status(controller.statusCode);
+    res.send(controller.response);
 });
 
 authRouter.post('/logout', (req, res) => {

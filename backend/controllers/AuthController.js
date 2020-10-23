@@ -78,6 +78,27 @@ class AuthController extends MainController {
         };
     }
 
+    actionLogin = (requestBody) => {
+        const requiredBodyFields = ['username', 'password', 'stayLoggedIn'];
+        const missingFields = [];
+
+        for(const requiredField of requiredBodyFields) {
+            if(!requestBody.hasOwnProperty(requiredField)) {
+                missingFields.push(requiredField);
+            }
+        }
+
+        if(missingFields.length > 0) {
+            this.statusCode = 400;
+            this.response = {
+                error: `Missing parameters: ${missingFields.join(', ')}`,
+            }
+            return;
+        }
+
+        console.log(requestBody);
+    }
+
     /**
      * Verifies a JWT token, and optionnaly its type
      * @param token string
