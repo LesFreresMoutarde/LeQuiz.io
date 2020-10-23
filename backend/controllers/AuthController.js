@@ -10,7 +10,7 @@ class AuthController extends MainController {
 
     // TODO from a config (env...)
     static JWT_SECRET = 'superSecret';
-    static ACCESS_TOKEN_LIFETIME = 300; // seconds
+    static ACCESS_TOKEN_LIFETIME = 10; // seconds
     static REFRESH_TOKEN_LIFETIME = 60 * 60 * 24; // 1 day
     static REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN = 60 * 60 * 24 * 365 // 1 year
 
@@ -115,11 +115,25 @@ class AuthController extends MainController {
             return;
         }
 
-        console.log(accessTokenPayload);
+        const currentAccessTokenPayload = {...accessTokenPayload};
+        const newAccessTokenPayload = Object.assign(currentAccessTokenPayload, {
+            user: {
+                id: user.id,
+                username: user.username,
+                plan: user.plan,
+                role: user.role,
+            }
+        });
 
-        // TODO update access token with user info
+        const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, newAccessTokenPayload);
+        const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, newAccessTokenPayload);
 
-        console.log(userPasswordHash);
+        this.saveRefreshToken(newRefreshToken);
+
+        this.response = {
+            accessToken: newAccessToken,
+            refreshToken: newRefreshToken,
+        }
     }
 
     /**
@@ -213,7 +227,7 @@ class AuthController extends MainController {
 
         payload.type = type;
         /* A SUPPRIMER UNIQUEMENT POUR TEST */
-        payload.userRole = 'premium';
+        // payload.userRole = 'premium';
         /* FIN SUPPRESSION */
 
         return jwt.sign(payload, AuthController.JWT_SECRET, {

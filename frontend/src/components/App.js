@@ -20,8 +20,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
-            userId: null,
-            userName: null,
+            user: null,
         }
     }
 
@@ -38,12 +37,12 @@ class App extends React.Component {
             return (
                 <div className="app">
                     <div className="content-wrapper">
-                        <Header/>
+                        <Header user={this.state.user} />
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
                             <Switch>
                                 <Route exact path="/" component={Home}/>
-                                <Route exact path="/login" component={Login}/>
+                                <Route exact path="/login" render={() => <Login setUser={this.setUser} currentUser={this.state.user} />}/>
                                 <Route exact path="/register" component={Register}/>
                                 <Route exact path="/create-room/game-mode" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
@@ -56,12 +55,19 @@ class App extends React.Component {
         }
     }
 
+    setUser = (user) => {
+        this.setState({
+            user,
+        });
+    }
+
     componentDidMount = async () => {
         await Util.onApplicationLoad();
         Util.verbose('Application loaded');
 
         const newState = {
             isLoading: false,
+            user: Util.accessTokenPayload.user ? Util.accessTokenPayload.user : null,
         };
 
         const accessTokenPayload = Util.accessTokenPayload;
