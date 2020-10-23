@@ -1,4 +1,6 @@
+const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 const MainController = require('./mainController/MainController');
 
@@ -81,6 +83,9 @@ class AuthController extends MainController {
     actionLogin = async (requestBody) => {
         const requiredBodyFields = ['username', 'password', 'stayLoggedIn'];
         const missingFields = [];
+        const badCredentialsResponse = {
+            error: 'The provided credentials do not correspond to any user',
+        };
 
         for(const requiredField of requiredBodyFields) {
             if(!requestBody.hasOwnProperty(requiredField)) {
@@ -98,12 +103,30 @@ class AuthController extends MainController {
 
         const user = await db.User.findOne({
             where: {
-                username: requestBody.username,
+                [Op.or]: [
+                    { username: requestBody.username },
+                    { email: requestBody.username },
+                ],
             },
         })
 
-        console.log(requestBody);
-        console.log(user);
+        if(user === null) {
+            this.statusCode = 404;
+            this.response = badCredentialsResponse;
+            return;
+        }
+
+        const userPasswordHash = user.password;
+
+        if(!(await argon2.verify(userPasswordHash, requestBody.password))) {
+            this.statusCode = 404;
+            this.response = badCredentialsResponse;
+            return;
+        }
+
+        // TODO update access token with user info
+
+        console.log(userPasswordHash);
     }
 
     /**
