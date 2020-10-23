@@ -11,7 +11,7 @@ class AuthController extends MainController {
     // TODO from a config (env...)
     static JWT_SECRET = 'superSecret';
     static ACCESS_TOKEN_LIFETIME = 60 * 15; // 15 minutes
-    static REFRESH_TOKEN_LIFETIME = 60 * 60 * 2430; // 1 day
+    static REFRESH_TOKEN_LIFETIME = 60 * 60 * 24; // 1 day
     static REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN = 60 * 60 * 24 * 365 // 1 year
 
     actionVerifyToken = () => {
@@ -197,11 +197,13 @@ class AuthController extends MainController {
             }
         });
 
+        const refreshTokenLifetime = requestBody.stayLoggedIn ? AuthController.REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN : AuthController.REFRESH_TOKEN_LIFETIME;
+
         const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, newAccessTokenPayload);
-        const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, newAccessTokenPayload);
+        const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, newAccessTokenPayload, refreshTokenLifetime);
 
         const refreshTokenExpirationDate = new Date();
-        refreshTokenExpirationDate.setTime(refreshTokenExpirationDate.getTime() + (AuthController.REFRESH_TOKEN_LIFETIME * 1000));
+        refreshTokenExpirationDate.setTime(refreshTokenExpirationDate.getTime() + (refreshTokenLifetime * 1000));
 
         await this.saveRefreshToken(newRefreshToken, refreshTokenExpirationDate, user.id);
 
@@ -280,19 +282,24 @@ class AuthController extends MainController {
      * Generates an access/refresh token, optionnally from an initial payload
      * @param type string
      * @param initialPayload object
+     * @param forceLifetime if set, it will be the token lifetime. Otherwise, the lifetime will be a default value depending on the token type
      * @returns {string}
      */
-    generateToken = (type, initialPayload = {}) => {
+    generateToken = (type, initialPayload = {}, forceLifetime = null) => {
         let expiresIn;
-        switch(type) {
-            case AuthController.TOKEN_TYPE_ACCESS_TOKEN:
-                expiresIn = AuthController.ACCESS_TOKEN_LIFETIME;
-                break;
-            case AuthController.TOKEN_TYPE_REFRESH_TOKEN:
-                expiresIn = AuthController.REFRESH_TOKEN_LIFETIME;
-                break;
-            default:
-                throw new InvalidTokenTypeError();
+        if(forceLifetime) {
+            expiresIn = forceLifetime;
+        } else {
+            switch(type) {
+                case AuthController.TOKEN_TYPE_ACCESS_TOKEN:
+                    expiresIn = AuthController.ACCESS_TOKEN_LIFETIME;
+                    break;
+                case AuthController.TOKEN_TYPE_REFRESH_TOKEN:
+                    expiresIn = AuthController.REFRESH_TOKEN_LIFETIME;
+                    break;
+                default:
+                    throw new InvalidTokenTypeError();
+            }
         }
 
         const payload = {...initialPayload};
