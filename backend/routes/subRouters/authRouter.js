@@ -2,7 +2,7 @@ const authRouter = require('express').Router();
 const AuthController = require('../../controllers/AuthController');
 
 
-authRouter.get('/access-token', (req, res) => {
+authRouter.get('/access-token', async (req, res) => {
     const controller = new AuthController();
 
     let inputRefreshToken = null;
@@ -10,7 +10,7 @@ authRouter.get('/access-token', (req, res) => {
         inputRefreshToken = req.query.refreshToken;
     }
 
-    controller.actionAccessToken(inputRefreshToken);
+    await controller.actionAccessToken(inputRefreshToken);
 
     res.status(controller.statusCode);
     res.send(controller.response);

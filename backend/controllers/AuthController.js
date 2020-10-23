@@ -1,6 +1,6 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
-const { Op } = require('sequelize');
+const { Op, QueryTypes } = require('sequelize');
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 const MainController = require('./mainController/MainController');
 
@@ -10,11 +10,9 @@ class AuthController extends MainController {
 
     // TODO from a config (env...)
     static JWT_SECRET = 'superSecret';
-    static ACCESS_TOKEN_LIFETIME = 60 * 15; // 15 minutes
-    static REFRESH_TOKEN_LIFETIME = 60 * 60 * 24; // 1 day
+    static ACCESS_TOKEN_LIFETIME = /*60 * 15*/15; // 15 minutes
+    static REFRESH_TOKEN_LIFETIME = /*60 * 60 * 24*/30; // 1 day
     static REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN = 60 * 60 * 24 * 365 // 1 year
-
-    static refreshTokens = [];
 
     actionVerifyToken = () => {
         // Access token is already verified in previous middleware, if we are here then the token is OK !
@@ -22,53 +20,125 @@ class AuthController extends MainController {
         this.response = {valid: true};
     }
 
-    actionAccessToken = (inputRefreshToken = null) => {
+    actionAccessToken = async (inputRefreshToken = null) => {
         let fromRefreshToken = false;
         if(inputRefreshToken !== null) {
             fromRefreshToken = true;
         }
 
-        if(fromRefreshToken) {
-            const response = {};
+        if(!fromRefreshToken) { // Generate new couple of blank tokens
+            const accessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN);
+            const refreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN);
 
-            if(!AuthController.refreshTokens.includes(inputRefreshToken)) {
-                response.error = 'Unknown refresh token';
-                this.response = response;
-                this.statusCode = 400;
-                return;
-            }
+            const refreshTokenExpirationDate = new Date();
+            refreshTokenExpirationDate.setTime(refreshTokenExpirationDate.getTime() + (AuthController.REFRESH_TOKEN_LIFETIME * 1000));
 
-            const verification = AuthController.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
-            if(!verification.verified) {
-                response.error = verification.error
-                this.response = response;
-                this.statusCode = 400;
-                return;
-            }
+            await this.saveRefreshToken(refreshToken, refreshTokenExpirationDate);
 
-            const refreshTokenPayload = verification.payload;
+            this.response = {
+                'accessToken': accessToken,
+                'refreshToken': refreshToken,
+            };
 
-            const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, refreshTokenPayload);
-            const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, refreshTokenPayload);
-
-            this.invalidateRefreshToken(inputRefreshToken);
-            this.saveRefreshToken(newRefreshToken);
-
-            response.accessToken = newAccessToken;
-            response.refreshToken = newRefreshToken;
-            this.response = response;
             return;
         }
 
-        const accessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN);
-        const refreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN);
+        // Generate new couple of tokens from a refresh token
 
-        this.saveRefreshToken(refreshToken);
+        const response = {};
 
-        this.response = {
-            'accessToken': accessToken,
-            'refreshToken': refreshToken,
-        };
+        // if(!AuthController.refreshTokens.includes(inputRefreshToken)) {
+        //     response.error = 'Unknown refresh token';
+        //     this.response = response;
+        //     this.statusCode = 400;
+        //     return;
+        // }
+
+        const verification = AuthController.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
+        if(!verification.verified) {
+            response.error = verification.error
+            this.response = response;
+            this.statusCode = 400;
+            return;
+        }
+
+        const records = await db.sequelize.query(
+            'SELECT * FROM "refresh_token" WHERE "token" = :token',
+            {
+                replacements: {
+                    token: inputRefreshToken,
+                },
+                type: QueryTypes.SELECT,
+            }
+        );
+
+        if(records.length < 1) {
+            response.error = 'Unknown refresh token';
+            this.response = response;
+            this.statusCode = 400;
+            return;
+        }
+
+        const dbRefreshToken = records[0];
+
+        const refreshTokenPayload = verification.payload;
+
+        // Check if userId associated to refreshToken in db matches with refreshToken payload
+        let userIdsMatch = true;
+        if(dbRefreshToken.userId === null) {
+            if(refreshTokenPayload.hasOwnProperty('user')) {
+                userIdsMatch = false;
+            }
+        } else {
+            if(refreshTokenPayload.hasOwnProperty('user')) {
+                if(refreshTokenPayload.user.id !== dbRefreshToken.userId) {
+                    userIdsMatch = false;
+                }
+            } else {
+                userIdsMatch = false;
+            }
+        }
+
+        if(!userIdsMatch) {
+            response.error = 'Invalid refresh token user';
+            this.response = response;
+            this.statusCode = 400;
+            return;
+        }
+
+        // Check if user exists
+        if(verification.payload.user) {
+            const userId = verification.payload.user.id;
+
+            const user = await db.User.findOne({
+                where: {
+                    id: userId
+                }
+            });
+
+            if(user === null) {
+                response.error = 'User not found';
+                this.statusCode = 400;
+                this.response = response;
+                return;
+            }
+
+            // TODO check if user is banned
+        }
+
+        const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, refreshTokenPayload);
+        const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, refreshTokenPayload);
+
+        await this.invalidateRefreshToken(inputRefreshToken);
+
+        const refreshTokenExpirationDate = new Date();
+        refreshTokenExpirationDate.setTime(refreshTokenExpirationDate.getTime() + (AuthController.REFRESH_TOKEN_LIFETIME * 1000));
+
+        await this.saveRefreshToken(newRefreshToken, refreshTokenExpirationDate, dbRefreshToken.userId);
+
+        response.accessToken = newAccessToken;
+        response.refreshToken = newRefreshToken;
+        this.response = response;
     }
 
     actionLogin = async (requestBody, accessTokenPayload) => {
@@ -99,7 +169,7 @@ class AuthController extends MainController {
                     { email: requestBody.username },
                 ],
             },
-        })
+        });
 
         if(user === null) {
             this.statusCode = 404;
@@ -115,6 +185,8 @@ class AuthController extends MainController {
             return;
         }
 
+        // TODO check if user is banned
+
         const currentAccessTokenPayload = {...accessTokenPayload};
         const newAccessTokenPayload = Object.assign(currentAccessTokenPayload, {
             user: {
@@ -128,7 +200,10 @@ class AuthController extends MainController {
         const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, newAccessTokenPayload);
         const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, newAccessTokenPayload);
 
-        this.saveRefreshToken(newRefreshToken);
+        const refreshTokenExpirationDate = new Date();
+        refreshTokenExpirationDate.setTime(refreshTokenExpirationDate.getTime() + (AuthController.REFRESH_TOKEN_LIFETIME * 1000));
+
+        await this.saveRefreshToken(newRefreshToken, refreshTokenExpirationDate, user.id);
 
         this.response = {
             accessToken: newAccessToken,
@@ -226,24 +301,36 @@ class AuthController extends MainController {
         delete payload.type;
 
         payload.type = type;
-        /* A SUPPRIMER UNIQUEMENT POUR TEST */
-        // payload.userRole = 'premium';
-        /* FIN SUPPRESSION */
 
         return jwt.sign(payload, AuthController.JWT_SECRET, {
             expiresIn,
         });
     }
 
-    invalidateRefreshToken = (refreshToken) => {
-        // TODO database
-        const index = AuthController.refreshTokens.indexOf(refreshToken);
-        if(index > -1) AuthController.refreshTokens.splice(index, 1);
+    invalidateRefreshToken = async (refreshToken) => {
+        await db.sequelize.query(
+            'DELETE FROM "refresh_token" WHERE token = :token',
+            {
+                replacements: {
+                    token: refreshToken,
+                },
+                type: QueryTypes.DELETE,
+            },
+        );
     }
 
-    saveRefreshToken = (refreshToken) => {
-        // TODO database
-        AuthController.refreshTokens.push(refreshToken);
+    saveRefreshToken = async (refreshToken, expirationDate, userId = null) => {
+        await db.sequelize.query(
+            'INSERT INTO "refresh_token" ("token", "userId", "expirationDate") VALUES (:token, :userId, :expirationDate)',
+            {
+                replacements: {
+                    token: refreshToken,
+                    userId,
+                    expirationDate,
+                },
+                type: QueryTypes.INSERT,
+            },
+        );
     }
 }
 
