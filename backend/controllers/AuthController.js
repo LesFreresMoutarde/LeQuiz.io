@@ -190,7 +190,9 @@ class AuthController extends MainController {
 
         payload.type = type;
         /* A SUPPRIMER UNIQUEMENT POUR TEST */
-        payload.userRole = 'premium';
+        payload.user =  {
+            plan : 'free'
+        };
         /* FIN SUPPRESSION */
 
         return jwt.sign(payload, AuthController.JWT_SECRET, {

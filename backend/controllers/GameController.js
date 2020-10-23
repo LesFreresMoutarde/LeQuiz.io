@@ -6,6 +6,8 @@ const Survivant = require("../models/gameModes/Survivant");
 
 class GameController extends MainController {
 
+
+    static GAME_MODES = [Serie, Ascension, Blitz, Survivant];
     // [db.User] : allow to get property User of db object
     static GAME_MODE_PERMISSIONS = {
         [db.User.PLAN_FREE]: [Serie],
@@ -14,10 +16,10 @@ class GameController extends MainController {
     };
 
 
-    actionModes = (role) => {
+    actionModes = (plan) => {
         const response = {};
         try {
-            response.gameModes = this.getAllowedGameModes(role);
+            response.gameModes = this.getAllowedGameModes(plan);
             this.response = response;
         } catch (error) {
             this.statusCode = 400;
@@ -26,19 +28,18 @@ class GameController extends MainController {
         }
     };
 
-    getAllowedGameModes = (role) => {
+    getAllowedGameModes = (plan) => {
         try {
 
-            if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(role)) throw 'Unknown role';
+            if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
 
             let allowedGameModes = [];
-            for (let [plan, gameModes] of Object.entries(GameController.GAME_MODE_PERMISSIONS)) {
+            for (const gameMode of GameController.GAME_MODES) {
 
-                if (plan === role) {
-
-                    for (let gameMode of gameModes) {
-                        allowedGameModes.push({classname: gameMode.CLASSNAME, label: gameMode.LABEL, description: gameMode.DESCRIPTION});
-                    }
+                if (GameController.GAME_MODE_PERMISSIONS[plan].includes(gameMode)) {
+                    allowedGameModes.push({classname: gameMode.CLASSNAME, label: gameMode.LABEL, description: gameMode.DESCRIPTION, allowed: true})
+                } else {
+                    allowedGameModes.push({classname: gameMode.CLASSNAME, label: gameMode.LABEL, description: gameMode.DESCRIPTION, allowed: false})
                 }
             }
             return allowedGameModes;

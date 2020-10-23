@@ -254,9 +254,18 @@ class Util {
         localStorage.setItem(key, JSON.stringify(object));
     };
 
+    static addObjectToSessionStorage = (key, object) => {
+        sessionStorage.setItem(key, JSON.stringify(object));
+    };
+
     static getObjectFromLocalStorage = (key) => {
         return JSON.parse(localStorage.getItem(key));
     };
+
+    static getObjectFromSessionStorage = (key) => {
+        return JSON.parse(sessionStorage.getItem(key));
+    }
+
 }
 
 Util.APP_BACKEND_URL = "http://localhost:3000"; // TODO ENV

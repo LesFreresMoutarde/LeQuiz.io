@@ -4,7 +4,7 @@ const GameController = require('../../controllers/GameController');
 gameRouter.post('/modes', (req, res) => {
     const gameController = new GameController();
 
-    gameController.actionModes(req.body.role);
+    gameController.actionModes(req.body.plan);
 
     res.status(gameController.statusCode);
     res.json(gameController.response);

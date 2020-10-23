@@ -3,17 +3,17 @@ import '../css/minireset.min.css';
 import '../css/style.css';
 import '../css/util.css';
 import {Switch, Route} from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 //import CreateRoom from "./pages/CreateRoom";
-import CreateGame from "./pages/CreateGame";
-import JoinRoom from "./pages/JoinRoom";
+import CreateGame from "./pages/CreateGame/CreateGame";
+import JoinRoom from "./pages/JoinRoom/JoinRoom";
 import Footer from "./Footer";
 import Header from "./Header";
 import Util from "../util/Util";
 import Loader from "./misc/Loader";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ChooseCategories from "./views/CreateGame/ChooseCategories";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import ChooseCategories from "./pages/CreateGame/views/ChooseCategories";
 
 class App extends React.Component {
     constructor(props) {
