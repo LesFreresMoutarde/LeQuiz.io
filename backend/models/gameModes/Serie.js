@@ -1,11 +1,14 @@
-const GameMode = require('./GameMode')
+const GameMode = require('./GameMode');
 
 class Serie extends GameMode {
-    constructor() {
-        super()
-    }
 
-    getWinCondition() {
+    static CLASSNAME = 'Serie';
+    static LABEL = 'Série';
+    static DESCRIPTION = `
+    Le jeu comporte un nombre défini de questions. À la fin de celles ci le joueur
+    ayant le score le plus élevé remporte la partie.`;
+
+    static getWinCondition() {
         return true;
     }
 }

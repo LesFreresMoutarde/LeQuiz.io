@@ -12,7 +12,7 @@ class Util {
             return;
         }
         console.log('%c[v]', 'color: orange', ...items);
-    }
+    };
 
     /**
      * Removes the accessToken and refreshToken from localStorage to hide it,
@@ -43,7 +43,7 @@ class Util {
                 localStorage.setItem('refreshToken', Util.refreshToken);
             }
         })
-    }
+    };
 
     static onApplicationLoad = async () => {
         Util.verbose('Application load');
@@ -62,7 +62,7 @@ class Util {
 
         Util.verbose('Access token payload', Util.accessTokenPayload);
         Util.verbose('Refresh token payload', Util.refreshTokenPayload);
-    }
+    };
 
     /**
      * Returns true if stored access token is valid, otherwise returns false
@@ -88,7 +88,7 @@ class Util {
         Util.verbose(responseJson.valid ? 'Access token is valid' : `Access token is not valid: ${responseJson.error}`);
 
         return responseJson.valid === true;
-    }
+    };
 
     static getNewAccessToken = async() => {
         Util.verbose('Getting new access token');
@@ -99,7 +99,7 @@ class Util {
         Util.verbose('New access token generation response', response.status, responseJson);
         Util.setAccesstoken(responseJson.accessToken);
         Util.setRefreshToken(responseJson.refreshToken);
-    }
+    };
 
     static refreshAccessToken = async() => {
         Util.verbose('Getting new access token from refresh token');
@@ -118,17 +118,17 @@ class Util {
 
         Util.verbose('Refresh access token failed');
         return false;
-    }
+    };
 
     static setAccesstoken = (token) => {
         Util.accessToken = token;
         Util.accessTokenPayload = Util.getJwtPayloadContent(token);
-    }
+    };
 
     static setRefreshToken = (token) => {
         Util.refreshToken = token;
         Util.refreshTokenPayload = Util.getJwtPayloadContent(token);
-    }
+    };
 
     static getJwtPayloadContent = (jwtToken) => {
         const tokenParts = jwtToken.split('.');
@@ -140,6 +140,7 @@ class Util {
         const decoded = atob(partToDecode);
 
         return JSON.parse(decoded);
+
     }
 
     static getBackendFullUrl = (shortUrl) => {
@@ -248,6 +249,14 @@ class Util {
 
         return response;
     }
+
+    static addObjectToLocalStorage = (key, object) => {
+        localStorage.setItem(key, JSON.stringify(object));
+    };
+
+    static getObjectFromLocalStorage = (key) => {
+        return JSON.parse(localStorage.getItem(key));
+    };
 }
 
 Util.APP_BACKEND_URL = "http://localhost:3000"; // TODO ENV
