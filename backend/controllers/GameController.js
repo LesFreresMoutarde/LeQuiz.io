@@ -23,7 +23,6 @@ class GameController extends MainController {
             this.statusCode = 400;
             response.error = error;
             this.response = response;
-            //throw error;
         }
     };
 
