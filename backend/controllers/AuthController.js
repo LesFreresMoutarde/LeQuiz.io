@@ -10,8 +10,8 @@ class AuthController extends MainController {
 
     // TODO from a config (env...)
     static JWT_SECRET = 'superSecret';
-    static ACCESS_TOKEN_LIFETIME = /*60 * 15*/15; // 15 minutes
-    static REFRESH_TOKEN_LIFETIME = /*60 * 60 * 24*/30; // 1 day
+    static ACCESS_TOKEN_LIFETIME = 60 * 15; // 15 minutes
+    static REFRESH_TOKEN_LIFETIME = 60 * 60 * 2430; // 1 day
     static REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN = 60 * 60 * 24 * 365 // 1 year
 
     actionVerifyToken = () => {
