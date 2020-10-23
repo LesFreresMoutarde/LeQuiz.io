@@ -1,6 +1,6 @@
 class MainController {
     statusCode = 200;
-    response = null;
+    response = {};
 }
 
 module.exports = MainController;
