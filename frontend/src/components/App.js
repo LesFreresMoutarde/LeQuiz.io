@@ -45,7 +45,7 @@ class App extends React.Component {
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/login" component={Login}/>
                                 <Route exact path="/register" component={Register}/>
-                                <Route exact path="/create-room/game-mode" component={CreateGame}/>
+                                <Route  path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
                             </Switch>
                         </div>
