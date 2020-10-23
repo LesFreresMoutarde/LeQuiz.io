@@ -5,7 +5,6 @@ const Blitz = require("../models/gameModes/Blitz");
 const Survivant = require("../models/gameModes/Survivant");
 
 class GameController extends MainController {
-
     // [db.User] : allow to get property User of db object
     static GAME_MODE_PERMISSIONS = {
         [db.User.PLAN_FREE]: [Serie],
@@ -45,6 +44,22 @@ class GameController extends MainController {
         } catch (error) {
             throw error;
         }
+    }
+
+    generateCodeRoom = () => {
+        let codeRoom = "";
+        const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+        //tableau à remplir des codes room déja réservé par d'autre rooms
+        let arrayCodeRoom = [];
+
+        while (arrayCodeRoom.includes(codeRoom) || codeRoom === "") {
+            codeRoom = "";
+            for (let i = 0; i < 6; i++) {
+                codeRoom += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+        }
+
+        return codeRoom;
     }
 }
 
