@@ -61,6 +61,28 @@ export default class ChooseGameMode extends React.Component {
         this.setState({redirect: true});
     };
 
+    generateLayout = (gameModes) => {
+        let row = 1;
+        let layout = {[row]: []};
+        let layoutData = [];
+        gameModes.map((gameMode, index, array) => {
+            layout[row].push(gameMode);
+            if (index !== 0 && index % 2 !== 0) {
+                row++;
+                if (row <= array.length / 2)
+                layout[row] = [];
+            }
+        });
+        console.log('layout',layout);
+
+        for (const row in layout) {
+            //console.log(layout[row]);
+            layoutData.push(layout[row]);
+        }
+        console.log(layoutData)
+        return layoutData;
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -75,13 +97,14 @@ export default class ChooseGameMode extends React.Component {
             );
         } else {
             const {gameModes, redirect} = this.state;
+            const layout = this.generateLayout(gameModes);
             return (
                 redirect ?
                     <Redirect to="/create-room/categories"/>
                 :
                     <>
                         <Title title={ChooseGameMode.TITLE}/>
-                        <div>
+                        <div className="flex-container">
                             {gameModes.map((gameMode, index) => {
                                 return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
                             })}
