@@ -14,6 +14,7 @@ import Loader from "./misc/Loader";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ChooseCategories from "./views/CreateGame/ChooseCategories";
+import Settings from "./pages/Settings";
 
 class App extends React.Component {
     constructor(props) {
@@ -44,6 +45,7 @@ class App extends React.Component {
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/login" render={() => <Login setUser={this.setUser} currentUser={this.state.user} />}/>
                                 <Route exact path="/register" component={Register}/>
+                                <Route exact path="/settings" component={Settings}/>
                                 <Route exact path="/create-room/game-mode" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
                             </Switch>
