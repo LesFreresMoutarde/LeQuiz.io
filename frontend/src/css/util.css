@@ -110,3 +110,11 @@ h6.mb, .h6.mb {
 .full-width {
     width: 100%;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.flex-item-full-width {
+    flex: 1;
+}
