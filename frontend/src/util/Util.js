@@ -7,6 +7,8 @@ class Util {
     static accessTokenPayload = null;
     static refreshTokenPayload = null;
 
+    static bgColors = ['red-pink-bg', 'brown-bg', 'deep-blue-bg', 'yellow-bg', 'green-bg'];
+
     static verbose = (...items) => {
         if(!Util.isVerbose) {
             return;
@@ -264,6 +266,10 @@ class Util {
 
     static getObjectFromSessionStorage = (key) => {
         return JSON.parse(sessionStorage.getItem(key));
+    }
+
+    static getRandomColor = () => {
+        return Util.bgColors[Math.floor(Math.random() * Util.bgColors.length)];
     }
 
 }

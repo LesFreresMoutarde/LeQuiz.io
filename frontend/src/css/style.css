@@ -274,10 +274,12 @@ label.checkbox > input:checked + span::after {
 
 .game-mode-label {
     font-size: 2.3em;
+    color: white;
 }
 
 .game-mode-description {
     font-size: 1.2em;
+    color: white;
 }
 
 

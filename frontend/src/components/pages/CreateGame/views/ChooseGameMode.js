@@ -11,6 +11,7 @@ export default class ChooseGameMode extends React.Component {
 
     static TITLE = 'Choisissez un mode de jeu';
 
+
     constructor(props) {
         super(props);
         this.state = {
@@ -54,6 +55,19 @@ export default class ChooseGameMode extends React.Component {
         }
     };
 
+    getColors = (nb) => {
+        let color = Util.getRandomColor();
+        const colorsUsed = [color];
+        for (let i = 0; i < nb -1; i++) {
+            while (colorsUsed.includes(color)) {
+                color = Util.getRandomColor();
+            }
+            colorsUsed.push(color)
+        }
+        console.log(colorsUsed);
+        return colorsUsed;
+    }
+
     pickGameMode = (gameMode) => {
         const gameConfiguration = Util.getObjectFromSessionStorage('gameConfiguration');
         gameConfiguration.gameMode = gameMode;
@@ -61,33 +75,12 @@ export default class ChooseGameMode extends React.Component {
         this.setState({redirect: true});
     };
 
-    generateLayout = (gameModes) => {
-        let row = 1;
-        let layout = {[row]: []};
-        let layoutData = [];
-        gameModes.map((gameMode, index, array) => {
-            layout[row].push(gameMode);
-            if (index !== 0 && index % 2 !== 0) {
-                row++;
-                if (row <= array.length / 2)
-                layout[row] = [];
-            }
-        });
-        console.log('layout',layout);
-
-        for (const row in layout) {
-            //console.log(layout[row]);
-            layoutData.push(layout[row]);
-        }
-        console.log(layoutData)
-        return layoutData;
-    }
 
     render() {
         if (this.state.isLoading) {
             return (
                 <>
-                    <h1>{ChooseGameMode.TITLE}</h1>
+                    <Title title={ChooseGameMode.TITLE}/>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -97,7 +90,7 @@ export default class ChooseGameMode extends React.Component {
             );
         } else {
             const {gameModes, redirect} = this.state;
-            const layout = this.generateLayout(gameModes);
+            const colors = this.getColors(gameModes.length);
             return (
                 redirect ?
                     <Redirect to="/create-room/categories"/>
@@ -106,7 +99,8 @@ export default class ChooseGameMode extends React.Component {
                         <Title title={ChooseGameMode.TITLE}/>
                         <div className="flex-container">
                             {gameModes.map((gameMode, index) => {
-                                return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
+                                let color = colors[index];
+                                return <GameMode color={color} gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
                             })}
                         </div>
                     </>

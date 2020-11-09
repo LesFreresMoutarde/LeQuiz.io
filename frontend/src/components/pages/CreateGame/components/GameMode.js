@@ -1,10 +1,9 @@
 import React from "react";
 
-const GameMode = ({gameMode, pickGameMode}) => {
+const GameMode = ({gameMode, pickGameMode, color}) => {
    const {label, description, allowed} = gameMode;
-   //console.log(pickGameMode);
     return (
-        <button className="game-mode" onClick={() => pickGameMode(gameMode)} disabled={!allowed}>
+        <button className={`game-mode ${color}`} onClick={() => pickGameMode(gameMode)} disabled={!allowed}>
             <p className="game-mode-label">{label}</p>
             <p className="game-mode-description">{description}</p>
         </button>
