@@ -2,6 +2,8 @@ import React from 'react';
 import '../css/minireset.min.css';
 import '../css/style.css';
 import '../css/util.css';
+import 'toastr2/dist/toastr.min.css';
+import '../css/toastr.override.css';
 import {Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
 //import CreateRoom from "./pages/CreateRoom";
@@ -15,7 +17,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ChooseCategories from "./views/CreateGame/ChooseCategories";
 import Settings from "./pages/Settings/Settings";
-
 class App extends React.Component {
     constructor(props) {
         super(props);

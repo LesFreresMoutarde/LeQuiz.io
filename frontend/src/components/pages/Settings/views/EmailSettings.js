@@ -2,6 +2,9 @@ import React from "react";
 import Loader from "../../../misc/Loader";
 import Util from "../../../../util/Util";
 
+import Toastr from "toastr2";
+const toastr = new Toastr();
+
 class EmailSettings extends React.Component {
     constructor(props) {
         super(props);
@@ -91,7 +94,7 @@ class EmailSettings extends React.Component {
         newEmailInput.value = '';
         passwordInput.value = '';
 
-        // TODO toastr.success
+        toastr.success('Votre adresse email a été mise à jour');
     }
 
     handleErrors = (errors) => {
@@ -99,7 +102,9 @@ class EmailSettings extends React.Component {
         state.formErrors = errors;
         this.setState(state);
 
-        // TODO toastr.error
+        for(const field in this.state.formErrors) {
+            toastr.error(this.state.formErrors[field]);
+        }
     }
 
     componentDidMount = async () => {

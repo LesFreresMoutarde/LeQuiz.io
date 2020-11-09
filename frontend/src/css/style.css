@@ -139,6 +139,8 @@ input {
     font-family: inherit;
     font-size: 1rem;
     color: #333;
+    background-color: #fff;
+    transition: background-color 0.1s ease-out;
 }
 
 input.error {
