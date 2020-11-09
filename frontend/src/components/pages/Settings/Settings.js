@@ -1,4 +1,5 @@
 import React from "react";
+import EmailSettings from "./views/EmailSettings";
 
 class Settings extends React.Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class Settings extends React.Component {
                     <div id="desktop-variable-content">
 
                         <section id="desktop-content-email">
-                            <p>Adresse email</p>
+                            <EmailSettings/>
                         </section>
 
                         <section id="desktop-content-password">

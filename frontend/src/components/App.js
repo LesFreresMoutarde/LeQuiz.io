@@ -14,7 +14,7 @@ import Loader from "./misc/Loader";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ChooseCategories from "./views/CreateGame/ChooseCategories";
-import Settings from "./pages/Settings";
+import Settings from "./pages/Settings/Settings";
 
 class App extends React.Component {
     constructor(props) {
