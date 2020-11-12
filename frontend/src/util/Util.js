@@ -151,6 +151,6 @@ class Util {
     }
 }
 
-Util.APP_BACKEND_URL = "http://localhost:3000"; // TODO ENV
+Util.APP_BACKEND_URL = `${window.location.protocol}//${window.location.hostname}:3000`; // TODO ENV
 
 export default Util;
