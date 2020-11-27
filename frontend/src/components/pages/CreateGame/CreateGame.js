@@ -1,6 +1,7 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Util from "../../../util/Util";
+import GameUtil from "../../../util/GameUtil";
 import ChooseGameMode from "./views/ChooseGameMode";
 import ChooseCategories from "./views/ChooseCategories";
 
@@ -10,12 +11,9 @@ export default class CreateGame extends React.Component {
         super(props);
         this.state = {
             gameConfiguration: this.createGameConfiguration()
-        }
-    }
+        };
 
-    componentDidMount() {
-        Util.addObjectToSessionStorage('gameConfiguration', this.state.gameConfiguration);
-        //console.log('la config de la game', this.state.gameConfiguration);
+        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, this.state.gameConfiguration);
     }
 
     createGameConfiguration = () => {

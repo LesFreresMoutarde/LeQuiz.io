@@ -1,6 +1,6 @@
 import React from "react";
-import {Redirect, useHistory} from "react-router-dom";
 import Util from "../../../../util/Util";
+import GameUtil from "../../../../util/GameUtil";
 import Loader from "../../../misc/Loader";
 import GameMode from "../components/GameMode";
 import Title from "../../../misc/Title";
@@ -13,7 +13,7 @@ export default class ChooseGameMode extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameConfiguration: Util.getObjectFromSessionStorage('gameConfiguration'),
+            gameConfiguration: Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key),
             gamesModes: false,
             isLoading: true,
         };
@@ -23,6 +23,7 @@ export default class ChooseGameMode extends React.Component {
         (async () => {
             try {
                 const gameModes = await this.getGameModes();
+
                 this.setState({
                     gameModes,
                     isLoading: false
@@ -36,6 +37,8 @@ export default class ChooseGameMode extends React.Component {
     getGameModes = async () => {
         try {
             const userPlan = Util.getJwtPayloadContent(Util.accessToken).user.plan;
+
+            //TODO Switch with Util Method to perform POST Call
             const response = await fetch(Util.getBackendFullUrl('/game/modes'), {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -53,9 +56,10 @@ export default class ChooseGameMode extends React.Component {
     };
 
     pickGameMode = (gameMode) => {
-        const gameConfiguration = Util.getObjectFromSessionStorage('gameConfiguration');
+        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.gameMode = gameMode;
-        Util.addObjectToSessionStorage('gameConfiguration', gameConfiguration);
+        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
         this.props.history.push('/create-room/categories');
     };
 
@@ -72,7 +76,7 @@ export default class ChooseGameMode extends React.Component {
                 </>
             );
         } else {
-            const {gameModes} = this.state;
+            const { gameModes } = this.state;
             const colors = Util.getRandomColors(gameModes.length);
             return (
                     <>
