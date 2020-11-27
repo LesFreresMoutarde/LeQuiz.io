@@ -256,20 +256,35 @@ label.checkbox > input:checked + span::after {
 
 }
 
-.flex-row {
+.game-mode-wrapper {
+    flex-basis: 50%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .game-mode {
-    flex-basis: 34%;
+    width: 50%;
+    padding: 20px;
     height: 200px;
-    border-radius: 20px;
+    border-radius: 40px;
     border: none;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    overflow: hidden;
+}
+
+.game-mode:disabled {
+    opacity: 0.6;
+}
+
+.game-mode:enabled:hover {
+    cursor: pointer;
+}
+
+.game-mode:focus {
+    outline: none;
 }
 
 .game-mode-label {
@@ -278,8 +293,64 @@ label.checkbox > input:checked + span::after {
 }
 
 .game-mode-description {
-    font-size: 1.2em;
+    font-size: 1.4em;
+    line-height: 1.3em;
     color: white;
 }
 
+/* Large */
+@media screen and (max-width: 1200px) {
+    .game-mode {
+        width: 70%;
+    }
+
+    .game-mode-description {
+        font-size: 1.3em;
+    }
+
+}
+
+
+
+/* Medium */
+@media screen and (max-width: 992px) {
+    .game-mode {
+       width: 80%;
+    }
+
+    .game-mode-description {
+        font-size: 1.3em;
+    }
+
+
+}
+
+/* Small */
+@media screen and (max-width: 768px) {
+
+
+    .game-mode-description {
+        font-size: 1.2em;
+    }
+}
+
+/* X-Small */
+@media screen and (max-width: 576px) {
+
+    .game-mode {
+        height: 140px;
+        width: 120px;
+        padding: 40px;
+        border-radius: 20px;
+    }
+
+    .game-mode-label {
+        font-size: 1.8em;
+        color: white;
+    }
+
+    .game-mode-description {
+        display: none;
+    }
+}
 

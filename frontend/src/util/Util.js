@@ -272,6 +272,18 @@ class Util {
         return Util.bgColors[Math.floor(Math.random() * Util.bgColors.length)];
     }
 
+    static getRandomColors = (nb) => {
+        let color = Util.getRandomColor();
+        const colorsUsed = [color];
+        for (let i = 0; i < nb - 1; i++) {
+            while (colorsUsed.includes(color)) {
+                color = Util.getRandomColor();
+            }
+            colorsUsed.push(color)
+        }
+        return colorsUsed;
+    }
+
 }
 
 Util.APP_BACKEND_URL = "http://localhost:3000"; // TODO ENV

@@ -1,6 +1,5 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
-import {Link} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import Util from "../../../../util/Util";
 import Loader from "../../../misc/Loader";
 import GameMode from "../components/GameMode";
@@ -11,21 +10,19 @@ export default class ChooseGameMode extends React.Component {
 
     static TITLE = 'Choisissez un mode de jeu';
 
-
     constructor(props) {
         super(props);
         this.state = {
             gameConfiguration: Util.getObjectFromSessionStorage('gameConfiguration'),
             gamesModes: false,
             isLoading: true,
-            redirect: false,
         };
     }
 
     componentDidMount() {
         (async () => {
             try {
-                let gameModes = await this.getGameModes();
+                const gameModes = await this.getGameModes();
                 this.setState({
                     gameModes,
                     isLoading: false
@@ -55,26 +52,12 @@ export default class ChooseGameMode extends React.Component {
         }
     };
 
-    getColors = (nb) => {
-        let color = Util.getRandomColor();
-        const colorsUsed = [color];
-        for (let i = 0; i < nb -1; i++) {
-            while (colorsUsed.includes(color)) {
-                color = Util.getRandomColor();
-            }
-            colorsUsed.push(color)
-        }
-        console.log(colorsUsed);
-        return colorsUsed;
-    }
-
     pickGameMode = (gameMode) => {
         const gameConfiguration = Util.getObjectFromSessionStorage('gameConfiguration');
         gameConfiguration.gameMode = gameMode;
         Util.addObjectToSessionStorage('gameConfiguration', gameConfiguration);
-        this.setState({redirect: true});
+        this.props.history.push('/create-room/categories');
     };
-
 
     render() {
         if (this.state.isLoading) {
@@ -89,17 +72,14 @@ export default class ChooseGameMode extends React.Component {
                 </>
             );
         } else {
-            const {gameModes, redirect} = this.state;
-            const colors = this.getColors(gameModes.length);
+            const {gameModes} = this.state;
+            const colors = Util.getRandomColors(gameModes.length);
             return (
-                redirect ?
-                    <Redirect to="/create-room/categories"/>
-                :
                     <>
                         <Title title={ChooseGameMode.TITLE}/>
                         <div className="flex-container">
                             {gameModes.map((gameMode, index) => {
-                                let color = colors[index];
+                                const color = colors[index];
                                 return <GameMode color={color} gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
                             })}
                         </div>
