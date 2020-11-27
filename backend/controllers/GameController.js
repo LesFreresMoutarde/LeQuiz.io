@@ -37,15 +37,41 @@ class GameController extends MainController {
             for (const gameMode of GameController.GAME_MODES) {
 
                 if (GameController.GAME_MODE_PERMISSIONS[plan].includes(gameMode)) {
-                    allowedGameModes.push({classname: gameMode.CLASSNAME, label: gameMode.LABEL, description: gameMode.DESCRIPTION, allowed: true})
+                    allowedGameModes.push({
+                        classname: gameMode.CLASSNAME,
+                        label: gameMode.LABEL,
+                        description: gameMode.DESCRIPTION,
+                        allowed: true
+                    })
                 } else {
-                    allowedGameModes.push({classname: gameMode.CLASSNAME, label: gameMode.LABEL, description: gameMode.DESCRIPTION, allowed: false})
+                    allowedGameModes.push({
+                        classname: gameMode.CLASSNAME,
+                        label: gameMode.LABEL,
+                        description: gameMode.DESCRIPTION,
+                        allowed: false
+                    })
                 }
             }
             return allowedGameModes;
         } catch (error) {
             throw error;
         }
+    }
+
+    generateCodeRoom = () => {
+        let codeRoom = "";
+        const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+        //tableau à remplir des codes room déja réservé par d'autre rooms
+        let arrayCodeRoom = [];
+
+        while (arrayCodeRoom.includes(codeRoom) || codeRoom === "") {
+            codeRoom = "";
+            for (let i = 0; i < 6; i++) {
+                codeRoom += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+        }
+
+        return codeRoom;
     }
 }
 
