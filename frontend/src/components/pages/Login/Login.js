@@ -1,9 +1,30 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import Util from "../../../util/Util";
+import {Link, Redirect } from "react-router-dom";
+import Util from "../../util/Util";
+
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+
+        if(this.props.currentUser) {
+            this.state = {
+                redirect: true,
+            }
+        } else {
+            this.state = {
+                redirect: false,
+            }
+        }
+    }
+
     render = () => {
+        if(this.state.redirect) {
+            return(
+                <Redirect to="/"/>
+            )
+        }
+
         return(
             <div className="text-center">
                 <h1 className="mb">Connexion</h1>
@@ -43,7 +64,20 @@ class Login extends React.Component {
         });
 
         const responseJson = await response.json()
-        console.log(responseJson);
+
+        if(response.status === 200) {
+            Util.verbose('Login successful');
+            Util.setAccesstoken(responseJson.accessToken);
+            Util.setRefreshToken(responseJson.refreshToken);
+
+            this.props.setUser(Util.accessTokenPayload.user);
+
+            this.setState({
+                redirect: true,
+            })
+        }
+
+        // TODO display error
     }
 }
 

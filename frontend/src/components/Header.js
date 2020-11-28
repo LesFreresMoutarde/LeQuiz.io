@@ -4,18 +4,32 @@ import {faCog} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 
 class Header extends React.Component {
-    render = () => {
-        return (
-            <header className="app-header">
-                <div className="header-user">
+    getHeaderUserSection = () => {
+        if(this.props.user) {
+            return(
+                <>
                     <div className="header-user-name">
-                        Current user
+                        {this.props.user.username}
                     </div>
                     <div className="header-user-settings-cog">
                         <Link to="/settings">
                             <FontAwesomeIcon icon={faCog} />
                         </Link>
                     </div>
+                </>
+            );
+        } else {
+            return(
+                <div><Link to="/login">Connexion</Link></div>
+            )
+        }
+    }
+
+    render = () => {
+        return (
+            <header className="app-header">
+                <div className="header-user">
+                    {this.getHeaderUserSection()}
                 </div>
                 <div className="clearfix"/>
             </header>

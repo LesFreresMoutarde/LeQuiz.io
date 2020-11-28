@@ -82,11 +82,6 @@ class Util {
 
         Util.verbose('Access token verification response', response.status, responseJson);
 
-        if(responseJson.valid && responseJson.type !== 'accessToken') {
-            Util.verbose(`Token type ${responseJson.type} is not valid`);
-            return false;
-        }
-
         Util.verbose(responseJson.valid ? 'Access token is valid' : `Access token is not valid: ${responseJson.error}`);
 
         return responseJson.valid === true;

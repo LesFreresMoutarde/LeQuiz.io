@@ -6,8 +6,8 @@ const Survivant = require("../models/gameModes/Survivant");
 
 class GameController extends MainController {
 
-
     static GAME_MODES = [Serie, Ascension, Blitz, Survivant];
+
     // [var] : allow using a var value as a key of an object's property
     static GAME_MODE_PERMISSIONS = {
         [db.User.PLAN_FREE]: [Serie],
