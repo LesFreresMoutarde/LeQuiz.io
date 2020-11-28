@@ -38,12 +38,7 @@ export default class ChooseGameMode extends React.Component {
         try {
             const userPlan = Util.getJwtPayloadContent(Util.accessToken).user.plan;
 
-            //TODO Switch with Util Method to perform POST Call
-            const response = await fetch(Util.getBackendFullUrl('/game/modes'), {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({plan: userPlan})
-            });
+            const response = await Util.sendJsonToAPI('game/modes', {plan: userPlan});
 
             if (!response.ok) throw `${response.status} : ${response.statusText}`;
 

@@ -10,7 +10,6 @@ class GameUtil {
                 redirect: '/create-room/game-mode'
             }
         }
-
     };
 
     static checkGameConfiguration = (history) => {

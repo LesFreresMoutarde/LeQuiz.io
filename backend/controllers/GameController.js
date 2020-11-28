@@ -8,7 +8,7 @@ class GameController extends MainController {
 
 
     static GAME_MODES = [Serie, Ascension, Blitz, Survivant];
-    // [db.User] : allow to get property User of db object
+    // [var] : allow using a var value as a key of an object's property
     static GAME_MODE_PERMISSIONS = {
         [db.User.PLAN_FREE]: [Serie],
         [db.User.PLAN_PREMIUM]: [Serie, Ascension, Blitz, Survivant],
