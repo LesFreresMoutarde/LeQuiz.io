@@ -123,3 +123,126 @@ a:hover {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+#page-content {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+input {
+    position: relative;
+
+    border: 1px solid rgba(200, 200, 200, 0.3);
+    padding: 10px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #333;
+}
+
+input::placeholder {
+    color: rgba(0, 0, 0, 0.4)
+}
+
+input:focus {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+
+label.checkbox {
+    position: relative;
+}
+
+input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+}
+
+label.checkbox > input + span {
+    margin-left: 8px;
+    user-select: none;
+}
+
+label.checkbox > input + span::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 1;
+
+    border: 2px solid #fff;
+    border-radius: 3px;
+
+    transition: background-color 0.1s ease-out;
+
+    cursor: pointer;
+}
+
+label.checkbox > input + span::after {
+    content: '';
+    width: 8px;
+    height: 14px;
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    border-bottom: 3px solid #2FB0DD;
+    border-right: 3px solid #2FB0DD;
+    border-bottom-right-radius: 2px;
+
+    transform: rotate(40deg);
+
+    cursor: pointer;
+
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+}
+
+label.checkbox > input:checked + span::before {
+    background-color: #fff;
+}
+
+label.checkbox > input:checked + span::after {
+    opacity: 1;
+}
+
+#login-form,
+#register-form {
+    max-width: 600px;
+    margin: auto;
+}
+
+.button {
+    font-family: inherit;
+    font-size: 0.9em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    transition: background-color 0.1s ease-out;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button.green {
+    background-color: #219c4a;
+    color: #f8f8f8;
+}
+
+.button.green:hover {
+    background-color: #34bc61
+}

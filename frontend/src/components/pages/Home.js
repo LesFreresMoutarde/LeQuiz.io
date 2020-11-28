@@ -6,7 +6,7 @@ class Home extends React.Component {
         return (
             <>
                 <ul>
-                    <li><Link to="/create-room">Create room</Link></li>
+                    <li><Link to="/create-room/game-mode">Create room</Link></li>
                     <li><Link to="/join-room">Join room</Link></li>
                 </ul>
             </>

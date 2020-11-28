@@ -1,9 +1,11 @@
-const GameMode = require('./GameMode')
+const GameMode = require('./GameMode');
 
 class Survivant extends GameMode {
-    constructor() {
-        super()
-    }
+
+    static CLASSNAME = 'Survivant';
+    static LABEL = 'Survivant';
+    static DESCRIPTION = `
+    Dans cette série de questions éliminatoires, le dernier joueur encore en lice remporte la partie`;
 
     getWinCondition() {
         return true;
