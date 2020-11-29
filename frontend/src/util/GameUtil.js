@@ -5,7 +5,7 @@ class GameUtil {
     static GAME_CONFIGURATION = {
         key: 'gameConfiguration',
         optionsNeeded: {
-            ['categories']: {
+            'categories': {
                 properties: ['gameMode'],
                 redirect: '/create-room/game-mode'
             }

@@ -15,6 +15,18 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
+    actionCategories = () => {
+        const response = {};
+        try {
+            response.categories = this.getCategories();
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+            /*this.statusCode = 400;
+            response.error = error;
+            this.response = response;*/
+        }
+    }
 
     actionModes = (plan) => {
         const response = {};
@@ -27,6 +39,22 @@ class GameController extends MainController {
             this.response = response;
         }
     };
+
+    generateCodeRoom = () => {
+        let codeRoom = "";
+        const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+        //tableau à remplir des codes room déja réservé par d'autre rooms
+        let arrayCodeRoom = [];
+
+        while (arrayCodeRoom.includes(codeRoom) || codeRoom === "") {
+            codeRoom = "";
+            for (let i = 0; i < 6; i++) {
+                codeRoom += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+        }
+
+        return codeRoom;
+    }
 
     getAllowedGameModes = (plan) => {
         try {
@@ -58,21 +86,20 @@ class GameController extends MainController {
         }
     }
 
-    generateCodeRoom = () => {
-        let codeRoom = "";
-        const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-        //tableau à remplir des codes room déja réservé par d'autre rooms
-        let arrayCodeRoom = [];
-
-        while (arrayCodeRoom.includes(codeRoom) || codeRoom === "") {
-            codeRoom = "";
-            for (let i = 0; i < 6; i++) {
-                codeRoom += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
+    getCategories = async () => {
+        try {
+            const categories = await db.Category.findAll({
+                where: db.sequelize.where(db.sequelize.literal('(SELECT COUNT(*) FROM category_question WHERE "Category"."id" = category_question."categoryId")'), '>',0)
+            });
+            categories.map(cat => {
+                console.log(cat.toJSON())
+            })
+        } catch (error) {
+           console.log(error);
         }
-
-        return codeRoom;
     }
+
+
 }
 
 module.exports = GameController;

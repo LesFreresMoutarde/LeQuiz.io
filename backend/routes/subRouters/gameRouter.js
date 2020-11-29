@@ -11,6 +11,10 @@ gameRouter.post('/modes', (req, res) => {
 });
 
 gameRouter.get('/categories', (req, res) => {
+    const gameController = new GameController();
+
+    gameController.actionCategories();
+
     res.json({endpoint: 'GET /game/categories'})
 });
 
