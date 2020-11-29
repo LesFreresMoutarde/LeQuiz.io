@@ -4,7 +4,6 @@ import '../css/style.css';
 import '../css/util.css';
 import {Switch, Route} from "react-router-dom";
 import Home from "./pages/Home/Home";
-//import CreateRoom from "./pages/CreateRoom";
 import CreateGame from "./pages/CreateGame/CreateGame";
 import JoinRoom from "./pages/JoinRoom/JoinRoom";
 import Footer from "./Footer";
@@ -13,7 +12,6 @@ import Util from "../util/Util";
 import Loader from "./misc/Loader";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import ChooseCategories from "./pages/CreateGame/views/ChooseCategories";
 
 class App extends React.Component {
     constructor(props) {
