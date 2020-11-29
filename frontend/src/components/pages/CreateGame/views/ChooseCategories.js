@@ -4,11 +4,14 @@ import GameUtil from "../../../../util/GameUtil";
 import Title from "../../../misc/Title";
 import Loader from "../../../misc/Loader";
 import Category from "../components/Category";
+import NextButton from "../../../misc/NextButton";
 
 
 export default class ChooseCategories extends React.Component {
 
     static TITLE = 'Choisissez des thèmes';
+
+    pickedCategories = [];
 
     constructor(props) {
         super(props);
@@ -54,6 +57,10 @@ export default class ChooseCategories extends React.Component {
         } catch (error) {
             throw error;
         }
+    };
+
+    pickCategory = (category) => {
+        console.log(category);
     }
 
     render() {
@@ -74,12 +81,12 @@ export default class ChooseCategories extends React.Component {
             return (
                 <>
                     <Title title={ChooseCategories.TITLE}/>
-                   <div className="flex-container">
+                    <div className="flex-container">
                        {categories.map((category, index) => {
                            return <Category key={category.id} category={category}/>
                        })}
-
-                   </div>
+                    </div>
+                    <NextButton/>
                 </>
             )
         }

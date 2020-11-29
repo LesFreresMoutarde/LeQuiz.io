@@ -1,9 +1,11 @@
 import React from "react";
 
-const Category = () => {
+const Category = ({category}) => {
     return (
         <div>
-            toto
+            <button>
+                {category.name}
+            </button>
         </div>
     )
 };
