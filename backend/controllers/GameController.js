@@ -15,18 +15,17 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
-    actionCategories = () => {
+    actionCategories = async () => {
         const response = {};
         try {
-            response.categories = this.getCategories();
-            console.log(response);
+            response.categories = await this.getCategories();
+            this.response = response;
         } catch (error) {
-            console.error(error);
-            /*this.statusCode = 400;
+            this.statusCode = 400;
             response.error = error;
-            this.response = response;*/
+            this.response = response;
         }
-    }
+    };
 
     actionModes = (plan) => {
         const response = {};
@@ -54,7 +53,7 @@ class GameController extends MainController {
         }
 
         return codeRoom;
-    }
+    };
 
     getAllowedGameModes = (plan) => {
         try {
@@ -84,20 +83,28 @@ class GameController extends MainController {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     getCategories = async () => {
+        const categoriesInJson = [];
         try {
             const categories = await db.Category.findAll({
-                where: db.sequelize.where(db.sequelize.literal('(SELECT COUNT(*) FROM category_question WHERE "Category"."id" = category_question."categoryId")'), '>',0)
+                attributes: ['id', 'name'],
+                where: db.sequelize.where(
+                    db.sequelize.literal('(SELECT COUNT(*) ' +
+                        'FROM category_question ' +
+                        'WHERE "Category"."id" = category_question."categoryId")'), '>',0)
             });
-            categories.map(cat => {
-                console.log(cat.toJSON())
-            })
+
+            categories.map(category => {
+                categoriesInJson.push(category.toJSON());
+            });
+
+            return categoriesInJson
         } catch (error) {
-           console.log(error);
+           throw error;
         }
-    }
+    };
 
 
 }
