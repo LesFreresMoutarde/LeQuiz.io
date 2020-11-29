@@ -3,6 +3,7 @@ import Util from "../../../../util/Util";
 import GameUtil from "../../../../util/GameUtil";
 import Title from "../../../misc/Title";
 import Loader from "../../../misc/Loader";
+import Category from "../components/Category";
 
 
 export default class ChooseCategories extends React.Component {
@@ -73,9 +74,12 @@ export default class ChooseCategories extends React.Component {
             return (
                 <>
                     <Title title={ChooseCategories.TITLE}/>
-                    {categories.map((category, index) => {
-                        return <div key={index}><p>{category.name}</p></div>
-                    })}
+                   <div className="flex-container">
+                       {categories.map((category, index) => {
+                           return <Category key={category.id} category={category}/>
+                       })}
+
+                   </div>
                 </>
             )
         }
