@@ -310,9 +310,9 @@ class AuthController extends MainController {
         payload.type = type;
 
         /* A SUPPRIMER UNIQUEMENT POUR TEST */
-        payload.user =  {
+       /* payload.user =  {
             plan : 'free'
-        };
+        };*/
         /* FIN SUPPRESSION */
 
 

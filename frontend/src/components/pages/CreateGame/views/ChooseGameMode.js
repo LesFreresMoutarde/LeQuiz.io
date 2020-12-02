@@ -36,9 +36,13 @@ export default class ChooseGameMode extends React.Component {
 
     getGameModes = async () => {
         try {
-            const userPlan = Util.getJwtPayloadContent(Util.accessToken).user.plan;
+            let user = Util.getJwtPayloadContent(Util.accessToken).user;
 
-            const response = await Util.sendJsonToAPI('game/modes', {plan: userPlan});
+            if(!user) {
+                user = {plan: 'free'};
+            }
+
+            const response = await Util.sendJsonToAPI('game/modes', {plan: user.plan});
 
             if (!response.ok) throw `${response.status} : ${response.statusText}`;
 
@@ -76,7 +80,7 @@ export default class ChooseGameMode extends React.Component {
             return (
                     <>
                         <Title title={ChooseGameMode.TITLE}/>
-                        <div className="flex-container">
+                        <div className="flex-container-space-evenly">
                             {gameModes.map((gameMode, index) => {
                                 const color = colors[index];
                                 return <GameMode color={color} gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>

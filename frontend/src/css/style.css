@@ -209,6 +209,10 @@ label.checkbox > input:checked + span::after {
     opacity: 1;
 }
 
+button:disabled {
+    opacity: 0.6;
+}
+
 #login-form,
 #register-form {
     max-width: 600px;
@@ -247,7 +251,8 @@ label.checkbox > input:checked + span::after {
     background-color: #34bc61
 }
 
-.flex-container {
+
+.flex-container-space-evenly {
     min-height: 65vh;
     display: flex;
     flex-wrap: wrap;
@@ -275,9 +280,10 @@ label.checkbox > input:checked + span::after {
     overflow: hidden;
 }
 
-.game-mode:disabled {
-    opacity: 0.6;
+.game-mode:enabled:hover {
+    filter: brightness(95%);
 }
+
 
 .game-mode:enabled:hover {
     cursor: pointer;
@@ -289,13 +295,96 @@ label.checkbox > input:checked + span::after {
 
 .game-mode-label {
     font-size: 2.3em;
-    color: white;
 }
 
 .game-mode-description {
     font-size: 1.4em;
     line-height: 1.3em;
-    color: white;
+}
+
+.category-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.category-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    width: 13%;
+    margin-left: 130px;
+    margin-bottom: 60px;
+
+}
+
+.category {
+    padding: 40px 0;
+    text-align: center;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #1888C6;
+}
+
+.category:hover {
+    filter: brightness(1.05);
+}
+
+.category:focus:visited {
+    background-color: #1888C6;
+}
+
+.category:focus {
+    outline: none;
+}
+
+.category-name {
+    font-size: 1.8em;
+    color: white
+}
+
+.large-button {
+    border: none;
+    border-radius: 20px;
+    padding: 20px 60px;
+    font-size: 1.6em;
+    cursor: pointer;
+}
+
+.large-button:hover {
+    filter: brightness(1.05);
+}
+
+.flex-container {
+    /*min-height: 30vh;*/
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: stretch;
+
+}
+
+.checkbox-wrapper {
+    /*float: left;*/
+    /*padding-left: 17%;*/
+    /*align-self: center;*/
+
+}
+
+
+.pick-buttons {
+    width: 50%;
+    margin-bottom: 10px;
+    display: inline;
+    /*align-self: flex-start;*/
+
+}
+
+.pick-buttons-wrapper {
+    display: flex;
 }
 
 /* Large */
@@ -346,7 +435,6 @@ label.checkbox > input:checked + span::after {
 
     .game-mode-label {
         font-size: 1.8em;
-        color: white;
     }
 
     .game-mode-description {
