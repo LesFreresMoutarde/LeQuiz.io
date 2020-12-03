@@ -75,9 +75,8 @@ export default class ChooseCategories extends React.Component {
         }
 
         const categoryElt = document.querySelector(`#category-${category.name.toLowerCase()}`);
-        categoryElt.classList.toggle('purple-heart-bg');
+        categoryElt.classList.toggle('category-selected');
 
-        console.log("Categories choisies", this.pickedCategories);
         this.handleButtonsState();
     };
 
@@ -91,8 +90,8 @@ export default class ChooseCategories extends React.Component {
         const categoriesElt = Array.from(document.querySelectorAll('.category'));
 
         categoriesElt.map((categoryElt) => {
-            categoryElt.classList.remove('purple-heart-bg');
-            categoryElt.classList.add('purple-heart-bg');
+            categoryElt.classList.remove('category-selected');
+            categoryElt.classList.add('category-selected');
         });
 
         this.handleButtonsState();
@@ -104,7 +103,7 @@ export default class ChooseCategories extends React.Component {
         const categoriesElt = Array.from(document.querySelectorAll('.category'));
 
         categoriesElt.map((categoryElt) => {
-            categoryElt.classList.remove('purple-heart-bg');
+            categoryElt.classList.remove('category-selected');
         });
 
         this.handleButtonsState();
@@ -189,6 +188,7 @@ export default class ChooseCategories extends React.Component {
                     <NextButton disabled={nextButtonDisabled}
                                 submitCategories={this.submitCategories}
                                 sizeClass="large-button"
+                                content="Suivant"
                     />
                 </>
             )

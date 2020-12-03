@@ -342,6 +342,10 @@ button:disabled {
     outline: none;
 }
 
+.category-selected {
+    background-color: #5B1EBC;
+}
+
 .category-name {
     font-size: 1.8em;
     color: white

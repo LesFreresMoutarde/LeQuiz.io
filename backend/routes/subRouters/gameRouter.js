@@ -10,19 +10,15 @@ gameRouter.post('/modes', (req, res) => {
     res.json(gameController.response);
 });
 
-gameRouter.get('/categories', (req, res) => {
-    (async () => {
-        try {
-            const gameController = new GameController();
+gameRouter.get('/categories', async (req, res) => {
 
-            await gameController.actionCategories();
+    const gameController = new GameController();
 
-            res.status(gameController.statusCode);
-            res.json(gameController.response);
-        } catch (error) {
-            throw error;
-        }
-    })();
+    await gameController.actionCategories();
+
+    res.status(gameController.statusCode);
+    res.json(gameController.response);
+
 });
 
 gameRouter.get('/options', (req, res) => {
