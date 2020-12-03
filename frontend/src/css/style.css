@@ -357,34 +357,33 @@ button:disabled {
     filter: brightness(1.05);
 }
 
-.flex-container {
-    /*min-height: 30vh;*/
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    /*justify-content: center;*/
-    align-items: stretch;
-
-}
-
-.checkbox-wrapper {
-    /*float: left;*/
-    /*padding-left: 17%;*/
-    /*align-self: center;*/
-
-}
-
-
-.pick-buttons {
-    width: 50%;
-    margin-bottom: 10px;
-    display: inline;
-    /*align-self: flex-start;*/
-
-}
-
 .pick-buttons-wrapper {
     display: flex;
+    margin-bottom: 25px;
+}
+
+.pick-buttons {
+    width: 25%;
+    border: none;
+    border-radius: 10px;
+    padding: 5px
+}
+
+.pick-buttons:focus {
+    outline: none;
+}
+
+.pick-buttons:enabled:hover {
+    filter: brightness(95%);
+}
+
+.pick-all {
+    background-color: #1E9B48;
+    margin-right: 20px;
+}
+
+.unpick-all {
+    background-color: #CE3D1B;
 }
 
 /* Large */

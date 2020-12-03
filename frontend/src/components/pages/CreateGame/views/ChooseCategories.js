@@ -5,6 +5,8 @@ import Title from "../../../misc/Title";
 import Loader from "../../../misc/Loader";
 import Category from "../components/Category";
 import NextButton from "../../../misc/NextButton";
+import PickAll from "../../../misc/PickAll";
+import UnpickAll from "../../../misc/UnpickAll";
 
 
 export default class ChooseCategories extends React.Component {
@@ -25,7 +27,6 @@ export default class ChooseCategories extends React.Component {
         }
     }
 
-    // TODO Initialiser le tableau pickedCategories si present dans la gameConfig
     componentDidMount() {
         (async () => {
             try {
@@ -33,12 +34,10 @@ export default class ChooseCategories extends React.Component {
                 const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
 
                 if (!checkConfiguration.verified) {
-
                     this.props.history.replace(checkConfiguration.redirect);
 
                 } else {
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-
                     const categories = await this.getCategories();
 
                     this.setState({
@@ -48,10 +47,7 @@ export default class ChooseCategories extends React.Component {
 
                     if (gameConfiguration.categories.length > 0) {
                         gameConfiguration.categories.map(category => this.pickCategory(category));
-
-                        this.pickedCategories.push(...gameConfiguration.categories);
                     }
-                    console.log("les categories choisies au start", this.pickedCategories);
                 }
             } catch (error) {
                 console.log(error)
@@ -74,7 +70,7 @@ export default class ChooseCategories extends React.Component {
     };
 
     pickCategory = (category) => {
-        // event.persist();
+
         if (!this.pickedCategories.includes(category)) {
             this.pickedCategories.push(category)
 
@@ -84,8 +80,8 @@ export default class ChooseCategories extends React.Component {
 
         const categoryElt = document.querySelector(`#category-${category.name.toLowerCase()}`);
         categoryElt.classList.toggle('purple-heart-bg');
-        //event.currentTarget.classList.toggle('purple-heart-bg');
 
+        console.log("Categories choisies", this.pickedCategories);
         this.handleButtonsState();
     };
 
@@ -150,11 +146,10 @@ export default class ChooseCategories extends React.Component {
 
     submitCategories = () => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        gameConfiguration.categories.push(...this.pickedCategories);
+        gameConfiguration.categories = this.pickedCategories;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-        console.log(gameConfiguration);
         this.props.history.push('/create-room/settings');
-    }
+    };
 
     render() {
         if (this.state.isLoading) {
@@ -170,7 +165,7 @@ export default class ChooseCategories extends React.Component {
             );
         } else {
             const { categories, pickAllDisabled, unpickAllDisabled, nextButtonDisabled } = this.state;
-            console.log("cat from view",categories);
+
             return (
                 <>
                     <Title title={ChooseCategories.TITLE}/>
@@ -180,8 +175,8 @@ export default class ChooseCategories extends React.Component {
                                return (
                                    <div key={index} className="category-wrapper">
                                        <div className="pick-buttons-wrapper">
-                                       <button id="pick-all" className="pick-buttons" onClick={this.pickAll} disabled={pickAllDisabled}>PickAll</button>
-                                       <button id="unpick-all" className="pick-buttons" onClick={this.unpickAll} disabled={unpickAllDisabled}>UnpickAll</button>
+                                           <PickAll id="pick-all" pickAll={this.pickAll} disabled={pickAllDisabled}/>
+                                           <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>
                                        </div>
                                        <Category category={category} pickCategory={this.pickCategory}/>
                                    </div>
@@ -195,7 +190,10 @@ export default class ChooseCategories extends React.Component {
                            }
                        })}
                     </div>
-                    <NextButton disabled={nextButtonDisabled} submitCategories={this.submitCategories} sizeClass="large-button"/>
+                    <NextButton disabled={nextButtonDisabled}
+                                submitCategories={this.submitCategories}
+                                sizeClass="large-button"
+                    />
                 </>
             )
         }
