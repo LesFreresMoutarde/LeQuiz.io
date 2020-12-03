@@ -67,14 +67,12 @@ export default class ChooseGameMode extends React.Component {
             );
         } else {
             const { gameModes } = this.state;
-            const colors = Util.getRandomColors(gameModes.length);
             return (
                     <>
                         <Title title={ChooseGameMode.TITLE}/>
                         <div className="flex-container">
                             {gameModes.map((gameMode, index) => {
-                                const color = colors[index];
-                                return <GameMode color={color} gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
+                                return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
                             })}
                         </div>
                     </>
