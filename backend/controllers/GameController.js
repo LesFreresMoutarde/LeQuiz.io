@@ -87,7 +87,6 @@ class GameController extends MainController {
 
     getCategories = async () => {
         const categoriesInJson = [];
-        try {
             const categories = await db.Category.findAll({
                 attributes: ['id', 'name'],
                 where: db.sequelize.where(
@@ -101,9 +100,6 @@ class GameController extends MainController {
             });
 
             return categoriesInJson
-        } catch (error) {
-           throw error;
-        }
     };
 
 

@@ -56,17 +56,13 @@ export default class ChooseCategories extends React.Component {
     }
 
     getCategories = async () => {
-        try {
-            const response = await Util.performAPIRequest('/game/categories');
+        const response = await Util.performAPIRequest('/game/categories');
 
-            if (!response.ok) throw 'error';
+        if (!response.ok) throw 'error';
 
-            const responseData = await response.json();
+        const responseData = await response.json();
 
-            return responseData.categories;
-        } catch (error) {
-            throw error;
-        }
+        return responseData.categories;
     };
 
     pickCategory = (category) => {
