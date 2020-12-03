@@ -17,6 +17,15 @@ settingsRouter.patch('/email', async (req, res) => {
 
     res.status(controller.statusCode);
     res.send(controller.response);
-})
+});
+
+settingsRouter.patch('/password', async (req, res) => {
+    const controller = new SettingsController();
+
+    await controller.actionEditPassword(req.body, req.accessTokenPayload);
+
+    res.status(controller.statusCode);
+    res.send(controller.response);
+});
 
 module.exports = settingsRouter;

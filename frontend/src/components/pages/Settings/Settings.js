@@ -1,5 +1,6 @@
 import React from "react";
 import EmailSettings from "./views/EmailSettings";
+import PasswordSettings from "./views/PasswordSettings";
 
 class Settings extends React.Component {
     constructor(props) {
@@ -17,7 +18,6 @@ class Settings extends React.Component {
                     <ul>
                         <li data-desktop-nav="email" className="active"><a onClick={this.onNavigate}>Adresse email</a></li>
                         <li data-desktop-nav="password"><a onClick={this.onNavigate}>Mot de passe</a></li>
-                        <li data-desktop-nav="other"><a onClick={this.onNavigate}>Autres paramètres</a></li>
                     </ul>
                 </nav>
                 <div className="flex-item-full-width">
@@ -30,11 +30,7 @@ class Settings extends React.Component {
                         </section>
 
                         <section id="desktop-content-password">
-                            <p>Password</p>
-                        </section>
-
-                        <section id="desktop-content-other">
-                            <p>Other</p>
+                            <PasswordSettings/>
                         </section>
 
                     </div>
