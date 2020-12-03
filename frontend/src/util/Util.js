@@ -7,6 +7,8 @@ class Util {
     static accessTokenPayload = null;
     static refreshTokenPayload = null;
 
+    static bgColors = ['red-pink-bg', 'brown-bg', 'deep-blue-bg', 'yellow-bg', 'green-bg'];
+
     static verbose = (...items) => {
         if(!Util.isVerbose) {
             return;
@@ -249,9 +251,34 @@ class Util {
         localStorage.setItem(key, JSON.stringify(object));
     };
 
+    static addObjectToSessionStorage = (key, object) => {
+        sessionStorage.setItem(key, JSON.stringify(object));
+    };
+
     static getObjectFromLocalStorage = (key) => {
         return JSON.parse(localStorage.getItem(key));
     };
+
+    static getObjectFromSessionStorage = (key) => {
+        return JSON.parse(sessionStorage.getItem(key));
+    }
+
+    static getRandomColor = () => {
+        return Util.bgColors[Math.floor(Math.random() * Util.bgColors.length)];
+    }
+
+    static getRandomColors = (nb) => {
+        let color = Util.getRandomColor();
+        const colorsUsed = [color];
+        for (let i = 0; i < nb - 1; i++) {
+            while (colorsUsed.includes(color)) {
+                color = Util.getRandomColor();
+            }
+            colorsUsed.push(color)
+        }
+        return colorsUsed;
+    }
+
 }
 
 Util.APP_BACKEND_URL = `${window.location.protocol}//${window.location.hostname}:3000`; // TODO ENV

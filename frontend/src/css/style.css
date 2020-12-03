@@ -246,3 +246,127 @@ label.checkbox > input:checked + span::after {
 .button.green:hover {
     background-color: #34bc61
 }
+
+.flex-container {
+    min-height: 65vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.game-mode-wrapper {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.game-mode {
+    width: 50%;
+    padding: 20px;
+    height: 200px;
+    border-radius: 40px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+}
+
+.game-mode:disabled {
+    opacity: 0.6;
+}
+
+.game-mode:enabled:hover {
+    cursor: pointer;
+}
+
+.game-mode:focus {
+    outline: none;
+}
+
+.game-mode-label {
+    font-size: 2.3em;
+    color: white;
+}
+
+.game-mode-description {
+    font-size: 1.4em;
+    line-height: 1.3em;
+    color: white;
+}
+
+.gm-serie {
+    background-color: #EAB01F;
+}
+
+.gm-ascension {
+    background-color: #217D9E;
+}
+
+.gm-blitz {
+    background-color: #DE4567;
+}
+
+.gm-survivant {
+    background-color:  #1E9B48;
+}
+
+/* Large */
+@media screen and (max-width: 1200px) {
+    .game-mode {
+        width: 70%;
+    }
+
+    .game-mode-description {
+        font-size: 1.3em;
+    }
+
+}
+
+
+
+/* Medium */
+@media screen and (max-width: 992px) {
+    .game-mode {
+       width: 80%;
+    }
+
+    .game-mode-description {
+        font-size: 1.3em;
+    }
+
+
+}
+
+/* Small */
+@media screen and (max-width: 768px) {
+
+
+    .game-mode-description {
+        font-size: 1.2em;
+    }
+}
+
+/* X-Small */
+@media screen and (max-width: 576px) {
+
+    .game-mode {
+        height: 140px;
+        width: 120px;
+        padding: 40px;
+        border-radius: 20px;
+    }
+
+    .game-mode-label {
+        font-size: 1.8em;
+        color: white;
+    }
+
+    .game-mode-description {
+        display: none;
+    }
+}
+

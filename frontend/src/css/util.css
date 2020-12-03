@@ -110,3 +110,23 @@ h6.mb, .h6.mb {
 .full-width {
     width: 100%;
 }
+
+.red-pink-bg {
+    background-color: #DE4567;
+}
+
+.brown-bg {
+    background-color: #91442D;
+}
+
+.deep-blue-bg {
+    background-color: #217D9E;
+}
+
+.yellow-bg {
+    background-color: #EAB01F;
+}
+
+.green-bg {
+    background-color: #1E9B48;
+}

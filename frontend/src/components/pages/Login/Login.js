@@ -1,6 +1,7 @@
 import React from "react";
 import {Link, Redirect } from "react-router-dom";
-import Util from "../../util/Util";
+import Util from "../../../util/Util";
+
 
 class Login extends React.Component {
     constructor(props) {

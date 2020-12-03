@@ -254,6 +254,7 @@ testModel = async () => {
 
 
 app.get('/', async (req, res) => {
+
     const controller = new GameController();
     let codeRoom = controller.generateCodeRoom();
 

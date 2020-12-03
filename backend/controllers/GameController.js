@@ -5,7 +5,10 @@ const Blitz = require("../models/gameModes/Blitz");
 const Survivant = require("../models/gameModes/Survivant");
 
 class GameController extends MainController {
-    // [db.User] : allow to get property User of db object
+
+    static GAME_MODES = [Serie, Ascension, Blitz, Survivant];
+
+    // [var] : allow using a var value as a key of an object's property
     static GAME_MODE_PERMISSIONS = {
         [db.User.PLAN_FREE]: [Serie],
         [db.User.PLAN_PREMIUM]: [Serie, Ascension, Blitz, Survivant],
@@ -13,10 +16,10 @@ class GameController extends MainController {
     };
 
 
-    actionModes = (role) => {
+    actionModes = (plan) => {
         const response = {};
         try {
-            response.gameModes = this.getAllowedGameModes(role);
+            response.gameModes = this.getAllowedGameModes(plan);
             this.response = response;
         } catch (error) {
             this.statusCode = 400;
@@ -25,26 +28,30 @@ class GameController extends MainController {
         }
     };
 
-    getAllowedGameModes = (role) => {
-        try {
+    getAllowedGameModes = (plan) => {
 
-            if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(role)) throw 'Unknown role';
+        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
 
-            let allowedGameModes = [];
-            for (let [plan, gameModes] of Object.entries(GameController.GAME_MODE_PERMISSIONS)) {
+        const allowedGameModes = [];
+        for (const gameMode of GameController.GAME_MODES) {
 
-                if (plan === role) {
+            let isGameModeAllowed = false;
 
-                    for (let gameMode of gameModes) {
-                        allowedGameModes.push({classname: gameMode.CLASSNAME, label: gameMode.LABEL, description: gameMode.DESCRIPTION});
-                    }
-                }
+            if (GameController.GAME_MODE_PERMISSIONS[plan].includes(gameMode)) {
+                isGameModeAllowed = true;
             }
-            return allowedGameModes;
-        } catch (error) {
-            throw error;
+
+            allowedGameModes.push({
+                classname: gameMode.CLASSNAME,
+                label: gameMode.LABEL,
+                description: gameMode.DESCRIPTION,
+                allowed: isGameModeAllowed,
+            });
+
         }
-    }
+
+        return allowedGameModes;
+    };
 
     generateCodeRoom = () => {
         let codeRoom = "";
