@@ -5,6 +5,7 @@ services:
     image: node:14
     container_name: lequiz.io-backend
     working_dir: /home/node/app
+    restart: always
     environment:
       - NODE_ENV=development
     volumes:

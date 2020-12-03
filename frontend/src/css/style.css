@@ -386,6 +386,22 @@ button:disabled {
     background-color: #CE3D1B;
 }
 
+.gm-serie {
+    background-color: #EAB01F;
+}
+
+.gm-ascension {
+    background-color: #217D9E;
+}
+
+.gm-blitz {
+    background-color: #DE4567;
+}
+
+.gm-survivant {
+    background-color:  #1E9B48;
+}
+
 /* Large */
 @media screen and (max-width: 1200px) {
 

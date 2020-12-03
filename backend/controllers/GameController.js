@@ -56,33 +56,28 @@ class GameController extends MainController {
     };
 
     getAllowedGameModes = (plan) => {
-        try {
 
-            if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
+        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
 
-            let allowedGameModes = [];
-            for (const gameMode of GameController.GAME_MODES) {
+        const allowedGameModes = [];
+        for (const gameMode of GameController.GAME_MODES) {
 
-                if (GameController.GAME_MODE_PERMISSIONS[plan].includes(gameMode)) {
-                    allowedGameModes.push({
-                        classname: gameMode.CLASSNAME,
-                        label: gameMode.LABEL,
-                        description: gameMode.DESCRIPTION,
-                        allowed: true
-                    })
-                } else {
-                    allowedGameModes.push({
-                        classname: gameMode.CLASSNAME,
-                        label: gameMode.LABEL,
-                        description: gameMode.DESCRIPTION,
-                        allowed: false
-                    })
-                }
+            let isGameModeAllowed = false;
+
+            if (GameController.GAME_MODE_PERMISSIONS[plan].includes(gameMode)) {
+                isGameModeAllowed = true;
             }
-            return allowedGameModes;
-        } catch (error) {
-            throw error;
+
+            allowedGameModes.push({
+                classname: gameMode.CLASSNAME,
+                label: gameMode.LABEL,
+                description: gameMode.DESCRIPTION,
+                allowed: isGameModeAllowed,
+            });
+
         }
+
+        return allowedGameModes;
     };
 
     getCategories = async () => {

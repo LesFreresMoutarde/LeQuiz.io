@@ -35,7 +35,7 @@ export default class ChooseGameMode extends React.Component {
     }
 
     getGameModes = async () => {
-        try {
+      
             let user = Util.getJwtPayloadContent(Util.accessToken).user;
 
             if(!user) {
@@ -44,14 +44,11 @@ export default class ChooseGameMode extends React.Component {
 
             const response = await Util.sendJsonToAPI('game/modes', {plan: user.plan});
 
-            if (!response.ok) throw `${response.status} : ${response.statusText}`;
+        if (!response.ok) throw `${response.status} : ${response.statusText}`;
 
-            const responseData = await response.json();
+        const responseData = await response.json();
 
-            return responseData.gameModes;
-        } catch (error) {
-            throw error;
-        }
+        return responseData.gameModes;
     };
 
     pickGameMode = (gameMode) => {
@@ -76,14 +73,12 @@ export default class ChooseGameMode extends React.Component {
             );
         } else {
             const { gameModes } = this.state;
-            const colors = Util.getRandomColors(gameModes.length);
             return (
                     <>
                         <Title title={ChooseGameMode.TITLE}/>
                         <div className="flex-container-space-evenly">
                             {gameModes.map((gameMode, index) => {
-                                const color = colors[index];
-                                return <GameMode color={color} gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
+                                return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
                             })}
                         </div>
                     </>
