@@ -44,7 +44,7 @@ class App extends React.Component {
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/login" render={() => <Login setUser={this.setUser} currentUser={this.state.user} />}/>
                                 <Route exact path="/register" component={Register}/>
-                                <Route  path="/create-room/" component={CreateGame}/>
+                                <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
                             </Switch>
                         </div>

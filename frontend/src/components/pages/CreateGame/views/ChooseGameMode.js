@@ -35,19 +35,14 @@ export default class ChooseGameMode extends React.Component {
     }
 
     getGameModes = async () => {
-        try {
-            const userPlan = Util.getJwtPayloadContent(Util.accessToken).user.plan;
 
-            const response = await Util.sendJsonToAPI('game/modes', {plan: userPlan});
+        const response = await Util.sendJsonToAPI('game/modes', {plan: 'free'});
 
-            if (!response.ok) throw `${response.status} : ${response.statusText}`;
+        if (!response.ok) throw `${response.status} : ${response.statusText}`;
 
-            const responseData = await response.json();
+        const responseData = await response.json();
 
-            return responseData.gameModes;
-        } catch (error) {
-            throw error;
-        }
+        return responseData.gameModes;
     };
 
     pickGameMode = (gameMode) => {
