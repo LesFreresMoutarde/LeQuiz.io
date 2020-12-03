@@ -388,6 +388,8 @@ button:disabled {
 
 /* Large */
 @media screen and (max-width: 1200px) {
+
+    /* game Modes */
     .game-mode {
         width: 70%;
     }
@@ -396,12 +398,21 @@ button:disabled {
         font-size: 1.3em;
     }
 
+    /* Categories */
+    .category-wrapper {
+        width: 18%;
+        margin-left: 60px;
+        margin-bottom: 60px;
+    }
+
 }
 
 
 
 /* Medium */
 @media screen and (max-width: 992px) {
+
+    /* Game modes */
     .game-mode {
        width: 80%;
     }
@@ -410,21 +421,42 @@ button:disabled {
         font-size: 1.3em;
     }
 
+    /* Categories */
+    .category-wrapper {
+        width: 20%;
+        margin-left: 50px;
+        margin-bottom: 60px;
+    }
 
 }
 
 /* Small */
 @media screen and (max-width: 768px) {
 
-
+    /* Game modes */
     .game-mode-description {
         font-size: 1.2em;
     }
+
+    /* Categories */
+    .category-wrapper {
+        width: 25%;
+        margin-bottom: 60px;
+    }
+
+    .category-name {
+        font-size: 1.7em;
+        color: white
+    }
+
+
+
 }
 
 /* X-Small */
 @media screen and (max-width: 576px) {
 
+    /* Game modes*/
     .game-mode {
         height: 140px;
         width: 120px;
@@ -439,5 +471,31 @@ button:disabled {
     .game-mode-description {
         display: none;
     }
+
+    /* Categories */
+    .category-wrapper {
+        width: 35%;
+        margin-left: 30px;
+        margin-bottom: 60px;
+
+    }
+
+    .category {
+        padding: 30px 0;
+    }
+
+    .category-name {
+        font-size: 1.2em;
+    }
+
+    .pick-buttons {
+        width: 30%;
+    }
+
+    .large-button {
+        padding: 15px 40px;
+        font-size: 1.3em;
+    }
+
 }
 
