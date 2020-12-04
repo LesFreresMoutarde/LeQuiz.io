@@ -5,21 +5,20 @@ import '../css/util.css';
 import 'toastr2/dist/toastr.min.css';
 import '../css/toastr.override.css';
 import {Switch, Route} from "react-router-dom";
-import Home from "./pages/Home";
-//import CreateRoom from "./pages/CreateRoom";
-import CreateGame from "./pages/CreateGame";
-import JoinRoom from "./pages/JoinRoom";
+import Home from "./pages/Home/Home";
+import CreateGame from "./pages/CreateGame/CreateGame";
+import JoinRoom from "./pages/JoinRoom/JoinRoom";
 import Footer from "./Footer";
 import Header from "./Header";
 import Util from "../util/Util";
 import Loader from "./misc/Loader";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ChooseCategories from "./views/CreateGame/ChooseCategories";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 import Settings from "./pages/Settings/Settings";
 
 import Toastr from "toastr2";
 const toastr = new Toastr();
+
 
 class App extends React.Component {
 
@@ -56,7 +55,7 @@ class App extends React.Component {
                                 <Route exact path="/login" render={() => <Login setUser={this.setUser} currentUser={this.state.user} />}/>
                                 <Route exact path="/register" component={Register}/>
                                 <Route exact path="/settings" component={Settings}/>
-                                <Route exact path="/create-room/game-mode" component={CreateGame}/>
+                                <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
                             </Switch>
                         </div>

@@ -245,6 +245,10 @@ label.checkbox > input:checked + span::after {
     opacity: 1;
 }
 
+button:disabled {
+    opacity: 0.6;
+}
+
 #login-form,
 #register-form {
     max-width: 600px;
@@ -318,4 +322,273 @@ label.checkbox > input:checked + span::after {
 
 #desktop-variable-content > section:not(.active) {
     display: none;
+}
+
+.flex-container-space-evenly {
+    min-height: 65vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.game-mode-wrapper {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.game-mode {
+    width: 50%;
+    padding: 20px;
+    height: 200px;
+    border-radius: 40px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+}
+
+.game-mode:enabled:hover {
+    filter: brightness(95%);
+}
+
+
+.game-mode:enabled:hover {
+    cursor: pointer;
+}
+
+.game-mode:focus {
+    outline: none;
+}
+
+.game-mode-label {
+    font-size: 2.3em;
+    color: white;
+}
+
+.game-mode-description {
+    color: white;
+    font-size: 1.4em;
+    line-height: 1.3em;
+}
+
+.category-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.category-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    width: 13%;
+    margin-left: 130px;
+    margin-bottom: 60px;
+
+}
+
+.category {
+    padding: 40px 0;
+    text-align: center;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #1888C6;
+}
+
+.category:hover {
+    filter: brightness(1.05);
+}
+
+.category:focus:visited {
+    background-color: #1888C6;
+}
+
+.category:focus {
+    outline: none;
+}
+
+.category-selected {
+    background-color: #5B1EBC;
+}
+
+.category-name {
+    font-size: 1.8em;
+    color: white
+}
+
+.large-button {
+    border: none;
+    border-radius: 20px;
+    padding: 20px 60px;
+    font-size: 1.6em;
+    cursor: pointer;
+}
+
+.large-button:hover {
+    filter: brightness(1.05);
+}
+
+.pick-buttons-wrapper {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.pick-buttons {
+    width: 25%;
+    border: none;
+    border-radius: 10px;
+    padding: 5px
+}
+
+.pick-buttons:focus {
+    outline: none;
+}
+
+.pick-buttons:enabled:hover {
+    filter: brightness(95%);
+}
+
+.pick-all {
+    background-color: #1E9B48;
+    margin-right: 20px;
+}
+
+.unpick-all {
+    background-color: #CE3D1B;
+}
+
+.gm-serie {
+    background-color: #EAB01F;
+}
+
+.gm-ascension {
+    background-color: #217D9E;
+}
+
+.gm-blitz {
+    background-color: #DE4567;
+}
+
+.gm-survivant {
+    background-color:  #1E9B48;
+}
+
+/* Large */
+@media screen and (max-width: 1200px) {
+
+    /* game Modes */
+    .game-mode {
+        width: 70%;
+    }
+
+    .game-mode-description {
+        font-size: 1.3em;
+    }
+
+    /* Categories */
+    .category-wrapper {
+        width: 18%;
+        margin-left: 60px;
+        margin-bottom: 60px;
+    }
+
+}
+
+
+
+/* Medium */
+@media screen and (max-width: 992px) {
+
+    /* Game modes */
+    .game-mode {
+       width: 80%;
+    }
+
+    .game-mode-description {
+        font-size: 1.3em;
+    }
+
+    /* Categories */
+    .category-wrapper {
+        width: 20%;
+        margin-left: 50px;
+        margin-bottom: 60px;
+    }
+
+}
+
+/* Small */
+@media screen and (max-width: 768px) {
+
+    /* Game modes */
+    .game-mode-description {
+        font-size: 1.2em;
+    }
+
+    /* Categories */
+    .category-wrapper {
+        width: 25%;
+        margin-bottom: 60px;
+    }
+
+    .category-name {
+        font-size: 1.7em;
+        color: white
+    }
+
+
+
+}
+
+/* X-Small */
+@media screen and (max-width: 576px) {
+
+    /* Game modes*/
+    .game-mode {
+        height: 140px;
+        width: 120px;
+        padding: 40px;
+        border-radius: 20px;
+    }
+
+    .game-mode-label {
+        font-size: 1.8em;
+    }
+
+    .game-mode-description {
+        display: none;
+    }
+
+    /* Categories */
+    .category-wrapper {
+        width: 35%;
+        margin-left: 30px;
+        margin-bottom: 60px;
+
+    }
+
+    .category {
+        padding: 30px 0;
+    }
+
+    .category-name {
+        font-size: 1.2em;
+    }
+
+    .pick-buttons {
+        width: 30%;
+    }
+
+    .large-button {
+        padding: 15px 40px;
+        font-size: 1.3em;
+    }
+
 }

@@ -122,3 +122,39 @@ h6.mb, .h6.mb {
 .flex-item-full-width {
     flex: 1;
 }
+
+.red-pink-bg {
+    background-color: #DE4567;
+}
+
+.brown-bg {
+    background-color: #91442D;
+}
+
+.curious-blue-bg {
+    background-color: #1888C6;
+}
+
+.deep-blue-bg {
+    background-color: #217D9E;
+}
+
+.yellow-bg {
+    background-color: #EAB01F;
+}
+
+.green-bg {
+    background-color: #1E9B48;
+}
+
+.purple-heart-bg {
+    background-color: #5B1EBC;
+}
+
+.text-white {
+    color: white;
+}
+
+.float-right {
+    float: right;
+}
