@@ -3,18 +3,20 @@ const MainController = require('./mainController/MainController');
 class UserController extends MainController {
 
     generateGuestName = () => {
-        let guestName = "guest";
+        let guestId = "";
         const possible = "0123456789";
-        //recuperer les guest names de la partie
-        let arrayGuestName = [];
+        let user = new Object();
+        //TODO : recuperer les id des guest de la room
+        let arrayGuestId = [];
 
-        while (arrayGuestName.includes(guestName) || guestName === "guest") {
-            guestName = "guest";
+        while (arrayGuestId.includes(guestId) || guestId === "") {
+            guestId = "";
             for (let i = 0; i < 6; i++) {
-                guestName += possible.charAt(Math.floor(Math.random() * possible.length));
+                guestId += possible.charAt(Math.floor(Math.random() * possible.length));
             }
         }
-        return guestName;
+        user.id = guestId;
+        return user;
     }
 }
 
