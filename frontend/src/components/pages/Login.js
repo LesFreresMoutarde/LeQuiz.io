@@ -2,6 +2,9 @@ import React from "react";
 import {Link, Redirect } from "react-router-dom";
 import Util from "../../util/Util";
 
+import Toastr from "toastr2";
+const toastr = new Toastr();
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -64,19 +67,29 @@ class Login extends React.Component {
 
         const responseJson = await response.json()
 
-        if(response.status === 200) {
-            Util.verbose('Login successful');
-            Util.setAccesstoken(responseJson.accessToken);
-            Util.setRefreshToken(responseJson.refreshToken);
+        switch(response.status) {
+            case 200:
+                Util.verbose('Login successful');
+                Util.setAccesstoken(responseJson.accessToken);
+                Util.setRefreshToken(responseJson.refreshToken);
 
-            this.props.setUser(Util.accessTokenPayload.user);
+                this.props.setUser(Util.accessTokenPayload.user);
 
-            this.setState({
-                redirect: true,
-            })
+                this.setState({
+                    redirect: true,
+                })
+                break;
+            case 403:
+                console.log(responseJson);
+                toastr.error("Vous avez été banni jusqu'à TODO");
+                break;
+            case 404:
+                toastr.error('Ces identifiants sont incorrects');
+                break;
+            default:
+                toastr.error('Une erreur inconnue est survenue');
+                break;
         }
-
-        // TODO display error
     }
 }
 

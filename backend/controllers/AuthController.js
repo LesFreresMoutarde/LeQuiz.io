@@ -185,7 +185,14 @@ class AuthController extends MainController {
             return;
         }
 
-        // TODO check if user is banned
+        if(user.isBanned) {
+            this.statusCode = 403;
+            this.response = {
+                error: 'User is banned',
+                unbanDate: user.unbanDate,
+            }
+            return;
+        }
 
         const currentAccessTokenPayload = {...accessTokenPayload};
         const newAccessTokenPayload = Object.assign(currentAccessTokenPayload, {
