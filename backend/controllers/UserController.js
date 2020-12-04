@@ -5,7 +5,6 @@ class UserController extends MainController {
     generateGuestName = () => {
         let guestId = "";
         const possible = "0123456789";
-        let user = new Object();
         //TODO : recuperer les id des guest de la room
         let arrayGuestId = [];
 
@@ -15,8 +14,11 @@ class UserController extends MainController {
                 guestId += possible.charAt(Math.floor(Math.random() * possible.length));
             }
         }
-        user.id = guestId;
-        return user;
+        let guest = {
+            id: guestId,
+            userName: 'guest'
+        };
+        return guest;
     }
 }
 
