@@ -213,6 +213,23 @@ class AuthController extends MainController {
         }
     }
 
+    actionLogout = async (accessTokenPayload) => {
+        console.log(accessTokenPayload);
+
+        if(!accessTokenPayload.hasOwnProperty('user')) {
+            this.statusCode = 400;
+            this.response = {
+                error: 'User is not logged in',
+            };
+        }
+
+        if(accessTokenPayload.user.hasOwnProperty('id')) {
+            await this.invalidateUserRefreshTokens(accessTokenPayload.user.id);
+        }
+
+        this.statusCode = 204;
+    }
+
     /**
      * Verifies a JWT token, and optionnaly its type
      * @param token string
@@ -320,6 +337,18 @@ class AuthController extends MainController {
             {
                 replacements: {
                     token: refreshToken,
+                },
+                type: QueryTypes.DELETE,
+            },
+        );
+    }
+
+    invalidateUserRefreshTokens = async (userId) => {
+        await db.sequelize.query(
+            'DELETE from "refresh_token" WHERE "userId" = :userId',
+            {
+                replacements: {
+                    userId,
                 },
                 type: QueryTypes.DELETE,
             },

@@ -77,6 +77,34 @@ a:hover {
     transform: rotate(30deg);
 }
 
+.header-user-logout-button {
+    padding-left: 15px;
+    padding-right: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.logout-button:hover {
+    cursor: pointer;
+}
+
+.logout-button-door {
+    transform-origin: left center;
+    transition: transform 0.1s ease-out;
+}
+
+.logout-button:hover .logout-button-door {
+    transform: scale(0.9);
+}
+
+.logout-button .logout-button-arrow {
+    transition: transform 0.1s ease-out;
+}
+
+.logout-button:hover .logout-button-arrow {
+    transform: translateX(10%);
+}
+
 .app-loader {
     position: fixed;
     top: 0;
