@@ -67,11 +67,13 @@ export default class ChooseCategories extends React.Component {
 
     pickCategory = (category) => {
 
-        if (!this.pickedCategories.includes(category)) {
+        const pickCategoriesId = this.pickedCategories.map(pickedCategory => (pickedCategory.id));
+
+        if (!pickCategoriesId.includes(category.id)) {
             this.pickedCategories.push(category)
 
         } else {
-            this.pickedCategories.splice(this.pickedCategories.indexOf(category), 1);
+            this.pickedCategories.splice(pickCategoriesId.indexOf(category.id), 1);
         }
 
         const categoryElt = document.querySelector(`#category-${category.name.toLowerCase()}`);
