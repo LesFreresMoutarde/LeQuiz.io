@@ -116,7 +116,7 @@ class GameController extends MainController {
 
     getQuestionTypes = async (categories) => {
 
-         return await db.sequelize.query(`SELECT "question"."type", COUNT(*) as "nb_questions" FROM "question"
+         return await db.sequelize.query(`SELECT "question"."type", COUNT(*) as "nbQuestions" FROM "question"
             INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
             WHERE "category_question"."categoryId" IN (:categories)
             AND "question"."status" = :status

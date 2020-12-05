@@ -29,6 +29,44 @@ class GameUtil {
 
         return check;
     }
+
+    static getWinCriterionMaxValue = (gameMode, questionTypesAvailable, questionTypesInput) => {
+
+        let max = 0;
+
+        switch (gameMode) {
+            case 'Serie':
+
+                for(let i = 0; i < questionTypesAvailable.length; i++ ) {
+
+                    if (!questionTypesAvailable[i].type === questionTypesInput[i].value) {
+                        throw new Error('Invalid Question Type');
+                    }
+
+                    if (questionTypesInput[i].checked) {
+                        max+= Number(questionTypesAvailable[i].nbQuestions);
+                    }
+
+                }
+
+                if (max > 100) max = 100;
+
+                break;
+            case 'Ascension':
+                break;
+
+            case 'Blitz':
+                break;
+
+            case 'Survivant':
+                break;
+
+            default:
+                throw new Error('Invalid Game Mode')
+        }
+
+        return max;
+    }
 }
 
 export default GameUtil;

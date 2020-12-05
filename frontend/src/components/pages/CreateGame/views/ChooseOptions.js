@@ -18,7 +18,7 @@ export default class ChooseOptions extends React.Component {
         this.state = {
             isLoading: true,
             gameOptions: false,
-            winCriterionMaxValue: false
+            winCriterionMaxValue: 0
         }
     }
 
@@ -65,12 +65,42 @@ export default class ChooseOptions extends React.Component {
 
     evaluateWinCriterionMaxValue = (event) => {
         const questionTypes = this.state.gameOptions.questionTypes;
+        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         console.log('toto', questionTypes);
-        const checkBoxes = Array.from(document.querySelectorAll('input[id*="checkbox-"'));
-        checkBoxes.map(checkbox => {
-            console.log('value', checkbox.value);
-        })
-        console.log('event', checkBoxes);
+        try {
+            //TODO Creer fonction qui renvoie la valeur selon le mode de jeu
+            const checkBoxes = Array.from(document.querySelectorAll('input[id*="cbx-"'));
+
+            const winCriterionMaxValue = GameUtil.getWinCriterionMaxValue
+            (
+                gameConfiguration.gameMode.classname,
+                questionTypes,
+                checkBoxes
+            );
+
+
+            /*let max = 0
+            for(let i = 0; i < questionTypes.length; i++ ) {
+
+                if (!questionTypes[i].type === checkBoxes[i].value) {
+                    throw new Error('Invalid Question Type');
+                }
+
+                if (checkBoxes[i].checked) {
+                    console.log(Number(questionTypes[i].nbQuestions));
+                    max+= Number(questionTypes[i].nbQuestions);
+                    console.log('value', checkBoxes[i].value);
+                    console.log('checked', checkBoxes[i].checked);
+                }
+
+            }*/
+
+            this.setState({winCriterionMaxValue});
+        } catch (e) {
+
+        }
+
+
 
     };
 
@@ -87,13 +117,13 @@ export default class ChooseOptions extends React.Component {
                 </>
             );
         } else {
-            const { gameOptions } = this.state;
+            const { gameOptions, winCriterionMaxValue } = this.state;
             console.log('gameOptions', gameOptions);
             return (
                 <>
                     <Title title={ChooseOptions.TITLE}/>
                     <div className="game-options-container">
-                        <WinCriterion winCriterion={gameOptions.winCriterion}/>
+                        <WinCriterion winCriterion={gameOptions.winCriterion} winCriterionMaxValue={winCriterionMaxValue}/>
                         <QuestionTypes questionTypes={gameOptions.questionTypes}
                                        evaluateWinCriterionMaxValue={this.evaluateWinCriterionMaxValue}/>
                     </div>

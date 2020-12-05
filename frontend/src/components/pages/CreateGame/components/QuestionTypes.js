@@ -1,7 +1,7 @@
 import React from "react";
 import QuestionType from "../components/QuestionType";
 
-const QuestionTypes = ({questionTypes}) => {
+const QuestionTypes = ({questionTypes, evaluateWinCriterionMaxValue}) => {
     return (
         <>
             <p className="game-options-section-header">Types de questions</p>
@@ -10,7 +10,8 @@ const QuestionTypes = ({questionTypes}) => {
                         console.log("questionTyê", questionType);
                         return(
                             <div key={index}>
-                                <QuestionType type={questionType.type}/>
+                                <QuestionType evaluateWinCriterionMaxValue={evaluateWinCriterionMaxValue}
+                                              type={questionType.type}/>
                             </div>
                         )
                     }
