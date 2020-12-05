@@ -186,7 +186,7 @@ export default class ChooseCategories extends React.Component {
                        })}
                     </div>
                     <NextButton disabled={nextButtonDisabled}
-                                submitCategories={this.submitCategories}
+                                onClick={this.submitCategories}
                                 sizeClass="large-button"
                                 content="Suivant"
                     />

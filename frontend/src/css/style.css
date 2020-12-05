@@ -351,6 +351,22 @@ button:disabled {
     color: white
 }
 
+.gm-serie {
+    background-color: #EAB01F;
+}
+
+.gm-ascension {
+    background-color: #217D9E;
+}
+
+.gm-blitz {
+    background-color: #DE4567;
+}
+
+.gm-survivant {
+    background-color:  #1E9B48;
+}
+
 .large-button {
     border: none;
     border-radius: 20px;
@@ -392,21 +408,30 @@ button:disabled {
     background-color: #CE3D1B;
 }
 
-.gm-serie {
-    background-color: #EAB01F;
+.game-options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.gm-ascension {
-    background-color: #217D9E;
+.game-options-section-header {
+    font-size: 1.6em;
+    color: #003C4C;
+    margin-bottom: 40px;
 }
 
-.gm-blitz {
-    background-color: #DE4567;
+.question-type-container {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.gm-survivant {
-    background-color:  #1E9B48;
+.question-type-checkbox {
+    opacity: 1 !important;
+    display: inline;
 }
+
 
 /* Large */
 @media screen and (max-width: 1200px) {

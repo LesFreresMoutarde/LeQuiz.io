@@ -46,7 +46,7 @@ class GameController extends MainController {
 
         try {
             response.gameOptions.questionTypes = await this.getQuestionTypes(categories);
-            response.gameOptions.winCriteria = this.getWinCriterion(gameMode);
+            response.gameOptions.winCriterion = this.getWinCriterion(gameMode);
             this.response = response;
         } catch (error) {
             console.error(error);
