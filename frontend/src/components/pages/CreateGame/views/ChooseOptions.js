@@ -4,7 +4,7 @@ import Util from "../../../../util/Util";
 import GameUtil from "../../../../util/GameUtil";
 import Loader from "../../../misc/Loader";
 import WinCriterion from "../components/WinCriterion";
-import QuestionType from "../components/QuestionType";
+
 import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
 
@@ -62,7 +62,7 @@ export default class ChooseOptions extends React.Component {
         })();
     }
 
-    // SUrement USELESS
+
     evaluateWinCriterionMaxValue = (event) => {
         const questionTypes = this.state.gameOptions.questionTypes;
         console.log('toto', questionTypes);
