@@ -38,6 +38,22 @@ class GameController extends MainController {
             this.response = response;
         }
     };
+    
+    actionOptions = async (gameMode, categories) => {
+        const response = {
+            gameOptions: {}
+        };
+        try {
+            response.gameOptions.questionTypes = await this.getQuestionTypes(categories);
+            response.gameOptions.winCriteria = this.getWinCriterion(gameMode);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+            this.statusCode = 400;
+            response.error = error;
+            this.response = response;
+        }
+    };
 
     generateCodeRoom = () => {
         let codeRoom = "";
@@ -95,6 +111,37 @@ class GameController extends MainController {
             });
 
             return categoriesInJson
+    };
+
+    getQuestionTypes = async (categories) => {
+
+         return await db.sequelize.query(`SELECT "question"."type", COUNT(*) as "nb_questions" FROM "question"
+            INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
+            WHERE "category_question"."categoryId" IN (:categories)
+            AND "question"."status" = :status
+            GROUP BY "question"."type"`,
+            {
+                replacements: {
+                    categories: categories,
+                    status: db.Question.STATUS_APPROVED
+                },
+                type: db.sequelize.QueryTypes.SELECT
+        });
+
+    };
+
+    getWinCriterion = (gameMode) => {
+        console.log("le gamemode", gameMode);
+        let winCriterion = null;
+        GameController.GAME_MODES.map(gameModeClass => {
+            if (gameModeClass.CLASSNAME === gameMode) {
+                winCriterion = gameModeClass.WIN_CRITERION;
+            }
+        });
+
+        if (!winCriterion) throw new Error('Invalid Game Mode');
+
+        return winCriterion;
     };
 
 

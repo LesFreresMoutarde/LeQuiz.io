@@ -21,7 +21,15 @@ gameRouter.get('/categories', async (req, res) => {
 
 });
 
-gameRouter.get('/options', (req, res) => {
+gameRouter.post('/options', async (req, res) => {
+
+    const { gameMode, categories } = req.body;
+
+    const gameController = new GameController();
+
+    await gameController.actionOptions(gameMode, categories);
+
+    res.status(gameController.statusCode);
     res.json({endpoint: 'GET /game/options'})
 });
 
