@@ -43,10 +43,11 @@ class GameController extends MainController {
         const response = {
             gameOptions: {}
         };
+
         try {
             response.gameOptions.questionTypes = await this.getQuestionTypes(categories);
             response.gameOptions.winCriteria = this.getWinCriterion(gameMode);
-            console.log(response);
+            this.response = response;
         } catch (error) {
             console.error(error);
             this.statusCode = 400;
@@ -131,8 +132,9 @@ class GameController extends MainController {
     };
 
     getWinCriterion = (gameMode) => {
-        console.log("le gamemode", gameMode);
+
         let winCriterion = null;
+
         GameController.GAME_MODES.map(gameModeClass => {
             if (gameModeClass.CLASSNAME === gameMode) {
                 winCriterion = gameModeClass.WIN_CRITERION;

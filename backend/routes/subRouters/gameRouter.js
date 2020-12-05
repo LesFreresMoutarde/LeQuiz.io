@@ -30,7 +30,7 @@ gameRouter.post('/options', async (req, res) => {
     await gameController.actionOptions(gameMode, categories);
 
     res.status(gameController.statusCode);
-    res.json({endpoint: 'GET /game/options'})
+    res.json(gameController.response);
 });
 
 gameRouter.route('/rooms')
