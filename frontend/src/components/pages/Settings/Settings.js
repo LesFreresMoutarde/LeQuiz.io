@@ -11,32 +11,8 @@ class Settings extends React.Component {
         }
     }
 
-    render = () => {
-        return (
-            <div className="flex-container">
-                <nav id="page-lateral-navigation">
-                    <ul>
-                        <li data-desktop-nav="email" className="active"><a onClick={this.onNavigate}>Adresse email</a></li>
-                        <li data-desktop-nav="password"><a onClick={this.onNavigate}>Mot de passe</a></li>
-                    </ul>
-                </nav>
-                <div className="flex-item-full-width">
-                    <h1 className="mb">Paramètres</h1>
-
-                    <div id="desktop-variable-content">
-
-                        <section id="desktop-content-email">
-                            <EmailSettings/>
-                        </section>
-
-                        <section id="desktop-content-password">
-                            <PasswordSettings/>
-                        </section>
-
-                    </div>
-                </div>
-            </div>
-        )
+    componentDidMount() {
+        this.showDesktopSection('email');
     }
 
     onNavigate = (e) => {
@@ -79,8 +55,32 @@ class Settings extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.showDesktopSection('email');
+    render = () => {
+        return (
+            <div className="flex-container">
+                <nav id="page-lateral-navigation">
+                    <ul>
+                        <li data-desktop-nav="email" className="active"><a onClick={this.onNavigate}>Adresse email</a></li>
+                        <li data-desktop-nav="password"><a onClick={this.onNavigate}>Mot de passe</a></li>
+                    </ul>
+                </nav>
+                <div className="flex-item-full-width">
+                    <h1 className="mb">Paramètres</h1>
+
+                    <div id="desktop-variable-content">
+
+                        <section id="desktop-content-email">
+                            <EmailSettings/>
+                        </section>
+
+                        <section id="desktop-content-password">
+                            <PasswordSettings/>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 

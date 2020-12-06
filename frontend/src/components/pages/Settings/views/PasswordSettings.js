@@ -15,31 +15,6 @@ class PasswordSettings extends React.Component {
         }
     }
 
-    render = () => {
-        if(this.state.error) {
-            return(
-                <p>Une erreur est survenue.</p>
-            )
-        } else {
-            return(
-                <>
-                    <form id="password-settings-form" onSubmit={this.onPasswordFormSubmit} style={{maxWidth: '600px'}}>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.currentPassword ? ' error' : '')} id="current-password-input" type="password" name="currentPassword" placeholder="Mot de passe actuel" autoComplete="current-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.newPassword ? ' error' : '')} id="new-password-input" type="password" name="newPassword" placeholder="Nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.confirmNewPassword ? ' error' : '')} id="confirm-new-password-input" type="password" name="confirmNewPassword" placeholder="Confirmation du nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <button type="submit" className="button green mb3">Changer de mot de passe</button>
-                    </form>
-                </>
-            )
-        }
-    }
-
     onInputUpdate = (e) => {
         const inputName = e.target.getAttribute('name');
 
@@ -98,6 +73,31 @@ class PasswordSettings extends React.Component {
 
         for(const field in this.state.formErrors) {
             toastr.error(this.state.formErrors[field]);
+        }
+    }
+
+    render = () => {
+        if(this.state.error) {
+            return(
+                <p>Une erreur est survenue.</p>
+            )
+        } else {
+            return(
+                <>
+                    <form id="password-settings-form" onSubmit={this.onPasswordFormSubmit} style={{maxWidth: '600px'}}>
+                        <div className="mb3">
+                            <input className={"full-width" + (this.state.formErrors.currentPassword ? ' error' : '')} id="current-password-input" type="password" name="currentPassword" placeholder="Mot de passe actuel" autoComplete="current-password" required onInput={this.onInputUpdate}/>
+                        </div>
+                        <div className="mb3">
+                            <input className={"full-width" + (this.state.formErrors.newPassword ? ' error' : '')} id="new-password-input" type="password" name="newPassword" placeholder="Nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
+                        </div>
+                        <div className="mb3">
+                            <input className={"full-width" + (this.state.formErrors.confirmNewPassword ? ' error' : '')} id="confirm-new-password-input" type="password" name="confirmNewPassword" placeholder="Confirmation du nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
+                        </div>
+                        <button type="submit" className="button green mb3">Changer de mot de passe</button>
+                    </form>
+                </>
+            )
         }
     }
 }

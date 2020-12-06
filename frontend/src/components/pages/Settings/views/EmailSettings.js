@@ -17,31 +17,23 @@ class EmailSettings extends React.Component {
         }
     }
 
-    render = () => {
-        if(this.state.isLoading) {
-            return(
-                <Loader width="50px"/>
-            )
-        } else if(this.state.error) {
-            return(
-                <p>Une erreur est survenue.</p>
-            )
-        } else {
-            return(
-                <>
-                    <p>Votre adresse email actuelle est <strong>{this.state.email}</strong></p>
-                    <form id="email-settings-form" onSubmit={this.onEmailFormSubmit} style={{maxWidth: '600px'}}>
-                        <div className="mb3 mt3">
-                            <input className={"full-width" + (this.state.formErrors.newEmail ? ' error' : '')} id="new-email-input" type="email" name="newEmail" placeholder="Nouvelle adresse email" autoComplete="email" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="current-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <button type="submit" className="button green mb3">Changer d'adresse email</button>
-                    </form>
-                </>
-            )
+    componentDidMount = async () => {
+        const response = await Util.performAPIRequest('/settings/email');
+
+        if(!response.ok) {
+            const state = this.state;
+            state.isLoading = false;
+            state.error = true;
+            this.setState(state);
+            return;
         }
+
+        const responseJSON = await response.json();
+
+        const state = this.state;
+        state.isLoading = false;
+        state.email = responseJSON.email;
+        this.setState(state);
     }
 
     onInputUpdate = (e) => {
@@ -107,23 +99,31 @@ class EmailSettings extends React.Component {
         }
     }
 
-    componentDidMount = async () => {
-        const response = await Util.performAPIRequest('/settings/email');
-
-        if(!response.ok) {
-            const state = this.state;
-            state.isLoading = false;
-            state.error = true;
-            this.setState(state);
-            return;
+    render = () => {
+        if(this.state.isLoading) {
+            return(
+                <Loader width="50px"/>
+            )
+        } else if(this.state.error) {
+            return(
+                <p>Une erreur est survenue.</p>
+            )
+        } else {
+            return(
+                <>
+                    <p>Votre adresse email actuelle est <strong>{this.state.email}</strong></p>
+                    <form id="email-settings-form" onSubmit={this.onEmailFormSubmit} style={{maxWidth: '600px'}}>
+                        <div className="mb3 mt3">
+                            <input className={"full-width" + (this.state.formErrors.newEmail ? ' error' : '')} id="new-email-input" type="email" name="newEmail" placeholder="Nouvelle adresse email" autoComplete="email" required onInput={this.onInputUpdate}/>
+                        </div>
+                        <div className="mb3">
+                            <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="current-password" required onInput={this.onInputUpdate}/>
+                        </div>
+                        <button type="submit" className="button green mb3">Changer d'adresse email</button>
+                    </form>
+                </>
+            )
         }
-
-        const responseJSON = await response.json();
-
-        const state = this.state;
-        state.isLoading = false;
-        state.email = responseJSON.email;
-        this.setState(state);
     }
 }
 

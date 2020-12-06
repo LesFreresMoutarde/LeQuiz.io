@@ -87,7 +87,6 @@ class SettingsController extends MainController {
             return;
         }
 
-        // await user.setEmail(requestBody.newEmail);
         try {
             user.email = requestBody.newEmail;
             await user.save();
@@ -165,6 +164,15 @@ class SettingsController extends MainController {
                 },
             };
             return;
+        }
+
+        if(requestBody.currentPassword === requestBody.newPassword) {
+            this.statusCode = 422;
+            this.response = {
+                errors: {
+                    newPassword: 'Le nouveau mot de passe est identique au mot de passe actuel',
+                },
+            };
         }
 
         if(requestBody.newPassword.length < Util.Password.MIN_LENGTH) {
