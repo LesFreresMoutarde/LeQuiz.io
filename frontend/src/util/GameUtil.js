@@ -8,6 +8,10 @@ class GameUtil {
             'categories': {
                 properties: ['gameMode'],
                 redirect: '/create-room/game-mode'
+            },
+            'options': {
+                properties: ['gameMode', 'categories'],
+                redirect: '/create-room/categories'
             }
         }
     };
@@ -37,7 +41,7 @@ class GameUtil {
         switch (gameMode) {
             case 'Serie':
 
-                for(let i = 0; i < questionTypesAvailable.length; i++ ) {
+                for (let i = 0; i < questionTypesAvailable.length; i++) {
 
                     if (!questionTypesAvailable[i].type === questionTypesInput[i].value) {
                         throw new Error('Invalid Question Type');

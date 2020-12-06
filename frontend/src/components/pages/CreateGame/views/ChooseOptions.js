@@ -25,40 +25,35 @@ export default class ChooseOptions extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                //TODO Vérifier la conf de la game
-                const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-                console.log(gameConfiguration);
-                let gameMode = "Serie";
-                const categoriesId = gameConfiguration.categories.map((category) => (category.id));
-
-                /* DEBUG EN ATTENDANT DE REVERIFIER LA CONF DE LA GAME */
-
-                // JV, Sport, Histoire
-                if (categoriesId.length === 0) categoriesId.push('0f677077-2b7e-4eb5-a28c-d1d395b9c8f1',
-                        "3b9474ad-189c-4ed3-8fc6-d8d4b222a5e3",
-                        "9bde0fff-731d-4fe2-939e-f737e926bd70")
-
-                console.log("catID", categoriesId);
-               /* FIN DEBUG */
-
-                const response = await Util.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
-
-                if (!response.ok) throw new Error(`${response.status} : ${response.statusText}`);
-
-                const responseData = await response.json();
-
-                this.setState({
-                    isLoading: false,
-                    gameOptions: responseData.gameOptions
-                });
-
-                //console.log(responseData);
+                const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
                 
+                if (!checkConfiguration.verified) {
+                    this.props.history.replace(checkConfiguration.redirect);
+
+                } else {
+                    const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+                    console.log(gameConfiguration);
+
+                    const categoriesId = gameConfiguration.categories.map((category) => (category.id));
+                    const gameMode = gameConfiguration.gameMode.classname;
+
+                    const response = await Util.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
+
+                    if (!response.ok) throw new Error(`${response.status} : ${response.statusText}`);
+
+                    const responseData = await response.json();
+
+                    this.setState({
+                        isLoading: false,
+                        gameOptions: responseData.gameOptions
+                    });
+
+
+                }
+
             } catch (error) {
                 console.error(error);
             }
-
-
         })();
     }
 
@@ -66,9 +61,9 @@ export default class ChooseOptions extends React.Component {
     evaluateWinCriterionMaxValue = (event) => {
         const questionTypes = this.state.gameOptions.questionTypes;
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        console.log('toto', questionTypes);
+
         try {
-            //TODO Creer fonction qui renvoie la valeur selon le mode de jeu
+
             const checkBoxes = Array.from(document.querySelectorAll('input[id*="cbx-"'));
 
             const winCriterionMaxValue = GameUtil.getWinCriterionMaxValue
@@ -77,23 +72,6 @@ export default class ChooseOptions extends React.Component {
                 questionTypes,
                 checkBoxes
             );
-
-
-            /*let max = 0
-            for(let i = 0; i < questionTypes.length; i++ ) {
-
-                if (!questionTypes[i].type === checkBoxes[i].value) {
-                    throw new Error('Invalid Question Type');
-                }
-
-                if (checkBoxes[i].checked) {
-                    console.log(Number(questionTypes[i].nbQuestions));
-                    max+= Number(questionTypes[i].nbQuestions);
-                    console.log('value', checkBoxes[i].value);
-                    console.log('checked', checkBoxes[i].checked);
-                }
-
-            }*/
 
             this.setState({winCriterionMaxValue});
         } catch (e) {

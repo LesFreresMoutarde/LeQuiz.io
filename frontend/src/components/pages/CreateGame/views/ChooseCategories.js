@@ -18,7 +18,6 @@ export default class ChooseCategories extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameConfiguration: Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key),
             isLoading: true,
             categories: false,
             pickAllDisabled: false,
