@@ -35,7 +35,7 @@ export default class ChooseOptions extends React.Component {
                     this.props.history.replace(checkConfiguration.redirect);
 
                 } else {
-
+                    let { winCriterionInputValue } = this.state;
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
                     const categoriesId = gameConfiguration.categories.map((category) => (category.id));
@@ -60,7 +60,9 @@ export default class ChooseOptions extends React.Component {
                         questionTypes.forEach(questionType => {
                             if (!pickedQuestionTypes.includes(questionType.type))
                                 questionType.checked = false;
-                        })
+                        });
+
+                       winCriterionInputValue = gameConfiguration.winCriterion
 
                     }
 
@@ -68,10 +70,10 @@ export default class ChooseOptions extends React.Component {
                         isLoading: false,
                         gameOptions: responseData.gameOptions,
                         questionTypes,
+                        winCriterionInputValue
                     });
 
-                    this.evaluateWinCriterionMaxValue(false);
-
+                    this.evaluateWinCriterionMaxValue();
                 }
 
             } catch (error) {
@@ -80,50 +82,51 @@ export default class ChooseOptions extends React.Component {
         })();
     }
 
-    evaluateWinCriterionMaxValue = (isTriggeredByEvent, checkboxPicked = null) => {
+    pickQuestionType = (questionTypePicked) => {
+        try {
+            const { questionTypes } = this.state;
+            const questionTypesLabel = questionTypes.map(questionType => (questionType.type));
+
+            if (!questionTypesLabel.includes(questionTypePicked.type))
+                throw new Error('Invalid Question Type');
+
+            questionTypes.forEach(questionType => {
+                if (questionType.type === questionTypePicked.type) questionType.checked = questionTypePicked.checked;
+            });
+
+            this.setState({questionTypes});
+
+            this.evaluateWinCriterionMaxValue()
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    evaluateWinCriterionMaxValue = () => {
         const questionTypesAvailable = this.state.gameOptions.questionTypes;
         const { questionTypes } = this.state;
-        let { winCriterionInputValue } = this.state;
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
-        try {
+        const winCriterionMaxValue = GameUtil.getWinCriterionMaxValue
+        (
+            gameConfiguration.gameMode.classname,
+            questionTypesAvailable,
+            questionTypes
+        );
 
-            if (isTriggeredByEvent) {
+        this.setState({winCriterionMaxValue});
 
-                const questionTypesLabel = questionTypes.map(questionType => (questionType.type));
-                if (!questionTypesLabel.includes(checkboxPicked.type))
-                    throw new Error('Invalid Question Type');
+        this.validateWinCriterionValue(winCriterionMaxValue);
 
-                questionTypes.forEach(questionType => {
-                    if (questionType.type === checkboxPicked.type) questionType.checked = checkboxPicked.checked;
-                })
-
-            } else {
-
-                if (gameConfiguration.questionTypes.length > 0)
-                    winCriterionInputValue = gameConfiguration.winCriterion;
-            }
-
-            const winCriterionMaxValue = GameUtil.getWinCriterionMaxValue
-            (
-                gameConfiguration.gameMode.classname,
-                questionTypesAvailable,
-                questionTypes
-            );
-
-
-            this.setState({winCriterionMaxValue, questionTypes});
-
-            this.checkSelectedWinCriterion(winCriterionMaxValue, winCriterionInputValue);
-
-        } catch (e) {
-            console.error(e);
-        }
     };
 
-    checkSelectedWinCriterion = (winCriterionMaxValue, winCriterionInputValue, event = null) => {
+
+    validateWinCriterionValue = (winCriterionMaxValue, winCriterionInputValue= null, event = null) => {
 
         let nextButtonDisabled = true;
+
+        if (!winCriterionInputValue) winCriterionInputValue = this.state.winCriterionInputValue;
 
         if (event) winCriterionInputValue = event.target.value;
 
@@ -141,7 +144,7 @@ export default class ChooseOptions extends React.Component {
     submitGameOptions = () => {
 
         try {
-            const { questionTypes, gameOptions, winCriterionInputValue } = this.state;
+            const { questionTypes, winCriterionInputValue } = this.state;
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
             gameConfiguration.winCriterion = winCriterionInputValue;
@@ -196,10 +199,10 @@ export default class ChooseOptions extends React.Component {
                             winCriterion={gameOptions.winCriterion}
                             winCriterionMaxValue={winCriterionMaxValue}
                             winCriterionInputValue={winCriterionInputValue}
-                            checkSelectedWinCriterion={this.checkSelectedWinCriterion}
+                            validateWinCriterionValue={this.validateWinCriterionValue}
                         />
                         <QuestionTypes questionTypes={questionTypes}
-                                       evaluateWinCriterionMaxValue={this.evaluateWinCriterionMaxValue}/>
+                                       pickQuestionType={this.pickQuestionType}/>
                     </div>
                     <NextButton disabled={nextButtonDisabled}
                                 onClick={this.submitGameOptions} sizeClass="large-button" content="Suivant"/>
@@ -207,6 +210,5 @@ export default class ChooseOptions extends React.Component {
             )
         }
     }
-
 
 }
