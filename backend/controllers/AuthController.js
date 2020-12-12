@@ -185,7 +185,14 @@ class AuthController extends MainController {
             return;
         }
 
-        // TODO check if user is banned
+        if(user.isBanned) {
+            this.statusCode = 403;
+            this.response = {
+                error: 'User is banned',
+                unbanDate: user.unbanDate,
+            }
+            return;
+        }
 
         const currentAccessTokenPayload = {...accessTokenPayload};
         const newAccessTokenPayload = Object.assign(currentAccessTokenPayload, {
@@ -211,6 +218,23 @@ class AuthController extends MainController {
             accessToken: newAccessToken,
             refreshToken: newRefreshToken,
         }
+    }
+
+    actionLogout = async (accessTokenPayload) => {
+        console.log(accessTokenPayload);
+
+        if(!accessTokenPayload.hasOwnProperty('user')) {
+            this.statusCode = 400;
+            this.response = {
+                error: 'User is not logged in',
+            };
+        }
+
+        if(accessTokenPayload.user.hasOwnProperty('id')) {
+            await this.invalidateUserRefreshTokens(accessTokenPayload.user.id);
+        }
+
+        this.statusCode = 204;
     }
 
     /**
@@ -327,6 +351,18 @@ class AuthController extends MainController {
             {
                 replacements: {
                     token: refreshToken,
+                },
+                type: QueryTypes.DELETE,
+            },
+        );
+    }
+
+    invalidateUserRefreshTokens = async (userId) => {
+        await db.sequelize.query(
+            'DELETE from "refresh_token" WHERE "userId" = :userId',
+            {
+                replacements: {
+                    userId,
                 },
                 type: QueryTypes.DELETE,
             },

@@ -36,8 +36,12 @@ authRouter.post('/login', async (req, res) => {
     res.send(controller.response);
 });
 
-authRouter.post('/logout', (req, res) => {
-    res.json({endpoint: 'POST /auth/logout'})
+authRouter.post('/logout', async (req, res) => {
+    const controller = new AuthController();
+    await controller.actionLogout(req.accessTokenPayload);
+
+    res.status(controller.statusCode);
+    res.send(controller.response);
 });
 
 

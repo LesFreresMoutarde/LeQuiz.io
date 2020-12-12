@@ -3,11 +3,12 @@ import React from "react";
 class Loader extends React.Component {
     render = () => {
         const width = this.props.width ?? 38;
+        const height = this.props.height ?? width;
         const color = this.props.color ?? "#fff";
 
         return(
             /*By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL*/
-            <svg width={width} height={width} viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+            <svg width={width} height={height} viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
                         <stop stopColor={color} stopOpacity="0" offset="0%"/>
