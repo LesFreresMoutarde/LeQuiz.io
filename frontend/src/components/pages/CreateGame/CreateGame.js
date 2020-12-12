@@ -5,6 +5,7 @@ import GameUtil from "../../../util/GameUtil";
 import ChooseGameMode from "./views/ChooseGameMode";
 import ChooseCategories from "./views/ChooseCategories";
 import ChooseOptions from "./views/ChooseOptions";
+import Room from "./views/Room";
 
 export default class CreateGame extends React.Component {
 
@@ -22,7 +23,7 @@ export default class CreateGame extends React.Component {
             gameMode: '',
             categories: [],
             questionTypes: [],
-            winCondition: '',
+            winCriterion: '',
             difficulty: null
         }
     };
@@ -33,6 +34,7 @@ export default class CreateGame extends React.Component {
                 <Route exact path="/create-room/game-mode" component={ChooseGameMode}/>
                 <Route exact path="/create-room/categories" component={ChooseCategories}/>
                 <Route exact path="/create-room/options" component={ChooseOptions}/>
+                <Route exact path="/create-room/room" component={Room}/>
             </Switch>
         );
     }

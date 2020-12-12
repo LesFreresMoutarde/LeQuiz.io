@@ -36,12 +36,33 @@ class GameUtil {
 
     static getWinCriterionMaxValue = (gameMode, questionTypesAvailable, questionTypesInput) => {
 
+        const questionTypesAvailableLabel = questionTypesAvailable.map(questionType => (questionType.type));
+        const questionTypesInputLabel = questionTypesInput.map(questionTypeInput => (questionTypeInput.type));
+
         let max = 0;
+
+        questionTypesInputLabel.forEach(questionTypeInputLabel => {
+            if (!questionTypesAvailableLabel.includes(questionTypeInputLabel)) throw new Error('Invalid question type')
+        });
 
         switch (gameMode) {
             case 'Serie':
 
-                for (let i = 0; i < questionTypesAvailable.length; i++) {
+               /* console.log(questionTypesAvailable, questionTypesInput);
+
+                for (const questionType of questionTypesAvailable) {
+                    if (!questionTypesInput.hasOwnProperty(questionType.type))
+                        throw new Error('Invalid Question Type');*/
+               for (const questionTypeInput of questionTypesInput) {
+                   console.log("booru de",questionTypeInput);
+                   if (questionTypeInput.checked) max += Number(questionTypeInput.nbQuestions);
+               }
+
+                    // if (questionTypesInput[questionType.type])
+                    //     max+= Number(questionType.nbQuestions);
+                //}
+
+                /*for (let i = 0; i < questionTypesAvailable.length; i++) {
 
                     if (!questionTypesAvailable[i].type === questionTypesInput[i].value) {
                         throw new Error('Invalid Question Type');
@@ -51,7 +72,7 @@ class GameUtil {
                         max+= Number(questionTypesAvailable[i].nbQuestions);
                     }
 
-                }
+                }*/
 
                 if (max > 100) max = 100;
 

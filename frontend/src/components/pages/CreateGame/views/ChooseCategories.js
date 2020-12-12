@@ -29,7 +29,7 @@ export default class ChooseCategories extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                console.log("la conf de la game", Util.getObjectFromSessionStorage('gameConfiguration'));
+                // console.log("la conf de la game", Util.getObjectFromSessionStorage('gameConfiguration'));
                 const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
 
                 if (!checkConfiguration.verified) {

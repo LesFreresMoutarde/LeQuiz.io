@@ -1,12 +1,16 @@
 import React from "react";
 
-const QuestionType = ({type, evaluateWinCriterionMaxValue}) => {
+const QuestionType = ({type, evaluateWinCriterionMaxValue, checked}) => {
     return (
-        <>
+        <div className="question-type-wrapper">
+            {/*TODO Stylish Checkbox*/}
             <input className="question-type-checkbox" type="checkbox"
-                   id={`cbx-${type}`} value={type} onChange={() => evaluateWinCriterionMaxValue()}/>
-            <span>{type}</span>
-        </>)
+                   value={type}
+                   onChange={(e) => evaluateWinCriterionMaxValue(true, {
+                       type: type,
+                       checked: !checked})} checked={checked}/>
+            <span className="question-type-name">{type}</span>
+        </div>)
 };
 
 export default QuestionType;

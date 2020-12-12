@@ -7,11 +7,10 @@ const QuestionTypes = ({questionTypes, evaluateWinCriterionMaxValue}) => {
             <p className="game-options-section-header">Types de questions</p>
             <div className="question-type-container">
                 {questionTypes.map((questionType, index) => {
-                        console.log("questionTyê", questionType);
                         return(
                             <div key={index}>
                                 <QuestionType evaluateWinCriterionMaxValue={evaluateWinCriterionMaxValue}
-                                              type={questionType.type}/>
+                                              type={questionType.type} checked={questionType.checked}/>
                             </div>
                         )
                     }

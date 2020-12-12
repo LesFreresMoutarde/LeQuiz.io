@@ -1,7 +1,6 @@
 import React from "react";
 
 const GameMode = ({gameMode, pickGameMode}) => {
-   console.log(gameMode);
     const {label, description, allowed, classname} = gameMode;
     return (
         <div className="game-mode-wrapper">

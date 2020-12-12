@@ -1,14 +1,15 @@
 import React from "react";
 
-const WinCriterion = ({ winCriterion, winCriterionMaxValue }) => {
-    const { label, type} = winCriterion
+const WinCriterion = ({ winCriterion, winCriterionMaxValue, winCriterionInputValue, checkSelectedWinCriterion }) => {
+    const { label, type} = winCriterion;
     return (
-        <>
+        <div className="win-criterion-wrapper">
             <p className="game-options-section-header">{label}</p>
-            <p>Max : {winCriterionMaxValue}</p>
-            <input type={type}/>
-        </>
-        )
+            <p className="win-criterion-max">Maximum : {winCriterionMaxValue}</p>
+            <input  className="win-criterion-input" onChange={(event) => checkSelectedWinCriterion(winCriterionMaxValue, 10, event)}
+                   id="criterion-value" type={type} min={0} max={winCriterionMaxValue} value={winCriterionInputValue}/>
+        </div>
+    )
 };
 
 export default WinCriterion;
