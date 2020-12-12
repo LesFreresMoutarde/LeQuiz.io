@@ -1,11 +1,20 @@
 db = require('./models/dbModels');
 const express = require('express');
 const bodyParser = require('body-parser');
-const AuthController = require('./controllers/AuthController');
-
-
 const app = express();
+const server = require('http').createServer(app);
 const port = 3000;
+
+const AuthController = require('./controllers/AuthController');
+// const io = require('socket.io')(server);
+//
+// console.log('io type', io);
+// io.on('connection', () => {
+//     console.log('enfoire !!!');
+// });
+
+require('./manager/SocketManager')(server);
+
 
 const mainRouter = require('./routes/mainRouter');
 
@@ -264,6 +273,6 @@ app.get('/', async (req, res) => {
     res.send(codeRoom);
 });
 
-app.listen(port,() => {
+server.listen(port,() => {
     console.log(`Server running at http://localhost:${port}`);
 });

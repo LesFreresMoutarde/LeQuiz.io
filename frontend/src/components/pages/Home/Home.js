@@ -1,7 +1,14 @@
 import React from "react";
 import {Link} from "react-router-dom";
+const socketIo = require('socket.io-client');
 
 class Home extends React.Component {
+
+    componentDidMount() {
+        const socket = socketIo('http://localhost:3000')
+        console.log("la socket", socket);
+    }
+
     render = () => {
         return (
             <>
