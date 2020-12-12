@@ -18,7 +18,6 @@ export default class ChooseCategories extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameConfiguration: Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key),
             isLoading: true,
             categories: false,
             pickAllDisabled: false,
@@ -30,7 +29,7 @@ export default class ChooseCategories extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                console.log("la conf de la game", Util.getObjectFromSessionStorage('gameConfiguration'));
+                // console.log("la conf de la game", Util.getObjectFromSessionStorage('gameConfiguration'));
                 const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
 
                 if (!checkConfiguration.verified) {
@@ -145,7 +144,7 @@ export default class ChooseCategories extends React.Component {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.categories = this.pickedCategories;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-        this.props.history.push('/create-room/settings');
+        this.props.history.push('/create-room/options');
     };
 
     render() {
@@ -188,7 +187,7 @@ export default class ChooseCategories extends React.Component {
                        })}
                     </div>
                     <NextButton disabled={nextButtonDisabled}
-                                submitCategories={this.submitCategories}
+                                onClick={this.submitCategories}
                                 sizeClass="large-button"
                                 content="Suivant"
                     />

@@ -423,6 +423,22 @@ button:disabled {
     color: white
 }
 
+.gm-serie {
+    background-color: #EAB01F;
+}
+
+.gm-ascension {
+    background-color: #217D9E;
+}
+
+.gm-blitz {
+    background-color: #DE4567;
+}
+
+.gm-survivant {
+    background-color:  #1E9B48;
+}
+
 .large-button {
     border: none;
     border-radius: 20px;
@@ -464,20 +480,64 @@ button:disabled {
     background-color: #CE3D1B;
 }
 
-.gm-serie {
-    background-color: #EAB01F;
+.game-options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.gm-ascension {
-    background-color: #217D9E;
+.game-options-section-header {
+    font-size: 1.6em;
+    color: #003C4C;
+    margin-bottom: 40px;
 }
 
-.gm-blitz {
-    background-color: #DE4567;
+.question-type-container {
+    display: flex;
+    width: 300px;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
-.gm-survivant {
-    background-color:  #1E9B48;
+.question-type-checkbox {
+    opacity: 1 !important;
+    width: 30px !important;
+    height: 30px !important;
+    display: inline;
+}
+
+.question-type-name {
+    font-size: 1.5em;
+    margin-left: 10px;
+
+}
+
+.question-type-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+
+.win-criterion-input {
+    width: 20%;
+    font-size: 2em;
+    text-align: center;
+}
+
+.win-criterion-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.win-criterion-max {
+    font-size: 1.2em;
+    margin-bottom: 20px;
 }
 
 .next-button {
@@ -508,9 +568,12 @@ button:disabled {
         margin-bottom: 60px;
     }
 
+    /* Game Options */
+    .win-criterion-input {
+        width: 25%;
+    }
+
 }
-
-
 
 /* Medium */
 @media screen and (max-width: 992px) {
@@ -529,6 +592,11 @@ button:disabled {
         width: 20%;
         margin-left: 50px;
         margin-bottom: 60px;
+    }
+
+    /* Game Options */
+    .win-criterion-input {
+        width: 30%;
     }
 
 }
@@ -551,8 +619,6 @@ button:disabled {
         font-size: 1.7em;
         color: white
     }
-
-
 
 }
 
@@ -580,7 +646,6 @@ button:disabled {
         width: 35%;
         margin-left: 30px;
         margin-bottom: 60px;
-
     }
 
     .category {
@@ -598,6 +663,11 @@ button:disabled {
     .large-button {
         padding: 15px 40px;
         font-size: 1.3em;
+    }
+
+    /* Game Options */
+    .win-criterion-input {
+        width: 50%;
     }
 
 }

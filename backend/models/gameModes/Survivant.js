@@ -7,9 +7,11 @@ class Survivant extends GameMode {
     static DESCRIPTION = `
     Dans cette série de questions éliminatoires, le dernier joueur encore en lice remporte la partie`;
 
-    getWinCondition() {
-        return true;
-    }
+    static WIN_CRITERION =  {
+        type: null,
+        label: null
+    };
+
 }
 
 module.exports = Survivant;

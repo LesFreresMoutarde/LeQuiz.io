@@ -8,6 +8,10 @@ class GameUtil {
             'categories': {
                 properties: ['gameMode'],
                 redirect: '/create-room/game-mode'
+            },
+            'options': {
+                properties: ['gameMode', 'categories'],
+                redirect: '/create-room/categories'
             }
         }
     };
@@ -28,6 +32,43 @@ class GameUtil {
         });
 
         return check;
+    }
+
+    static getWinCriterionMaxValue = (gameMode, questionTypesAvailable, questionTypesInput) => {
+
+        const questionTypesAvailableLabel = questionTypesAvailable.map(questionType => (questionType.type));
+        const questionTypesInputLabel = questionTypesInput.map(questionTypeInput => (questionTypeInput.type));
+
+        let max = 0;
+
+        questionTypesInputLabel.forEach(questionTypeInputLabel => {
+            if (!questionTypesAvailableLabel.includes(questionTypeInputLabel)) throw new Error('Invalid question type')
+        });
+
+        switch (gameMode) {
+            case 'Serie':
+
+                for (const questionTypeInput of questionTypesInput) {
+                    if (questionTypeInput.checked) max += Number(questionTypeInput.nbQuestions);
+                }
+
+                if (max > 100) max = 100;
+
+                break;
+            case 'Ascension':
+                break;
+
+            case 'Blitz':
+                break;
+
+            case 'Survivant':
+                break;
+
+            default:
+                throw new Error('Invalid Game Mode')
+        }
+
+        return max;
     }
 }
 

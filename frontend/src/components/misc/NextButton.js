@@ -1,10 +1,10 @@
 import React from "react";
 
-const NextButton = ({sizeClass, disabled, submitCategories, content}) => {
+const NextButton = ({sizeClass, disabled, onClick, content}) => {
     return (
         <button className={`float-right next-button ${sizeClass}`}
                 disabled={disabled}
-                onClick={() => submitCategories()}>{content}</button>
+                onClick={() => onClick()}>{content}</button>
     )
 };
 
