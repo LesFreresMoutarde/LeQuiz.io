@@ -14,7 +14,7 @@ class UserController extends MainController {
                 guestId += possible.charAt(Math.floor(Math.random() * possible.length));
             }
         }
-        let guest = {
+        var guest = {
             id: guestId,
             userName: 'guest'
         };
