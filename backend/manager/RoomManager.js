@@ -1,8 +1,8 @@
-const socketIo = require('socket.io');
+const socketEngine = require('socket.io');
 
 module.exports = (server) => {
 
- const io = socketIo(server, {
+ const io = socketEngine(server, {
      cors: {
          origin: 'http://localhost',
      }
@@ -10,7 +10,7 @@ module.exports = (server) => {
 
 
  io.on('connection', () => {
-     console.log('enfoire !!!');
+     console.log('user has connected');
  })
 
 };

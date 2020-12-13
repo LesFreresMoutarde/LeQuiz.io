@@ -6,14 +6,7 @@ const server = require('http').createServer(app);
 const port = 3000;
 
 const AuthController = require('./controllers/AuthController');
-// const io = require('socket.io')(server);
-//
-// console.log('io type', io);
-// io.on('connection', () => {
-//     console.log('enfoire !!!');
-// });
-
-require('./manager/SocketManager')(server);
+require('./manager/RoomManager')(server);
 
 
 const mainRouter = require('./routes/mainRouter');
@@ -39,6 +32,7 @@ app.all('*', (req, res, next) => {
 
     const excludedUrls = [ // The URLs for which the access token is not required
         '/auth/access-token',
+        '/' //TODO A ENLEVER C'EST POUR DES TESTS
     ];
 
     if(excludedUrls.includes(req.url.split('?')[0])) {
@@ -264,10 +258,10 @@ testModel = async () => {
 
 app.get('/', async (req, res) => {
 
-    const controller = new GameController();
-    let codeRoom = controller.generateCodeRoom();
+    const gameController = new GameController();
+    let codeRoom = gameController.generateRoomIdentifier();
 
-    await testModel();
+    //await testModel();
 
     res.statusCode = 200;
     res.send(codeRoom);

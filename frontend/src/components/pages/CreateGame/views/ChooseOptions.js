@@ -161,8 +161,8 @@ export default class ChooseOptions extends React.Component {
 
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
-            //TODO Real Redirection
-            this.props.history.push('/create-room/room')
+            //TODO GetCode + Real Redirection
+            this.props.history.push('/room/10')
 
         } catch (error) {
             console.error(error);

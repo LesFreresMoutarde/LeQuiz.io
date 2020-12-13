@@ -17,6 +17,7 @@ import Register from "./pages/Register/Register";
 import Settings from "./pages/Settings/Settings";
 
 import Toastr from "toastr2";
+import Room from "./pages/Room/Room";
 const toastr = new Toastr();
 
 
@@ -113,6 +114,7 @@ class App extends React.Component {
                                 <Route exact path="/settings" component={Settings}/>
                                 <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
+                                <Route path="/room/:id" component={Room}/>
                             </Switch>
                         </div>
                     </div>
