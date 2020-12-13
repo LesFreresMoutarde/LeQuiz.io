@@ -141,7 +141,7 @@ export default class ChooseOptions extends React.Component {
     };
 
 
-    submitGameOptions = () => {
+    submitGameOptions = async () => {
 
         try {
             const { questionTypes, winCriterionInputValue } = this.state;
@@ -162,7 +162,17 @@ export default class ChooseOptions extends React.Component {
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
             //TODO GetCode + Real Redirection
-            this.props.history.push('/room/10')
+
+            const response = await Util.performAPIRequest('game/generate/code');
+
+            if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
+
+            const responseData = await response.json();
+
+            console.log('la reponse D', responseData);
+            const roomCode = responseData.roomCode;
+
+            this.props.history.push(`/room/${roomCode}`);
 
         } catch (error) {
             console.error(error);

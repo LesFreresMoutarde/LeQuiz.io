@@ -19,13 +19,13 @@ class Room extends React.Component {
     componentDidMount() {
         const id  = Number(this.props.match.params.id);
 
-        if (!Room.allowed.includes(id)) this.props.history.replace('/404/')
+       // if (!Room.allowed.includes(id)) this.props.history.replace('/404/')
 
-        else {
+        //else {
             // const socket = socketIo('http://localhost:3000')
             // console.log("la socket", socket)
             SocketManager.connectToSocketServer();
-        }
+        //}
 
 
 

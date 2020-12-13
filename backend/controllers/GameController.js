@@ -15,7 +15,7 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
-    static currentRooms = [];
+    static CURRENT_ROOMS = [];
 
     actionCategories = async () => {
         const response = {};
@@ -27,6 +27,14 @@ class GameController extends MainController {
             response.error = error;
             this.response = response;
         }
+    };
+
+    actionGenerateRoomCode = () => {
+        const response = {};
+
+        response.roomCode = this.generateRoomIdentifier();
+
+        this.response = response;
     };
 
     actionModes = (plan) => {
@@ -62,7 +70,8 @@ class GameController extends MainController {
         let roomIdentifier = '';
         const possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-        while (GameController.currentRooms.includes(roomIdentifier) || roomIdentifier === '') {
+
+        while (GameController.CURRENT_ROOMS.includes(roomIdentifier) || roomIdentifier === '') {
 
             roomIdentifier = "";
 
@@ -71,11 +80,9 @@ class GameController extends MainController {
             }
         }
 
-        GameController.currentRooms.push(roomIdentifier);
+        GameController.CURRENT_ROOMS.push(roomIdentifier);
 
-        // console.log("le code generé", roomIdentifier);
-        // console.log("le tableaux des codes générés", GameController.currentRooms);
-        return roomIdentifier;
+        return roomIdentifier
     };
 
     getAllowedGameModes = (plan) => {
