@@ -12,11 +12,24 @@ class ClientSocket {
         this.socket.emit('join', roomId);
     };
 
-    handleSocketCommunication = (instance) => {
-        this.socket.on('test', (date) => {
-            console.log("msg reçu", date);
-            instance.setState({date})
+    handleSocketCommunication = (roomComponent) => {
+
+        this.socket.on('connection-success', () => {
+            roomComponent.setState({
+                isLoading: false,
+                display: {
+                    room: true,
+                    question: false,
+                    answer: false,
+                    endGame: false,
+                },
+            })
         })
+
+
+
+
+        //TODO Handle socket.on('error')
     };
 
 

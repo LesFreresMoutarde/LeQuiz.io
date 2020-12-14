@@ -14,6 +14,7 @@ module.exports = (server) => {
 
      socket.on('join', (roomId) => {
          console.log('roomId', roomId);
+         socket.emit('connection-success')
      })
 
      //console.log("la socket",socket)
@@ -27,6 +28,7 @@ module.exports = (server) => {
 
      //socket.emit('test')
 
+     //TODO Handle socket.on('error')
  })
 
 };
