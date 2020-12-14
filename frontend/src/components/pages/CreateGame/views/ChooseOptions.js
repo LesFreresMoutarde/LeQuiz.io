@@ -159,10 +159,6 @@ export default class ChooseOptions extends React.Component {
 
             });
 
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-
-            //TODO GetCode + Real Redirection
-
             const response = await Util.performAPIRequest('game/generate/code');
 
             if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
@@ -172,6 +168,11 @@ export default class ChooseOptions extends React.Component {
             console.log('la reponse D', responseData);
             const roomCode = responseData.roomCode;
 
+            gameConfiguration.roomCode = roomCode;
+
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+            //TODO Gerer le cas où l'utilisateur vient du lobby
             this.props.history.push(`/room/${roomCode}`);
 
         } catch (error) {

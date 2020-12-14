@@ -2,6 +2,9 @@ import React from "react";
 import ClientSocket from "../../../manager/ClientSocket";
 import Title from "../../misc/Title";
 import Loader from "../../misc/Loader";
+import Lobby from "./views/Lobby";
+import Util from "../../../util/Util";
+import GameUtil from "../../../util/GameUtil";
 
 class Room extends React.Component {
 
@@ -10,7 +13,7 @@ class Room extends React.Component {
 
     socket;
 
-    static ROOM_TITLE = "Salon de jeu";
+    static LOBBY_TITLE = "Salon de jeu";
 
 
     constructor(props) {
@@ -19,8 +22,9 @@ class Room extends React.Component {
         this.state = {
             isLoading: true,
             roomId: false,
+            isHost: false,
             display: {
-                room: false,
+                lobby: false,
                 question: false,
                 answer: false,
                 endGame: false
@@ -34,7 +38,16 @@ class Room extends React.Component {
     componentDidMount() {
         const roomId  = this.props.match.params.id;
 
-        this.socket.connectToRoom(roomId);
+        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+
+        let isHost = false;
+
+        if (gameConfiguration.roomCode) isHost = true;
+
+        const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+
+        this.socket.connectToRoom(roomId, pseudo, isHost);
         this.socket.handleSocketCommunication(this);
 
 
@@ -64,7 +77,7 @@ class Room extends React.Component {
         if (isLoading) {
             return (
                 <>
-                    <Title title={Room.ROOM_TITLE}/>
+                    <Title title={Room.LOBBY_TITLE}/>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -72,12 +85,12 @@ class Room extends React.Component {
                     </div>
                 </>
             );
-        } else if (display.room) {
+        } else if (display.lobby) {
 
             return (
                 <>
-                    <Title title={Room.ROOM_TITLE}/>
-                    <p>la room</p>
+                    <Title title={Room.LOBBY_TITLE}/>
+                    <Lobby/>
                 </>
             )
 

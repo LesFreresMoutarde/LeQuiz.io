@@ -56,6 +56,7 @@ export default class ChooseGameMode extends React.Component {
         gameConfiguration.gameMode = gameMode;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
+        //TODO Gerer le cas où l'utilisateur vient du lobby
         this.props.history.push('/create-room/categories');
     };
 

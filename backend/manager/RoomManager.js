@@ -2,20 +2,39 @@ const socketEngine = require('socket.io');
 
 module.exports = (server) => {
 
- const io = socketEngine(server, {
-     cors: {
-         origin: 'http://localhost',
-     }
- });
+    const rooms = [];
+
+    const io = socketEngine(server, {
+        cors: {
+            origin: 'http://localhost',
+        }
+    });
 
 
  io.on('connection', (socket) => {
+
      console.log('user has connected');
 
-     socket.on('join', (roomId) => {
+     socket.on('join', ({roomId, pseudo, isHost}) => {
          console.log('roomId', roomId);
+         console.log('pseudo', pseudo);
+
+         if (isHost)  {
+             console.log('c lhost');
+             // Creer lobjet Room
+         }
+
+
          socket.emit('connection-success')
+
+
+         // Envoyer tous les joueurs
+
+
      })
+
+
+
 
      //console.log("la socket",socket)
      //Soket join etc

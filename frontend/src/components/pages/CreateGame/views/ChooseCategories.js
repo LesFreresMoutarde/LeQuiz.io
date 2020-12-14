@@ -144,6 +144,8 @@ export default class ChooseCategories extends React.Component {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.categories = this.pickedCategories;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+        //TODO Gerer le cas où l'utilisateur vient du lobby
         this.props.history.push('/create-room/options');
     };
 

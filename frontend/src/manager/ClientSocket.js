@@ -1,4 +1,5 @@
 import * as socketIoClient from 'socket.io-client';
+import Util from "../util/Util";
 
 class ClientSocket {
 
@@ -8,8 +9,9 @@ class ClientSocket {
         this.socket = socketIoClient(`${window.location.origin}:3000`);
     }
 
-    connectToRoom = (roomId) => {
-        this.socket.emit('join', roomId);
+    connectToRoom = (roomId, pseudo, isHost) => {
+        console.log('le payload', Util.accessTokenPayload);
+        this.socket.emit('join', {roomId, pseudo, isHost});
     };
 
     handleSocketCommunication = (roomComponent) => {
@@ -18,7 +20,7 @@ class ClientSocket {
             roomComponent.setState({
                 isLoading: false,
                 display: {
-                    room: true,
+                    lobby: true,
                     question: false,
                     answer: false,
                     endGame: false,
