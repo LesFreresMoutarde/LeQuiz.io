@@ -9,8 +9,24 @@ module.exports = (server) => {
  });
 
 
- io.on('connection', () => {
+ io.on('connection', (socket) => {
      console.log('user has connected');
+
+     socket.on('join', (roomId) => {
+         console.log('roomId', roomId);
+     })
+
+     //console.log("la socket",socket)
+     //Soket join etc
+     // Comment récup le code room generé
+     /*setInterval(() => {
+
+         socket.emit('test', `${new Date().toISOString()}`);
+     }, 1000);*/
+
+
+     //socket.emit('test')
+
  })
 
 };
