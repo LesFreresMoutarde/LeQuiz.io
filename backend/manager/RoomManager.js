@@ -1,3 +1,5 @@
+const GameUtil = require("../util/GameUtil");
+
 const socketEngine = require('socket.io');
 
 module.exports = (server) => {
@@ -180,10 +182,11 @@ module.exports = (server) => {
 
         rooms.splice(index, 1);
 
-        //TODO Vider le tableau de GameUtil
+        index = GameUtil.ROOMS_ID.indexOf(room.id);
+        GameUtil.ROOMS_ID.splice(index, 1);
     };
 
-    const checkIfHostHasToBeTransferred = (player, room) => {;
+    const checkIfHostHasToBeTransferred = (player, room) => {
         return room.host.socketId === player.socketId;
     };
 

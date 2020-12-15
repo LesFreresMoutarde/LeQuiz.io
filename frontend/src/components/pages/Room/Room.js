@@ -52,6 +52,7 @@ class Room extends React.Component {
         console.log("isHost ?", isHost);
         const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
+        //TODO Conditionner si le room id existe dans le tableau des ID
         this.socket.connectToRoom(roomId, pseudo, isHost);
         this.socket.handleSocketCommunication(this);
 
