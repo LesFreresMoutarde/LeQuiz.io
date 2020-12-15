@@ -9,9 +9,9 @@ class ClientSocket {
         this.socket = socketIoClient(`${window.location.origin}:3000`);
     }
 
-    connectToRoom = (roomId, pseudo, isHost) => {
+    connectToRoom = (roomId, username, isHost) => {
         console.log('le payload', Util.accessTokenPayload);
-        this.socket.emit('join', {roomId, pseudo, isHost});
+        this.socket.emit('join', {roomId, username, isHost});
     };
 
     handleSocketCommunication = (roomComponent) => {

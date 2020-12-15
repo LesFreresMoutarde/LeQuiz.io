@@ -36,7 +36,8 @@ export default class CreateGame extends React.Component {
             categories: [],
             questionTypes: [],
             winCriterion: '',
-            difficulty: null
+            difficulty: null,
+            isHost: true,
         }
     };
 

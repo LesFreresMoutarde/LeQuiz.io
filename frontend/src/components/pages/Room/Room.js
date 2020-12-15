@@ -38,14 +38,14 @@ class Room extends React.Component {
 
     componentDidMount() {
         const roomId  = this.props.match.params.id;
-
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        console.log('gameconfigFromRoom', gameConfiguration);
-
         let isHost = false;
 
-        if (gameConfiguration.roomCode)  {
-            isHost = true;
+        if (Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key)) {
+            const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+            console.log('gameconfigFromRoom', gameConfiguration);
+
+            isHost = gameConfiguration.isHost;
+
         }
 
         const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
