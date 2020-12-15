@@ -29,15 +29,15 @@ export default class ChooseOptions extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
+              /*  const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
 
                 if (!checkConfiguration.verified) {
                     this.props.history.replace(checkConfiguration.redirect);
 
-                } else {
+                } else {*/
                     let { winCriterionInputValue } = this.state;
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-
+                    console.log('gameConfig', gameConfiguration);
                     const categoriesId = gameConfiguration.categories.map((category) => (category.id));
                     const gameMode = gameConfiguration.gameMode.classname;
 
@@ -74,7 +74,7 @@ export default class ChooseOptions extends React.Component {
                     });
 
                     this.evaluateWinCriterionMaxValue();
-                }
+                // }
 
             } catch (error) {
                 console.error(error);
@@ -104,6 +104,7 @@ export default class ChooseOptions extends React.Component {
     }
 
     evaluateWinCriterionMaxValue = () => {
+
         const questionTypesAvailable = this.state.gameOptions.questionTypes;
         const { questionTypes } = this.state;
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
@@ -147,14 +148,14 @@ export default class ChooseOptions extends React.Component {
             const { questionTypes, winCriterionInputValue } = this.state;
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
-            gameConfiguration.winCriterion = winCriterionInputValue;
+          //  gameConfiguration.winCriterion = winCriterionInputValue;
 
-            gameConfiguration.questionTypes = [];
+            //gameConfiguration.questionTypes = [];
 
             questionTypes.forEach(questionType => {
                 if (questionType.checked) {
                     delete questionType.checked;
-                    gameConfiguration.questionTypes.push(questionType);
+              //      gameConfiguration.questionTypes.push(questionType);
                 }
 
             });
@@ -168,12 +169,13 @@ export default class ChooseOptions extends React.Component {
             console.log('la reponse D', responseData);
             const roomCode = responseData.roomCode;
 
-            gameConfiguration.roomCode = roomCode;
+           // gameConfiguration.roomCode = roomCode;
 
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+           // Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
+            this.props.submit(questionTypes, winCriterionInputValue, roomCode)
             //TODO Gerer le cas où l'utilisateur vient du lobby
-            this.props.history.push(`/room/${roomCode}`);
+           // this.props.history.push(`/room/${roomCode}`);
 
         } catch (error) {
             console.error(error);

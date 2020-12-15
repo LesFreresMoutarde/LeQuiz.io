@@ -5,7 +5,6 @@ const OptionsBox = ({options}) => {
     return (
         <>
             <p>Options de jeu</p>
-            <Link to='/create-room/options'>Edit</Link>
         </>
     )
 };

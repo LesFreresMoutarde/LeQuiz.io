@@ -5,7 +5,6 @@ const CategoriesBox = ({categories}) => {
     return (
         <>
             <p>Thèmes</p>
-            <Link to='/create-room/categories'>Edit</Link>
         </>
     )
 };

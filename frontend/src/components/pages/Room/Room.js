@@ -13,16 +13,17 @@ class Room extends React.Component {
 
     socket;
 
-    static LOBBY_TITLE = "Salon de jeu";
+
 
 
     constructor(props) {
         super(props);
-
+        // this.props.history.length = 0;
+        console.log(this.props.history);
         this.state = {
             isLoading: true,
             roomId: false,
-            isHost: false,
+           // isHost: false,
             display: {
                 lobby: false,
                 question: false,
@@ -39,20 +40,20 @@ class Room extends React.Component {
         const roomId  = this.props.match.params.id;
 
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        console.log('gameconfigFromRoom', gameConfiguration);
 
         let isHost = false;
 
-        if (gameConfiguration.roomCode) isHost = true;
+        if (gameConfiguration.roomCode)  {
+            isHost = true;
+        }
 
         const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
 
         this.socket.connectToRoom(roomId, pseudo, isHost);
         this.socket.handleSocketCommunication(this);
 
-
        // if (!Room.allowed.includes(id)) this.props.history.replace('/404/')
-
         //else {
             // const socket = socketIo('http://localhost:3000')
             // console.log("la socket", socket)
@@ -67,7 +68,10 @@ class Room extends React.Component {
 
     componentWillUnmount() {
         //SocketManager.disconnectFromSocketServer();
+        //TODO Sauf s'il veut juste editer un menu donc pas possible de faire ca la
         this.socket.destructor()
+        console.log("FAIL ON A UNMOUNT")
+        this.props.history.replace('/')
     }
 
     render() {
@@ -89,7 +93,6 @@ class Room extends React.Component {
 
             return (
                 <>
-                    <Title title={Room.LOBBY_TITLE}/>
                     <Lobby/>
                 </>
             )
