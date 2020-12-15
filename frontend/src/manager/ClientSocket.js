@@ -26,6 +26,15 @@ class ClientSocket {
                     endGame: false,
                 },
             })
+        });
+
+        this.socket.on('connection-failure', () => {
+            roomComponent.props.history.replace('/');
+            this.destructor()
+        })
+
+        this.socket.on('room-updated', (roomData) => {
+            console.log('les infos de la rooms actualisées', roomData);
         })
 
 

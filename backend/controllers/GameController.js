@@ -1,3 +1,5 @@
+const GameUtil = require("../util/GameUtil");
+
 const MainController = require('./mainController/MainController');
 const Serie = require("../models/gameModes/Serie");
 const Ascension = require("../models/gameModes/Ascension");
@@ -15,6 +17,7 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
+    // TODO LE VIDER QUAND LA ROOM EST MORTE
     static CURRENT_ROOMS = [];
 
     actionCategories = async () => {
@@ -71,7 +74,7 @@ class GameController extends MainController {
         const possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
 
 
-        while (GameController.CURRENT_ROOMS.includes(roomIdentifier) || roomIdentifier === '') {
+        while (GameUtil.ROOMS_ID.includes(roomIdentifier) || roomIdentifier === '') {
 
             roomIdentifier = "";
 
@@ -80,7 +83,7 @@ class GameController extends MainController {
             }
         }
 
-        GameController.CURRENT_ROOMS.push(roomIdentifier);
+        GameUtil.ROOMS_ID.push(roomIdentifier);
 
         return roomIdentifier
     };

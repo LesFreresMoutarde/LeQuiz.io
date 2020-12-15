@@ -46,12 +46,15 @@ class Room extends React.Component {
 
             isHost = gameConfiguration.isHost;
 
-        }
+            delete gameConfiguration.isHost;
 
+        }
+        console.log("isHost ?", isHost);
         const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
         this.socket.connectToRoom(roomId, pseudo, isHost);
         this.socket.handleSocketCommunication(this);
+
 
        // if (!Room.allowed.includes(id)) this.props.history.replace('/404/')
         //else {
@@ -71,7 +74,9 @@ class Room extends React.Component {
         //TODO Sauf s'il veut juste editer un menu donc pas possible de faire ca la
         this.socket.destructor()
         console.log("FAIL ON A UNMOUNT")
-        this.props.history.replace('/')
+
+        //this.props.history.replace('/')
+        //window.history.replaceState('/', '/', '/')
     }
 
     render() {
