@@ -158,3 +158,11 @@ h6.mb, .h6.mb {
 .float-right {
     float: right;
 }
+
+.visible {
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}

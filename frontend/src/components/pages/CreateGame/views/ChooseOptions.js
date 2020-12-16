@@ -218,7 +218,10 @@ export default class ChooseOptions extends React.Component {
                                        pickQuestionType={this.pickQuestionType}/>
                     </div>
                     <NextButton disabled={nextButtonDisabled}
-                                onClick={this.submitGameOptions} sizeClass="large-button" content="Suivant"/>
+                                onClick={this.submitGameOptions}
+                                sizeClass="large-button"
+                                content="Suivant"
+                                displayClass="visible"/>
                 </>
             )
         }

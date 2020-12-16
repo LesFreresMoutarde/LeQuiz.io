@@ -13,10 +13,10 @@ export default class ChooseGameMode extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameConfiguration: Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key),
             gamesModes: false,
             isLoading: true,
         };
+
     }
 
     componentDidMount() {

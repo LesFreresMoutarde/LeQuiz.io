@@ -196,6 +196,7 @@ export default class ChooseCategories extends React.Component {
                                 onClick={this.submitCategories}
                                 sizeClass="large-button"
                                 content="Suivant"
+                                displayClass="visible"
                     />
                 </>
             )

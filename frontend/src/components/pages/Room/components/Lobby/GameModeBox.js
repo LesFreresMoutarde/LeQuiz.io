@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 const GameModeBox = ({gameMode}) => {
     return (
         <>
-            <p>Mode de jeu</p>
+            <p>Mode de jeu : {gameMode.label}</p>
         </>
     )
 };

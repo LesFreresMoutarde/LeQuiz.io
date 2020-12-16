@@ -6,7 +6,7 @@ module.exports = (server) => {
 
     const rooms = [];
 
-    const players = [{username: 'toto'}];
+    const players = [];
 
     const io = socketEngine(server, {
         cors: {
@@ -22,9 +22,9 @@ module.exports = (server) => {
      socket.on('join', ({roomId, username, isHost}) => {
         console.log('roomId', roomId);
         console.log('pseudo', username);
-
+        console.log('isHost ?', isHost);
         const player = handleNewPlayer(username, socket.id);
-        console.log(player);
+        console.log('player novuvellement creer', player);
 
        // let room = findRoom()
 
@@ -34,43 +34,50 @@ module.exports = (server) => {
         const {room, joined} = handleRoomJoining(roomId, isHost, player);
 
         if (!joined) {
-            // Emettre event pour dire que ca a fail,
+
             socket.emit('connection-failure')
+
         } else {
             socket.join(room.id);
-            socket.emit('connection-success');
-            console.log("temoinnito")
+            socket.emit('connection-success', {room, player});
+            console.log("temoinito")
             io.to(room.id).emit('room-updated', room);
+
+            if(!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
         }
 
-         // Envoyer tous les joueurs
-            //.emit('updated-room', JSON.stringify(room));
+     });
 
-         socket.on('disconnect', () => {
-             console.log('deconnexion')
-             console.log('player', player);
-             console.log("la room", room);
+     socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
+         io.to(socketId).emit('game-config-host', gameConfiguration);
+     })
 
-             const hasRoomToBeUpdated = handlePlayerDisconnect(player, room);
+     socket.on('disconnect', () => {
+         console.log('deconnexion');
 
-             if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
-         })
+         const {hasRoomToBeUpdated, room} = handlePlayerDisconnect(socket.id);
 
+         if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
      })
 
 
+
+
+ })
+
      const handleNewPlayer = (username, socketId) => {
-        let player = findPlayer(username);
+        let player = findPlayer(socketId);
 
          if (player.length === 0) player = createPlayer(username, socketId)
 
          else player = player[0];
 
+         console.log("le nouveau joueur", player);
          return player;
      };
 
-    const findPlayer = (username) => {
-        return players.filter(player => player.username === username)
+    const findPlayer = (socketId) => {
+        return players.filter(player => player.socketId === socketId)
     };
 
     const createPlayer = (username, socketId) => {
@@ -113,10 +120,23 @@ module.exports = (server) => {
          return rooms.filter(room => room.id === roomId)
     };
 
+    const findRoomByPlayer = (player) => {
+        let room = {};
+
+        rooms.forEach((activeRoom) => {
+            activeRoom.players.forEach((playerInRoom) => {
+                if (playerInRoom.socketId === player.socketId) room = activeRoom;
+            })
+        })
+
+        return room;
+    };
+
     const createRoom = (roomId, host) => {
        const room = {
            id: roomId,
            host,
+           state: 'lobby',
            players: [host],
        }
 
@@ -135,24 +155,29 @@ module.exports = (server) => {
         return true;
     };
 
-    const handlePlayerDisconnect = (player, room) => {
-        if (room) {
-            //console.log(room);
-            playerLeaveRoom(player, room);
+    const handlePlayerDisconnect = (socketId) => {
+        // findPlayer,
+        console.log('la socketId du gars a deco', socketId);
+        const player = findPlayer(socketId)[0];
+        console.log("le player a deco", player);
+        let room = findRoomByPlayer(player);
+        console.log("la room du mec", room);
+        let hasRoomToBeUpdated = true;
+        //console.log(room);
+        playerLeaveRoom(player, room);
 
-            const isRoomDeletable = checkIfRoomIsDeletable(room);
-            if (isRoomDeletable)  {
-                deleteRoom(room);
-                return false;
-            }
-
-            const hostHasToBeTransferred = checkIfHostHasToBeTransferred(player, room);
-            if (hostHasToBeTransferred) changeRoomHost(room)
-
+        const isRoomDeletable = checkIfRoomIsDeletable(room);
+        if (isRoomDeletable)  {
+            deleteRoom(room);
+            hasRoomToBeUpdated = false;
         }
 
+        const hostHasToBeTransferred = checkIfHostHasToBeTransferred(player, room);
+        if (hostHasToBeTransferred) room = changeRoomHost(room);
+
+
         deletePlayer(player);
-        return true;
+        return {hasRoomToBeUpdated, room};
 
         // console.log('tableau des joueurs après', players);
         // console.log('tableau des rooms après', rooms);
@@ -193,6 +218,7 @@ module.exports = (server) => {
 
     const changeRoomHost = (room) => {
         room.host = room.players[0];
+        return room;
     };
 
     const deletePlayer = (player) => {
@@ -212,6 +238,6 @@ module.exports = (server) => {
 
 
      //TODO Handle socket.on('error')
- })
+
 
 };

@@ -17,15 +17,20 @@ class Room extends React.Component {
         this.state = {
             isLoading: true,
             roomId: false,
+            isHost: false,
+            socketOpen: false,
             display: {
                 lobby: false,
                 question: false,
                 answer: false,
                 endGame: false
             },
-            date: 'tototo'
+            roomData: false,
+            gameConfiguration: false,
+            currentPlayer: false,
         }
-        this.socket = new ClientSocket();
+
+
 
     }
 
@@ -41,17 +46,22 @@ class Room extends React.Component {
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                     console.log('gameconfigFromRoom', gameConfiguration);
 
-                    isHost = gameConfiguration.isHost;
-
-                    delete gameConfiguration.isHost;
+                    if (gameConfiguration.roomCode === roomId) {
+                        isHost = true;
+                        delete gameConfiguration.roomCode;
+                        this.setState({isHost, gameConfiguration});
+                        console.log('gameConfig sans roomCode normalement', gameConfiguration);
+                        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+                        console.log('la gameConfig sans RoomCode depuis le localStorage', Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key))
+                    } else {
+                        Util.clearSessionStorage();
+                    }
 
                 }
                 console.log("isHost ?", isHost);
+
                 const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-                //TODO Conditionner si le room id existe dans le tableau des ID
-
-                // Appel endpoint avec roomID
                 const response = await Util.performAPIRequest(`game/verify/rooms/${roomId}`);
 
                 if (!response.ok) throw new Error('Cannot join this room');
@@ -60,11 +70,12 @@ class Room extends React.Component {
 
                 console.log("IS ROOM VALID !", isRoomValid);
 
-                if (!isRoomValid) throw new Error('This room doesn\'t exist' );
+                if (!isRoomValid) throw new Error('This room doesn\'t exist' )
 
-
+                this.socket = new ClientSocket();
                 this.socket.connectToRoom(roomId, pseudo, isHost);
                 this.socket.handleSocketCommunication(this);
+                this.setState({socketOpen: true});
             } catch (error) {
                 this.props.history.replace('/');
                 console.error(error);
@@ -74,9 +85,9 @@ class Room extends React.Component {
     }
 
     componentWillUnmount() {
-        //SocketManager.disconnectFromSocketServer();
-        //TODO Sauf s'il veut juste editer un menu donc pas possible de faire ca la
-        this.socket.destructor()
+
+        Util.clearSessionStorage();
+        if(this.state.socketOpen) this.socket.destructor()
         console.log("FAIL ON A UNMOUNT")
 
         //this.props.history.replace('/')
@@ -84,7 +95,7 @@ class Room extends React.Component {
     }
 
     render() {
-        const { isLoading, display } = this.state;
+        const { isLoading, display, roomData, gameConfiguration, currentPlayer, isHost } = this.state;
         console.log("le state", this.state);
 
         if (isLoading) {
@@ -102,7 +113,11 @@ class Room extends React.Component {
 
             return (
                 <>
-                    <Lobby/>
+                    <Lobby isHost={isHost}
+                           currentPlayer={currentPlayer}
+                           roomData={roomData}
+                           gameConfiguration={gameConfiguration}
+                    />
                 </>
             )
 

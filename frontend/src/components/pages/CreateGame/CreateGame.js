@@ -10,24 +10,25 @@ export default class CreateGame extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log('props CreateGame', props)
+
         this.state = {
             display: {
                 gameMode: true,
                 categories: false,
                 options: false,
-            }
+            },
         };
-        //TODO a conditionner pour le retour depuis le Lobby
+    }
+
+    componentDidMount() {
+        console.log('gameConfigJusteAprèsBug', Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key));
         if (this.props.fromLobby) {
             console.log("on vient du lobby");
         } else {
-            const gameConfiguration = this.createGameConfiguration()
+
+            const gameConfiguration = this.createGameConfiguration();
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
         }
-
-        console.log('tmoinito')
-
     }
 
     createGameConfiguration = () => {
@@ -37,15 +38,18 @@ export default class CreateGame extends React.Component {
             questionTypes: [],
             winCriterion: '',
             difficulty: null,
-            isHost: true,
+            roomCode: false,
         }
     };
 
     submitGameMode = (gameMode) => {
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        if(!gameConfiguration) console.log("y a pas de config")
+        //TODO REPRISE REPAS
+        console.log('gameConfigurationSubmitGameMode', gameConfiguration);
         gameConfiguration.gameMode = gameMode;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-;
+
         this.setState({
             display: {
                 gameMode: false,
@@ -75,15 +79,21 @@ export default class CreateGame extends React.Component {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.winCriterion = winCriterionValue;
         gameConfiguration.questionTypes = questionTypes;
-        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+        gameConfiguration.roomCode = roomCode;
 
         if (this.props.fromLobby) {
+            delete gameConfiguration.roomCode;
             this.props.lobbyInstance.setState({
                 displayCreateGame: false,
+                gameConfiguration: gameConfiguration
             })
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration)
         } else {
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration)
             this.props.history.push(`/room/${roomCode}`);
         }
+
+        //Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration)
 
     }
 
