@@ -174,6 +174,7 @@ module.exports = (server) => {
     };
 
     const deleteRoom = (room) => {
+        console.log('on va delete la room');
         let index = -1;
 
         rooms.forEach((activeRoom, i) => {

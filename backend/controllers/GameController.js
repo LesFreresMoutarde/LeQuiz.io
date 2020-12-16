@@ -69,6 +69,15 @@ class GameController extends MainController {
         }
     };
 
+    actionVerifyRoom = (roomIdentifier) => {
+        const response = {};
+        console.log("le roomIdentifier", roomIdentifier);
+        console.log('ROOMS ID', GameUtil.ROOMS_ID);
+        console.log('Boolean', GameUtil.ROOMS_ID.includes(roomIdentifier))
+        response.isRoomValid = GameUtil.ROOMS_ID.includes(roomIdentifier);
+        this.response = response;
+    };
+
     generateRoomIdentifier = () => {
         let roomIdentifier = '';
         const possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -87,6 +96,8 @@ class GameController extends MainController {
 
         return roomIdentifier
     };
+
+
 
     getAllowedGameModes = (plan) => {
 

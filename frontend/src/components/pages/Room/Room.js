@@ -8,13 +8,7 @@ import GameUtil from "../../../util/GameUtil";
 
 class Room extends React.Component {
 
-    //TODO This page is accesible only if backend has generated code game matching the id param
-    static allowed = [10,15,20];
-
     socket;
-
-
-
 
     constructor(props) {
         super(props);
@@ -23,7 +17,6 @@ class Room extends React.Component {
         this.state = {
             isLoading: true,
             roomId: false,
-           // isHost: false,
             display: {
                 lobby: false,
                 question: false,
@@ -37,37 +30,47 @@ class Room extends React.Component {
     }
 
     componentDidMount() {
-        const roomId  = this.props.match.params.id;
-        let isHost = false;
+        (async () => {
 
-        if (Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key)) {
-            const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-            console.log('gameconfigFromRoom', gameConfiguration);
+            try {
+                console.log('props match', this.props.match);
+                const roomId  = this.props.match.params.id;
+                let isHost = false;
 
-            isHost = gameConfiguration.isHost;
+                if (Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key)) {
+                    const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+                    console.log('gameconfigFromRoom', gameConfiguration);
 
-            delete gameConfiguration.isHost;
+                    isHost = gameConfiguration.isHost;
 
-        }
-        console.log("isHost ?", isHost);
-        const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                    delete gameConfiguration.isHost;
 
-        //TODO Conditionner si le room id existe dans le tableau des ID
-        this.socket.connectToRoom(roomId, pseudo, isHost);
-        this.socket.handleSocketCommunication(this);
+                }
+                console.log("isHost ?", isHost);
+                const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+                //TODO Conditionner si le room id existe dans le tableau des ID
+
+                // Appel endpoint avec roomID
+                const response = await Util.performAPIRequest(`game/verify/rooms/${roomId}`);
+
+                if (!response.ok) throw new Error('Cannot join this room');
+
+                const {isRoomValid} = await response.json();
+
+                console.log("IS ROOM VALID !", isRoomValid);
+
+                if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
 
-       // if (!Room.allowed.includes(id)) this.props.history.replace('/404/')
-        //else {
-            // const socket = socketIo('http://localhost:3000')
-            // console.log("la socket", socket)
-            //SocketManager.connectToSocketServer();
+                this.socket.connectToRoom(roomId, pseudo, isHost);
+                this.socket.handleSocketCommunication(this);
+            } catch (error) {
+                this.props.history.replace('/');
+                console.error(error);
+            }
+        })()
 
-        //}
-
-
-
-        console.log("l'ID :",roomId)
     }
 
     componentWillUnmount() {
