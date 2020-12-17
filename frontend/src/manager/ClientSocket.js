@@ -71,12 +71,21 @@ class ClientSocket {
             });
         })
 
-
+        this.socket.on('quiz-sent', (msg) => {
+            console.log(msg);
+        })
 
 
 
 
         //TODO Handle socket.on('error')
+    };
+
+
+    generateQuiz = () => {
+        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        this.socket.emit('quiz-generation-asked', gameConfiguration)
+
     };
 
 

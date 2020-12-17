@@ -21,11 +21,9 @@ export default class CreateGame extends React.Component {
     }
 
     componentDidMount() {
-        console.log('gameConfigJusteAprèsBug', Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key));
         if (this.props.fromLobby) {
             console.log("on vient du lobby");
         } else {
-
             const gameConfiguration = this.createGameConfiguration();
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
         }
@@ -43,9 +41,7 @@ export default class CreateGame extends React.Component {
     };
 
     submitGameMode = (gameMode) => {
-        let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        if(!gameConfiguration) console.log("y a pas de config")
-        //TODO REPRISE REPAS
+        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         console.log('gameConfigurationSubmitGameMode', gameConfiguration);
         gameConfiguration.gameMode = gameMode;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
@@ -57,8 +53,6 @@ export default class CreateGame extends React.Component {
                 options: false
             }
         })
-        //TODO Gerer le cas où l'utilisateur vient du lobby
-        //this.props.history.push('/create-room/categories');
     }
 
     submitCategories = (categories) => {

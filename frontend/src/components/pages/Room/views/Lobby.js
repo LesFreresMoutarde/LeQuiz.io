@@ -16,10 +16,10 @@ class Lobby extends React.Component {
         console.log("propos",props);
         this.state = {
             displayCreateGame: false,
-            lobbyData: this.props.roomData,
-            gameConfiguration: this.props.gameConfiguration,
-            currentPlayer: this.props.currentPlayer,
-            isHost: this.props.isHost
+            // lobbyData: this.props.roomData,
+            // gameConfiguration: this.props.gameConfiguration,
+            // currentPlayer: this.props.currentPlayer,
+            // isHost: this.props.isHost
         };
         console.log("state lobby", this.state);
     }
@@ -28,15 +28,11 @@ class Lobby extends React.Component {
 
     }
 
-    startQuiz = () => {
-        console.log("on start le quiz");
-
-    }
 
 
     render() {
         const { displayCreateGame } = this.state;
-        const { roomData, gameConfiguration, currentPlayer, isHost } = this.props;
+        const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz } = this.props;
         console.log('gameConfigFromLobby',gameConfiguration);
         // console.log("lobbyData from lobby", lobbyData)
         if (displayCreateGame) {
@@ -57,7 +53,7 @@ class Lobby extends React.Component {
                     <OptionsBox questionTypes={gameConfiguration.questionTypes} winCriterion={gameConfiguration.winCriterion}/>
                     <PlayersBox players={roomData.players} host={roomData.host} currentPlayer={currentPlayer}/>
                     <CategoriesBox categories={gameConfiguration.categories}/>
-                    <NextButton onClick={this.startQuiz}
+                    <NextButton onClick={startQuiz}
                                 sizeClass="large-button"
                                 content="Commencer"
                                 displayClass={displayClass}/>

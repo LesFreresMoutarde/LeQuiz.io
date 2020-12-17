@@ -84,6 +84,20 @@ class Room extends React.Component {
 
     }
 
+
+    startQuiz = () => {
+        //TODO verifier que le Host a les droits pour le mode de jeu !!
+        console.log("on start le quizZZZ");
+        this.socket.generateQuiz()
+
+    };
+
+    leaveRoom = () => {
+        console.log("leave room by button")
+    };
+
+
+
     componentWillUnmount() {
 
         Util.clearSessionStorage();
@@ -117,6 +131,8 @@ class Room extends React.Component {
                            currentPlayer={currentPlayer}
                            roomData={roomData}
                            gameConfiguration={gameConfiguration}
+                           startQuiz={this.startQuiz}
+                           leaveRoom={this.leaveRoom}
                     />
                 </>
             )

@@ -125,20 +125,16 @@ class GameController extends MainController {
     };
 
     getCategories = async () => {
-        const categoriesInJson = [];
-            const categories = await db.Category.findAll({
-                attributes: ['id', 'name'],
-                where: db.sequelize.where(
-                    db.sequelize.literal('(SELECT COUNT(*) ' +
-                        'FROM category_question ' +
-                        'WHERE "Category"."id" = category_question."categoryId")'), '>',0)
-            });
 
-            categories.map(category => {
-                categoriesInJson.push(category.toJSON());
-            });
+        return await db.sequelize.query(`SELECT "category"."id", "category"."name", 
+            COUNT(*) as "nbQuestions" FROM "category" 
+            INNER JOIN "category_question" ON "category"."id" = "category_question"."categoryId"
+            INNER JOIN "question" ON "category_question"."questionId" = "question"."id"
+            WHERE "question"."status" = 'approved'
+            GROUP BY "category"."id";`, {
+            type: db.sequelize.QueryTypes.SELECT
+        });
 
-            return categoriesInJson
     };
 
     getQuestionTypes = async (categories) => {

@@ -14,6 +14,8 @@ module.exports = (server) => {
         }
     });
 
+    console.log('Uniquement au lancement du SERV');
+     console.log('les sockets Co', io.sockets.sockets);
 
  io.on('connection', (socket) => {
 
@@ -40,16 +42,25 @@ module.exports = (server) => {
         } else {
             socket.join(room.id);
             socket.emit('connection-success', {room, player});
-            console.log("temoinito")
+
+            // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room
             io.to(room.id).emit('room-updated', room);
 
-            if(!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
+            if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
         }
 
      });
 
      socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
          io.to(socketId).emit('game-config-host', gameConfiguration);
+     });
+
+     socket.on('quiz-generation-asked', (gameConfiguration) => {
+         const player = findPlayer(socket.id);
+         const room = findRoomByPlayer(player[0]);
+         console.log("le quiz pour la room suivante", room);
+         console.log("avec la conf suivante", gameConfiguration);
+         io.to(room.id).emit('quiz-sent', "le quiz est envoyée")
      })
 
      socket.on('disconnect', () => {
@@ -58,6 +69,7 @@ module.exports = (server) => {
          const {hasRoomToBeUpdated, room} = handlePlayerDisconnect(socket.id);
 
          if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
+
      })
 
 
@@ -125,9 +137,9 @@ module.exports = (server) => {
 
         rooms.forEach((activeRoom) => {
             activeRoom.players.forEach((playerInRoom) => {
-                if (playerInRoom.socketId === player.socketId) room = activeRoom;
+                if (playerInRoom.socketId.trim() === player.socketId.trim()) room = activeRoom;
             })
-        })
+        });
 
         return room;
     };
@@ -138,7 +150,7 @@ module.exports = (server) => {
            host,
            state: 'lobby',
            players: [host],
-       }
+       };
 
        rooms.push(room);
 
@@ -155,18 +167,23 @@ module.exports = (server) => {
         return true;
     };
 
+
     const handlePlayerDisconnect = (socketId) => {
-        // findPlayer,
+
         console.log('la socketId du gars a deco', socketId);
         const player = findPlayer(socketId)[0];
         console.log("le player a deco", player);
+
+        if (!player) return {hasRoomToBeUpdated: false, room: null};
+
         let room = findRoomByPlayer(player);
         console.log("la room du mec", room);
+
         let hasRoomToBeUpdated = true;
-        //console.log(room);
         playerLeaveRoom(player, room);
 
         const isRoomDeletable = checkIfRoomIsDeletable(room);
+
         if (isRoomDeletable)  {
             deleteRoom(room);
             hasRoomToBeUpdated = false;
@@ -178,9 +195,6 @@ module.exports = (server) => {
 
         deletePlayer(player);
         return {hasRoomToBeUpdated, room};
-
-        // console.log('tableau des joueurs après', players);
-        // console.log('tableau des rooms après', rooms);
     };
 
 
