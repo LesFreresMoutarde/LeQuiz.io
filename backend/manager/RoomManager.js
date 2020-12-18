@@ -55,11 +55,13 @@ module.exports = (server) => {
          io.to(socketId).emit('game-config-host', gameConfiguration);
      });
 
-     socket.on('quiz-generation-asked', (gameConfiguration) => {
+     socket.on('quiz-generation-asked', async (gameConfiguration) => {
          const player = findPlayer(socket.id);
          const room = findRoomByPlayer(player[0]);
          console.log("le quiz pour la room suivante", room);
          console.log("avec la conf suivante", gameConfiguration);
+         const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
+         const records = await GameUtil.executeQuizQuery(quizQuery);
          io.to(room.id).emit('quiz-sent', "le quiz est envoyée")
      })
 

@@ -47,6 +47,7 @@ export default class ChooseOptions extends React.Component {
 
                     const responseData = await response.json();
 
+                    console.log('ResponseData GAMEOPTIONS', responseData);
                     const questionTypes = responseData.gameOptions.questionTypes.slice();
 
                     questionTypes.forEach(questionType => {

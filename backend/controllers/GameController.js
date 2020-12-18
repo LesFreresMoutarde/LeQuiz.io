@@ -126,15 +126,41 @@ class GameController extends MainController {
 
     getCategories = async () => {
 
-        return await db.sequelize.query(`SELECT "category"."id", "category"."name", 
-            COUNT(*) as "nbQuestions" FROM "category" 
+        const categories = [];
+
+        const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", 
+            COUNT(*) as "nbQuestions", "question"."type" FROM "category" 
             INNER JOIN "category_question" ON "category"."id" = "category_question"."categoryId"
             INNER JOIN "question" ON "category_question"."questionId" = "question"."id"
             WHERE "question"."status" = 'approved'
-            GROUP BY "category"."id";`, {
+            GROUP BY "category"."id", "question"."type"
+            ORDER BY "category"."id";`, {
             type: db.sequelize.QueryTypes.SELECT
         });
 
+        for (let i = 0; i < records.length; i++) {
+            if (i === 0) {
+                categories.push({
+                    id: records[i].id,
+                    name: records[i].name,
+                    nbQuestions : {
+                        [records[i].type]: records[i].nbQuestions
+                    }
+                })
+            } else if (records[i-1].id === records[i].id) {
+                categories[i-1]['nbQuestions'][[records[i].type]] = records[i].nbQuestions
+            } else {
+                categories.push({
+                    id: records[i].id,
+                    name: records[i].name,
+                    nbQuestions : {
+                        [records[i].type]: records[i].nbQuestions
+                    }
+                })
+            }
+        }
+
+        return categories;
     };
 
     getQuestionTypes = async (categories) => {
