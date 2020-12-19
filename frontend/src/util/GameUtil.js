@@ -2,6 +2,12 @@ import Util from "./Util";
 
 class GameUtil {
 
+    static QUIZ_SESSION_STORAGE_KEY = 'quiz';
+
+    static ROUND_TIME = 12*1000;
+
+    static QUESTION_TIMEOUT_ID;
+
     static GAME_CONFIGURATION = {
         key: 'gameConfiguration',
         optionsNeeded: {
@@ -70,6 +76,26 @@ class GameUtil {
 
         return max;
     }
+
+
+    static verifyAnswer = (answer, type) => {
+
+        let isGoodAnswer = false;
+
+        switch (type) {
+            case 'qcm':
+                console.log("la reponse depuis la verif", answer)
+                isGoodAnswer = answer['is_good_answer'];
+                break;
+
+            case 'input':
+                break;
+        }
+
+    return isGoodAnswer;
+
+    }
+
 }
 
 export default GameUtil;

@@ -5,6 +5,7 @@ import GameUtil from "../util/GameUtil";
 class ClientSocket {
 
     socket;
+    //questionTimeout;
 
     constructor() {
         this.socket = socketIoClient(`${window.location.origin}:3000`);
@@ -20,8 +21,7 @@ class ClientSocket {
         this.socket.on('connection-success', ({room, player}) => {
 
             let isLoading = true;
-            console.log('RoomData depuis connectionsuccess', room);
-            console.log('Player depuis connectionsuccess', player);
+
             if (room.host.socketId === this.socket.id) isLoading = false;
 
             roomComponent.setState({
@@ -57,13 +57,13 @@ class ClientSocket {
         });
 
         this.socket.on('game-config-asked', (socketId) => {
-            console.log('UN JOUEUR ME DEMANDE LA CONF DE LA GAME');
+
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
             this.socket.emit('game-config-sent', {gameConfiguration,socketId});
         })
 
         this.socket.on('game-config-host', (gameConfiguration) => {
-            console.log('la conf de la game recu', gameConfiguration);
+
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
             roomComponent.setState({
                 gameConfiguration,
@@ -71,9 +71,36 @@ class ClientSocket {
             });
         })
 
-        this.socket.on('quiz-sent', (msg) => {
-            console.log(msg);
+        this.socket.on('quiz-sent', (quiz) => {
+            console.log("le quiz", quiz);
+            Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
+            this.socket.emit('quiz-received', roomComponent.roomId)
         })
+
+        this.socket.on('ask-question', () => {
+            roomComponent.askQuestion();
+            GameUtil.QUESTION_TIMEOUT_ID = setTimeout(() => {
+                roomComponent.submitAnswer()
+            }, 10000)
+        })
+
+        this.socket.on('display-scores', (roomData) => {
+            roomComponent.setState(
+                {
+                    display: {
+                        lobby: false,
+                        question: false,
+                        answer: true,
+                        endGame: false,
+                    },
+                    roomData
+                }
+            )
+
+            // SetTimeout (this.socket.emit('nextquestion)
+        })
+
+        //this.socket.on('send-answer')
 
 
 
@@ -82,10 +109,13 @@ class ClientSocket {
     };
 
 
-    generateQuiz = () => {
+    generateQuiz = (roomId) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        this.socket.emit('quiz-generation-asked', gameConfiguration)
+        this.socket.emit('quiz-generation-asked', {gameConfiguration, roomId})
+    };
 
+    sendResult = ({result, roomId}) => {
+        this.socket.emit('player-result', {result, roomId});
     };
 
 

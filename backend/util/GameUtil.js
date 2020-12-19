@@ -32,8 +32,8 @@ class GameUtil {
         const limit = Number(gameConfiguration.winCriterion);
 
         return {
-            query:`SELECT  "question"."id", "question"."type", "question"."content", 
-                "question"."answer", "question"."media", "category"."name" 
+            query:`SELECT "question"."type", "question"."content", 
+                "question"."answer", "question"."media", "category"."name" as "category" 
                 FROM "question"
                 INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
                 INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
@@ -77,12 +77,16 @@ class GameUtil {
                 })
             }
         }*/
-    }
+    };
 
     static executeQuizQuery = async (queryObject) => {
-        const records = await db.sequelize.query(queryObject.query, queryObject.options);
+        const quiz =  await db.sequelize.query(queryObject.query, queryObject.options);
 
-        console.log(records);
+        quiz.forEach((question, index) => {
+            question.round = index+1;
+        });
+
+        return quiz;
     }
 
 }

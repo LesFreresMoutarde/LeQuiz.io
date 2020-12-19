@@ -17,8 +17,7 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
-    // TODO LE VIDER QUAND LA ROOM EST MORTE
-    static CURRENT_ROOMS = [];
+
 
     actionCategories = async () => {
         const response = {};

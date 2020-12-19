@@ -55,14 +55,40 @@ module.exports = (server) => {
          io.to(socketId).emit('game-config-host', gameConfiguration);
      });
 
-     socket.on('quiz-generation-asked', async (gameConfiguration) => {
-         const player = findPlayer(socket.id);
-         const room = findRoomByPlayer(player[0]);
+
+     socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
+         // const player = findPlayer(socket.id);
+         // const room = findRoomByPlayer(player[0]);
+         const room = findRoom(roomId)[0];
          console.log("le quiz pour la room suivante", room);
          console.log("avec la conf suivante", gameConfiguration);
          const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
-         const records = await GameUtil.executeQuizQuery(quizQuery);
-         io.to(room.id).emit('quiz-sent', "le quiz est envoyée")
+         const quiz = await GameUtil.executeQuizQuery(quizQuery);
+        console.log('temon quiz');
+         // Creation quiz
+         room.game.quiz = quiz;
+
+         io.to(room.id).emit('quiz-sent', quiz);
+     })
+
+     socket.on('quiz-received', (roomId) => {
+         const room = findRoom(roomId)[0];
+         room.state = 'question' // inGame
+         io.to(room.id).emit('ask-question');
+     });
+
+     socket.on('player-result', ({result, roomId}) => {
+         console.log("player-result event catch");
+         const {receivedAllAnswers, room} = handlePlayerResult(socket.id, result);
+
+         if (receivedAllAnswers) {
+             if (room.game.quiz.length > 0) {
+                io.to(room.id).emit('display-scores', room)
+             } else {
+                io.to(room.id).emit('end-game', room)
+             }
+
+         }
      })
 
      socket.on('disconnect', () => {
@@ -73,7 +99,6 @@ module.exports = (server) => {
          if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
 
      })
-
 
 
 
@@ -139,7 +164,7 @@ module.exports = (server) => {
 
         rooms.forEach((activeRoom) => {
             activeRoom.players.forEach((playerInRoom) => {
-                if (playerInRoom.socketId.trim() === player.socketId.trim()) room = activeRoom;
+                if (playerInRoom.socketId === player.socketId) room = activeRoom;
             })
         });
 
@@ -152,6 +177,11 @@ module.exports = (server) => {
            host,
            state: 'lobby',
            players: [host],
+           game: {
+               quiz: {},
+               scores: {[host.socketId]: 0},
+               hasAnswered: []
+           }
        };
 
        rooms.push(room);
@@ -160,12 +190,13 @@ module.exports = (server) => {
     };
 
     const playerJoinRoom = (player, room) => {
-
+        //TODO SI LA GAME EN COURS
         if (room.players.length > 8) {
             return false
         }
 
         room.players.push(player);
+        room.game.scores[player.socketId] = 0;
         return true;
     };
 
@@ -203,6 +234,7 @@ module.exports = (server) => {
     const playerLeaveRoom = (player, room) => {
        let index = -1;
 
+       //TODO Virer son tableau de scores
         room.players.forEach((playerInRoom, i) => {
             if (playerInRoom.socketId === player.socketId) index = i;
         });
@@ -246,12 +278,37 @@ module.exports = (server) => {
         players.splice(index, 1);
     }
 
+    const handlePlayerResult = (socketId, result) => {
+        const player = findPlayer(socketId)[0];
 
-     /*setInterval(() => {
+        if (player) {
 
-         socket.emit('test', `${new Date().toISOString()}`);
-     }, 1000);*/
+            console.log("player handleplayeresult",player);
+            const room = findRoomByPlayer(player);
 
+            let receivedAllAnswers = true;
+
+            room.game.scores[player.socketId] += Number(result);
+
+            room.game.hasAnswered.push(player.socketId);
+
+            room.players.forEach((player) => {
+                if(!room.game.hasAnswered.includes(player.socketId)) receivedAllAnswers = false
+            });
+
+            console.log("tableau des scores", room.game.scores);
+
+            if (receivedAllAnswers) {
+                room.game.quiz.shift();
+                room.game.hasAnswered = [];
+            }
+
+            return {receivedAllAnswers, room};
+
+        } else {
+            return {receivedAllAnswers: false, room: null};
+        }
+    }
 
      //TODO Handle socket.on('error')
 

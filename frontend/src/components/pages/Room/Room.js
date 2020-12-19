@@ -5,10 +5,12 @@ import Loader from "../../misc/Loader";
 import Lobby from "./views/Lobby";
 import Util from "../../../util/Util";
 import GameUtil from "../../../util/GameUtil";
+import Question from "./views/Question";
 
 class Room extends React.Component {
 
     socket;
+    roomId;
 
     constructor(props) {
         super(props);
@@ -28,6 +30,7 @@ class Room extends React.Component {
             roomData: false,
             gameConfiguration: false,
             currentPlayer: false,
+            currentQuestion: false,
         }
 
 
@@ -72,6 +75,7 @@ class Room extends React.Component {
 
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' )
 
+                this.roomId = roomId;
                 this.socket = new ClientSocket();
                 this.socket.connectToRoom(roomId, pseudo, isHost);
                 this.socket.handleSocketCommunication(this);
@@ -88,7 +92,7 @@ class Room extends React.Component {
     startQuiz = () => {
         //TODO verifier que le Host a les droits pour le mode de jeu !!
         console.log("on start le quizZZZ");
-        this.socket.generateQuiz()
+        this.socket.generateQuiz(this.roomId)
 
     };
 
@@ -96,6 +100,37 @@ class Room extends React.Component {
         console.log("leave room by button")
     };
 
+    askQuestion = () => {
+        const quiz = Util.getObjectFromSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY);
+
+        const currentQuestion = quiz.shift();
+
+        Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
+
+        this.setState({
+            display: {
+                lobby: false,
+                question: true,
+                answer: false,
+                endGame: false,
+            },
+            currentQuestion
+        });
+        console.log("la question a poser", currentQuestion);
+    };
+
+    submitAnswer = (answer = null) => {
+        //console.log('answer chosen', answer);
+        //TODO Desactiver les boutons de réponses
+        let isGoodAnswer = false;
+        if (answer) {
+            clearTimeout(GameUtil.QUESTION_TIMEOUT_ID);
+            const { currentQuestion } = this.state;
+            isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
+        }
+
+        this.socket.sendResult({result: isGoodAnswer, roomId: this.roomId})
+    }
 
 
     componentWillUnmount() {
@@ -109,7 +144,7 @@ class Room extends React.Component {
     }
 
     render() {
-        const { isLoading, display, roomData, gameConfiguration, currentPlayer, isHost } = this.state;
+        const { isLoading, display, roomData, gameConfiguration, currentPlayer, isHost, currentQuestion } = this.state;
         console.log("le state", this.state);
 
         if (isLoading) {
@@ -140,7 +175,9 @@ class Room extends React.Component {
         } else if (display.question) {
 
             return (
-                <p>la question</p>
+                <>
+                    <Question currentQuestion={currentQuestion} submitAnswer={this.submitAnswer}/>
+                </>
             )
 
         } else if (display.answer) {
