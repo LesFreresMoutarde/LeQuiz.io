@@ -5,7 +5,6 @@ import GameUtil from "../util/GameUtil";
 class ClientSocket {
 
     socket;
-    //questionTimeout;
 
     constructor() {
         this.socket = socketIoClient(`${window.location.origin}:3000`);
@@ -79,9 +78,12 @@ class ClientSocket {
 
         this.socket.on('ask-question', () => {
             roomComponent.askQuestion();
-            GameUtil.QUESTION_TIMEOUT_ID = setTimeout(() => {
+           console.log("socketID", this.socket.id);
+            roomComponent.timeoutId = window.setTimeout(() => {
+                console.log('TIMEOUT TRIGGERED')
                 roomComponent.submitAnswer()
             }, 10000)
+            console.log("timeoutId from DEB", roomComponent.timeoutId);
         })
 
         this.socket.on('display-scores', (roomData) => {
@@ -95,7 +97,10 @@ class ClientSocket {
                     },
                     roomData
                 }
-            )
+            );
+            setTimeout(() => {
+                this.socket.emit('next-question', roomComponent.roomId)
+            }, 5000);
 
             // SetTimeout (this.socket.emit('nextquestion)
         })

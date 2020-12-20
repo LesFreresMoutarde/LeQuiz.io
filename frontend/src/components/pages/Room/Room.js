@@ -6,11 +6,13 @@ import Lobby from "./views/Lobby";
 import Util from "../../../util/Util";
 import GameUtil from "../../../util/GameUtil";
 import Question from "./views/Question";
+import Answer from "./views/Answer";
 
 class Room extends React.Component {
 
     socket;
     roomId;
+    timeoutId;
 
     constructor(props) {
         super(props);
@@ -124,7 +126,8 @@ class Room extends React.Component {
         //TODO Desactiver les boutons de réponses
         let isGoodAnswer = false;
         if (answer) {
-            clearTimeout(GameUtil.QUESTION_TIMEOUT_ID);
+            console.log("timeoutId fromSA", this.timeoutId);
+            window.clearTimeout(this.timeoutId);
             const { currentQuestion } = this.state;
             isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
         }
@@ -183,7 +186,11 @@ class Room extends React.Component {
         } else if (display.answer) {
 
             return (
-                <p>la reponse</p>
+                <>
+                    <Answer scores={roomData.game.scores}
+                            currentQuestion={currentQuestion}
+                            currentPlayer={currentPlayer}/>
+                </>
             )
 
         } else if (display.end) {

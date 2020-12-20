@@ -1,7 +1,7 @@
 import React from "react";
 
-const Title = ({title}) => (
-    <h1 className="mb3 text-center">{title}</h1>
+const Title = ({title, colorClass = 'text-white'}) => (
+    <h1 className={`mb3 text-center ${colorClass}`}>{title}</h1>
 );
 
 export default Title;

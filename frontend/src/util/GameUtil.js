@@ -6,7 +6,7 @@ class GameUtil {
 
     static ROUND_TIME = 12*1000;
 
-    static QUESTION_TIMEOUT_ID;
+    QUESTION_TIMEOUT_ID;
 
     static GAME_CONFIGURATION = {
         key: 'gameConfiguration',

@@ -74,12 +74,20 @@ module.exports = (server) => {
      socket.on('quiz-received', (roomId) => {
          const room = findRoom(roomId)[0];
          room.state = 'question' // inGame
-         io.to(room.id).emit('ask-question');
+         socket.emit('ask-question');
      });
+
+     socket.on('next-question', (roomId) => {
+         const room = findRoom(roomId)[0];
+         room.state = 'question';
+         socket.emit('ask-question')
+     })
 
      socket.on('player-result', ({result, roomId}) => {
          console.log("player-result event catch");
          const {receivedAllAnswers, room} = handlePlayerResult(socket.id, result);
+
+         room.state = 'answer';
 
          if (receivedAllAnswers) {
              if (room.game.quiz.length > 0) {
@@ -179,7 +187,14 @@ module.exports = (server) => {
            players: [host],
            game: {
                quiz: {},
-               scores: {[host.socketId]: 0},
+               scores: [
+                       {
+                           player: host,
+                           value: 0,
+                           rank: 0,
+                           lastAnswer: null,
+                       }
+               ],
                hasAnswered: []
            }
        };
@@ -196,7 +211,15 @@ module.exports = (server) => {
         }
 
         room.players.push(player);
-        room.game.scores[player.socketId] = 0;
+
+        room.game.scores.push({
+            player: player,
+            value: 0,
+            rank: 0,
+            lastAnswer: null,
+        });
+
+
         return true;
     };
 
@@ -211,6 +234,8 @@ module.exports = (server) => {
 
         let room = findRoomByPlayer(player);
         console.log("la room du mec", room);
+
+        if (!room) return {hasRoomToBeUpdated: false, room: null};
 
         let hasRoomToBeUpdated = true;
         playerLeaveRoom(player, room);
@@ -284,11 +309,24 @@ module.exports = (server) => {
         if (player) {
 
             console.log("player handleplayeresult",player);
-            const room = findRoomByPlayer(player);
 
+            const room = findRoomByPlayer(player);
+            console.log('roomScores',room.game.scores);
             let receivedAllAnswers = true;
 
-            room.game.scores[player.socketId] += Number(result);
+            room.game.scores.forEach((scoreLine) => {
+                if (scoreLine.player.socketId === player.socketId) {
+                    scoreLine.value += Number(result);
+                    scoreLine.lastAnswer = result;
+                }
+            });
+
+            room.game.scores = sortScoresRank(room.game.scores);
+            // room.game.scores[player.socketId]['lastAnswer'] = result;
+            // room.game.scores[player.socketId]['value'] += Number(result);
+
+
+            //TODO trier le tableau en fonction des scores et générer un classement
 
             room.game.hasAnswered.push(player.socketId);
 
@@ -308,6 +346,25 @@ module.exports = (server) => {
         } else {
             return {receivedAllAnswers: false, room: null};
         }
+    }
+
+    const sortScoresRank = (scores) => {
+        // Trier selon value et générer le rank
+        scores.sort((a, b) => {
+            return b.value - a.value
+        });
+
+        scores[0].rank = 1;
+
+        for (let i = 1; i < scores.length; i++) {
+           // if (i===0) scores[i].rank = i+1
+            scores[i].rank = i+1;
+
+            if (scores[i-1].value === scores[i].value) scores[i].rank = i;
+
+        }
+
+        return scores;
     }
 
      //TODO Handle socket.on('error')
