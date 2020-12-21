@@ -8,27 +8,38 @@ class Answer extends React.Component {
     }
 
     render() {
-        const { currentQuestion, currentPlayer, scores} = this.props;
-        console.log("currPlayer", currentPlayer);
+        const { currentQuestion, currentPlayer, game, timeLeft} = this.props;
+        const { scores, round, quizLength} = game;
+
+        let goodAnswer = null;
+
+        currentQuestion.answer.answers.map((answer) => {
+            if (answer['is_good_answer']) goodAnswer = answer.content;
+        });
+
         let header = {text: 'Mauvaise réponse', colorClass: 'text-red'};
 
         scores.forEach(lineScore => {
            if (lineScore.player.socketId === currentPlayer.socketId && lineScore.lastAnswer)
                header = {text:'Bonne réponse', colorClass: 'text-green'}
         });
-        // const header = scores[currentPlayer.socketId].lastAnswer
-        //     ?
-        //     {text:'Bonne réponse', colorClass: 'text-green'}
-        //     :
-        //     {text:'Mauvaise réponse', colorClass: 'text-red'};
+
+        let roundInformation = `Question ${round} sur ${quizLength}`;
+
+        if (round === quizLength) roundInformation = 'Partie terminée';
+
 
         return (
             <>
                 <Title title={header.text} colorClass={header.colorClass}/>
+                <p>Temps restant : {timeLeft}</p>
+                <p>{roundInformation}</p>
+                <p>{currentQuestion.content}</p>
+                <p><strong>{goodAnswer}</strong></p>
                 <p>Scores</p>
                 <ul>
-                    {scores.map(lineScore => (
-                        <p>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>
+                    {scores.map((lineScore, index) => (
+                        <p key={index}>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>
                     ))}
                 </ul>
             </>

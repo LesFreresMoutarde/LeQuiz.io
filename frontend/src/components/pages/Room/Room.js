@@ -13,26 +13,26 @@ class Room extends React.Component {
     socket;
     roomId;
     timeoutId;
+    intervalId;
 
     constructor(props) {
         super(props);
-        // this.props.history.length = 0;
-        console.log(this.props.history);
         this.state = {
             isLoading: true,
             roomId: false,
             isHost: false,
             socketOpen: false,
+            timeLeft: false,
             display: {
                 lobby: false,
                 question: false,
                 answer: false,
-                endGame: false
             },
             roomData: false,
             gameConfiguration: false,
             currentPlayer: false,
             currentQuestion: false,
+            questionInputDisabled: false
         }
 
 
@@ -43,27 +43,22 @@ class Room extends React.Component {
         (async () => {
 
             try {
-                console.log('props match', this.props.match);
                 const roomId  = this.props.match.params.id;
                 let isHost = false;
 
                 if (Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key)) {
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-                    console.log('gameconfigFromRoom', gameConfiguration);
 
                     if (gameConfiguration.roomCode === roomId) {
                         isHost = true;
                         delete gameConfiguration.roomCode;
                         this.setState({isHost, gameConfiguration});
-                        console.log('gameConfig sans roomCode normalement', gameConfiguration);
                         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-                        console.log('la gameConfig sans RoomCode depuis le localStorage', Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key))
                     } else {
                         Util.clearSessionStorage();
                     }
 
                 }
-                console.log("isHost ?", isHost);
 
                 const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
@@ -72,8 +67,6 @@ class Room extends React.Component {
                 if (!response.ok) throw new Error('Cannot join this room');
 
                 const {isRoomValid} = await response.json();
-
-                console.log("IS ROOM VALID !", isRoomValid);
 
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' )
 
@@ -93,7 +86,6 @@ class Room extends React.Component {
 
     startQuiz = () => {
         //TODO verifier que le Host a les droits pour le mode de jeu !!
-        console.log("on start le quizZZZ");
         this.socket.generateQuiz(this.roomId)
 
     };
@@ -114,41 +106,57 @@ class Room extends React.Component {
                 lobby: false,
                 question: true,
                 answer: false,
-                endGame: false,
             },
             currentQuestion
         });
-        console.log("la question a poser", currentQuestion);
     };
 
     submitAnswer = (answer = null) => {
-        //console.log('answer chosen', answer);
-        //TODO Desactiver les boutons de réponses
+
         let isGoodAnswer = false;
         if (answer) {
-            console.log("timeoutId fromSA", this.timeoutId);
+            this.setState({questionInputDisabled: true});
             window.clearTimeout(this.timeoutId);
             const { currentQuestion } = this.state;
             isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
         }
 
         this.socket.sendResult({result: isGoodAnswer, roomId: this.roomId})
-    }
+    };
+
+    handleTimeLeft = (type) => {
+
+        let timeLeft = GameUtil.ROUND_TIME / 1000;
+
+        if (type === 'scores') timeLeft = GameUtil.SCORES_TIME / 1000;
+
+        this.setState({timeLeft});
+        timeLeft --;
+        this.intervalId = window.setInterval(() => {
+            this.setState({timeLeft});
+            timeLeft --
+        }, 1000) ;
+    };
 
 
     componentWillUnmount() {
 
         Util.clearSessionStorage();
-        if(this.state.socketOpen) this.socket.destructor()
-        console.log("FAIL ON A UNMOUNT")
 
-        //this.props.history.replace('/')
-        //window.history.replaceState('/', '/', '/')
+        if(this.state.socketOpen) {
+            this.socket.destructor();
+            clearTimeout(this.timeoutId);
+            clearInterval(this.intervalId);
+        }
+
     }
 
     render() {
-        const { isLoading, display, roomData, gameConfiguration, currentPlayer, isHost, currentQuestion } = this.state;
-        console.log("le state", this.state);
+        const {
+            isLoading, display, roomData, gameConfiguration,
+            currentPlayer, isHost, currentQuestion, timeLeft,
+            questionInputDisabled
+        } = this.state;
 
         if (isLoading) {
             return (
@@ -179,7 +187,11 @@ class Room extends React.Component {
 
             return (
                 <>
-                    <Question currentQuestion={currentQuestion} submitAnswer={this.submitAnswer}/>
+                    <Question currentQuestion={currentQuestion}
+                              submitAnswer={this.submitAnswer}
+                              timeLeft={timeLeft}
+                              questionInputDisabled={questionInputDisabled}
+                    />
                 </>
             )
 
@@ -187,16 +199,12 @@ class Room extends React.Component {
 
             return (
                 <>
-                    <Answer scores={roomData.game.scores}
+                    <Answer game={roomData.game}
                             currentQuestion={currentQuestion}
-                            currentPlayer={currentPlayer}/>
+                            currentPlayer={currentPlayer}
+                            timeLeft={timeLeft}
+                    />
                 </>
-            )
-
-        } else if (display.end) {
-
-            return (
-                <p>Fin de partie</p>
             )
 
         }

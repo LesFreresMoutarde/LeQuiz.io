@@ -14,9 +14,6 @@ module.exports = (server) => {
         }
     });
 
-    console.log('Uniquement au lancement du SERV');
-     console.log('les sockets Co', io.sockets.sockets);
-
  io.on('connection', (socket) => {
 
      console.log('user has connected');
@@ -26,13 +23,7 @@ module.exports = (server) => {
         console.log('pseudo', username);
         console.log('isHost ?', isHost);
         const player = handleNewPlayer(username, socket.id);
-        console.log('player novuvellement creer', player);
 
-       // let room = findRoom()
-
-        console.log('tous les joueurs', players);
-
-        // Verifier si roomExiste // Si elle existe pas, on la créer dans isHost // Si il est pas host ca degage
         const {room, joined} = handleRoomJoining(roomId, isHost, player);
 
         if (!joined) {
@@ -57,8 +48,7 @@ module.exports = (server) => {
 
 
      socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
-         // const player = findPlayer(socket.id);
-         // const room = findRoomByPlayer(player[0]);
+
          const room = findRoom(roomId)[0];
          console.log("le quiz pour la room suivante", room);
          console.log("avec la conf suivante", gameConfiguration);
@@ -67,9 +57,10 @@ module.exports = (server) => {
         console.log('temon quiz');
          // Creation quiz
          room.game.quiz = quiz;
+         room.game.quizLength = quiz.length;
 
          io.to(room.id).emit('quiz-sent', quiz);
-     })
+     });
 
      socket.on('quiz-received', (roomId) => {
          const room = findRoom(roomId)[0];
@@ -81,7 +72,7 @@ module.exports = (server) => {
          const room = findRoom(roomId)[0];
          room.state = 'question';
          socket.emit('ask-question')
-     })
+     });
 
      socket.on('player-result', ({result, roomId}) => {
          console.log("player-result event catch");
@@ -90,27 +81,62 @@ module.exports = (server) => {
          room.state = 'answer';
 
          if (receivedAllAnswers) {
-             if (room.game.quiz.length > 0) {
-                io.to(room.id).emit('display-scores', room)
-             } else {
-                io.to(room.id).emit('end-game', room)
-             }
-
+             const eventToEmit = getEventToEmit(room);
+             io.to(room.id).emit(eventToEmit, room);
          }
+     });
+
+     socket.on('game-reinit',(roomId) => {
+         const room = findRoom(roomId)[0];
+         reinitRoomGame(room)
      })
 
      socket.on('disconnect', () => {
          console.log('deconnexion');
 
-         const {hasRoomToBeUpdated, room} = handlePlayerDisconnect(socket.id);
+         //TODO Gerer la deconnexion pour déclencher le renvoie de reponses pendant l'attente
+
+         // hasScoresToBeDisplayed
+         const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
 
          if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
+
+         if (hasScoresToBeDisplayed) {
+             const eventToEmit = getEventToEmit(room);
+             io.to(room.id).emit(eventToEmit, room);
+         }
 
      })
 
 
-
  })
+
+    const reinitRoomGame = (room) => {
+        room.state = 'lobby';
+        room.game = {
+            quizLength: 0,
+            round: 0,
+            quiz: [],
+            scores: [
+                {
+                    player: room.host,
+                    value: 0,
+                    rank: 0,
+                    lastAnswer: null,
+                }
+            ],
+            hasAnswered: []
+        }
+    };
+
+    const getEventToEmit = (room) => {
+
+        if (room.game.quiz.length > 0) {
+            return 'display-scores';
+        }
+
+        return 'end-game'
+    };
 
      const handleNewPlayer = (username, socketId) => {
         let player = findPlayer(socketId);
@@ -139,9 +165,6 @@ module.exports = (server) => {
 
 
     const handleRoomJoining = (roomId, isHost, player) => {
-        // Verifier si roomExiste
-        // Si elle existe pas, on la créer dans isHost
-        // Si il est pas host ca degage
         let joined = false;
         let room = findRoom(roomId);
 
@@ -161,14 +184,14 @@ module.exports = (server) => {
         }
 
         return {room, joined};
-    }
+    };
 
     const findRoom = (roomId) => {
          return rooms.filter(room => room.id === roomId)
     };
 
     const findRoomByPlayer = (player) => {
-        let room = {};
+        let room = null;
 
         rooms.forEach((activeRoom) => {
             activeRoom.players.forEach((playerInRoom) => {
@@ -186,7 +209,9 @@ module.exports = (server) => {
            state: 'lobby',
            players: [host],
            game: {
-               quiz: {},
+               quizLength: 0,
+               round: 0,
+               quiz: [],
                scores: [
                        {
                            player: host,
@@ -205,8 +230,8 @@ module.exports = (server) => {
     };
 
     const playerJoinRoom = (player, room) => {
-        //TODO SI LA GAME EN COURS
-        if (room.players.length > 8) {
+        //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
+        if (room.players.length > 8 || room.state !== 'lobby') {
             return false
         }
 
@@ -230,41 +255,53 @@ module.exports = (server) => {
         const player = findPlayer(socketId)[0];
         console.log("le player a deco", player);
 
-        if (!player) return {hasRoomToBeUpdated: false, room: null};
+        if (!player) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
         let room = findRoomByPlayer(player);
         console.log("la room du mec", room);
 
-        if (!room) return {hasRoomToBeUpdated: false, room: null};
+        if (!room) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
         let hasRoomToBeUpdated = true;
         playerLeaveRoom(player, room);
 
         const isRoomDeletable = checkIfRoomIsDeletable(room);
 
+        let hasScoresToBeDisplayed = false;
+
         if (isRoomDeletable)  {
             deleteRoom(room);
             hasRoomToBeUpdated = false;
+        } else {
+
+            const hostHasToBeTransferred = checkIfHostHasToBeTransferred(player, room);
+            if (hostHasToBeTransferred) room = changeRoomHost(room);
+
+            if (checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true
         }
 
-        const hostHasToBeTransferred = checkIfHostHasToBeTransferred(player, room);
-        if (hostHasToBeTransferred) room = changeRoomHost(room);
-
-
         deletePlayer(player);
-        return {hasRoomToBeUpdated, room};
+
+        return {hasRoomToBeUpdated, hasScoresToBeDisplayed,room};
     };
 
 
     const playerLeaveRoom = (player, room) => {
-       let index = -1;
+       let playerIndex = -1;
+       let scoreIndex = -1;
 
-       //TODO Virer son tableau de scores
-        room.players.forEach((playerInRoom, i) => {
-            if (playerInRoom.socketId === player.socketId) index = i;
+
+        room.game.scores.forEach((lineScore, index) => {
+            if (lineScore.player.socketId === player.socketId) scoreIndex = index
         });
 
-        room.players.splice(index, 1);
+        room.game.scores.splice(scoreIndex, 1);
+
+        room.players.forEach((playerInRoom, index) => {
+            if (playerInRoom.socketId === player.socketId) playerIndex = index;
+        });
+
+        room.players.splice(playerIndex, 1);
     };
 
     const checkIfRoomIsDeletable = (room) => {
@@ -306,13 +343,14 @@ module.exports = (server) => {
     const handlePlayerResult = (socketId, result) => {
         const player = findPlayer(socketId)[0];
 
+
         if (player) {
 
             console.log("player handleplayeresult",player);
 
             const room = findRoomByPlayer(player);
             console.log('roomScores',room.game.scores);
-            let receivedAllAnswers = true;
+            //let receivedAllAnswers = true;
 
             room.game.scores.forEach((scoreLine) => {
                 if (scoreLine.player.socketId === player.socketId) {
@@ -322,23 +360,17 @@ module.exports = (server) => {
             });
 
             room.game.scores = sortScoresRank(room.game.scores);
-            // room.game.scores[player.socketId]['lastAnswer'] = result;
-            // room.game.scores[player.socketId]['value'] += Number(result);
-
-
-            //TODO trier le tableau en fonction des scores et générer un classement
 
             room.game.hasAnswered.push(player.socketId);
 
-            room.players.forEach((player) => {
-                if(!room.game.hasAnswered.includes(player.socketId)) receivedAllAnswers = false
-            });
+            const receivedAllAnswers = checkIfAllAnswersReceived(room);
 
             console.log("tableau des scores", room.game.scores);
 
             if (receivedAllAnswers) {
                 room.game.quiz.shift();
                 room.game.hasAnswered = [];
+                room.game.round++;
             }
 
             return {receivedAllAnswers, room};
@@ -346,10 +378,20 @@ module.exports = (server) => {
         } else {
             return {receivedAllAnswers: false, room: null};
         }
-    }
+    };
+
+    const checkIfAllAnswersReceived = (room) => {
+        let receivedAllAnswers = true;
+
+        room.players.forEach((player) => {
+            if(!room.game.hasAnswered.includes(player.socketId)) receivedAllAnswers = false
+        });
+
+        return receivedAllAnswers;
+    };
 
     const sortScoresRank = (scores) => {
-        // Trier selon value et générer le rank
+
         scores.sort((a, b) => {
             return b.value - a.value
         });
@@ -357,7 +399,6 @@ module.exports = (server) => {
         scores[0].rank = 1;
 
         for (let i = 1; i < scores.length; i++) {
-           // if (i===0) scores[i].rank = i+1
             scores[i].rank = i+1;
 
             if (scores[i-1].value === scores[i].value) scores[i].rank = i;
