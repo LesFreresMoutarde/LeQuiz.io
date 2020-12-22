@@ -7,6 +7,7 @@ import Category from "../components/Category";
 import NextButton from "../../../misc/NextButton";
 import PickAll from "../../../misc/PickAll";
 import UnpickAll from "../../../misc/UnpickAll";
+import BackArrow from "../../../misc/BackArrow";
 
 
 export default class ChooseCategories extends React.Component {
@@ -153,11 +154,16 @@ export default class ChooseCategories extends React.Component {
         this.props.submit(this.pickedCategories);
     };
 
+    goBack = () => {
+        this.props.goBack('chooseCategories');
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <Title title={ChooseCategories.TITLE}/>
+                    <BackArrow onClick={this.goBack()}/>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -171,6 +177,7 @@ export default class ChooseCategories extends React.Component {
             return (
                 <>
                     <Title title={ChooseCategories.TITLE}/>
+                    <BackArrow onClick={this.goBack()}/>
                     <div className="category-container">
                        {categories.map((category, index) => {
                             if (index === 0) {

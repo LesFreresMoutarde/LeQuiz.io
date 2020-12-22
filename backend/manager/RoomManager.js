@@ -34,7 +34,7 @@ module.exports = (server) => {
             socket.join(room.id);
             socket.emit('connection-success', {room, player});
 
-            // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room
+            // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
             io.to(room.id).emit('room-updated', room);
 
             if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
@@ -45,6 +45,12 @@ module.exports = (server) => {
      socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
          io.to(socketId).emit('game-config-host', gameConfiguration);
      });
+
+     // ECRIRE EVENT SOCKET game config updated
+     socket.on('game-config-update', ({gameConfiguration, roomId}) => {
+         //TODO V2 broadcast
+         io.to(roomId).emit('game-config-updated-sent', gameConfiguration);
+     })
 
 
      socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {

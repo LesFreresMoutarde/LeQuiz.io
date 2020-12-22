@@ -1,10 +1,10 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
 import Util from "../../../util/Util";
 import GameUtil from "../../../util/GameUtil";
 import ChooseGameMode from "./views/ChooseGameMode";
 import ChooseCategories from "./views/ChooseCategories";
 import ChooseOptions from "./views/ChooseOptions";
+import Loader from "../../misc/Loader";
 
 export default class CreateGame extends React.Component {
 
@@ -13,17 +13,29 @@ export default class CreateGame extends React.Component {
 
         this.state = {
             display: {
-                gameMode: true,
+                gameMode: false,
                 categories: false,
                 options: false,
             },
+            isLoading: true,
         };
     }
 
     componentDidMount() {
-        if (this.props.fromLobby) {
-            console.log("on vient du lobby");
+        if (this.props.fromRoom) {
+            console.log("on vient de la room");
+            this.setState(this.props.generatedState);
+
         } else {
+            this.setState({
+                display: {
+                    gameMode: true,
+                    categories: false,
+                    options: false,
+                },
+                isLoading: false,
+            });
+
             const gameConfiguration = this.createGameConfiguration();
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
         }
@@ -46,13 +58,31 @@ export default class CreateGame extends React.Component {
         gameConfiguration.gameMode = gameMode;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
-        this.setState({
-            display: {
-                gameMode: false,
-                categories: true,
-                options: false
-            }
-        })
+        if (!this.props.fromRoom) {
+            this.setState({
+                display: {
+                    gameMode: false,
+                    categories: true,
+                    options: false
+                }
+            })
+        } else {
+            // Emettre un evenement socket ?
+            // changer la game configuration du state
+            this.props.roomInstance.setState({
+                display: {
+                    lobby: true,
+                    question: false,
+                    answer: false,
+                    gameOptions: false,
+                },
+                gameConfiguration
+            });
+
+            this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+        }
+
+
     }
 
     submitCategories = (categories) => {
@@ -60,14 +90,28 @@ export default class CreateGame extends React.Component {
         gameConfiguration.categories = categories;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
-        this.setState({
-            display: {
-                gameMode: false,
-                categories: false,
-                options: true,
-            }
-        })
-    }
+        if (!this.props.fromRoom) {
+            this.setState({
+                display: {
+                    gameMode: false,
+                    categories: false,
+                    options: true,
+                }
+            })
+        } else {
+            this.props.roomInstance.setState({
+                display: {
+                    lobby: true,
+                    question: false,
+                    answer: false,
+                    gameOptions: false,
+                },
+                gameConfiguration
+            });
+
+            this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+        }
+    };
 
     submitOptions = (questionTypes, winCriterionValue, roomCode) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
@@ -75,20 +119,45 @@ export default class CreateGame extends React.Component {
         gameConfiguration.questionTypes = questionTypes;
         gameConfiguration.roomCode = roomCode;
 
-        if (this.props.fromLobby) {
-            delete gameConfiguration.roomCode;
-            this.props.lobbyInstance.setState({
-                displayCreateGame: false,
-                gameConfiguration: gameConfiguration
-            })
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration)
-        } else {
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration)
+        if (!this.props.fromRoom) {
+
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
             this.props.history.push(`/room/${roomCode}`);
+
+        } else {
+
+            delete gameConfiguration.roomCode;
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+            this.props.roomInstance.setState({
+                display: {
+                    lobby: true,
+                    question: false,
+                    answer: false,
+                    gameOptions: false,
+                },
+                gameConfiguration
+            });
+
+            this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+
         }
+    };
 
-        //Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration)
+    goBack = (page) => {
+        // prends la page en param. SELON elle affiche la bonne précédente
+        // SI PAGE = 'chooseGameMode' ALORS regardez si on vient du lobby (room) ou NON
+        // SI PAGE = 'chooseOptions' ALORS Emettre event socket si c'est une modif de la configuration
+        switch (page) {
+            case 'chooseGameMode':
 
+                break;
+            case 'chooseCategories':
+                break;
+            case 'chooseOptions':
+                break;
+        }
     }
 
     componentWillUnmount() {
@@ -96,19 +165,33 @@ export default class CreateGame extends React.Component {
     }
 
     render() {
-        const { display } = this.state;
+        // Passer from lobby
+        const { display, isLoading } = this.state;
+
+        if (isLoading) {
+            return (
+                <>
+                    <div className="app loading">
+                        <div className="app-loader">
+                            <Loader width="max(6vw, 80px)"/>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+
 
         if (display.gameMode) {
 
-            return(<ChooseGameMode submit={this.submitGameMode}/>)
+            return(<ChooseGameMode submit={this.submitGameMode} goBack={this.goBack}/>)
 
         } else if (display.categories) {
 
-            return(<ChooseCategories submit={this.submitCategories}/>)
+            return(<ChooseCategories submit={this.submitCategories} goBack={this.goBack}/>)
 
         } else if (display.options) {
 
-            return(<ChooseOptions submit={this.submitOptions}/>)
+            return(<ChooseOptions submit={this.submitOptions} goBack={this.goBack}/>)
 
         }
 

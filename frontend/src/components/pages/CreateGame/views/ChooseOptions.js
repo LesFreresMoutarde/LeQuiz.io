@@ -7,6 +7,7 @@ import WinCriterion from "../components/WinCriterion";
 
 import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
+import BackArrow from "../../../misc/BackArrow";
 
 
 export default class ChooseOptions extends React.Component {
@@ -184,11 +185,16 @@ export default class ChooseOptions extends React.Component {
 
     };
 
+    goBack = () => {
+        this.props.goBack('chooseOptions')
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <Title title={ChooseOptions.TITLE}/>
+                    <BackArrow onClick={this.goBack()}/>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -208,6 +214,7 @@ export default class ChooseOptions extends React.Component {
             return (
                 <>
                     <Title title={ChooseOptions.TITLE}/>
+                    <BackArrow onClick={this.goBack()}/>
                     <div className="game-options-container">
                         <WinCriterion
                             winCriterion={gameOptions.winCriterion}

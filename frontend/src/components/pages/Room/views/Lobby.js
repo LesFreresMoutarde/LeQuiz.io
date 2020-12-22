@@ -14,14 +14,6 @@ class Lobby extends React.Component {
     constructor(props) {
         super(props);
         console.log("propos",props);
-        this.state = {
-            displayCreateGame: false,
-            // lobbyData: this.props.roomData,
-            // gameConfiguration: this.props.gameConfiguration,
-            // currentPlayer: this.props.currentPlayer,
-            // isHost: this.props.isHost
-        };
-        console.log("state lobby", this.state);
     }
 
     componentDidMount() {
@@ -30,29 +22,39 @@ class Lobby extends React.Component {
 
 
 
+
+
     render() {
-        const { displayCreateGame } = this.state;
-        const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz } = this.props;
+        const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz, changeOptions } = this.props;
         console.log('gameConfigFromLobby',gameConfiguration);
         // console.log("lobbyData from lobby", lobbyData)
-        if (displayCreateGame) {
+       /* if (displayCreateGame) {
             console.log('momo');
             return(
             <>
                 <CreateGame fromLobby={true} lobbyInstance={this}/>
             </>
-            )
-        } else {
+            )*/
+        // } else {
 
             let displayClass = 'hidden';
             if(isHost) displayClass = 'visible';
 
             return (
                 <div>
-                    <GameModeBox gameMode={gameConfiguration.gameMode}/>
-                    <OptionsBox questionTypes={gameConfiguration.questionTypes} winCriterion={gameConfiguration.winCriterion}/>
+                    <GameModeBox gameMode={gameConfiguration.gameMode}
+                                 changeOptions={changeOptions}
+                                 displayClass={displayClass}/>
+                    <OptionsBox questionTypes={gameConfiguration.questionTypes}
+                                winCriterion={gameConfiguration.winCriterion}
+                                changeOptions={changeOptions}
+                                displayClass={displayClass}
+                    />
                     <PlayersBox players={roomData.players} host={roomData.host} currentPlayer={currentPlayer}/>
-                    <CategoriesBox categories={gameConfiguration.categories}/>
+                    <CategoriesBox categories={gameConfiguration.categories}
+                                   changeOptions={changeOptions}
+                                   displayClass={displayClass}
+                    />
                     <NextButton onClick={startQuiz}
                                 sizeClass="large-button"
                                 content="Commencer"
@@ -60,7 +62,7 @@ class Lobby extends React.Component {
                     {/*<button onClick={() => {this.setState({displayCreateGame: true})}}>Modifier</button>*/}
                 </div>
             );
-        }
+        //}
 
     }
 
