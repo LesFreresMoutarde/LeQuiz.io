@@ -8,11 +8,11 @@ import Util from "./util/Util";
 Util.initializeTokensStorage();
 
 ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode> ITS COMMENTED BECAUSE IT RENDERS COMPONENT TWICE WHICH IS FATAL FOR SOCKET HANDLING
         <BrowserRouter>
             <App />
-        </BrowserRouter>
-    </React.StrictMode>,
+        </BrowserRouter>,
+    // </React.StrictMode>,
     document.getElementById('root')
 );
 

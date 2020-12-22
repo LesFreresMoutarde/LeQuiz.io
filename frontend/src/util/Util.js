@@ -255,6 +255,10 @@ class Util {
         sessionStorage.setItem(key, JSON.stringify(object));
     };
 
+    static clearSessionStorage = () => {
+        sessionStorage.clear();
+    };
+
     static getObjectFromLocalStorage = (key) => {
         return JSON.parse(localStorage.getItem(key));
     };

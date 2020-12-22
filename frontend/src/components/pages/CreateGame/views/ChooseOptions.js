@@ -29,15 +29,15 @@ export default class ChooseOptions extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
+              /*  const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
 
                 if (!checkConfiguration.verified) {
                     this.props.history.replace(checkConfiguration.redirect);
 
-                } else {
+                } else {*/
                     let { winCriterionInputValue } = this.state;
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-
+                    console.log('gameConfig', gameConfiguration);
                     const categoriesId = gameConfiguration.categories.map((category) => (category.id));
                     const gameMode = gameConfiguration.gameMode.classname;
 
@@ -47,6 +47,7 @@ export default class ChooseOptions extends React.Component {
 
                     const responseData = await response.json();
 
+                    console.log('ResponseData GAMEOPTIONS', responseData);
                     const questionTypes = responseData.gameOptions.questionTypes.slice();
 
                     questionTypes.forEach(questionType => {
@@ -74,7 +75,7 @@ export default class ChooseOptions extends React.Component {
                     });
 
                     this.evaluateWinCriterionMaxValue();
-                }
+                // }
 
             } catch (error) {
                 console.error(error);
@@ -104,6 +105,7 @@ export default class ChooseOptions extends React.Component {
     }
 
     evaluateWinCriterionMaxValue = () => {
+
         const questionTypesAvailable = this.state.gameOptions.questionTypes;
         const { questionTypes } = this.state;
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
@@ -141,28 +143,40 @@ export default class ChooseOptions extends React.Component {
     };
 
 
-    submitGameOptions = () => {
+    submitGameOptions = async () => {
 
         try {
             const { questionTypes, winCriterionInputValue } = this.state;
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
-            gameConfiguration.winCriterion = winCriterionInputValue;
+          //  gameConfiguration.winCriterion = winCriterionInputValue;
 
-            gameConfiguration.questionTypes = [];
+            //gameConfiguration.questionTypes = [];
 
             questionTypes.forEach(questionType => {
                 if (questionType.checked) {
                     delete questionType.checked;
-                    gameConfiguration.questionTypes.push(questionType);
+              //      gameConfiguration.questionTypes.push(questionType);
                 }
 
             });
 
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+            const response = await Util.performAPIRequest('game/generate/code');
 
-            //TODO Real Redirection
-            this.props.history.push('/create-room/room')
+            if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
+
+            const responseData = await response.json();
+
+            console.log('la reponse D', responseData);
+            const roomCode = responseData.roomCode;
+
+           // gameConfiguration.roomCode = roomCode;
+
+           // Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+            this.props.submit(questionTypes, winCriterionInputValue, roomCode)
+            //TODO Gerer le cas où l'utilisateur vient du lobby
+           // this.props.history.push(`/room/${roomCode}`);
 
         } catch (error) {
             console.error(error);
@@ -205,7 +219,10 @@ export default class ChooseOptions extends React.Component {
                                        pickQuestionType={this.pickQuestionType}/>
                     </div>
                     <NextButton disabled={nextButtonDisabled}
-                                onClick={this.submitGameOptions} sizeClass="large-button" content="Suivant"/>
+                                onClick={this.submitGameOptions}
+                                sizeClass="large-button"
+                                content="Suivant"
+                                displayClass="visible"/>
                 </>
             )
         }

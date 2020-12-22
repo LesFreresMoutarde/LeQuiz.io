@@ -1,11 +1,13 @@
 db = require('./models/dbModels');
 const express = require('express');
 const bodyParser = require('body-parser');
-const AuthController = require('./controllers/AuthController');
-
-
 const app = express();
+const server = require('http').createServer(app);
 const port = 3000;
+
+const AuthController = require('./controllers/AuthController');
+require('./manager/RoomManager')(server);
+
 
 const mainRouter = require('./routes/mainRouter');
 
@@ -255,15 +257,15 @@ testModel = async () => {
 
 app.get('/', async (req, res) => {
 
-    const controller = new GameController();
-    let codeRoom = controller.generateCodeRoom();
+    const gameController = new GameController();
+    let codeRoom = gameController.generateRoomIdentifier();
 
-    await testModel();
+    //await testModel();
 
     res.statusCode = 200;
     res.send(codeRoom);
 });
 
-app.listen(port,() => {
+server.listen(port,() => {
     console.log(`Server running at http://localhost:${port}`);
 });

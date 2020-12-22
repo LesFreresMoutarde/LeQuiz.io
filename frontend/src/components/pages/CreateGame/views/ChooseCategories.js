@@ -17,6 +17,7 @@ export default class ChooseCategories extends React.Component {
 
     constructor(props) {
         super(props);
+        //console.log("les props de cate", props);
         this.state = {
             isLoading: true,
             categories: false,
@@ -29,13 +30,13 @@ export default class ChooseCategories extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                // console.log("la conf de la game", Util.getObjectFromSessionStorage('gameConfiguration'));
+                /* console.log("la conf de la game", Util.getObjectFromSessionStorage('gameConfiguration'));
                 const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
 
                 if (!checkConfiguration.verified) {
                     this.props.history.replace(checkConfiguration.redirect);
 
-                } else {
+                } else {*/
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                     const categories = await this.getCategories();
 
@@ -47,7 +48,7 @@ export default class ChooseCategories extends React.Component {
                     if (gameConfiguration.categories.length > 0) {
                         gameConfiguration.categories.map(category => this.pickCategory(category));
                     }
-                }
+                 // }
             } catch (error) {
                 console.log(error)
             }
@@ -141,10 +142,15 @@ export default class ChooseCategories extends React.Component {
     };
 
     submitCategories = () => {
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        /*const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.categories = this.pickedCategories;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-        this.props.history.push('/create-room/options');
+
+        //TODO Gerer le cas où l'utilisateur vient du lobby
+        this.props.history.push('/create-room/options');*/
+
+
+        this.props.submit(this.pickedCategories);
     };
 
     render() {
@@ -190,6 +196,7 @@ export default class ChooseCategories extends React.Component {
                                 onClick={this.submitCategories}
                                 sizeClass="large-button"
                                 content="Suivant"
+                                displayClass="visible"
                     />
                 </>
             )

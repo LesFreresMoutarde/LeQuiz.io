@@ -1,3 +1,5 @@
+const GameUtil = require("../util/GameUtil");
+
 const MainController = require('./mainController/MainController');
 const Serie = require("../models/gameModes/Serie");
 const Ascension = require("../models/gameModes/Ascension");
@@ -15,6 +17,8 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
+
+
     actionCategories = async () => {
         const response = {};
         try {
@@ -25,6 +29,14 @@ class GameController extends MainController {
             response.error = error;
             this.response = response;
         }
+    };
+
+    actionGenerateRoomCode = () => {
+        const response = {};
+
+        response.roomCode = this.generateRoomIdentifier();
+
+        this.response = response;
     };
 
     actionModes = (plan) => {
@@ -56,21 +68,35 @@ class GameController extends MainController {
         }
     };
 
-    generateCodeRoom = () => {
-        let codeRoom = "";
-        const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-        //tableau à remplir des codes room déja réservé par d'autre rooms
-        let arrayCodeRoom = [];
+    actionVerifyRoom = (roomIdentifier) => {
+        const response = {};
+        console.log("le roomIdentifier", roomIdentifier);
+        console.log('ROOMS ID', GameUtil.ROOMS_ID);
+        console.log('Boolean', GameUtil.ROOMS_ID.includes(roomIdentifier))
+        response.isRoomValid = GameUtil.ROOMS_ID.includes(roomIdentifier);
+        this.response = response;
+    };
 
-        while (arrayCodeRoom.includes(codeRoom) || codeRoom === "") {
-            codeRoom = "";
+    generateRoomIdentifier = () => {
+        let roomIdentifier = '';
+        const possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+
+        while (GameUtil.ROOMS_ID.includes(roomIdentifier) || roomIdentifier === '') {
+
+            roomIdentifier = "";
+
             for (let i = 0; i < 6; i++) {
-                codeRoom += possible.charAt(Math.floor(Math.random() * possible.length));
+                roomIdentifier += possibilities.charAt(Math.floor(Math.random() * possibilities.length));
             }
         }
 
-        return codeRoom;
+        GameUtil.ROOMS_ID.push(roomIdentifier);
+
+        return roomIdentifier
     };
+
+
 
     getAllowedGameModes = (plan) => {
 
@@ -98,20 +124,42 @@ class GameController extends MainController {
     };
 
     getCategories = async () => {
-        const categoriesInJson = [];
-            const categories = await db.Category.findAll({
-                attributes: ['id', 'name'],
-                where: db.sequelize.where(
-                    db.sequelize.literal('(SELECT COUNT(*) ' +
-                        'FROM category_question ' +
-                        'WHERE "Category"."id" = category_question."categoryId")'), '>',0)
-            });
 
-            categories.map(category => {
-                categoriesInJson.push(category.toJSON());
-            });
+        const categories = [];
 
-            return categoriesInJson
+        const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", 
+            COUNT(*) as "nbQuestions", "question"."type" FROM "category" 
+            INNER JOIN "category_question" ON "category"."id" = "category_question"."categoryId"
+            INNER JOIN "question" ON "category_question"."questionId" = "question"."id"
+            WHERE "question"."status" = 'approved'
+            GROUP BY "category"."id", "question"."type"
+            ORDER BY "category"."id";`, {
+            type: db.sequelize.QueryTypes.SELECT
+        });
+
+        for (let i = 0; i < records.length; i++) {
+            if (i === 0) {
+                categories.push({
+                    id: records[i].id,
+                    name: records[i].name,
+                    nbQuestions : {
+                        [records[i].type]: records[i].nbQuestions
+                    }
+                })
+            } else if (records[i-1].id === records[i].id) {
+                categories[i-1]['nbQuestions'][[records[i].type]] = records[i].nbQuestions
+            } else {
+                categories.push({
+                    id: records[i].id,
+                    name: records[i].name,
+                    nbQuestions : {
+                        [records[i].type]: records[i].nbQuestions
+                    }
+                })
+            }
+        }
+
+        return categories;
     };
 
     getQuestionTypes = async (categories) => {

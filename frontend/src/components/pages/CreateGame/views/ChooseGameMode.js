@@ -13,10 +13,10 @@ export default class ChooseGameMode extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameConfiguration: Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key),
             gamesModes: false,
             isLoading: true,
         };
+
     }
 
     componentDidMount() {
@@ -52,11 +52,21 @@ export default class ChooseGameMode extends React.Component {
     };
 
     pickGameMode = (gameMode) => {
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+       /* const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.gameMode = gameMode;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
-        this.props.history.push('/create-room/categories');
+        let {display } = this.props;
+        console.log("objet display", display);
+        display = {gameMode: false,
+        categories: true,
+        options: false}
+        //TODO Gerer le cas où l'utilisateur vient du lobby
+        //this.props.history.push('/create-room/categories');*/
+       this.props.submit(gameMode);
+
+       //
+        console.log('props', this.props);
     };
 
     render() {
