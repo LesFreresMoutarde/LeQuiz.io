@@ -53,25 +53,10 @@ export default class ChooseGameMode extends React.Component {
     };
 
     pickGameMode = (gameMode) => {
-       /* const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        gameConfiguration.gameMode = gameMode;
-        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-
-        let {display } = this.props;
-        console.log("objet display", display);
-        display = {gameMode: false,
-        categories: true,
-        options: false}
-        //TODO Gerer le cas où l'utilisateur vient du lobby
-        //this.props.history.push('/create-room/categories');*/
        this.props.submit(gameMode);
-
-       //
-        console.log('props', this.props);
     };
 
     goBack = () => {
-        // Executé la methode de CreateGame avec la page en param
         this.props.goBack('chooseGameMode');
     }
 
@@ -80,7 +65,7 @@ export default class ChooseGameMode extends React.Component {
             return (
                 <>
                     <Title title={ChooseGameMode.TITLE}/>
-                    <BackArrow onClick={this.goBack()}/>
+                    <BackArrow onClick={this.goBack}/>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -93,7 +78,7 @@ export default class ChooseGameMode extends React.Component {
             return (
                     <>
                         <Title title={ChooseGameMode.TITLE}/>
-                        <BackArrow onClick={this.goBack()}/>
+                        <BackArrow onClick={this.goBack}/>
                         <div className="flex-container-space-evenly">
                             {gameModes.map((gameMode, index) => {
                                 return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>

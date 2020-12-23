@@ -23,7 +23,6 @@ export default class CreateGame extends React.Component {
 
     componentDidMount() {
         if (this.props.fromRoom) {
-            console.log("on vient de la room");
             this.setState(this.props.generatedState);
 
         } else {
@@ -54,7 +53,6 @@ export default class CreateGame extends React.Component {
 
     submitGameMode = (gameMode) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        console.log('gameConfigurationSubmitGameMode', gameConfiguration);
         gameConfiguration.gameMode = gameMode;
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
@@ -67,8 +65,7 @@ export default class CreateGame extends React.Component {
                 }
             })
         } else {
-            // Emettre un evenement socket ?
-            // changer la game configuration du state
+
             this.props.roomInstance.setState({
                 display: {
                     lobby: true,
@@ -83,7 +80,7 @@ export default class CreateGame extends React.Component {
         }
 
 
-    }
+    };
 
     submitCategories = (categories) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
@@ -146,26 +143,73 @@ export default class CreateGame extends React.Component {
     };
 
     goBack = (page) => {
-        // prends la page en param. SELON elle affiche la bonne précédente
-        // SI PAGE = 'chooseGameMode' ALORS regardez si on vient du lobby (room) ou NON
-        // SI PAGE = 'chooseOptions' ALORS Emettre event socket si c'est une modif de la configuration
         switch (page) {
             case 'chooseGameMode':
 
+                if (!this.props.fromRoom) {
+                    this.props.history.replace('/');
+                } else {
+                    this.props.roomInstance.setState({
+                        display: {
+                            lobby: true,
+                            question: false,
+                            answer: false,
+                            gameOptions: false,
+                        }})
+                }
+
                 break;
             case 'chooseCategories':
+
+                if (!this.props.fromRoom) {
+                    this.setState({
+                        display: {
+                            gameMode: true,
+                            categories: false,
+                            options: false,
+                        }
+
+                    })
+                } else {
+                    this.props.roomInstance.setState({
+                        display: {
+                            lobby: true,
+                            question: false,
+                            answer: false,
+                            gameOptions: false,
+                        }})
+                }
                 break;
             case 'chooseOptions':
+
+                if (!this.props.fromRoom) {
+                    this.setState({
+                        display: {
+                            gameMode: false,
+                            categories: true,
+                            options: false,
+                        }
+
+                    })
+                } else {
+                    this.props.roomInstance.setState({
+                        display: {
+                            lobby: true,
+                            question: false,
+                            answer: false,
+                            gameOptions: false,
+                        }})
+                }
                 break;
         }
     }
 
     componentWillUnmount() {
-        console.log("GAME UNMOUNT !!!!")
+
     }
 
     render() {
-        // Passer from lobby
+
         const { display, isLoading } = this.state;
 
         if (isLoading) {
@@ -194,15 +238,5 @@ export default class CreateGame extends React.Component {
             return(<ChooseOptions submit={this.submitOptions} goBack={this.goBack}/>)
 
         }
-
-        /* PREVIOUS LOGIC
-
-        return (
-            <Switch>
-                <Route exact path="/create-room/game-mode" component={ChooseGameMode}/>
-                <Route exact path="/create-room/categories" component={ChooseCategories}/>
-                <Route exact path="/create-room/options" component={ChooseOptions}/>
-            </Switch>
-        );*/
     }
 }
