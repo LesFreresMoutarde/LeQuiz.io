@@ -7,6 +7,7 @@ import Util from "../../../util/Util";
 import GameUtil from "../../../util/GameUtil";
 import Question from "./views/Question";
 import Answer from "./views/Answer";
+import CreateGame from "../CreateGame/CreateGame";
 
 class Room extends React.Component {
 
@@ -14,6 +15,7 @@ class Room extends React.Component {
     roomId;
     timeoutId;
     intervalId;
+    gameOptionsToLoad;
 
     constructor(props) {
         super(props);
@@ -27,6 +29,7 @@ class Room extends React.Component {
                 lobby: false,
                 question: false,
                 answer: false,
+                gameOptions: false
             },
             roomData: false,
             gameConfiguration: false,
@@ -85,7 +88,7 @@ class Room extends React.Component {
 
 
     startQuiz = () => {
-        //TODO verifier que le Host a les droits pour le mode de jeu !!
+        //TODO V2 verifier que le Host a les droits pour le mode de jeu !!
         this.socket.generateQuiz(this.roomId)
 
     };
@@ -93,6 +96,8 @@ class Room extends React.Component {
     leaveRoom = () => {
         console.log("leave room by button")
     };
+
+    //TODO LOrs de la modf de la gameConfig in Game, balancez un event socket pour la faire récupérer par les autres joueurs
 
     askQuestion = () => {
         const quiz = Util.getObjectFromSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY);
@@ -106,6 +111,7 @@ class Room extends React.Component {
                 lobby: false,
                 question: true,
                 answer: false,
+                gameOptions: false,
             },
             currentQuestion
         });
@@ -136,6 +142,33 @@ class Room extends React.Component {
             this.setState({timeLeft});
             timeLeft --
         }, 1000) ;
+    };
+
+    changeOptions = (page) => {
+        this.gameOptionsToLoad = page;
+        this.setState({
+            display: {
+                lobby: false,
+                question: false,
+                answer: false,
+                gameOptions: true,
+            }
+        })
+    }
+
+    generateCreateGameState = (page) => {
+        let generatedState = {
+            display: {
+                gameMode: false,
+                categories: false,
+                options: false,
+            },
+            isLoading: false,
+        };
+
+        generatedState.display[page] = true;
+
+        return generatedState;
     };
 
 
@@ -169,6 +202,14 @@ class Room extends React.Component {
                     </div>
                 </>
             );
+        } else if (display.gameOptions) {
+            const generatedState = this.generateCreateGameState(this.gameOptionsToLoad);
+            return (
+                <>
+                    <CreateGame fromRoom={true} roomInstance={this} generatedState={generatedState}/>
+                </>
+            )
+
         } else if (display.lobby) {
 
             return (
@@ -179,6 +220,7 @@ class Room extends React.Component {
                            gameConfiguration={gameConfiguration}
                            startQuiz={this.startQuiz}
                            leaveRoom={this.leaveRoom}
+                           changeOptions={this.changeOptions}
                     />
                 </>
             )

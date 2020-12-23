@@ -29,6 +29,7 @@ class ClientSocket {
                     lobby: true,
                     question: false,
                     answer: false,
+                    gameOptions: false,
                 },
                 currentPlayer: player,
                 roomData: room
@@ -56,6 +57,12 @@ class ClientSocket {
 
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
             this.socket.emit('game-config-sent', {gameConfiguration,socketId});
+        })
+
+        this.socket.on('game-config-updated-sent', (gameConfiguration) => {
+            console.log("gameConfig recu mise à jour",gameConfiguration)
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+            roomComponent.setState({gameConfiguration});
         });
 
         this.socket.on('game-config-host', (gameConfiguration) => {
@@ -89,6 +96,7 @@ class ClientSocket {
                         lobby: false,
                         question: false,
                         answer: true,
+                        gameOptions: false,
                     },
                     roomData,
                     questionInputDisabled: false,
@@ -109,6 +117,7 @@ class ClientSocket {
                     lobby: false,
                     question: false,
                     answer: true,
+                    gameOptions: false,
                 },
                 roomData,
                 questionInputDisabled: false
@@ -122,6 +131,7 @@ class ClientSocket {
                         lobby: true,
                         question: false,
                         answer: false,
+                        gameOptions: false,
                     }
                 })
             }, GameUtil.SCORES_TIME);
@@ -143,6 +153,11 @@ class ClientSocket {
     sendResult = ({result, roomId}) => {
         this.socket.emit('player-result', {result, roomId});
     };
+
+    updateGameConfiguration = (roomId) => {
+        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        this.socket.emit('game-config-update', {gameConfiguration, roomId})
+    }
 
 
     destructor = () => {

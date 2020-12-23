@@ -7,6 +7,7 @@ import WinCriterion from "../components/WinCriterion";
 
 import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
+import BackArrow from "../../../misc/BackArrow";
 
 
 export default class ChooseOptions extends React.Component {
@@ -29,53 +30,46 @@ export default class ChooseOptions extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-              /*  const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
 
-                if (!checkConfiguration.verified) {
-                    this.props.history.replace(checkConfiguration.redirect);
+                let { winCriterionInputValue } = this.state;
+                const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+                const categoriesId = gameConfiguration.categories.map((category) => (category.id));
+                const gameMode = gameConfiguration.gameMode.classname;
 
-                } else {*/
-                    let { winCriterionInputValue } = this.state;
-                    const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-                    console.log('gameConfig', gameConfiguration);
-                    const categoriesId = gameConfiguration.categories.map((category) => (category.id));
-                    const gameMode = gameConfiguration.gameMode.classname;
+                const response = await Util.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
 
-                    const response = await Util.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
+                if (!response.ok) throw new Error(`${response.status} : ${response.statusText}`);
 
-                    if (!response.ok) throw new Error(`${response.status} : ${response.statusText}`);
+                const responseData = await response.json();
 
-                    const responseData = await response.json();
+                const questionTypes = responseData.gameOptions.questionTypes.slice();
 
-                    console.log('ResponseData GAMEOPTIONS', responseData);
-                    const questionTypes = responseData.gameOptions.questionTypes.slice();
+                questionTypes.forEach(questionType => {
+                     questionType.checked = true;
+                });
+
+                if (gameConfiguration.questionTypes.length > 0) {
+
+                    const pickedQuestionTypes = gameConfiguration.questionTypes.map(questionType => questionType.type);
 
                     questionTypes.forEach(questionType => {
-                         questionType.checked = true;
+                        if (!pickedQuestionTypes.includes(questionType.type))
+                            questionType.checked = false;
                     });
 
-                    if (gameConfiguration.questionTypes.length > 0) {
+                   winCriterionInputValue = gameConfiguration.winCriterion
 
-                        const pickedQuestionTypes = gameConfiguration.questionTypes.map(questionType => questionType.type);
+                }
 
-                        questionTypes.forEach(questionType => {
-                            if (!pickedQuestionTypes.includes(questionType.type))
-                                questionType.checked = false;
-                        });
+                this.setState({
+                    isLoading: false,
+                    gameOptions: responseData.gameOptions,
+                    questionTypes,
+                    winCriterionInputValue
+                });
 
-                       winCriterionInputValue = gameConfiguration.winCriterion
+                this.evaluateWinCriterionMaxValue();
 
-                    }
-
-                    this.setState({
-                        isLoading: false,
-                        gameOptions: responseData.gameOptions,
-                        questionTypes,
-                        winCriterionInputValue
-                    });
-
-                    this.evaluateWinCriterionMaxValue();
-                // }
 
             } catch (error) {
                 console.error(error);
@@ -147,16 +141,10 @@ export default class ChooseOptions extends React.Component {
 
         try {
             const { questionTypes, winCriterionInputValue } = this.state;
-            const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-
-          //  gameConfiguration.winCriterion = winCriterionInputValue;
-
-            //gameConfiguration.questionTypes = [];
 
             questionTypes.forEach(questionType => {
                 if (questionType.checked) {
                     delete questionType.checked;
-              //      gameConfiguration.questionTypes.push(questionType);
                 }
 
             });
@@ -167,16 +155,9 @@ export default class ChooseOptions extends React.Component {
 
             const responseData = await response.json();
 
-            console.log('la reponse D', responseData);
             const roomCode = responseData.roomCode;
 
-           // gameConfiguration.roomCode = roomCode;
-
-           // Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-
             this.props.submit(questionTypes, winCriterionInputValue, roomCode)
-            //TODO Gerer le cas où l'utilisateur vient du lobby
-           // this.props.history.push(`/room/${roomCode}`);
 
         } catch (error) {
             console.error(error);
@@ -184,11 +165,16 @@ export default class ChooseOptions extends React.Component {
 
     };
 
+    goBack = () => {
+        this.props.goBack('chooseOptions')
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <Title title={ChooseOptions.TITLE}/>
+                    <BackArrow onClick={this.goBack}/>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -208,6 +194,7 @@ export default class ChooseOptions extends React.Component {
             return (
                 <>
                     <Title title={ChooseOptions.TITLE}/>
+                    <BackArrow onClick={this.goBack}/>
                     <div className="game-options-container">
                         <WinCriterion
                             winCriterion={gameOptions.winCriterion}

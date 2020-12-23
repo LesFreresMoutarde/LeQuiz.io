@@ -7,6 +7,7 @@ import Category from "../components/Category";
 import NextButton from "../../../misc/NextButton";
 import PickAll from "../../../misc/PickAll";
 import UnpickAll from "../../../misc/UnpickAll";
+import BackArrow from "../../../misc/BackArrow";
 
 
 export default class ChooseCategories extends React.Component {
@@ -17,7 +18,6 @@ export default class ChooseCategories extends React.Component {
 
     constructor(props) {
         super(props);
-        //console.log("les props de cate", props);
         this.state = {
             isLoading: true,
             categories: false,
@@ -30,25 +30,17 @@ export default class ChooseCategories extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                /* console.log("la conf de la game", Util.getObjectFromSessionStorage('gameConfiguration'));
-                const checkConfiguration = GameUtil.checkGameConfiguration(this.props.history);
+                const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+                const categories = await this.getCategories();
 
-                if (!checkConfiguration.verified) {
-                    this.props.history.replace(checkConfiguration.redirect);
+                this.setState({
+                    isLoading: false,
+                    categories
+                });
 
-                } else {*/
-                    const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-                    const categories = await this.getCategories();
-
-                    this.setState({
-                        isLoading: false,
-                        categories
-                    });
-
-                    if (gameConfiguration.categories.length > 0) {
-                        gameConfiguration.categories.map(category => this.pickCategory(category));
-                    }
-                 // }
+                if (gameConfiguration.categories.length > 0) {
+                    gameConfiguration.categories.map(category => this.pickCategory(category));
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -142,22 +134,19 @@ export default class ChooseCategories extends React.Component {
     };
 
     submitCategories = () => {
-        /*const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        gameConfiguration.categories = this.pickedCategories;
-        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-
-        //TODO Gerer le cas où l'utilisateur vient du lobby
-        this.props.history.push('/create-room/options');*/
-
-
         this.props.submit(this.pickedCategories);
     };
+
+    goBack = () => {
+        this.props.goBack('chooseCategories');
+    }
 
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <Title title={ChooseCategories.TITLE}/>
+                    <BackArrow onClick={this.goBack}/>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -171,6 +160,7 @@ export default class ChooseCategories extends React.Component {
             return (
                 <>
                     <Title title={ChooseCategories.TITLE}/>
+                    <BackArrow onClick={this.goBack}/>
                     <div className="category-container">
                        {categories.map((category, index) => {
                             if (index === 0) {
