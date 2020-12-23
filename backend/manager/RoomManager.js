@@ -343,8 +343,8 @@ module.exports = (server) => {
 
         if (player.username.startsWith('Guest#')) {
             const guestId = player.username.split('#')[1];
-            const index = GameUtil.GUEST_ID.indexOf(guestId);
-            GameUtil.GUEST_ID.splice(index, 1);
+            const index = GameUtil.GUEST_IDS.indexOf(guestId);
+            GameUtil.GUEST_IDS.splice(index, 1);
         }
     };
 

@@ -17,7 +17,7 @@ class UserController extends MainController {
         let guestId = '';
         const possible = "0123456789";
 
-        while (GameUtil.GUEST_ID.includes(guestId) || guestId === '') {
+        while (GameUtil.GUEST_IDS.includes(guestId) || guestId === '') {
             guestId = '';
 
             for (let i = 0; i < 6; i++) {
@@ -25,7 +25,7 @@ class UserController extends MainController {
             }
         }
 
-        GameUtil.GUEST_ID.push(guestId);
+        GameUtil.GUEST_IDS.push(guestId);
 
         return guestId;
     }

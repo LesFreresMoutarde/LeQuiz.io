@@ -2,7 +2,7 @@
 class GameUtil {
 
     static ROOMS_ID = [];
-    static GUEST_ID = [];
+    static GUEST_IDS = [];
 
     static generateQuizQuery = (gameConfiguration) => {
         let query = ''
