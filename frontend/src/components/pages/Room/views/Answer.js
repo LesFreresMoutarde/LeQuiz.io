@@ -1,5 +1,6 @@
 import React from "react";
 import Title from "../../../misc/Title";
+import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 
 class Answer extends React.Component {
 
@@ -8,7 +9,7 @@ class Answer extends React.Component {
     }
 
     render() {
-        const { currentQuestion, currentPlayer, game, timeLeft} = this.props;
+        const { currentQuestion, currentPlayer, game, timeLeft, leaveRoom } = this.props;
         const { scores, round, quizLength} = game;
 
         let goodAnswer = null;
@@ -31,6 +32,7 @@ class Answer extends React.Component {
 
         return (
             <>
+                <LeaveRoomCross leaveRoom={leaveRoom}/>
                 <Title title={header.text} colorClass={header.colorClass}/>
                 <p>Temps restant : {timeLeft}</p>
                 <p>{roundInformation}</p>
