@@ -94,7 +94,7 @@ class Room extends React.Component {
     };
 
     leaveRoom = () => {
-        console.log("leave room by button")
+        this.props.history.replace('/');
     };
 
     //TODO LOrs de la modf de la gameConfig in Game, balancez un event socket pour la faire récupérer par les autres joueurs
