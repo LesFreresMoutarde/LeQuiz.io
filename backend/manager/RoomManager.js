@@ -46,7 +46,7 @@ module.exports = (server) => {
          io.to(socketId).emit('game-config-host', gameConfiguration);
      });
 
-     // ECRIRE EVENT SOCKET game config updated
+
      socket.on('game-config-update', ({gameConfiguration, roomId}) => {
          //TODO V2 broadcast
          io.to(roomId).emit('game-config-updated-sent', gameConfiguration);
@@ -100,9 +100,6 @@ module.exports = (server) => {
      socket.on('disconnect', () => {
          console.log('deconnexion');
 
-         //TODO Gerer la deconnexion pour déclencher le renvoie de reponses pendant l'attente
-
-         // hasScoresToBeDisplayed
          const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
 
          if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
@@ -250,7 +247,6 @@ module.exports = (server) => {
             lastAnswer: null,
         });
 
-
         return true;
     };
 
@@ -344,7 +340,13 @@ module.exports = (server) => {
         });
 
         players.splice(index, 1);
-    }
+
+        if (player.username.startsWith('Guest#')) {
+            const guestId = player.username.split('#')[1];
+            const index = GameUtil.GUEST_IDS.indexOf(guestId);
+            GameUtil.GUEST_IDS.splice(index, 1);
+        }
+    };
 
     const handlePlayerResult = (socketId, result) => {
         const player = findPlayer(socketId)[0];
