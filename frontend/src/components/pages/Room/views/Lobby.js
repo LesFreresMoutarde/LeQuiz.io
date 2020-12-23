@@ -6,6 +6,7 @@ import CategoriesBox from "../components/Lobby/CategoriesBox";
 // import ChooseCategories from "../../CreateGame/views/ChooseCategories";
 import CreateGame from "../../CreateGame/CreateGame";
 import NextButton from "../../../misc/NextButton";
+import LeaveButton from "../components/Lobby/LeaveButton";
 
 class Lobby extends React.Component {
 
@@ -25,7 +26,7 @@ class Lobby extends React.Component {
 
 
     render() {
-        const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz, changeOptions } = this.props;
+        const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz, changeOptions, leaveRoom } = this.props;
         console.log('gameConfigFromLobby',gameConfiguration);
         // console.log("lobbyData from lobby", lobbyData)
        /* if (displayCreateGame) {
@@ -59,7 +60,7 @@ class Lobby extends React.Component {
                                 sizeClass="large-button"
                                 content="Commencer"
                                 displayClass={displayClass}/>
-                    {/*<button onClick={() => {this.setState({displayCreateGame: true})}}>Modifier</button>*/}
+                   <LeaveButton leaveRoom={leaveRoom}/>
                 </div>
             );
         //}

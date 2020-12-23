@@ -1,6 +1,7 @@
 import React from "react";
 import Title from "../../../misc/Title";
 import QcmAnswer from "../components/Question/QcmAnswer";
+import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 
 
 class Question extends React.Component {
@@ -11,12 +12,13 @@ class Question extends React.Component {
 
     render() {
         const {content, type, round, category, answer} = this.props.currentQuestion;
-        const { submitAnswer, timeLeft, questionInputDisabled } = this.props;
+        const { submitAnswer, timeLeft, questionInputDisabled, leaveRoom } = this.props;
 
         switch (type) {
             case 'qcm':
                 return (
                     <>
+                        <LeaveRoomCross leaveRoom={leaveRoom}/>
                         <Title title={`Question ${round}`}/>
                         <p>Temps restant : {timeLeft}</p>
                         <p>{category}</p>

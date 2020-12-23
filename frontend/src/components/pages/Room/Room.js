@@ -111,10 +111,9 @@ class Room extends React.Component {
     };
 
     leaveRoom = () => {
-        console.log("leave room by button")
+        this.props.history.replace('/');
     };
 
-    //TODO LOrs de la modf de la gameConfig in Game, balancez un event socket pour la faire récupérer par les autres joueurs
 
     askQuestion = () => {
         const quiz = Util.getObjectFromSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY);
@@ -250,6 +249,7 @@ class Room extends React.Component {
                               submitAnswer={this.submitAnswer}
                               timeLeft={timeLeft}
                               questionInputDisabled={questionInputDisabled}
+                              leaveRoom={this.leaveRoom}
                     />
                 </>
             )
@@ -262,6 +262,7 @@ class Room extends React.Component {
                             currentQuestion={currentQuestion}
                             currentPlayer={currentPlayer}
                             timeLeft={timeLeft}
+                            leaveRoom={this.leaveRoom}
                     />
                 </>
             )
