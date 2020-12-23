@@ -2,13 +2,13 @@
 class GameUtil {
 
     static ROOMS_ID = [];
+    static GUEST_ID = [];
 
     static generateQuizQuery = (gameConfiguration) => {
         let query = ''
         switch (gameConfiguration.gameMode.classname) {
             case 'Serie':
                 query = GameUtil.generateSerieQuizQuery(gameConfiguration);
-                console.log("lobjet query final", query)
                 break;
 
             case 'Ascension':

@@ -48,6 +48,7 @@ class Room extends React.Component {
             try {
                 const roomId  = this.props.match.params.id;
                 let isHost = false;
+                let username = '';
 
                 if (Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key)) {
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
@@ -65,17 +66,33 @@ class Room extends React.Component {
 
                 const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-                const response = await Util.performAPIRequest(`game/verify/rooms/${roomId}`);
+                const roomIdResponse = await Util.performAPIRequest(`game/verify/rooms/${roomId}`);
 
-                if (!response.ok) throw new Error('Cannot join this room');
+                if (!roomIdResponse.ok) throw new Error('Cannot join this room');
 
-                const {isRoomValid} = await response.json();
+                const {isRoomValid} = await roomIdResponse.json();
 
-                if (!isRoomValid) throw new Error('This room doesn\'t exist' )
+                if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
                 this.roomId = roomId;
                 this.socket = new ClientSocket();
-                this.socket.connectToRoom(roomId, pseudo, isHost);
+
+                const user = Util.getJwtPayloadContent(Util.accessToken).user;
+
+                if (user) {
+                    username = user.username
+                } else {
+
+                    const guestIdResponse = await Util.performAPIRequest('users/guest-id');
+
+                    if (!guestIdResponse.ok) throw new Error('Cannot join this room');
+
+                    const { guestId } = await guestIdResponse.json();
+
+                    username = `Guest#${guestId}`;
+
+                }
+                this.socket.connectToRoom(roomId, username, isHost);
                 this.socket.handleSocketCommunication(this);
                 this.setState({socketOpen: true});
             } catch (error) {
