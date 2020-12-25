@@ -34,7 +34,7 @@ app.all('*', (req, res, next) => {
         '/auth/access-token',
     ];
 
-    if(excludedUrls.includes(req.url.split('?')[0])) {
+    /*if(excludedUrls.includes(req.url.split('?')[0])) {
         next();
         return;
     }
@@ -59,7 +59,7 @@ app.all('*', (req, res, next) => {
     }
 
     req.accessTokenPayload = accessTokenVerification.payload;
-
+*/
     next();
 });
 
@@ -67,6 +67,14 @@ app.use(bodyParser.json());
 
 /** Routing */
 app.use('/', mainRouter);
+
+//Middleware 404
+app.use((req, res ,next) => {
+    console.log("404 triggered !!!!!");
+})
+
+
+//Middleware 500
 
 
 testModel = async () => {

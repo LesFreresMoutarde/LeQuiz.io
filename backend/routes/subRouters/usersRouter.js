@@ -2,7 +2,7 @@ const usersRouter = require('express').Router();
 const UserController = require('../../controllers/UserController');
 
 
-usersRouter.get('/guest-id', (req, res) => {
+usersRouter.get('/guest-id$', (req, res) => {
     const userController = new UserController();
 
     userController.actionGuestId();
@@ -11,7 +11,7 @@ usersRouter.get('/guest-id', (req, res) => {
     res.status(userController.response)
 });
 
-usersRouter.route('/:id')
+usersRouter.route('/:id(\\d+)')
     .get((req, res) => {
         res.json({endpoint: `GET /users/${req.params.id}`})
     })
