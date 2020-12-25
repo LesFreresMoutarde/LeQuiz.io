@@ -5,7 +5,7 @@ const gameRouter = require('./subRouters/gameRouter');
 const adminRouter = require('./subRouters/adminRouter');
 const settingsRouter = require('./subRouters/settingsRouter');
 
-mainRouter.use('/auth', authRouter);
+mainRouter.use('^/auth', authRouter);
 mainRouter.use('^/users', usersRouter);
 mainRouter.use('/game', gameRouter);
 mainRouter.use('/admin', adminRouter);
