@@ -34,7 +34,7 @@ app.all('*', (req, res, next) => {
         '/auth/access-token',
     ];
 
-    /*if(excludedUrls.includes(req.url.split('?')[0])) {
+    if(excludedUrls.includes(req.url.split('?')[0])) {
         next();
         return;
     }
@@ -59,7 +59,7 @@ app.all('*', (req, res, next) => {
     }
 
     req.accessTokenPayload = accessTokenVerification.payload;
-*/
+
     next();
 });
 
@@ -68,14 +68,18 @@ app.use(bodyParser.json());
 /** Routing */
 app.use('/', mainRouter);
 
-//Middleware 404
+/** 404 Handling **/
 app.use((req, res ,next) => {
-    console.log("404 triggered !!!!!");
-})
+    next(new Error(JSON.stringify({status: 404, message: 'Not Found'})));
+});
 
-
-//Middleware 500
-
+/** Not-Handled-In-Methods Errors Handler **/
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        message: error.message
+    });
+});
 
 testModel = async () => {
     // J'initialise une transaction. Cet variable sera passé à chaque requete
