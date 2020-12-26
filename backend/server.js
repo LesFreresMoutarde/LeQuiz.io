@@ -68,6 +68,18 @@ app.use(bodyParser.json());
 /** Routing */
 app.use('/', mainRouter);
 
+/** 404 Handling **/
+app.use((req, res ,next) => {
+    next(new Error(JSON.stringify({status: 404, message: 'Not Found'})));
+});
+
+/** Not-Handled-In-Methods Errors Handler **/
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        message: error.message
+    });
+});
 
 testModel = async () => {
     // J'initialise une transaction. Cet variable sera passé à chaque requete

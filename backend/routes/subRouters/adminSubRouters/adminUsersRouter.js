@@ -10,7 +10,7 @@ adminUsersRouter.route('/')
     });
 
 
-adminUsersRouter.route('/:id')
+adminUsersRouter.route('/:id([\\w\\-]+)')
     .get((req, res) => {
         res.json({endpoint: `GET admin/users/${req.params.id}`});
     })

@@ -10,7 +10,7 @@ adminQuestionsRouter.route('/')
     });
 
 
-adminQuestionsRouter.route('/:id')
+adminQuestionsRouter.route('/:id([\\w\\-]+)')
     .get((req, res) => {
         res.json({endpoint: `GET admin/questions/${req.params.id}`});
     })

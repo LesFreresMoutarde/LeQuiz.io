@@ -7,7 +7,7 @@ adminQuestionTypesRouter.route('/')
     })
 
 
-adminQuestionTypesRouter.route('/:name')
+adminQuestionTypesRouter.route('/:name([a-zA-Z\\-]+)')
     .get((req, res) => {
         res.json({endpoint: `GET admin/question-types/${req.params.name}`});
     })
