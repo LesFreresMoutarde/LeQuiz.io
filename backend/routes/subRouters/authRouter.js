@@ -2,7 +2,7 @@ const authRouter = require('express').Router();
 const AuthController = require('../../controllers/AuthController');
 
 
-authRouter.get('/access-token$', async (req, res) => {
+authRouter.get('/access-token', async (req, res) => {
     const controller = new AuthController();
 
     let inputRefreshToken = null;
@@ -16,7 +16,7 @@ authRouter.get('/access-token$', async (req, res) => {
     res.send(controller.response);
 });
 
-authRouter.get('/verify-token$', (req, res) => {
+authRouter.get('/verify-token', (req, res) => {
     const controller = new AuthController();
     controller.actionVerifyToken();
 
@@ -24,11 +24,11 @@ authRouter.get('/verify-token$', (req, res) => {
     res.send(controller.response);
 });
 
-authRouter.post('/register$', (req, res) => {
+authRouter.post('/register', (req, res) => {
     res.json({endpoint: 'POST /auth/register'})
 });
 
-authRouter.post('/login$', async (req, res) => {
+authRouter.post('/login', async (req, res) => {
     const controller = new AuthController();
     await controller.actionLogin(req.body, req.accessTokenPayload);
 
@@ -36,7 +36,7 @@ authRouter.post('/login$', async (req, res) => {
     res.send(controller.response);
 });
 
-authRouter.post('/logout$', async (req, res) => {
+authRouter.post('/logout', async (req, res) => {
     const controller = new AuthController();
     await controller.actionLogout(req.accessTokenPayload);
 

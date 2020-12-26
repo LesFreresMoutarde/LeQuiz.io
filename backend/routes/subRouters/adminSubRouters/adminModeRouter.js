@@ -10,7 +10,7 @@ adminModesRouter.route('/')
     });
 
 
-adminModesRouter.route('/:name')
+adminModesRouter.route('/:name([a-zA-Z\\-]+)')
     .get((req, res) => {
         res.json({endpoint: `GET admin/modes/${req.params.name}`});
     })

@@ -10,7 +10,7 @@ adminCategoriesRouter.route('/')
     });
 
 
-adminCategoriesRouter.route('/:id')
+adminCategoriesRouter.route('/:id([\\w\\-]+)')
     .get((req, res) => {
         res.json({endpoint: `GET admin/categories/${req.params.name}`});
     })

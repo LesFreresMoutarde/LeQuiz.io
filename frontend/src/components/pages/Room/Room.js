@@ -66,7 +66,7 @@ class Room extends React.Component {
 
                 const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-                const roomIdResponse = await Util.performAPIRequest(`game/verify/rooms/${roomId}`);
+                const roomIdResponse = await Util.performAPIRequest(`game/rooms/verify/${roomId}`);
 
                 if (!roomIdResponse.ok) throw new Error('Cannot join this room');
 

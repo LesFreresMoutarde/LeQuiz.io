@@ -1,7 +1,7 @@
 const gameRouter = require('express').Router();
 const GameController = require('../../controllers/GameController');
 
-gameRouter.post('/modes$', (req, res) => {
+gameRouter.post('/modes', (req, res) => {
     const gameController = new GameController();
 
     gameController.actionModes(req.body.plan);
@@ -10,7 +10,7 @@ gameRouter.post('/modes$', (req, res) => {
     res.json(gameController.response);
 });
 
-gameRouter.get('/categories$', async (req, res) => {
+gameRouter.get('/categories', async (req, res) => {
 
     const gameController = new GameController();
 
@@ -21,7 +21,7 @@ gameRouter.get('/categories$', async (req, res) => {
 
 });
 
-gameRouter.post('/options$', async (req, res) => {
+gameRouter.post('/options', async (req, res) => {
 
     const { gameMode, categories } = req.body;
 
@@ -33,7 +33,7 @@ gameRouter.post('/options$', async (req, res) => {
     res.json(gameController.response);
 });
 
-gameRouter.route('/rooms$')
+gameRouter.route('/rooms')
     .get((req, res) => {
         res.json({endpoint: 'GET /game/rooms'})
     })
@@ -41,7 +41,7 @@ gameRouter.route('/rooms$')
         res.json({endpoint: 'POST /game/rooms'})
     });
 
-gameRouter.get('/rooms/:id(\\d+)', (req, res) => {
+gameRouter.get('/rooms/:id(\\w+)', (req, res) => {
     res.json({endpoint: `GET /game/rooms/${req.params.id}`})
 });
 
@@ -55,8 +55,7 @@ gameRouter.get('/generate/code', (req, res) => {
     res.json(gameController.response);
 });
 
-gameRouter.get('/verify/rooms/:id(\\d+)', (req, res) => {
-   // console.log(req.params.roomId);
+gameRouter.get('/rooms/verify/:id(\\w+)', (req, res) => {
 
     const gameController = new GameController();
 

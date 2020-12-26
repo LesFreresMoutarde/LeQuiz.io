@@ -5,7 +5,7 @@ adminRoomRouter.get('/', (req, res) => {
     res.json({endpoint: 'GET admin/rooms'});
 });
 
-adminRoomRouter.route('/:id')
+adminRoomRouter.route('/:id(\\w+)')
     .get((req, res) => {
         res.json({endpoint: `GET admin/rooms/${req.params.id}`});
     })
