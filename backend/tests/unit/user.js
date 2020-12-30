@@ -12,12 +12,14 @@ describe('../../models/dbModels/user', () => {
 
     const UserFactory = proxyquire('../../models/dbModels/user', {
         sequelize: Sequelize,
+        DataTypes
     });
 
     let User;
 
     before(async() => {
         User = await UserFactory(sequelize, DataTypes)
+     //   const user = User.build
     });
 
     // It's important you do this
@@ -26,6 +28,7 @@ describe('../../models/dbModels/user', () => {
     });
 
     it('called User.init with the correct parameters', () => {
+        User.init();
         chai.assert.isOk(User.id);
     })
 })
