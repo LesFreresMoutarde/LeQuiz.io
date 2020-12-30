@@ -32,7 +32,7 @@ class Util {
 
             Util.Email.sendEmail(message);
         },
-    }
+    };
 }
 
 module.exports = Util;
