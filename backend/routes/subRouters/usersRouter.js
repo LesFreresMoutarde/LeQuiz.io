@@ -2,6 +2,15 @@ const usersRouter = require('express').Router();
 const UserController = require('../../controllers/UserController');
 
 
+usersRouter.get('/guest-id', (req, res) => {
+    const userController = new UserController();
+
+    userController.actionGuestId();
+
+    res.json(userController.response);
+    res.status(userController.response)
+});
+
 usersRouter.route('/:id([\\w\\-]+)')
     .get((req, res) => {
         res.json({endpoint: `GET /users/${req.params.id}`})
@@ -15,15 +24,5 @@ usersRouter.route('/:id([\\w\\-]+)')
     .delete((req, res) => {
         res.json({endpoint: `DELETE /users/${req.params.id}`})
     });
-
-usersRouter.get('/guest-id', (req, res) => {
-    const userController = new UserController();
-
-    userController.actionGuestId();
-
-    res.json(userController.response);
-    res.status(userController.response)
-});
-
 
 module.exports = usersRouter;
