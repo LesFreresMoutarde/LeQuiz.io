@@ -44,5 +44,13 @@ authRouter.post('/logout', async (req, res) => {
     res.send(controller.response);
 });
 
+authRouter.post('/forgot-password', async (req, res) => {
+    const controller = new AuthController();
+    await controller.actionForgotPassword(req.body);
+
+    res.status(controller.statusCode);
+    res.send(controller.response);
+});
+
 
 module.exports = authRouter;

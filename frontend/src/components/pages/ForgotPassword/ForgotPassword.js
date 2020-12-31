@@ -1,5 +1,9 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
+import Util from "../../../util/Util";
+
+import Toastr from "toastr2";
+const toastr = new Toastr();
 
 class ForgotPassword extends React.Component {
     constructor(props) {
@@ -39,7 +43,28 @@ class ForgotPassword extends React.Component {
 
     onForgotPasswordFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(e);
+
+        // TODO make an automatic form serialization function in Util.js ?
+
+        const username = document.getElementById('username-input').value;
+
+        const response = await Util.sendJsonToAPI('/auth/forgot-password', {
+            username,
+        });
+
+        const responseJson = await response.json();
+
+        switch(response.status) {
+            case 200:
+                Util.verbose('Forgot password request successfully sent');
+                // TODO toast
+                break;
+            case 429:
+                toastr.error(`Veuillez patienter ${responseJson.minutesToWait} minute${responseJson.minutesToWait > 1 ? 's' : ''} avant de demander un nouvel email de réinitialisation.`);
+                break;
+        }
+
+        console.log(response.status, responseJson)
     }
 }
 
