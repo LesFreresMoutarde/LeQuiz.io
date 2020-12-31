@@ -65,6 +65,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        passwordResetToken: {
+            type: DataTypes.STRING,
+            unique: true,
+        },
+        lastResetPasswordEmailSendDate: {
+            type: DataTypes.DATE,
+        },
         plan: {
             type: DataTypes.STRING(30),
             allowNull: false,
