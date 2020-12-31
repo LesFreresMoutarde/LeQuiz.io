@@ -23,6 +23,13 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+            passwordResetToken: {
+                type: Sequelize.STRING,
+                unique: true,
+            },
+            lastResetPasswordEmailSendDate: {
+                type: Sequelize.DATE,
+            },
             plan: {
                 type: Sequelize.STRING(30),
                 allowNull: false,
