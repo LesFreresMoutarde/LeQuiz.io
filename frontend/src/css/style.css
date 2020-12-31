@@ -671,3 +671,65 @@ button:disabled {
     }
 
 }
+
+.home-menu {
+    display: flex;
+    justify-content: center;
+    margin-top: 200px;
+}
+
+.home-menu-wrapper {
+    width: 50%;
+}
+
+.btn-create-room {
+    float: right;
+    margin-right: 50px;
+    background-color: #217D9E;
+    min-width: 400px;
+}
+
+.btn-join-room {
+    margin-left: 50px;
+    background-color: #f7d137;
+    min-width: 400px;
+}
+
+.btn-join-room:hover {
+    background-color: #dfbd33;
+}
+
+.btn-create-room:hover {
+    background-color: #1d6781;
+}
+
+.btn-menu {
+    width: 50%;
+    padding: 20px;
+    height: 200px;
+    border-radius: 40px;
+    border: none;
+    align-items: center;
+    overflow: hidden;
+}
+
+.btn-menu:hover {
+    cursor: pointer;
+
+}
+
+.home-menu-label {
+    font-size:3em;
+    color: white;
+}
+
+.label-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    top: 26px;
+    font-size: 3em;
+}
