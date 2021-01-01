@@ -16,7 +16,7 @@ class QuestionHeader extends React.Component {
 
     constructor(props) {
         super(props);
-        this.colors = Util.getRandomColors(2);
+        this.colorsClasses = Util.getRandomColors(2);
     }
 
     render() {
@@ -27,8 +27,8 @@ class QuestionHeader extends React.Component {
                 <Clock timeLeft={timeLeft}/>
                 <h1 className="text-center">{`Question ${round}`}</h1>
                 <div className="question-header-info">
-                    <p className={`question-header-info-box ${this.colors[0]}`}>{category}</p>
-                    <p className={`question-header-info-box ${this.colors[1]}`}>{type}</p>
+                    <p className={`question-header-info-box ${this.colorsClasses[0]}`}>{category}</p>
+                    <p className={`question-header-info-box ${this.colorsClasses[1]}`}>{type}</p>
                 </div>
             </div>
         )

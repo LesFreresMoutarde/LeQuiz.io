@@ -595,8 +595,34 @@ button:disabled {
 .question-answer-container {
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-content: space-around;
+    margin-bottom: 40px;
 }
 
+.qcm-box {
+    width: 34%;
+    border: none;
+    border-radius: 30px;
+    padding: 70px;
+}
+
+.qcm-box:nth-child(1), .qcm-box:nth-child(2) {
+    margin-bottom: 50px;
+}
+
+.qcm-box:enabled:hover {
+    filter: brightness(95%);
+}
+
+.qcm-box:focus {
+    outline: none;
+}
+
+.qcm-answer {
+    font-size: 1.7em;
+    color: white;
+}
 
 /* Large */
 @media screen and (max-width: 1200px) {

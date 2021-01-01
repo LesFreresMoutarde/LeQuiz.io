@@ -3,12 +3,14 @@ import Title from "../../../misc/Title";
 import QcmAnswer from "../components/Question/QcmAnswer";
 import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 import QuestionHeader from "../components/Question/QuestionHeader";
+import Util from "../../../../util/Util";
 
 
 class Question extends React.Component {
 
     constructor(props) {
         super(props);
+        this.qcmAnswersColors = Util.getRandomColors(4);
     }
 
     render() {
@@ -22,7 +24,7 @@ class Question extends React.Component {
                         <p className="question-content mb3">{content}</p>
                         <div className="question-answer-container">
                         {answer.answers.map((answer, index) => (
-                                <QcmAnswer key={index} answer={answer} disabled={questionInputDisabled} submitAnswer={submitAnswer}/>
+                                <QcmAnswer key={index} colorClass={this.qcmAnswersColors[index]} answer={answer} disabled={questionInputDisabled} submitAnswer={submitAnswer}/>
                             )
                         )}
                         </div>
