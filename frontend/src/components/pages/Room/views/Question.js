@@ -14,20 +14,19 @@ class Question extends React.Component {
     render() {
         const {content, type, round, category, answer} = this.props.currentQuestion;
         const { submitAnswer, timeLeft, questionInputDisabled, leaveRoom } = this.props;
-
         switch (type) {
             case 'qcm':
                 return (
                     <>
                         <QuestionHeader round={round} category={category} type={type} timeLeft={timeLeft}/>
-                        <div>
-                            <p>Temps restant : {timeLeft}</p>
-                            <Title title={`Question ${round}`}/>
-                            <div> <!-- Flex direction: colum -->
-                                <p>{category}</p>
-                                <p>{type}</p>
-                            </div>
-                        </div>
+                        {/*<div>*/}
+                        {/*    <p>Temps restant : {timeLeft}</p>*/}
+                        {/*    <Title title={`Question ${round}`}/>*/}
+                        {/*    <div> <!-- Flex direction: colum -->*/}
+                        {/*        <p>{category}</p>*/}
+                        {/*        <p>{type}</p>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <p>{content}</p>
                         {answer.answers.map((answer, index) => (
                                 <QcmAnswer key={index} answer={answer} disabled={questionInputDisabled} submitAnswer={submitAnswer}/>

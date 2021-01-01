@@ -562,6 +562,32 @@ button:disabled {
     outline: none;
 }
 
+.question-header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.question-header-info {
+    display: flex;
+    flex-flow: column nowrap;
+    font-size: 1.2em;
+}
+
+.question-header-info-box {
+    background-color: black;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px 65px;
+}
+
+.question-header-info-box:nth-child(2)
+{
+    margin-top: 10px;
+}
+
+
 /* Large */
 @media screen and (max-width: 1200px) {
 
