@@ -576,7 +576,6 @@ button:disabled {
 }
 
 .question-header-info-box {
-    background-color: black;
     border-radius: 10px;
     text-align: center;
     padding: 5px 65px;
@@ -605,6 +604,9 @@ button:disabled {
     border: none;
     border-radius: 30px;
     padding: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .qcm-box:nth-child(1), .qcm-box:nth-child(2) {
@@ -648,6 +650,7 @@ button:disabled {
         width: 25%;
     }
 
+
 }
 
 /* Medium */
@@ -674,6 +677,11 @@ button:disabled {
         width: 30%;
     }
 
+    /* Question */
+    .qcm-box {
+        width: 40%;
+    }
+
 }
 
 /* Small */
@@ -693,6 +701,11 @@ button:disabled {
     .category-name {
         font-size: 1.7em;
         color: white
+    }
+
+    /* Question */
+    .question-header-info-box {
+        padding: 5px 30px;
     }
 
 }
@@ -743,6 +756,12 @@ button:disabled {
     /* Game Options */
     .win-criterion-input {
         width: 50%;
+    }
+
+
+    /* Question */
+    .question-header-info-box {
+        padding: 5px 20px;
     }
 
 }
