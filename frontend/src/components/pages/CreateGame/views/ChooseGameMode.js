@@ -79,7 +79,7 @@ export default class ChooseGameMode extends React.Component {
                     <>
                         <Title title={ChooseGameMode.TITLE}/>
                         <BackArrow onClick={this.goBack}/>
-                        <div className="flex-container-space-evenly">
+                        <div className="game-mode-container">
                             {gameModes.map((gameMode, index) => {
                                 return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
                             })}
