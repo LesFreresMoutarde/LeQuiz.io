@@ -19,16 +19,12 @@ class Home extends React.Component {
             <>
                 <Title title={Home.TITLE}/>
                 <div className="home-menu">
-                    <div className="home-menu-wrapper">
-                        <button className="home-menu-create home-menu-btn" onClick={this.createRoom}>
-                            <p className="home-menu-btn-label">Créer un Salon</p>
-                        </button>
-                    </div>
-                    <div className="home-menu-wrapper">
-                        <button className="home-menu-join home-menu-btn" onClick={this.joinRoom}>
-                            <p className="home-menu-btn-label">Rejoindre un salon</p>
-                        </button>
-                    </div>
+                    <button className="homepage-button create-room-button" onClick={this.createRoom}>
+                        <p className="home-menu-btn-label">Créer un salon</p>
+                    </button>
+                    <button className="homepage-button join-room-button" onClick={this.joinRoom}>
+                        <p className="home-menu-btn-label">Rejoindre un salon</p>
+                    </button>
                 </div>
             </>
 

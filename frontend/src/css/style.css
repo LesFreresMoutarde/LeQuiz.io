@@ -674,53 +674,35 @@ button:disabled {
 .home-menu {
     display: flex;
     justify-content: space-evenly;
-    margin-top: 200px;
-    flex-wrap: wrap;
+    margin-top: 100px;
 }
 
-.home-menu-wrapper {
-    flex-basis: 50%;
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-.home-menu-create {
-    float: right;
-    background-color: #217D9E;
-    min-width: 210px;
-}
-
-.home-menu-join {
-    background-color: #f7d137;
-    min-width: 210px;
-}
-
-.home-menu-join:hover {
-    background-color: #dfbd33;
-}
-
-.home-menu-create:hover {
-    background-color: #1d6781;
-}
-
-.home-menu-btn {
-    width: 80%;
-    padding: 20px;
-    height: 250px;
+.homepage-button {
+    width: 40%;
+    padding: 80px;
     border-radius: 40px;
     border: none;
-    align-items: center;
-    overflow: hidden;
 }
 
-.home-menu-btn:hover {
+.homepage-button:hover {
+    filter: brightness(95%);
     cursor: pointer;
+}
 
+.homepage-button:focus {
+    outline: none;
+}
+
+.create-room-button {
+    background-color: #217D9E;
+}
+
+.join-room-button {
+    background-color: #f7c634;
 }
 
 .home-menu-btn-label {
-    font-size:3em;
+    font-size: 3em;
     color: white;
 }
 
