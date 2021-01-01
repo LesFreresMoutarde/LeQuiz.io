@@ -324,6 +324,41 @@ button:disabled {
     display: none;
 }
 
+.home-menu {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 100px;
+}
+
+.homepage-button {
+    width: 40%;
+    padding: 80px;
+    border-radius: 40px;
+    border: none;
+}
+
+.homepage-button:hover {
+    filter: brightness(95%);
+    cursor: pointer;
+}
+
+.homepage-button:focus {
+    outline: none;
+}
+
+.create-room-button {
+    background-color: #217D9E;
+}
+
+.join-room-button {
+    background-color: #f7c634;
+}
+
+.home-menu-btn-label {
+    font-size: 3em;
+    color: white;
+}
+
 .flex-container-space-evenly {
     min-height: 65vh;
     display: flex;
@@ -669,41 +704,6 @@ button:disabled {
         width: 50%;
     }
 
-}
-
-.home-menu {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 100px;
-}
-
-.homepage-button {
-    width: 40%;
-    padding: 80px;
-    border-radius: 40px;
-    border: none;
-}
-
-.homepage-button:hover {
-    filter: brightness(95%);
-    cursor: pointer;
-}
-
-.homepage-button:focus {
-    outline: none;
-}
-
-.create-room-button {
-    background-color: #217D9E;
-}
-
-.join-room-button {
-    background-color: #f7c634;
-}
-
-.home-menu-btn-label {
-    font-size: 3em;
-    color: white;
 }
 
 
