@@ -549,6 +549,19 @@ button:disabled {
     outline: none;
 }
 
+.cross-button {
+    border: none;
+    background: none;
+}
+
+.cross-button:hover {
+    filter: brightness(95%);
+}
+
+.cross-button:focus {
+    outline: none;
+}
+
 /* Large */
 @media screen and (max-width: 1200px) {
 
