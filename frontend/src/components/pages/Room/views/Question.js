@@ -19,19 +19,13 @@ class Question extends React.Component {
                 return (
                     <>
                         <QuestionHeader round={round} category={category} type={type} timeLeft={timeLeft}/>
-                        {/*<div>*/}
-                        {/*    <p>Temps restant : {timeLeft}</p>*/}
-                        {/*    <Title title={`Question ${round}`}/>*/}
-                        {/*    <div> <!-- Flex direction: colum -->*/}
-                        {/*        <p>{category}</p>*/}
-                        {/*        <p>{type}</p>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                        <p>{content}</p>
+                        <p className="question-content mb3">{content}</p>
+                        <div className="question-answer-container">
                         {answer.answers.map((answer, index) => (
                                 <QcmAnswer key={index} answer={answer} disabled={questionInputDisabled} submitAnswer={submitAnswer}/>
                             )
                         )}
+                        </div>
                         <LeaveRoomCross leaveRoom={leaveRoom}/>
                     </>);
             case 'input':
