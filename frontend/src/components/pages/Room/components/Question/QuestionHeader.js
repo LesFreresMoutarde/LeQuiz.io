@@ -2,16 +2,6 @@ import React from "react";
 import Clock from "../Shared/Clock";
 import Util from "../../../../../util/Util";
 
-// let firstInstance = true
-// let colors= ['',''];
-// const handleFirstInstance = (timeLeft) => {
-//     // firstInstance = false
-//     // console.log(timeLeft)
-//     // if (timeLeft === 0) firstInstance = true;
-//     if (timeLeft === 0) return true;
-//     return false;
-// }
-
 class QuestionHeader extends React.Component {
 
     constructor(props) {

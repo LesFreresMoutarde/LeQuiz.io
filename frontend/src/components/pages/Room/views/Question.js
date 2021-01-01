@@ -1,5 +1,4 @@
 import React from "react";
-import Title from "../../../misc/Title";
 import QcmAnswer from "../components/Question/QcmAnswer";
 import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 import QuestionHeader from "../components/Question/QuestionHeader";
