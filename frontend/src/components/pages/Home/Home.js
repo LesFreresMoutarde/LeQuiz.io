@@ -7,11 +7,11 @@ class Home extends React.Component {
     static TITLE = 'LE QUIZ';
 
     createRoom = () => {
-        this.props.history.replace('/create-room');
+        this.props.history.push('/create-room');
     };
 
     joinRoom = () => {
-        this.props.history.replace('/join-room');
+        this.props.history.push('/join-room');
     };
 
     render = () => {
