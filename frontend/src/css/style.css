@@ -598,7 +598,6 @@ button:disabled {
     .win-criterion-input {
         width: 30%;
     }
-
 }
 
 /* Small */
@@ -674,62 +673,55 @@ button:disabled {
 
 .home-menu {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-top: 200px;
+    flex-wrap: wrap;
 }
 
 .home-menu-wrapper {
-    width: 50%;
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
-.btn-create-room {
+.home-menu-create {
     float: right;
-    margin-right: 50px;
     background-color: #217D9E;
-    min-width: 400px;
+    min-width: 210px;
 }
 
-.btn-join-room {
-    margin-left: 50px;
+.home-menu-join {
     background-color: #f7d137;
-    min-width: 400px;
+    min-width: 210px;
 }
 
-.btn-join-room:hover {
+.home-menu-join:hover {
     background-color: #dfbd33;
 }
 
-.btn-create-room:hover {
+.home-menu-create:hover {
     background-color: #1d6781;
 }
 
-.btn-menu {
-    width: 50%;
+.home-menu-btn {
+    width: 80%;
     padding: 20px;
-    height: 200px;
+    height: 250px;
     border-radius: 40px;
     border: none;
     align-items: center;
     overflow: hidden;
 }
 
-.btn-menu:hover {
+.home-menu-btn:hover {
     cursor: pointer;
 
 }
 
-.home-menu-label {
+.home-menu-btn-label {
     font-size:3em;
     color: white;
 }
 
-.label-title {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: max-content;
-    top: 26px;
-    font-size: 3em;
-}
+
