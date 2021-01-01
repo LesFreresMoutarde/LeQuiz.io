@@ -334,7 +334,8 @@ button:disabled {
 
 .game-mode {
     width: 34%;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 40px;
     margin-bottom: 80px;
     border-radius: 40px;
     border: none;
@@ -610,7 +611,6 @@ button:disabled {
     /* Game modes */
     .game-mode {
         width: 40%;
-        padding-bottom: 40px;
     }
 
     .game-mode-description {
@@ -643,6 +643,7 @@ button:disabled {
 
     .game-mode-label {
         font-size: 1.8em;
+        margin: 0;
     }
 
     .game-mode-description {
