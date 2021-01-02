@@ -4,6 +4,7 @@ const { Op, QueryTypes } = require('sequelize');
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 const MainController = require('./mainController/MainController');
 const Util = require('../util/Util');
+const env = require('../config/env');
 
 class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
@@ -449,7 +450,38 @@ class AuthController extends MainController {
     }
 
     sendResetPasswordEmailToUser = async (user) => {
-        // TODO
+        await Util.Email.sendEmailFromNoreply({
+            to: {
+                name: user.username,
+                email: user.email,
+            },
+            subject: 'Réinitialisez votre mot de passe',
+            html:
+`<p>
+    Bonjour ${user.username},<br>
+    Vous avez demandé la réinitialisation du mot de passe de votre compte LeQuiz.io.
+    Pour définir un nouveau mot de passe, veuillez
+    <strong><a href="${env.frontUrl}/reset-password/${user.passwordResetToken}" target="_blank">cliquer ici</a></strong>.
+</p>
+<p>
+    Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de passe, veuillez ignorer ce message.
+</p>
+<p>
+    Cordialement,<br>
+    L'équipe LeQuiz.io
+</p>`,
+            text:
+`Bonjour ${user.username},
+Vous avez demandé la réinitialisation du mot de passe de votre compte LeQuiz.io.
+Pour définir un nouveau mot de passe, veuillez suivre le lien ci-dessous :
+
+${env.frontUrl}/reset-password/${user.passwordResetToken}
+
+Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de passe, veuillez ignorer ce message.
+
+Cordialement,
+L'équipe LeQuiz.io`,
+        });
     }
 }
 

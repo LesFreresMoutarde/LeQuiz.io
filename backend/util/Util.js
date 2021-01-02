@@ -24,6 +24,17 @@ class Util {
             await sendgrid.send(message);
         },
 
+        /**
+         *
+         * @param {object} message
+         * @param {object} message.to
+         * @param {string} message.to.name The email recipient's name
+         * @param {string} message.to.email The email recipient's email address
+         * @param {string} message.subject The email subject
+         * @param {string} message.html The email HTML content
+         * @param {string} message.text The email text content
+         * @returns {Promise<void>}
+         */
         sendEmailFromNoreply: async(message = {}) => {
             message.from = {
                 email: Util.Email.FROM_NOREPLY_ADDRESS,

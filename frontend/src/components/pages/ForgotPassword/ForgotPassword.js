@@ -57,7 +57,10 @@ class ForgotPassword extends React.Component {
         switch(response.status) {
             case 200:
                 Util.verbose('Forgot password request successfully sent');
-                // TODO toast
+                toastr.success('Un email vous a été envoyé pour réinitialiser votre mot de passe.');
+                break;
+            case 404:
+                toastr.error('Aucun utilisateur ne correspond à ce nom ou cette adresse email.');
                 break;
             case 429:
                 toastr.error(`Veuillez patienter ${responseJson.minutesToWait} minute${responseJson.minutesToWait > 1 ? 's' : ''} avant de demander un nouvel email de réinitialisation.`);
