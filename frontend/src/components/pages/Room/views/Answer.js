@@ -59,21 +59,6 @@ class Answer extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/*<AnswerHeader header={header} timeLeft={timeLeft} roundInfo={roundInfo}/>*/}
-                {/*<div className="answers-container">*/}
-                {/*    /!*<div>*!/*/}
-                {/*        <p className="h2 mb2">{goodAnswer}</p>*/}
-                {/*        /!* Media Displaying *!/*/}
-                {/*    /!*</div>*!/*/}
-                {/*    <div>*/}
-                {/*        <p>Scores</p>*/}
-                {/*        <ul>*/}
-                {/*            {scores.map((lineScore, index) => (*/}
-                {/*                <p key={index}>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>*/}
-                {/*            ))}*/}
-                {/*        </ul>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </div>
         )
     }

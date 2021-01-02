@@ -374,8 +374,6 @@ button:disabled {
 .game-mode {
     width: 34%;
     padding: 20px 40px 40px 40px;
-    /*padding-top: 20px;*/
-    /*padding-bottom: 40px;*/
     margin-bottom: 80px;
     border-radius: 40px;
     border: none;
