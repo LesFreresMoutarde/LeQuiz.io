@@ -44,5 +44,29 @@ authRouter.post('/logout', async (req, res) => {
     res.send(controller.response);
 });
 
+authRouter.post('/forgot-password', async (req, res) => {
+    const controller = new AuthController();
+    await controller.actionForgotPassword(req.body);
+
+    res.status(controller.statusCode);
+    res.send(controller.response);
+});
+
+authRouter.get('/reset-password', async (req, res) => {
+    const controller = new AuthController();
+    await controller.actionPasswordResetTokenExists(req.query);
+
+    res.status(controller.statusCode);
+    res.send(controller.response);
+});
+
+authRouter.post('/reset-password', async (req, res) => {
+    const controller = new AuthController();
+    await controller.actionResetPassword(req.body);
+
+    res.status(controller.statusCode);
+    res.send(controller.response);
+});
+
 
 module.exports = authRouter;

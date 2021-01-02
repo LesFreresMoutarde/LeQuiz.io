@@ -250,7 +250,9 @@ button:disabled {
 }
 
 #login-form,
-#register-form {
+#register-form,
+#forgot-password-form,
+#reset-password-form {
     max-width: 600px;
     margin: auto;
 }

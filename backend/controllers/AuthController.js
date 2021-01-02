@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const { Op, QueryTypes } = require('sequelize');
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 const MainController = require('./mainController/MainController');
+const Util = require('../util/Util');
+const env = require('../config/env');
 
 class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
@@ -237,6 +239,166 @@ class AuthController extends MainController {
         this.statusCode = 204;
     }
 
+    actionForgotPassword = async (requestBody) => {
+        const requiredBodyFields = ['username']; // We have only one field for this form, but we keep consistency with other actions
+        const missingFields = [];
+        const badCredentialsResponse = {
+            error: 'The provided username or email address do not correspond to any user',
+        }
+
+        for(const requiredField of requiredBodyFields) {
+            if(!requestBody.hasOwnProperty(requiredField)) {
+                missingFields.push(requiredField);
+            }
+        }
+
+        if(missingFields.length > 0) {
+            this.statusCode = 400;
+            this.response = {
+                error: `Missing parameters: ${missingFields.join(', ')}`,
+            }
+            return;
+        }
+
+        const user = await db.User.findOne({
+            where: {
+                [Op.or]: [
+                    { username: requestBody.username },
+                    { email: requestBody.username },
+                ]
+            }
+        });
+
+        if(user === null) {
+            this.statusCode = 404;
+            this.response = badCredentialsResponse;
+            return;
+        }
+
+        const lastResetPasswordEmailSendDate = user.lastResetPasswordEmailSendDate;
+
+        console.log(lastResetPasswordEmailSendDate);
+
+        const now = new Date();
+
+        if(lastResetPasswordEmailSendDate !== null) {
+            const diffSeconds = (now.getTime() - user.lastResetPasswordEmailSendDate.getTime()) / 1000;
+
+            if(diffSeconds < 300) {
+                const minutesToWait = Math.ceil((300 - diffSeconds) / 60);
+
+                this.statusCode = 429;
+                this.response = {
+                    minutesToWait
+                };
+
+                return;
+            }
+        }
+
+        user.lastResetPasswordEmailSendDate = now;
+        user.passwordResetToken = Util.Random.getRandomString(Util.Random.RANDOM_ALPHANUMERIC_ALL_CASE, 128);
+        await user.save();
+
+        await this.sendResetPasswordEmailToUser(user);
+    }
+
+    actionPasswordResetTokenExists = async (requestParams) => {
+        const requiredBodyFields = ['passwordResetToken']; // We have only one field for this form, but we keep consistency with other actions
+        const missingFields = [];
+        const badCredentialsResponse = {
+            error: 'This token does not exist',
+        }
+
+        for(const requiredField of requiredBodyFields) {
+            if(!requestParams.hasOwnProperty(requiredField)) {
+                missingFields.push(requiredField);
+            }
+        }
+
+        if(missingFields.length > 0) {
+            this.statusCode = 400;
+            this.response = {
+                error: `Missing parameters: ${missingFields.join(', ')}`,
+            }
+            return;
+        }
+
+        const user = await db.User.findOne({
+            where: {
+                passwordResetToken: requestParams.passwordResetToken,
+            }
+        });
+
+        if(user === null) {
+            this.statusCode = 404;
+            this.response = badCredentialsResponse;
+            return;
+        }
+
+        this.statusCode = 204;
+    }
+
+    actionResetPassword = async (requestBody) => {
+        const requiredBodyFields = ['newPassword', 'confirmNewPassword', 'passwordResetToken']; // We have only one field for this form, but we keep consistency with other actions
+        const missingFields = [];
+        const badCredentialsResponse = {
+            error: 'This token does not exist',
+        }
+
+        for(const requiredField of requiredBodyFields) {
+            if(!requestBody.hasOwnProperty(requiredField)) {
+                missingFields.push(requiredField);
+            }
+        }
+
+        if(missingFields.length > 0) {
+            this.statusCode = 400;
+            this.response = {
+                error: `Missing parameters: ${missingFields.join(', ')}`,
+            }
+            return;
+        }
+
+        const user = await db.User.findOne({
+            where: {
+                passwordResetToken: requestBody.passwordResetToken,
+            }
+        });
+
+        if(user === null) {
+            this.statusCode = 404;
+            this.response = badCredentialsResponse;
+            return;
+        }
+
+        if(requestBody.newPassword !== requestBody.confirmNewPassword) {
+            this.statusCode = 422;
+            this.response = {
+                errors: {
+                    confirmNewPassword: 'Les champs de nouveau mot de passe ne correspondent pas',
+                },
+            };
+            return;
+        }
+
+        if(requestBody.newPassword.length < Util.Password.MIN_LENGTH) {
+            this.statusCode = 422;
+            this.response = {
+                errors: {
+                    newPassword: `Le nouveau mot de passe doit faire au moins ${Util.Password.MIN_LENGTH} caractères`,
+                },
+            };
+            return;
+        }
+
+        user.password = await Util.Password.hashPassword(requestBody.newPassword);
+        user.passwordResetToken = null;
+        await user.save();
+
+        this.statusCode = 204;
+    }
+
     /**
      * Verifies a JWT token, and optionnaly its type
      * @param token string
@@ -381,6 +543,41 @@ class AuthController extends MainController {
                 type: QueryTypes.INSERT,
             },
         );
+    }
+
+    sendResetPasswordEmailToUser = async (user) => {
+        await Util.Email.sendEmailFromNoreply({
+            to: {
+                name: user.username,
+                email: user.email,
+            },
+            subject: 'Réinitialisez votre mot de passe',
+            html:
+`<p>
+    Bonjour ${user.username},<br>
+    Vous avez demandé la réinitialisation du mot de passe de votre compte LeQuiz.io.
+    Pour définir un nouveau mot de passe, veuillez
+    <strong><a href="${env.frontUrl}/reset-password/${user.passwordResetToken}" target="_blank">cliquer ici</a></strong>.
+</p>
+<p>
+    Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de passe, veuillez ignorer ce message.
+</p>
+<p>
+    Cordialement,<br>
+    L'équipe LeQuiz.io
+</p>`,
+            text:
+`Bonjour ${user.username},
+Vous avez demandé la réinitialisation du mot de passe de votre compte LeQuiz.io.
+Pour définir un nouveau mot de passe, veuillez suivre le lien ci-dessous :
+
+${env.frontUrl}/reset-password/${user.passwordResetToken}
+
+Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de passe, veuillez ignorer ce message.
+
+Cordialement,
+L'équipe LeQuiz.io`,
+        });
     }
 }
 

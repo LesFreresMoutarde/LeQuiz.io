@@ -45,8 +45,9 @@ class Login extends React.Component {
                             <span>Rester connecté</span>
                         </label>
                     </div>
-                    <button type="submit" className="button green mb3">Connexion</button>
+                    <button type="submit" className="button green mb2">Connexion</button>
                 </form>
+                <small><Link to="/forgot-password">Mot de passe oublié</Link></small>
             </div>
         )
     }
