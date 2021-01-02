@@ -14,8 +14,10 @@ class QuestionHeader extends React.Component {
 
         return (
             <div className="question-header mb3">
-                <Clock timeLeft={timeLeft}/>
-                <h1 className="text-center">{`Question ${round}`}</h1>
+                <div id="clock">
+                    <Clock timeLeft={timeLeft}/>
+                </div>
+                <h1 className="question-round">{`Question ${round}`}</h1>
                 <div className="question-header-info">
                     <p className={`question-header-info-box ${this.colorsClasses[0]}`}>{category}</p>
                     <p className={`question-header-info-box ${this.colorsClasses[1]}`}>{type}</p>

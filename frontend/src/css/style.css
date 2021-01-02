@@ -621,6 +621,10 @@ button:disabled {
     text-transform: capitalize;
 }
 
+.question-round {
+    margin-left: 5%;
+}
+
 .question-content {
     font-size: 1.6em;
     text-align: center;
@@ -660,6 +664,26 @@ button:disabled {
     font-size: 1.7em;
     color: white;
 }
+
+.answer-header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+
+.answer-header-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.answer-header-info-round {
+    font-size: 1.4em;
+}
+
+
 
 /* Large */
 @media screen and (max-width: 1200px) {
@@ -813,6 +837,14 @@ button:disabled {
 
 
     /* Question */
+    .question-header {
+        flex-direction: column;
+    }
+
+    .question-round {
+        margin-bottom: 20px;
+    }
+
     .question-header-info-box {
         padding: 5px 20px;
     }
