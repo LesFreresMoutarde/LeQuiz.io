@@ -1,6 +1,7 @@
 import React from "react";
 import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 import Clock from "../components/Shared/Clock";
+import PlayerScore from "../components/Answer/PlayerScore";
 
 class Answer extends React.Component {
 
@@ -20,10 +21,12 @@ class Answer extends React.Component {
 
         let header = {text: 'Mauvaise réponse', colorClass: 'text-red'};
 
-        scores.forEach(lineScore => {
-           if (lineScore.player.socketId === currentPlayer.socketId && lineScore.lastAnswer)
+        scores.forEach(scoreLine => {
+           if (scoreLine.player.socketId === currentPlayer.socketId && scoreLine.lastAnswer)
                header = {text:'Bonne réponse', colorClass: 'text-green'}
         });
+
+        // console.log('tableauxSCORES', scores);
 
         let roundInfo = `Question ${round} sur ${quizLength}`;
 
@@ -49,8 +52,9 @@ class Answer extends React.Component {
                         <p className="good-answer">{goodAnswer}</p>
 
                         <div className="scores-container">
-                            {scores.map((lineScore, index) => (
-                                <p key={index}>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>
+                            {scores.map((scoreLine, index) => (
+                                <PlayerScore key={index} scoreLine={scoreLine} currentPlayer={currentPlayer}/>
+                                // <p key={index}>{scoreLine.rank} | {scoreLine.player.username} | {scoreLine.value}</p>
                             ))}
                         </div>
                     </div>

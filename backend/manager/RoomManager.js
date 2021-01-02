@@ -116,20 +116,15 @@ module.exports = (server) => {
 
     const reinitRoomGame = (room) => {
         room.state = 'lobby';
-        room.game = {
-            quizLength: 0,
-            round: 0,
-            quiz: [],
-            scores: [
-                {
-                    player: room.host,
-                    value: 0,
-                    rank: 0,
-                    lastAnswer: null,
-                }
-            ],
-            hasAnswered: []
-        }
+        room.game.quizLength = 0;
+        room.game.round = 0;
+        room.game.quiz = [];
+        room.hasAnswered = [];
+        room.game.scores.forEach((scoreLine) => {
+            scoreLine.value = 0;
+            scoreLine.rank = 0
+            scoreLine.lastAnswer = null;
+        })
     };
 
     const getEventToEmit = (room) => {
@@ -234,7 +229,7 @@ module.exports = (server) => {
 
     const playerJoinRoom = (player, room) => {
         //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
-        if (room.players.length > 8 || room.state !== 'lobby') {
+        if (room.players.length >= 8 || room.state !== 'lobby') {
             return false
         }
 
@@ -409,8 +404,7 @@ module.exports = (server) => {
         for (let i = 1; i < scores.length; i++) {
             scores[i].rank = i+1;
 
-            if (scores[i-1].value === scores[i].value) scores[i].rank = i;
-
+            if (scores[i-1].value === scores[i].value) scores[i].rank = scores[i-1].rank;
         }
 
         return scores;

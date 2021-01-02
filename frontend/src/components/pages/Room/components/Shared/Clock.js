@@ -1,9 +1,10 @@
 import React from "react";
 
 const Clock = ({timeLeft}) => {
-    let xAxisPct = "29%";
 
-    if (timeLeft < 10) xAxisPct = "39%";
+    const xAxisPct = timeLeft >= 10 ? "29%" : "39%";
+
+    const timeLeftToDisplay = timeLeft > 0  ? timeLeft : 0;
 
     return (
            <svg fill="white" x="0px" y="0px" height="92px" width="85px"><path d="M38,22A31.57,31.57,0,0,0,6.33,
@@ -25,7 +26,7 @@ const Clock = ({timeLeft}) => {
            7.36,15.71l7.85-4.66,1.87,3.11Zm3.82.84,3-1.76,2,3.41c-1,.6-1.93,1.25-2.85,1.94Zm25,68.9A35.21,35.21,0,0,1,2.67,
            53.47,34.76,34.76,0,0,1,13,28.66a35.49,35.49,0,0,1,50,0A34.76,34.76,0,0,1,73.33,53.47C73.33,72.54,57.2,88.56,38,
            88.56Z"/>
-           <text x={xAxisPct} y="67%" fontSize="1.4em">{timeLeft}</text>
+           <text x={xAxisPct} y="67%" fontSize="1.4em">{timeLeftToDisplay}</text>
            </svg>
    );
 };

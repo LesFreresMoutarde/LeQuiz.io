@@ -44,7 +44,6 @@ class Room extends React.Component {
 
     componentDidMount() {
         (async () => {
-
             try {
                 const roomId  = this.props.match.params.id;
                 let isHost = false;
@@ -63,8 +62,6 @@ class Room extends React.Component {
                     }
 
                 }
-
-                const pseudo = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
                 const roomIdResponse = await Util.performAPIRequest(`game/rooms/verify/${roomId}`);
 
@@ -206,7 +203,6 @@ class Room extends React.Component {
             currentPlayer, isHost, currentQuestion, timeLeft,
             questionInputDisabled
         } = this.state;
-
         if (isLoading) {
             return (
                 <>
