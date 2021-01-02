@@ -1009,3 +1009,19 @@ button:disabled {
     }
 
 }
+
+.back-arrow-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.back-arrow-button:focus {
+    outline: none;
+}
+
+.back-arrow-svg:hover {
+    filter: brightness(95%);
+}
+
+
