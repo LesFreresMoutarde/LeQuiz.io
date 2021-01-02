@@ -324,6 +324,45 @@ button:disabled {
     display: none;
 }
 
+.home-menu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin-top: 100px;
+}
+
+.homepage-button {
+    width: 40%;
+    padding: 80px;
+    border-radius: 40px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homepage-button:hover {
+    filter: brightness(95%);
+    cursor: pointer;
+}
+
+.homepage-button:focus {
+    outline: none;
+}
+
+.create-room-button {
+    background-color: #217D9E;
+}
+
+.join-room-button {
+    background-color: #f7c634;
+}
+
+.homepage-button-label {
+    font-size: 3em;
+    color: white;
+}
+
 .game-mode-container {
     display: flex;
     flex-wrap: wrap;
@@ -625,6 +664,13 @@ button:disabled {
 /* Large */
 @media screen and (max-width: 1200px) {
 
+    /* Homepage */
+    .homepage-button {
+        width: 40%;
+        padding: 50px;
+    }
+
+
     /* game Modes */
     .game-mode {
         width: 40%;
@@ -652,6 +698,12 @@ button:disabled {
 /* Medium */
 @media screen and (max-width: 992px) {
 
+    /* Homepage */
+    .homepage-button {
+        width: 70%;
+        margin-bottom: 60px;
+    }
+
     /* Game modes */
     .game-mode {
        width: 40%;
@@ -673,11 +725,15 @@ button:disabled {
     .qcm-box {
         width: 40%;
     }
-
 }
 
 /* Small */
 @media screen and (max-width: 768px) {
+
+    /* Homepage */
+    .homepage-button {
+        width: 80%;
+    }
 
     /* Game modes */
     .game-mode {
