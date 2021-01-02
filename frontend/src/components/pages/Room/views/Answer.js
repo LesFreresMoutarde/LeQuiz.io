@@ -1,6 +1,7 @@
 import React from "react";
-import Title from "../../../misc/Title";
 import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
+import Clock from "../components/Shared/Clock";
+import PlayerScore from "../components/Answer/PlayerScore";
 
 class Answer extends React.Component {
 
@@ -20,31 +21,45 @@ class Answer extends React.Component {
 
         let header = {text: 'Mauvaise réponse', colorClass: 'text-red'};
 
-        scores.forEach(lineScore => {
-           if (lineScore.player.socketId === currentPlayer.socketId && lineScore.lastAnswer)
+        scores.forEach(scoreLine => {
+           if (scoreLine.player.socketId === currentPlayer.socketId && scoreLine.lastAnswer)
                header = {text:'Bonne réponse', colorClass: 'text-green'}
         });
 
-        let roundInformation = `Question ${round} sur ${quizLength}`;
+        // console.log('tableauxSCORES', scores);
 
-        if (round === quizLength) roundInformation = 'Partie terminée';
+        let roundInfo = `Question ${round} sur ${quizLength}`;
 
+        if (round === quizLength) roundInfo = 'Partie terminée';
 
+        //TODO V2 ADD MEDIA DISPLAYING
         return (
-            <>
-                <LeaveRoomCross leaveRoom={leaveRoom}/>
-                <Title title={header.text} colorClass={header.colorClass}/>
-                <p>Temps restant : {timeLeft}</p>
-                <p>{roundInformation}</p>
-                <p>{currentQuestion.content}</p>
-                <p><strong>{goodAnswer}</strong></p>
-                <p>Scores</p>
-                <ul>
-                    {scores.map((lineScore, index) => (
-                        <p key={index}>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>
-                    ))}
-                </ul>
-            </>
+            <div className="answer-container">
+
+                <div className="answer-screen-left">
+                    <Clock timeLeft={timeLeft}/>
+                    <LeaveRoomCross leaveRoom={leaveRoom}/>
+                </div>
+
+                <div className="answer-screen-right">
+
+                <div className="answer-info"> {/* flex column*/}
+                        <p className={`answer-result ${header.colorClass}`}>{header.text}</p>
+                        <p className="answer-round">{roundInfo}</p>
+                    </div>
+
+                    <div className="answer-content-container">
+                        <p className="good-answer">{goodAnswer}</p>
+
+                        <div className="scores-container">
+                            {scores.map((scoreLine, index) => (
+                                <PlayerScore key={index} scoreLine={scoreLine} currentPlayer={currentPlayer}/>
+                                // <p key={index}>{scoreLine.rank} | {scoreLine.player.username} | {scoreLine.value}</p>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 

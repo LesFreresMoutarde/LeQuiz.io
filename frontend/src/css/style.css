@@ -373,8 +373,7 @@ button:disabled {
 
 .game-mode {
     width: 34%;
-    padding-top: 20px;
-    padding-bottom: 40px;
+    padding: 20px 40px 40px 40px;
     margin-bottom: 80px;
     border-radius: 40px;
     border: none;
@@ -590,6 +589,7 @@ button:disabled {
 
 .cross-button:hover {
     filter: brightness(95%);
+    cursor: pointer;
 }
 
 .cross-button:focus {
@@ -621,21 +621,45 @@ button:disabled {
     text-transform: capitalize;
 }
 
+.question-round {
+    font-size: 2.2em;
+    margin-bottom: 30px;
+}
+
 .question-content {
     font-size: 1.6em;
     text-align: center;
 }
 
-.question-answer-container {
+.question-screen-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.question-screen-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.question-screen-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.qcm-container {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-content: space-around;
     margin-bottom: 40px;
 }
 
 .qcm-box {
-    width: 34%;
+    width: 45%;
     border: none;
     border-radius: 30px;
     padding: 70px;
@@ -650,6 +674,7 @@ button:disabled {
 
 .qcm-box:enabled:hover {
     filter: brightness(95%);
+    cursor: pointer;
 }
 
 .qcm-box:focus {
@@ -659,6 +684,87 @@ button:disabled {
 .qcm-answer {
     font-size: 1.7em;
     color: white;
+}
+
+.answer-container {
+    display: flex;
+}
+
+.answer-screen-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.answer-screen-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto
+}
+
+.answer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.answer-result {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.answer-round {
+    font-size: 1.4em;
+}
+
+.answer-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* ROW IN V2 */
+}
+
+.good-answer {
+    font-size: 2.3em;
+    margin-bottom: 30px;
+}
+
+.scores-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.player-score-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.player-box {
+    border-radius: 10px;
+    font-size: 1.6em;
+}
+
+.player-rank-box {
+    padding: 20px 20px;
+}
+
+.player-score-info-container {
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+}
+
+.player-score-info {
+    padding: 20px 10px;
+}
+
+.player-username {
+    margin-right: 150px;
 }
 
 /* Large */
@@ -692,6 +798,10 @@ button:disabled {
         width: 25%;
     }
 
+    /* Question */
+    .question-header-info-box {
+        padding: 5px 40px;
+    }
 
 }
 
@@ -722,8 +832,17 @@ button:disabled {
     }
 
     /* Question */
-    .qcm-box {
-        width: 40%;
+    .question-header-info-box {
+        padding: 5px 30px;
+    }
+
+    /* Answer */
+    .player-box {
+        font-size: 1.3em;
+    }
+
+    .good-answer {
+        font-size: 1.8em;
     }
 }
 
@@ -737,7 +856,12 @@ button:disabled {
 
     /* Game modes */
     .game-mode {
-        width: 40%;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .game-mode-container {
+        flex-direction: column;
     }
 
     .game-mode-description {
@@ -757,29 +881,69 @@ button:disabled {
     }
 
     /* Question */
-    .question-header-info-box {
-        padding: 5px 30px;
+    .qcm-box {
+        padding: 50px;
     }
+
+
+    .question-screen-container {
+        flex-direction: column;
+    }
+
+    .question-screen-left {
+        order: 1;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .question-screen-right {
+        order: 2;
+        margin-bottom: 30px;
+    }
+
+    .question-screen-center {
+        order: 3;
+        margin-bottom: 0;
+    }
+
+    /* Answer */
+    .answer-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .answer-screen-left {
+        flex-direction: row-reverse;
+        margin-bottom: 30px;
+    }
+
+    .scores-container {
+        margin-bottom: 0;
+    }
+
+    .good-answer {
+        font-size: 1.5em;
+    }
+
 
 }
 
 /* X-Small */
 @media screen and (max-width: 576px) {
 
-    /* Game modes*/
-    .game-mode {
-        width: 34%;
-        padding: 40px;
-        border-radius: 20px;
+    .homepage-button-label {
+        font-size: 1.8em;
     }
 
     .game-mode-label {
         font-size: 1.8em;
-        margin: 0;
+        margin-bottom: 10px;
     }
 
     .game-mode-description {
-        display: none;
+        font-size: 1.4em;
     }
 
     /* Categories */
@@ -813,8 +977,35 @@ button:disabled {
 
 
     /* Question */
-    .question-header-info-box {
-        padding: 5px 20px;
+    .question-round {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+
+    .question-content {
+        font-size: 1.1em;
+    }
+
+    .qcm-answer {
+        font-size: 1.2em;
+    }
+
+    /* Answer */
+
+    .player-username {
+        margin-right: 30px;
+    }
+
+    .player-box {
+        font-size: 1.1em;
+    }
+
+    .answer-result {
+        font-size: 2em;
+    }
+
+    .good-answer {
+        font-size: 1.3em;
     }
 
 }
