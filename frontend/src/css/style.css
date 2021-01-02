@@ -326,6 +326,20 @@ button:disabled {
     display: none;
 }
 
+.back-arrow-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.back-arrow-button:hover {
+    filter: brightness(95%);
+}
+
+.back-arrow-button:focus {
+    outline: none;
+}
+
 .home-menu {
     display: flex;
     flex-flow: row wrap;
@@ -363,6 +377,11 @@ button:disabled {
 .homepage-button-label {
     font-size: 3em;
     color: white;
+}
+
+.create-game-header {
+    display: flex;
+    margin-bottom: 50px;
 }
 
 .game-mode-container {
@@ -935,10 +954,17 @@ button:disabled {
 /* X-Small */
 @media screen and (max-width: 576px) {
 
+    /* Homepage */
     .homepage-button-label {
         font-size: 1.8em;
     }
 
+    /* Create game cycle */
+    .create-game-header {
+        flex-direction: column;
+    }
+
+    /* Game modes */
     .game-mode-label {
         font-size: 1.8em;
         margin-bottom: 10px;
@@ -1011,19 +1037,3 @@ button:disabled {
     }
 
 }
-
-.back-arrow-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.back-arrow-button:focus {
-    outline: none;
-}
-
-.back-arrow-svg:hover {
-    filter: brightness(95%);
-}
-
-
