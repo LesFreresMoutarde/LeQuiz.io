@@ -1,7 +1,6 @@
 import React from "react";
-import Title from "../../../misc/Title";
 import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
-import AnswerHeader from "../components/Answer/AnswerHeader";
+import Clock from "../components/Shared/Clock";
 
 class Answer extends React.Component {
 
@@ -32,19 +31,46 @@ class Answer extends React.Component {
 
         //TODO V2 ADD MEDIA DISPLAYING
         return (
-            <>
-                <AnswerHeader header={header} timeLeft={timeLeft} roundInfo={roundInfo}/>
-                <div className="answer-container">
-                    <p className="good-answer">{goodAnswer}</p>
-                    <p>Scores</p>
-                    <ul>
-                        {scores.map((lineScore, index) => (
-                            <p key={index}>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>
-                        ))}
-                    </ul>
+            <div className="answer-container">
+
+                <div className="answer-screen-left">
+                    <Clock timeLeft={timeLeft}/>
+                    <LeaveRoomCross leaveRoom={leaveRoom}/>
                 </div>
 
-            </>
+                <div className="answer-screen-right">
+
+                <div className="answer-info"> {/* flex column*/}
+                        <p className={`answer-result ${header.colorClass}`}>{header.text}</p>
+                        <p className="answer-round">{roundInfo}</p>
+                    </div>
+
+                    <div className="answer-content-container">
+                        <p className="good-answer">{goodAnswer}</p>
+
+                        <div className="scores-container">
+                            {scores.map((lineScore, index) => (
+                                <p key={index}>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                {/*<AnswerHeader header={header} timeLeft={timeLeft} roundInfo={roundInfo}/>*/}
+                {/*<div className="answers-container">*/}
+                {/*    /!*<div>*!/*/}
+                {/*        <p className="h2 mb2">{goodAnswer}</p>*/}
+                {/*        /!* Media Displaying *!/*/}
+                {/*    /!*</div>*!/*/}
+                {/*    <div>*/}
+                {/*        <p>Scores</p>*/}
+                {/*        <ul>*/}
+                {/*            {scores.map((lineScore, index) => (*/}
+                {/*                <p key={index}>{lineScore.rank} | {lineScore.player.username} | {lineScore.value}</p>*/}
+                {/*            ))}*/}
+                {/*        </ul>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+            </div>
         )
     }
 
