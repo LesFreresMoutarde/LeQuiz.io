@@ -10,6 +10,7 @@ import CreateGame from "./pages/CreateGame/CreateGame";
 import JoinRoom from "./pages/JoinRoom/JoinRoom";
 import Footer from "./Footer";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Header from "./Header";
 import Util from "../util/Util";
 import Loader from "./misc/Loader";
@@ -113,6 +114,7 @@ class App extends React.Component {
                                 <Route exact path="/login" render={() => <Login setUser={this.setUser} currentUser={this.state.user} />}/>
                                 <Route exact path="/register" component={Register}/>
                                 <Route exact path="/forgot-password" render={() => <ForgotPassword currentUser={this.state.user} />} />
+                                <Route exact path="/reset-password/:token" render={() => <ResetPassword currentUser={this.state.user} />} />
                                 <Route exact path="/settings" component={Settings}/>
                                 <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>

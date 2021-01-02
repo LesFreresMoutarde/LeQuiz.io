@@ -303,6 +303,102 @@ class AuthController extends MainController {
         await this.sendResetPasswordEmailToUser(user);
     }
 
+    actionPasswordResetTokenExists = async (requestParams) => {
+        const requiredBodyFields = ['passwordResetToken']; // We have only one field for this form, but we keep consistency with other actions
+        const missingFields = [];
+        const badCredentialsResponse = {
+            error: 'This token does not exist',
+        }
+
+        for(const requiredField of requiredBodyFields) {
+            if(!requestParams.hasOwnProperty(requiredField)) {
+                missingFields.push(requiredField);
+            }
+        }
+
+        if(missingFields.length > 0) {
+            this.statusCode = 400;
+            this.response = {
+                error: `Missing parameters: ${missingFields.join(', ')}`,
+            }
+            return;
+        }
+
+        const user = await db.User.findOne({
+            where: {
+                passwordResetToken: requestParams.passwordResetToken,
+            }
+        });
+
+        if(user === null) {
+            this.statusCode = 404;
+            this.response = badCredentialsResponse;
+            return;
+        }
+
+        this.statusCode = 204;
+    }
+
+    actionResetPassword = async (requestBody) => {
+        const requiredBodyFields = ['newPassword', 'confirmNewPassword', 'passwordResetToken']; // We have only one field for this form, but we keep consistency with other actions
+        const missingFields = [];
+        const badCredentialsResponse = {
+            error: 'This token does not exist',
+        }
+
+        for(const requiredField of requiredBodyFields) {
+            if(!requestBody.hasOwnProperty(requiredField)) {
+                missingFields.push(requiredField);
+            }
+        }
+
+        if(missingFields.length > 0) {
+            this.statusCode = 400;
+            this.response = {
+                error: `Missing parameters: ${missingFields.join(', ')}`,
+            }
+            return;
+        }
+
+        const user = await db.User.findOne({
+            where: {
+                passwordResetToken: requestBody.passwordResetToken,
+            }
+        });
+
+        if(user === null) {
+            this.statusCode = 404;
+            this.response = badCredentialsResponse;
+            return;
+        }
+
+        if(requestBody.newPassword !== requestBody.confirmNewPassword) {
+            this.statusCode = 422;
+            this.response = {
+                errors: {
+                    confirmNewPassword: 'Les champs de nouveau mot de passe ne correspondent pas',
+                },
+            };
+            return;
+        }
+
+        if(requestBody.newPassword.length < Util.Password.MIN_LENGTH) {
+            this.statusCode = 422;
+            this.response = {
+                errors: {
+                    newPassword: `Le nouveau mot de passe doit faire au moins ${Util.Password.MIN_LENGTH} caractères`,
+                },
+            };
+            return;
+        }
+
+        user.password = await Util.Password.hashPassword(requestBody.newPassword);
+        user.passwordResetToken = null;
+        await user.save();
+
+        this.statusCode = 204;
+    }
+
     /**
      * Verifies a JWT token, and optionnaly its type
      * @param token string

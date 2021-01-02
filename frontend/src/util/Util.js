@@ -181,8 +181,8 @@ class Util {
     /**
      * Try to perform a request to the backend API with the access token in Authorization header.
      * If the request results in a 401 Unauthorized response, the access token is refreshed and then the same request is re-sent.
-     * @param url string
-     * @param init object|Headers If set, the Authorization header will be overrided
+     * @param url {string}
+     * @param init {object|Headers} If set, the Authorization header will be overrided
      * @returns {Promise<Response>}
      * TODO try/catch, in case of error log it and return nothing ?
      */

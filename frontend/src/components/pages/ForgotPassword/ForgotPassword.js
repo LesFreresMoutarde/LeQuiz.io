@@ -5,6 +5,9 @@ import Util from "../../../util/Util";
 import Toastr from "toastr2";
 const toastr = new Toastr();
 
+/**
+ * Component displayed when the user wants to receive an email to reset his/her password
+ */
 class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
