@@ -1,4 +1,5 @@
 import React from "react";
+import PlayerLine from "./PlayerLine";
 
 const PlayersBox = ({players, host, currentPlayer}) => {
     console.log('players form playersBox', players);
@@ -14,7 +15,11 @@ const PlayersBox = ({players, host, currentPlayer}) => {
                         let playerData = player.username;
                         if (player.socketId === currentPlayer.socketId) playerData += ' (Vous)';
                         if (host.socketId === player.socketId) playerData += ' (Host)';
-                        return (<li key={index}>{playerData}</li>)
+                        return (
+                            // <li key={index}>{playerData}</li>
+                            <PlayerLine key={index} player={playerData}/>
+                        )
+
                     })}
             </div>
         </div>

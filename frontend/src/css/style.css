@@ -1046,23 +1046,28 @@ button:disabled {
 
 .lobby-info-container {
     display: flex;
-    justify-content: space-around;
+    /*justify-content: space-around;*/
 }
 
 .lobby-info-left-container {
     display: flex;
     flex-direction: column;
     /*justify-content: space-between;*/
+    flex: 1;
+    margin-right: 50px;
 }
 
 .lobby-info-center-container {
     /*margin-bottom: 50px;*/
+    flex: 2;
 
 }
 
 .lobby-info-right-container {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    margin-left: 50px;
 }
 
 .lobby-box {
@@ -1129,7 +1134,7 @@ button:disabled {
     background-color: #217D9E;
     width: 30%;
     padding: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .lobby-value {
@@ -1146,3 +1151,19 @@ button:disabled {
     outline: none;
 }
 
+.player-line-wrapper {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.player-line {
+    color: #232323;
+    font-size: 1.1em;
+}
+
+.lobby-room-code {
+    text-align: center;
+    font-size: 2.4em;
+}

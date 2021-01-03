@@ -14,7 +14,7 @@ const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) 
             </div>
             <div className="lobby-box-content">
                 <p className="lobby-options-label">Nombre de questions : <span className="lobby-win-criterion">{winCriterion}</span></p>
-                <p className="lobby-options-label">Types de questions</p>
+                <p className="lobby-options-label">Types de questions :</p>
                 <div className="lobby-value-container">
                     {questionTypes.map((questionType, index) => (
                         <LobbyValue key={index} value={questionType.type}/>
