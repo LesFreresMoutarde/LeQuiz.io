@@ -1,3 +1,5 @@
+import App from "../components/App";
+
 class Util {
     static isVerbose = true; // TODO env
 
@@ -8,6 +10,42 @@ class Util {
     static refreshTokenPayload = null;
 
     static bgColors = ['red-pink-bg', 'brown-bg', 'deep-blue-bg', 'yellow-bg', 'green-bg'];
+
+    static UserAccess = {
+        /**
+         * @enum {string}
+         */
+        ROLES: {
+            GUEST_ONLY: 'guestOnly',
+            LOGGED_IN: 'loggedIn',
+        },
+
+        /**
+         * @param {Util.UserAccess.ROLES} role
+         * @param {string} redirect The URL to which the user is redirected if he does not have the required role
+         * @return {boolean} True if user has access to component, false otherwise
+         */
+        componentRequiresRole: (role, redirect = '/') => {
+            switch(role) {
+                case Util.UserAccess.ROLES.GUEST_ONLY:
+                    if(App.GLOBAL.state.user) {
+                        App.GLOBAL.redirectTo(redirect);
+                        return false;
+                    }
+                    break;
+                case Util.UserAccess.ROLES.LOGGED_IN:
+                    if(!App.GLOBAL.state.user) {
+                        App.GLOBAL.redirectTo(redirect);
+                        return false;
+                    }
+                    break;
+                default:
+                    throw new Error('Unknown required role');
+            }
+
+            return true;
+        }
+    };
 
     static verbose = (...items) => {
         if(!Util.isVerbose) {

@@ -1,7 +1,6 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Util from "../../../util/Util";
-import App from "../../App";
 
 import Toastr from "toastr2";
 const toastr = new Toastr();
@@ -13,24 +12,10 @@ class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
 
-        if(App.GLOBAL.state.user) {
-            this.state = {
-                redirect: true,
-            }
-        } else {
-            this.state = {
-                redirect: false,
-            }
-        }
+        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
     }
 
     render = () => {
-        if(this.state.redirect) {
-            return(
-                <Redirect to="/" />
-            )
-        }
-
         return(
             <div className="text-center">
                 <h1 className="mb">Mot de passe oublié</h1>

@@ -1,7 +1,6 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import Util from "../../../util/Util";
-import App from "../../App";
 
 import Toastr from "toastr2";
 import Loader from "../../misc/Loader";
@@ -14,16 +13,17 @@ class ResetPassword extends React.Component {
     constructor(props) {
         super(props);
 
+        this.userHasAccess = Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
+
         this.state = {
             isLoading: true,
             isCompleted: false,
-            redirect: !!App.GLOBAL.state.user,
             resetTokenExists: false,
         };
     }
 
     componentDidMount() {
-        if(!this.state.redirect) {
+        if(this.userHasAccess) {
             (async () => {
                 const resetToken = window.location.pathname.split('/')[2];
 
@@ -45,12 +45,6 @@ class ResetPassword extends React.Component {
     }
 
     render = () => {
-        if(this.state.redirect) {
-            return(
-                <Redirect to="/" />
-            )
-        }
-
         if(this.state.isCompleted) {
             return(
                 <Redirect to="/login" />
