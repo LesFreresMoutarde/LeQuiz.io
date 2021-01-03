@@ -105,18 +105,16 @@ class App extends React.Component {
 
     render = () => {
         if (this.state.redirect) {
-            if(this.nextRedirect) {
-                const url = this.nextRedirect;
-                this.nextRedirect = null;
-                setTimeout(() => { // SetTimeout to update the state of the App component after rendering the <Redirect> component
-                    this.setState({
-                        redirect: false,
-                    });
-                }, 0);
-                return (
-                    <Redirect to={url} />
-                );
-            }
+            const url = this.nextRedirect;
+            this.nextRedirect = null;
+            setTimeout(() => { // SetTimeout to update the state of the App component after rendering the <Redirect> component
+                this.setState({
+                    redirect: false,
+                });
+            }, 0);
+            return (
+                <Redirect to={url} />
+            );
         }
 
         if(this.state.isLoading) {
