@@ -11,12 +11,25 @@ class JoinRoom extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            valueInput: ''
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.goToRoom = this.goToRoom.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({valueInput: event.target.value});
     }
 
     goBack = () => {
         this.props.history.goBack();
+    };
+
+    goToRoom = () => {
+        //alert(this.state.valueInput)
+        this.props.history.push('/room/'+ this.state.valueInput)
     }
 
     render = () => {
@@ -25,9 +38,10 @@ class JoinRoom extends React.Component {
             <Title title={JoinRoom.TITLE}/>
             <BackArrow onClick={this.goBack}/>
             <div className="join-room-div">
-                <input type="text" id="join-room-input" placeholder="Code de la partie"/>
-            <br/>
-                <button className="join-room-enter">Entrer</button>
+                <label for="join-room-input" className="join-room-label">Entrez le code de la partie</label>
+                <input type="text" id="join-room-input" value={this.state.value} onChange={this.handleChange}/>
+                <br/>
+                <button className="join-room-enter" onClick={this.goToRoom}>Entrer</button>
             </div>
             </>
         );

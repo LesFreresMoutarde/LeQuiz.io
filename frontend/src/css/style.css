@@ -1031,25 +1031,33 @@ button:disabled {
     width: 35vw;
     max-width: 80%;
     text-align: center;
+    min-width: 250px;
 }
 
 .join-room-label {
-    font-size: 3em;
+    font-size: 1.5em;
 }
 
 #join-room-input {
-    width: 100%;
+    width: 80%;
     height: 50px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     text-align: center;
 }
 
 .join-room-enter {
-    width: 100%;
+    width: 40%;
     border-radius: 10px;
     height: 50px;
-    background: #f7c634;
+    background: #217D9E;
+    outline: none;
+    border: none;
+}
+
+.join-room-enter:hover {
+    filter: brightness(95%);
+    cursor: pointer;
 }
 
 #join-room-input::placeholder {
