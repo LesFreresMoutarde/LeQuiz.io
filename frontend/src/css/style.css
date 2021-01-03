@@ -1026,4 +1026,32 @@ button:disabled {
     filter: brightness(95%);
 }
 
+.join-room-div {
+    margin: 0 auto;
+    width: 35vw;
+    max-width: 80%;
+    text-align: center;
+}
 
+.join-room-label {
+    font-size: 3em;
+}
+
+#join-room-input {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.join-room-enter {
+    width: 100%;
+    border-radius: 10px;
+    height: 50px;
+    background: #f7c634;
+}
+
+#join-room-input::placeholder {
+    margin: auto;
+}
