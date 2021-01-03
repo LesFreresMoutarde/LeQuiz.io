@@ -18,6 +18,12 @@ class Settings extends React.Component {
         this.showDesktopSection('email');
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.LOGGED_IN); // TODO find a better/more generic solution ?
+
+        return true;
+    }
+
     onNavigate = (e) => {
         const li = e.target.parentNode;
         const navTo = li.getAttribute('data-desktop-nav');
