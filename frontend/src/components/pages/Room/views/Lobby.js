@@ -3,11 +3,8 @@ import GameModeBox from "../components/Lobby/GameModeBox";
 import OptionsBox from "../components/Lobby/OptionsBox";
 import PlayersBox from "../components/Lobby/PlayersBox";
 import CategoriesBox from "../components/Lobby/CategoriesBox";
-// import ChooseCategories from "../../CreateGame/views/ChooseCategories";
-import CreateGame from "../../CreateGame/CreateGame";
 import NextButton from "../../../misc/NextButton";
 import LeaveButton from "../components/Lobby/LeaveButton";
-import Title from "../../../misc/Title";
 
 class Lobby extends React.Component {
 
@@ -18,8 +15,7 @@ class Lobby extends React.Component {
         super(props);
         this.state = {
             hover: false
-        }
-        console.log("propos",props);
+        };
     }
 
     onMouseEnter = () => {
