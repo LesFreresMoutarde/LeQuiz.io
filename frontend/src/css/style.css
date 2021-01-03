@@ -523,6 +523,7 @@ button:disabled {
 
 .pick-buttons:enabled:hover {
     filter: brightness(95%);
+    cursor: pointer;
 }
 
 .pick-all {
@@ -1036,4 +1037,83 @@ button:disabled {
         font-size: 1.3em;
     }
 
+}
+
+.lobby-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.lobby-info-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.lobby-info-left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lobby-info-center-container {
+    /*margin-bottom: 50px;*/
+}
+
+.lobby-info-right-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.lobby-box {
+    background-color: #2EC6EF;
+    margin-bottom: 200px;
+}
+
+.lobby-box-header {
+    display: flex;
+    background-color: #217D9E;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 10px 5px 5px 5px;
+}
+
+.lobby-box-content {
+    padding: 15px;
+}
+
+.lobby-box-header-label {
+    font-size: 1.1em;
+    margin: 0 auto;
+}
+
+.lobby-options-label {
+    color: #217D9E;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.lobby-win-criterion {
+    margin-left: 15px;
+    color: white;
+    font-size: 1.7em;
+}
+
+.lobby-edit-button {
+    background: none;
+    border: none;
+}
+
+.lobby-edit-button:hover {
+    filter: brightness(95%);
+    cursor: pointer;
+}
+
+.lobby-edit-button:focus {
+    outline: none;
+}
+
+.lobby-game-mode {
+    font-size: 1.7em;
+    font-weight: bold;
+    text-align: center;
 }

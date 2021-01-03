@@ -5,7 +5,7 @@ const PlayersBox = ({players, host, currentPlayer}) => {
     console.log('host depuis playersBox', host);
     console.log("currentPlayer from playersbox", currentPlayer);
     return (
-        <>
+        <div className="lobby-box">
             <p>Players Box</p>
             <div>
                 Les joueurs
@@ -18,7 +18,7 @@ const PlayersBox = ({players, host, currentPlayer}) => {
                     })}
                 </ul>
             </div>
-        </>
+        </div>
     )
 };
 
