@@ -17,6 +17,7 @@ import Loader from "./misc/Loader";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Settings from "./pages/Settings/Settings";
+import NotFound from "./pages/Errors/404/NotFound";
 
 import Toastr from "toastr2";
 import Room from "./pages/Room/Room";
@@ -119,6 +120,7 @@ class App extends React.Component {
                                 <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
                                 <Route path="/room/:id" component={Room}/>
+                                <Route component={NotFound} />
                             </Switch>
                         </div>
                     </div>
