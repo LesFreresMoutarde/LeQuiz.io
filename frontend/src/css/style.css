@@ -1053,6 +1053,7 @@ button:disabled {
     background: #217D9E;
     outline: none;
     border: none;
+    font-size: 1em;
 }
 
 .join-room-enter:hover {
