@@ -41,7 +41,9 @@ class Lobby extends React.Component {
 
         return (
             <div className="lobby-container">
-                <h1 className="mb2 text-center">{Lobby.LOBBY_TITLE}</h1>
+                <div className="lobby-title">
+                    <h1>{Lobby.LOBBY_TITLE}</h1>
+                </div>
                 <div className="lobby-info-container">
                     <div className="lobby-info-left-container">
                         <GameModeBox gameMode={gameConfiguration.gameMode}
