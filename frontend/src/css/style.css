@@ -1052,11 +1052,12 @@ button:disabled {
 .lobby-info-left-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
 }
 
 .lobby-info-center-container {
     /*margin-bottom: 50px;*/
+
 }
 
 .lobby-info-right-container {
@@ -1115,5 +1116,23 @@ button:disabled {
 .lobby-game-mode {
     font-size: 1.7em;
     font-weight: bold;
+    text-align: center;
+}
+
+.lobby-value-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.lobby-value-wrapper {
+    background-color: #217D9E;
+    width: 30%;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.lobby-value {
+    text-transform: capitalize;
     text-align: center;
 }

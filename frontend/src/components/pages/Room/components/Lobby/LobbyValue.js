@@ -2,8 +2,8 @@ import React from "react";
 
 const LobbyValue = ({value}) => {
     return (
-        <div>
-            <p>{value}</p>
+        <div className="lobby-value-wrapper">
+            <p className="lobby-value">{value}</p>
         </div>
     )
 };

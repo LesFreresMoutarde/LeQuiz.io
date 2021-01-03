@@ -112,7 +112,7 @@ export default class CreateGame extends React.Component {
 
     submitOptions = (questionTypes, winCriterionValue, roomCode) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        gameConfiguration.winCriterion = winCriterionValue;
+        gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
         gameConfiguration.questionTypes = questionTypes;
         gameConfiguration.roomCode = roomCode;
 
