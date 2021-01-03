@@ -4,7 +4,6 @@ import EditLobbyButton from "./EditLobbyButton";
 import LobbyValue from "./LobbyValue";
 
 const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) => {
-    const tt = ['qcm', 'blind-test', 'input', 'toto', 'momo', 'mimi']
     return (
         <div className="lobby-box">
             <div className="lobby-box-header">
@@ -17,11 +16,10 @@ const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) 
                 <p className="lobby-options-label">Nombre de questions : <span className="lobby-win-criterion">{winCriterion}</span></p>
                 <p className="lobby-options-label">Types de questions</p>
                 <div className="lobby-value-container">
-                    {tt.map((questionType, index) => (
-                            // <p key={index}>{questionType.type}</p>
-                            <LobbyValue key={index} value={questionType}/>
+                    {questionTypes.map((questionType, index) => (
+                        <LobbyValue key={index} value={questionType.type}/>
                         )
-                    )}
+                     )}
                 </div>
             </div>
         </div>

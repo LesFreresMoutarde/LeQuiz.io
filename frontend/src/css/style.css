@@ -1067,7 +1067,7 @@ button:disabled {
 
 .lobby-box {
     background-color: #2EC6EF;
-    margin-bottom: 200px;
+    margin-bottom: 50px;
 }
 
 .lobby-box-header {
@@ -1136,3 +1136,13 @@ button:disabled {
     text-transform: capitalize;
     text-align: center;
 }
+
+.leave-button {
+    color: white;
+    background-color: #DE2D48;
+}
+
+.leave-button:focus {
+    outline: none;
+}
+

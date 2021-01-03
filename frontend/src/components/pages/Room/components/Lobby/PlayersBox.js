@@ -6,17 +6,16 @@ const PlayersBox = ({players, host, currentPlayer}) => {
     console.log("currentPlayer from playersbox", currentPlayer);
     return (
         <div className="lobby-box">
-            <p>Players Box</p>
-            <div>
-                Les joueurs
-                <ul>
+            <div className="lobby-box-header">
+                <p className="lobby-box-header-label">Joueurs</p>
+            </div>
+            <div className="lobby-box-content">
                     {players.map((player, index) => {
                         let playerData = player.username;
                         if (player.socketId === currentPlayer.socketId) playerData += ' (Vous)';
                         if (host.socketId === player.socketId) playerData += ' (Host)';
                         return (<li key={index}>{playerData}</li>)
                     })}
-                </ul>
             </div>
         </div>
     )

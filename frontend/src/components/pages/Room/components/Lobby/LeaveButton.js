@@ -3,7 +3,7 @@ import React from "react";
 const LeaveButton = ({leaveRoom}) => {
 
     return (
-        <button onClick={() => leaveRoom()}>Quitter</button>
+        <button className="large-button leave-button" onClick={() => leaveRoom()}>Quitter</button>
     )
 };
 

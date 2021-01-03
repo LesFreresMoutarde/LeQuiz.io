@@ -7,6 +7,7 @@ import CategoriesBox from "../components/Lobby/CategoriesBox";
 import CreateGame from "../../CreateGame/CreateGame";
 import NextButton from "../../../misc/NextButton";
 import LeaveButton from "../components/Lobby/LeaveButton";
+import Title from "../../../misc/Title";
 
 class Lobby extends React.Component {
 
@@ -43,7 +44,7 @@ class Lobby extends React.Component {
 
             return (
                 <div className="lobby-container">
-                    <h1 className="text-center">Salon de jeu</h1>
+                    <Title title="Salon de jeu"/>
                     <div className="lobby-info-container">
                         <div className="lobby-info-left-container">
                             <GameModeBox gameMode={gameConfiguration.gameMode}
