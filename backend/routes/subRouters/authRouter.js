@@ -24,8 +24,12 @@ authRouter.get('/verify-token', (req, res) => {
     res.send(controller.response);
 });
 
-authRouter.post('/register', (req, res) => {
-    res.json({endpoint: 'POST /auth/register'})
+authRouter.post('/register', async (req, res) => {
+    const controller = new AuthController();
+    await controller.actionRegister(req.body, req.accessTokenPayload);
+
+    res.status(controller.statusCode);
+    res.send(controller.response);
 });
 
 authRouter.post('/login', async (req, res) => {

@@ -20,6 +20,19 @@ class Util {
         FROM_NAME: 'LeQuiz.io',
         FROM_NOREPLY_ADDRESS: 'noreply@lequiz.io',
 
+        /**
+         * @param {string} email
+         * @return {boolean}
+         */
+        isEmailAddressValid: (email) => {
+            if(email.length > 191) {
+                return false;
+            }
+
+            const regex = "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+            return !!email.match(regex);
+        },
+
         sendEmail: async(message = {}) => {
             await sendgrid.send(message);
         },
