@@ -34,7 +34,7 @@ class Register extends React.Component {
                         <input className={"full-width" + (this.state.formErrors.username ? ' error' : '')} id="username-input" name="username" placeholder="Nom d'utilisateur" autoFocus autoComplete="username"/>
                     </div>
                     <div className="mb3">
-                        <input className={"full-width" + (this.state.formErrors.email ? ' error' : '')} id="email-input" type="text" name="email" placeholder="Adresse email" autoComplete="email"/>
+                        <input className={"full-width" + (this.state.formErrors.email ? ' error' : '')} id="email-input" type="email" name="email" placeholder="Adresse email" autoComplete="email"/>
                     </div>
                     <div className="mb3">
                         <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="new-password"/>
