@@ -1,10 +1,13 @@
 import React from "react";
 import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
+import Util from "../../../util/Util";
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
+
+        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.LOGGED_IN);
 
         this.state = {
             desktopCurrentContent: "email",
@@ -13,6 +16,12 @@ class Settings extends React.Component {
 
     componentDidMount() {
         this.showDesktopSection('email');
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.LOGGED_IN); // TODO find a better/more generic solution ?
+
+        return true;
     }
 
     onNavigate = (e) => {

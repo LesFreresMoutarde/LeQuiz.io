@@ -1,7 +1,18 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Util from "../../../util/Util";
 
 class Register extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            redirect: false,
+        }
+
+        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
+    }
+
     render = () => {
         return(
             <div className="text-center">

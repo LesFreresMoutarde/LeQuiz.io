@@ -4,7 +4,7 @@ import '../css/style.css';
 import '../css/util.css';
 import 'toastr2/dist/toastr.min.css';
 import '../css/toastr.override.css';
-import {Switch, Route} from "react-router-dom";
+import {Switch, Route, Redirect} from "react-router-dom";
 import Home from "./pages/Home/Home";
 import CreateGame from "./pages/CreateGame/CreateGame";
 import JoinRoom from "./pages/JoinRoom/JoinRoom";
@@ -31,9 +31,12 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            redirect: false,
             isLoading: true,
             user: null,
         }
+
+        this.nextRedirect = null;
 
         App.GLOBAL = this;
     }
@@ -94,7 +97,27 @@ class App extends React.Component {
         return true;
     }
 
+    redirectTo = (url) => {
+        this.nextRedirect = url;
+        this.setState({
+            redirect: true,
+        });
+    }
+
     render = () => {
+        if (this.state.redirect) {
+            const url = this.nextRedirect;
+            this.nextRedirect = null;
+            setTimeout(() => { // SetTimeout to update the state of the App component after rendering the <Redirect> component
+                this.setState({
+                    redirect: false,
+                });
+            }, 0);
+            return (
+                <Redirect to={url} />
+            );
+        }
+
         if(this.state.isLoading) {
             return (
                 <div className="app loading">
@@ -112,10 +135,10 @@ class App extends React.Component {
                         <div id="page-content">
                             <Switch>
                                 <Route exact path="/" component={Home}/>
-                                <Route exact path="/login" render={() => <Login setUser={this.setUser} currentUser={this.state.user} />}/>
+                                <Route exact path="/login" component={Login} />
                                 <Route exact path="/register" component={Register}/>
-                                <Route exact path="/forgot-password" render={() => <ForgotPassword currentUser={this.state.user} />} />
-                                <Route exact path="/reset-password/:token" render={() => <ResetPassword currentUser={this.state.user} />} />
+                                <Route exact path="/forgot-password" component={ForgotPassword} />
+                                <Route exact path="/reset-password/:token" component={ResetPassword} />
                                 <Route exact path="/settings" component={Settings}/>
                                 <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>

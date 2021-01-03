@@ -1,7 +1,7 @@
 import React from "react";
-import {Link, Redirect } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Util from "../../../util/Util";
-
+import App from "../../App";
 
 import Toastr from "toastr2";
 const toastr = new Toastr();
@@ -10,15 +10,11 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
 
-        if(this.props.currentUser) {
-            this.state = {
-                redirect: true,
-            }
-        } else {
-            this.state = {
-                redirect: false,
-            }
+        this.state = {
+            redirect: false,
         }
+
+        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
     }
 
     render = () => {
@@ -75,7 +71,7 @@ class Login extends React.Component {
                 Util.setAccesstoken(responseJson.accessToken);
                 Util.setRefreshToken(responseJson.refreshToken);
 
-                this.props.setUser(Util.accessTokenPayload.user);
+                App.GLOBAL.setUser(Util.accessTokenPayload.user);
 
                 this.setState({
                     redirect: true,

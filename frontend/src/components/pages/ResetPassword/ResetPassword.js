@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import Util from "../../../util/Util";
 
 import Toastr from "toastr2";
@@ -13,40 +13,38 @@ class ResetPassword extends React.Component {
     constructor(props) {
         super(props);
 
+        this.userHasAccess = Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
+
         this.state = {
             isLoading: true,
             isCompleted: false,
-            redirect: !!this.props.currentUser,
             resetTokenExists: false,
         };
     }
 
     componentDidMount() {
-        (async () => {
-            const resetToken = window.location.pathname.split('/')[2];
+        if(this.userHasAccess) {
+            (async () => {
+                const resetToken = window.location.pathname.split('/')[2];
 
-            const tokenExistsResponse = await Util.performAPIRequest(`/auth/reset-password?passwordResetToken=${resetToken}`);
+                const tokenExistsResponse = await Util.performAPIRequest(`/auth/reset-password?passwordResetToken=${resetToken}`);
 
-            if(tokenExistsResponse.ok) {
+                if(tokenExistsResponse.ok) {
+                    this.setState({
+                        resetTokenExists: true,
+                    });
+                }
+
                 this.setState({
-                    resetTokenExists: true,
+                    isLoading: false,
+                    resetToken,
                 });
-            }
+            })()
+        }
 
-            this.setState({
-                isLoading: false,
-                resetToken,
-            });
-        })()
     }
 
     render = () => {
-        if(this.state.redirect) {
-            return(
-                <Redirect to="/" />
-            )
-        }
-
         if(this.state.isCompleted) {
             return(
                 <Redirect to="/login" />
