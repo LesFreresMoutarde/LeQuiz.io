@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import Util from "../../../util/Util";
+import App from "../../App";
 
 import Toastr from "toastr2";
 const toastr = new Toastr();
@@ -12,7 +13,7 @@ class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
 
-        if(this.props.currentUser) {
+        if(App.GLOBAL.state.user) {
             this.state = {
                 redirect: true,
             }

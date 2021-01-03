@@ -111,10 +111,10 @@ class App extends React.Component {
                         <div id="page-content">
                             <Switch>
                                 <Route exact path="/" component={Home}/>
-                                <Route exact path="/login" render={() => <Login setUser={this.setUser} currentUser={this.state.user} />}/>
+                                <Route exact path="/login" component={Login} />
                                 <Route exact path="/register" component={Register}/>
-                                <Route exact path="/forgot-password" render={() => <ForgotPassword currentUser={this.state.user} />} />
-                                <Route exact path="/reset-password/:token" render={() => <ResetPassword currentUser={this.state.user} />} />
+                                <Route exact path="/forgot-password" component={ForgotPassword} />
+                                <Route exact path="/reset-password/:token" component={ResetPassword} />
                                 <Route exact path="/settings" component={Settings}/>
                                 <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>

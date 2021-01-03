@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import Util from "../../../util/Util";
+import App from "../../App";
 
 import Toastr from "toastr2";
 import Loader from "../../misc/Loader";
@@ -16,28 +17,31 @@ class ResetPassword extends React.Component {
         this.state = {
             isLoading: true,
             isCompleted: false,
-            redirect: !!this.props.currentUser,
+            redirect: !!App.GLOBAL.state.user,
             resetTokenExists: false,
         };
     }
 
     componentDidMount() {
-        (async () => {
-            const resetToken = window.location.pathname.split('/')[2];
+        if(!this.state.redirect) {
+            (async () => {
+                const resetToken = window.location.pathname.split('/')[2];
 
-            const tokenExistsResponse = await Util.performAPIRequest(`/auth/reset-password?passwordResetToken=${resetToken}`);
+                const tokenExistsResponse = await Util.performAPIRequest(`/auth/reset-password?passwordResetToken=${resetToken}`);
 
-            if(tokenExistsResponse.ok) {
+                if(tokenExistsResponse.ok) {
+                    this.setState({
+                        resetTokenExists: true,
+                    });
+                }
+
                 this.setState({
-                    resetTokenExists: true,
+                    isLoading: false,
+                    resetToken,
                 });
-            }
+            })()
+        }
 
-            this.setState({
-                isLoading: false,
-                resetToken,
-            });
-        })()
     }
 
     render = () => {
