@@ -39,7 +39,7 @@ class JoinRoom extends React.Component {
             <BackArrow onClick={this.goBack}/>
             <div className="join-room-div">
                 <label for="join-room-input" className="join-room-label">Entrez le code de la partie</label>
-                <input type="text" id="join-room-input" value={this.state.value} onChange={this.handleChange}/>
+                <input type="text" id="join-room-input" value={this.state.valueInput} onChange={this.handleChange}/>
                 <br/>
                 <button className="join-room-enter" onClick={this.goToRoom}>Entrer</button>
             </div>
