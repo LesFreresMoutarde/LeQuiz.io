@@ -4,7 +4,7 @@ import BackArrow from "../../misc/BackArrow";
 
 class JoinRoom extends React.Component {
 
-    static TITLE = 'LE QUIZ';
+    static TITLE = 'Rejoindre une partie';
 
     constructor(props) {
         super(props);
@@ -31,12 +31,13 @@ class JoinRoom extends React.Component {
     render = () => {
         return (
             <>
-            <Title title={JoinRoom.TITLE}/>
-            <BackArrow onClick={this.goBack}/>
+                <div className="create-game-header">
+                    <BackArrow onClick={this.goBack}/>
+                    <Title title={JoinRoom.TITLE}/>
+                </div>
             <div className="join-room-div">
                 <label htmlFor="join-room-input" className="join-room-label">Entrez le code de la partie</label>
                 <input type="text" id="join-room-input" value={this.state.valueInput} onChange={this.handleChange}/>
-                <br/>
                 <button className="join-room-enter" onClick={this.goToRoom}>Entrer</button>
             </div>
             </>
