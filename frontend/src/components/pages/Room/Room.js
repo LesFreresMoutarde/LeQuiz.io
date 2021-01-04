@@ -92,6 +92,7 @@ class Room extends React.Component {
 
                 }
                 this.socket.connectToRoom(roomId, username, isHost);
+                toastr.success('Connexion réussie');
                 this.socket.handleSocketCommunication(this);
                 this.setState({socketOpen: true});
             } catch (error) {
