@@ -347,6 +347,13 @@ button:disabled {
     margin-top: 100px;
 }
 
+.home-title-description {
+    margin-top: 50px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-align: center;
+}
+
 .homepage-button {
     width: 40%;
     padding: 80px;
