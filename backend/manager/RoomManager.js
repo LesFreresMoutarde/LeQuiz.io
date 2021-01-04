@@ -56,45 +56,59 @@ module.exports = (server) => {
      socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
 
          const room = findRoom(roomId)[0];
-         console.log("le quiz pour la room suivante", room);
-         console.log("avec la conf suivante", gameConfiguration);
-         const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
-         const quiz = await GameUtil.executeQuizQuery(quizQuery);
-        console.log('temon quiz');
-         // Creation quiz
-         room.game.quiz = quiz;
-         room.game.quizLength = quiz.length;
 
-         io.to(room.id).emit('quiz-sent', quiz);
+         if (room) {
+             // console.log("le quiz pour la room suivante", room);
+             // console.log("avec la conf suivante", gameConfiguration);
+             const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
+             const quiz = await GameUtil.executeQuizQuery(quizQuery);
+             // console.log('temon quiz');
+             // Creation quiz
+             room.game.quiz = quiz;
+             room.game.quizLength = quiz.length;
+             io.to(room.id).emit('quiz-sent', quiz);
+         }
+
      });
 
      socket.on('quiz-received', (roomId) => {
          const room = findRoom(roomId)[0];
-         room.state = 'question' // inGame
-         socket.emit('ask-question');
+
+         if (room) {
+             room.state = 'question' // inGame
+             socket.emit('ask-question');
+         }
+
      });
 
      socket.on('next-question', (roomId) => {
          const room = findRoom(roomId)[0];
-         room.state = 'question';
-         socket.emit('ask-question')
+
+         if (room) {
+             room.state = 'question';
+             socket.emit('ask-question')
+         }
+
      });
 
-     socket.on('player-result', ({result, roomId}) => {
+     socket.on('player-result', ({result}) => {
          console.log("player-result event catch");
          const {receivedAllAnswers, room} = handlePlayerResult(socket.id, result);
 
-         room.state = 'answer';
+         if (room) {
+             room.state = 'answer';
 
-         if (receivedAllAnswers) {
-             const eventToEmit = getEventToEmit(room);
-             io.to(room.id).emit(eventToEmit, room);
+             if (receivedAllAnswers) {
+                 const eventToEmit = getEventToEmit(room);
+                 io.to(room.id).emit(eventToEmit, room);
+             }
          }
      });
 
      socket.on('game-reinit',(roomId) => {
          const room = findRoom(roomId)[0];
-         reinitRoomGame(room)
+
+         if (room) reinitRoomGame(room)
      })
 
      socket.on('disconnect', () => {
@@ -112,7 +126,7 @@ module.exports = (server) => {
      })
 
 
- })
+ });
 
     const reinitRoomGame = (room) => {
         room.state = 'lobby';
