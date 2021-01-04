@@ -185,3 +185,7 @@ h6.mb, .h6.mb {
 .hidden {
     display: none;
 }
+
+.centered-item {
+    margin: auto;
+}

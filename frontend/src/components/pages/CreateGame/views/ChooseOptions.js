@@ -138,30 +138,15 @@ export default class ChooseOptions extends React.Component {
 
 
     submitGameOptions = async () => {
+        const { questionTypes, winCriterionInputValue } = this.state;
 
-        try {
-            const { questionTypes, winCriterionInputValue } = this.state;
+        questionTypes.forEach(questionType => {
+            if (questionType.checked) {
+                delete questionType.checked;
+            }
+        });
 
-            questionTypes.forEach(questionType => {
-                if (questionType.checked) {
-                    delete questionType.checked;
-                }
-
-            });
-
-            const response = await Util.performAPIRequest('game/generate/code');
-
-            if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
-
-            const responseData = await response.json();
-
-            const roomCode = responseData.roomCode;
-
-            this.props.submit(questionTypes, winCriterionInputValue, roomCode)
-
-        } catch (error) {
-            console.error(error);
-        }
+        this.props.submit(questionTypes, winCriterionInputValue)
 
     };
 
@@ -173,8 +158,10 @@ export default class ChooseOptions extends React.Component {
         if (this.state.isLoading) {
             return (
                 <>
-                    <Title title={ChooseOptions.TITLE}/>
-                    <BackArrow onClick={this.goBack}/>
+                    <div className="create-game-header">
+                        <BackArrow onClick={this.goBack}/>
+                        <Title title={ChooseOptions.TITLE}/>
+                    </div>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -193,8 +180,10 @@ export default class ChooseOptions extends React.Component {
 
             return (
                 <>
-                    <Title title={ChooseOptions.TITLE}/>
-                    <BackArrow onClick={this.goBack}/>
+                    <div className="create-game-header">
+                        <BackArrow onClick={this.goBack}/>
+                        <Title title={ChooseOptions.TITLE}/>
+                    </div>
                     <div className="game-options-container">
                         <WinCriterion
                             winCriterion={gameOptions.winCriterion}

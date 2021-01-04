@@ -110,36 +110,51 @@ export default class CreateGame extends React.Component {
         }
     };
 
-    submitOptions = (questionTypes, winCriterionValue, roomCode) => {
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        gameConfiguration.winCriterion = winCriterionValue;
-        gameConfiguration.questionTypes = questionTypes;
-        gameConfiguration.roomCode = roomCode;
+    submitOptions = async (questionTypes, winCriterionValue) => {
 
-        if (!this.props.fromRoom) {
+        try {
+            if (!this.props.fromRoom) {
 
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+                const response = await Util.performAPIRequest('game/generate/code');
 
-            this.props.history.push(`/room/${roomCode}`);
+                if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
 
-        } else {
+                const responseData = await response.json();
 
-            delete gameConfiguration.roomCode;
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+                const roomCode = responseData.roomCode;
 
-            this.props.roomInstance.setState({
-                display: {
-                    lobby: true,
-                    question: false,
-                    answer: false,
-                    gameOptions: false,
-                },
-                gameConfiguration
-            });
+                const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+                gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
+                gameConfiguration.questionTypes = questionTypes;
+                gameConfiguration.roomCode = roomCode;
 
-            this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+                Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
+                this.props.history.push(`/room/${roomCode}`);
+
+            } else {
+
+                const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+                gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
+                gameConfiguration.questionTypes = questionTypes;
+                Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+                this.props.roomInstance.setState({
+                    display: {
+                        lobby: true,
+                        question: false,
+                        answer: false,
+                        gameOptions: false,
+                    },
+                    gameConfiguration
+                });
+
+                this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+            }
+        } catch (e) {
+            console.error(e);
         }
+
     };
 
     goBack = (page) => {

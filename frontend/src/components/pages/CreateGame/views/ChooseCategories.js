@@ -145,8 +145,10 @@ export default class ChooseCategories extends React.Component {
         if (this.state.isLoading) {
             return (
                 <>
-                    <Title title={ChooseCategories.TITLE}/>
-                    <BackArrow onClick={this.goBack}/>
+                    <div className="create-game-header">
+                        <BackArrow onClick={this.goBack}/>
+                        <Title title={ChooseCategories.TITLE}/>
+                    </div>
                     <div className="app loading">
                         <div className="app-loader">
                             <Loader width="max(6vw, 80px)"/>
@@ -159,8 +161,10 @@ export default class ChooseCategories extends React.Component {
 
             return (
                 <>
-                    <Title title={ChooseCategories.TITLE}/>
-                    <BackArrow onClick={this.goBack}/>
+                    <div className="create-game-header">
+                        <BackArrow onClick={this.goBack}/>
+                        <Title title={ChooseCategories.TITLE}/>
+                    </div>
                     <div className="category-container">
                        {categories.map((category, index) => {
                             if (index === 0) {

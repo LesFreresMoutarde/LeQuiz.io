@@ -1,15 +1,27 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import EditLobbyButton from "./EditLobbyButton";
+import LobbyValue from "./LobbyValue";
 
 const CategoriesBox = ({categories, changeOptions, displayClass}) => {
     return (
-        <>
-            <p>Thèmes</p>
-            {categories.map((category, index) =>  (
-                <p key={index}>{category.name}</p>
-            ))}
-            <button className={`${displayClass}`} onClick={() => changeOptions('categories')}>Modifier</button>
-        </>
+        <div className="lobby-box">
+            <div className="lobby-box-header">
+                <p className="lobby-box-header-label">Thèmes</p>
+                <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('categories')}>
+                    <EditLobbyButton/>
+                </button>
+            </div>
+            <div className="lobby-box-content">
+                <div className="lobby-value-container">
+                    {categories.map((category, index) =>  (
+                        <LobbyValue key={index} value={category.name}/>
+                    ))}
+                </div>
+
+            </div>
+
+        </div>
     )
 };
 
