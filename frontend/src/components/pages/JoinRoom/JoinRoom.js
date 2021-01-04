@@ -1,8 +1,6 @@
 import React from "react";
-import {Link} from "react-router-dom";
 import Title from "../../misc/Title";
 import BackArrow from "../../misc/BackArrow";
-import {placeholder} from "@babel/types";
 
 class JoinRoom extends React.Component {
 
@@ -36,7 +34,7 @@ class JoinRoom extends React.Component {
             <Title title={JoinRoom.TITLE}/>
             <BackArrow onClick={this.goBack}/>
             <div className="join-room-div">
-                <label for="join-room-input" className="join-room-label">Entrez le code de la partie</label>
+                <label htmlFor="join-room-input" className="join-room-label">Entrez le code de la partie</label>
                 <input type="text" id="join-room-input" value={this.state.valueInput} onChange={this.handleChange}/>
                 <br/>
                 <button className="join-room-enter" onClick={this.goToRoom}>Entrer</button>

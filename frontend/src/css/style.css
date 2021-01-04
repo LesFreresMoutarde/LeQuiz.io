@@ -1035,7 +1035,7 @@ button:disabled {
 }
 
 .join-room-label {
-    font-size: 2.7vw;
+    font-size: 2.5vw;
 }
 
 #join-room-input {
@@ -1055,6 +1055,7 @@ button:disabled {
     outline: none;
     border: none;
     font-size: 1em;
+    color: white;
 }
 
 .join-room-enter:hover {
