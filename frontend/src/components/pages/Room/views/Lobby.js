@@ -67,7 +67,11 @@ class Lobby extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <p className="lobby-room-code" onMouseEnter={() => this.onMouseEnter()} onMouseLeave={() => this.onMouseLeave()}>{roomCodeText}</p>
+                    <p className="lobby-room-code">
+                        <span onMouseEnter={() => this.onMouseEnter()} onMouseLeave={() => this.onMouseLeave()}>
+                            {roomCodeText}
+                        </span>
+                    </p>
                 </div>
             </div>
         );
