@@ -798,7 +798,8 @@ button:disabled {
 
 .lobby-title {
     display: flex;
-    margin:0 auto 30px auto;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
 .lobby-info-container {
