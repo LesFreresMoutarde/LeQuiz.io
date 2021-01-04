@@ -8,7 +8,8 @@ import WinCriterion from "../components/WinCriterion";
 import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
 import BackArrow from "../../../misc/BackArrow";
-
+import Toastr from "toastr2";
+const toastr = new Toastr();
 
 export default class ChooseOptions extends React.Component {
 
@@ -72,7 +73,7 @@ export default class ChooseOptions extends React.Component {
 
 
             } catch (error) {
-                console.error(error);
+                toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
             }
         })();
     }
@@ -94,7 +95,7 @@ export default class ChooseOptions extends React.Component {
             this.evaluateWinCriterionMaxValue()
 
         } catch (error) {
-            console.error(error)
+            toastr.error('Ce type de question n\'existe pas')
         }
     }
 

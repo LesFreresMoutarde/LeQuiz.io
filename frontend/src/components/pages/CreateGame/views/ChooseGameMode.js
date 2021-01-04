@@ -1,11 +1,11 @@
 import React from "react";
 import Util from "../../../../util/Util";
-import GameUtil from "../../../../util/GameUtil";
 import Loader from "../../../misc/Loader";
 import GameMode from "../components/GameMode";
 import Title from "../../../misc/Title";
 import BackArrow from "../../../misc/BackArrow";
-
+import Toastr from "toastr2";
+const toastr = new Toastr();
 
 export default class ChooseGameMode extends React.Component {
 
@@ -30,7 +30,7 @@ export default class ChooseGameMode extends React.Component {
                     isLoading: false
                 });
             } catch (error) {
-                console.error(error);
+                toastr.error('Impossible d\' afficher les modes de jeu, réessayez ultérieurement');
             }
         })();
     }
