@@ -1326,3 +1326,8 @@ button:disabled {
 #join-room-input::placeholder {
     margin: auto;
 }
+
+#logo {
+    margin: 0 auto;
+    display: block;
+}

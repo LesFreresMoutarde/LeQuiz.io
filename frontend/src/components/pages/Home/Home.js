@@ -1,9 +1,8 @@
 import React from "react";
-import Title from "../../../components/misc/Title"
+import Title from "../../../components/misc/Title";
+import Logo from "../../misc/Logo";
 
 class Home extends React.Component {
-
-    static TITLE = 'LE QUIZ';
 
     createRoom = () => {
         this.props.history.push('/create-room');
@@ -16,7 +15,7 @@ class Home extends React.Component {
     render = () => {
         return (
             <>
-                <Title title={Home.TITLE}/>
+                <Logo height="200" width="300"/>
                 <div className="home-menu">
                     <button className="homepage-button create-room-button" onClick={this.createRoom}>
                         <p className="homepage-button-label">Créer un salon</p>
