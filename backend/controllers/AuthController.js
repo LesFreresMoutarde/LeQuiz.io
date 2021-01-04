@@ -239,6 +239,109 @@ class AuthController extends MainController {
         this.statusCode = 204;
     }
 
+    actionRegister = async (requestBody, accessTokenPayload) => {
+        const requiredBodyFields = ['username', 'email', 'password', 'confirmPassword', 'stayLoggedIn'];
+        const missingFields = [];
+
+        for(const requiredField of requiredBodyFields) {
+            if(!requestBody.hasOwnProperty(requiredField)) {
+                missingFields.push(requiredField);
+            }
+        }
+
+        if(missingFields.length > 0) {
+            this.statusCode = 400;
+            this.response = {
+                error: `Missing parameters: ${missingFields.join(', ')}`,
+            }
+            return;
+        }
+
+        const errors = {};
+
+        const existingUserWithUsername = await db.User.findOne({
+            where: {
+                username: requestBody.username,
+            },
+        });
+
+        if (existingUserWithUsername !== null) {
+            errors.username = "Ce nom d'utilisateur est déjà utilisé";
+        } else if (!requestBody.username.match("^[a-zA-Z0-9_]*$")) {
+            errors.username = "Votre nom d'utilisateur ne peut contenir que des caractères alphanumériques et des tirets bas";
+        } else if (requestBody.username.length > 30) {
+            errors.username = "Votre nom d'utilisateur doit faire maximum 30 caractères";
+        }
+
+        const existingUserWithEmail = await db.User.findOne({
+            where: {
+                email: requestBody.email,
+            },
+        });
+
+        if (existingUserWithEmail !== null) {
+            errors.email = "Cette adresse email est déjà utilisée";
+        } else if(!Util.Email.isEmailAddressValid(requestBody.email)) {
+            errors.email = "Cette adresse email n'est pas valide";
+        }
+
+        if (requestBody.password.length < Util.Password.MIN_LENGTH) {
+            errors.password = `Le mot de passe doit faire au moins ${Util.Password.MIN_LENGTH} caractères`;
+        }
+
+        if (requestBody.password !== requestBody.confirmPassword) {
+            errors.confirmPassword = 'Les champs de mot de passe ne correspondent pas';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            this.statusCode = 422;
+            this.response = {
+                errors,
+            };
+            return;
+        }
+
+        const user = await db.User.create({
+            username: requestBody.username,
+            email: requestBody.email,
+            password: await Util.Password.hashPassword(requestBody.password),
+            plan: 'free',
+            role: 'member',
+            isTrustyWriter: false,
+            isActive: true,
+            isBanned: false,
+        });
+
+        const currentAccessTokenPayload = {...accessTokenPayload};
+        const newAccessTokenPayload = Object.assign(currentAccessTokenPayload, {
+            user: {
+                id: user.id,
+                username: user.username,
+                plan: user.plan,
+                role: user.role,
+            }
+        });
+
+        const refreshTokenLifetime = requestBody.stayLoggedIn ? AuthController.REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN : AuthController.REFRESH_TOKEN_LIFETIME;
+
+        console.log(refreshTokenLifetime, requestBody.stayLoggedIn);
+
+        const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, newAccessTokenPayload);
+        const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, newAccessTokenPayload, refreshTokenLifetime);
+
+        const refreshTokenExpirationDate = new Date();
+        refreshTokenExpirationDate.setTime(refreshTokenExpirationDate.getTime() + (refreshTokenLifetime * 1000));
+
+        await this.saveRefreshToken(newRefreshToken, refreshTokenExpirationDate, user.id);
+
+        this.statusCode = 201;
+
+        this.response = {
+            accessToken: newAccessToken,
+            refreshToken: newRefreshToken,
+        }
+    }
+
     actionForgotPassword = async (requestBody) => {
         const requiredBodyFields = ['username']; // We have only one field for this form, but we keep consistency with other actions
         const missingFields = [];
