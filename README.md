@@ -1,3 +1,5 @@
+<p style="text-align: center"><img src="logo.png" alt="Logo"></p>
+
 # LeQuiz.io
 
 ## Description
