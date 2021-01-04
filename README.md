@@ -72,3 +72,7 @@ You can login
 For all the demo accounts, the password is `password`
 
 > Note: Users, reviewers and admins have different roles in the database, but as it stands, the higher roles do not have access to additional functionality. This will come later.
+
+### Build
+
+To build the React app (the frontend), run `npm run build` in the `frontend` directory.
