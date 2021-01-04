@@ -138,30 +138,15 @@ export default class ChooseOptions extends React.Component {
 
 
     submitGameOptions = async () => {
+        const { questionTypes, winCriterionInputValue } = this.state;
 
-        try {
-            const { questionTypes, winCriterionInputValue } = this.state;
+        questionTypes.forEach(questionType => {
+            if (questionType.checked) {
+                delete questionType.checked;
+            }
+        });
 
-            questionTypes.forEach(questionType => {
-                if (questionType.checked) {
-                    delete questionType.checked;
-                }
-
-            });
-
-            const response = await Util.performAPIRequest('game/generate/code');
-
-            if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
-
-            const responseData = await response.json();
-
-            const roomCode = responseData.roomCode;
-
-            this.props.submit(questionTypes, winCriterionInputValue, roomCode)
-
-        } catch (error) {
-            console.error(error);
-        }
+        this.props.submit(questionTypes, winCriterionInputValue)
 
     };
 
