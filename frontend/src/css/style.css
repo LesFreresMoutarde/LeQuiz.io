@@ -1286,4 +1286,43 @@ button:disabled {
 
 }
 
+.join-room-div {
+    margin: 0 auto;
+    width: 35vw;
+    max-width: 80%;
+    text-align: center;
+    min-width: 250px;
+}
 
+.join-room-label {
+    font-size: 2.5vw;
+}
+
+#join-room-input {
+    width: 80%;
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.join-room-enter {
+    width: 40%;
+    border-radius: 10px;
+    height: 50px;
+    background: #217D9E;
+    outline: none;
+    border: none;
+    font-size: 1em;
+    color: white;
+}
+
+.join-room-enter:hover {
+    filter: brightness(95%);
+    cursor: pointer;
+}
+
+#join-room-input::placeholder {
+    margin: auto;
+}
