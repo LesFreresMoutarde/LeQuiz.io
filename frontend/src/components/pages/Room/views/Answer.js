@@ -43,7 +43,7 @@ class Answer extends React.Component {
 
                 <div className="answer-screen-right">
 
-                <div className="answer-info"> {/* flex column*/}
+                <div className="answer-info">
                         <p className={`answer-result ${header.colorClass}`}>{header.text}</p>
                         <p className="answer-round">{roundInfo}</p>
                     </div>
@@ -54,7 +54,6 @@ class Answer extends React.Component {
                         <div className="scores-container">
                             {scores.map((scoreLine, index) => (
                                 <PlayerScore key={index} scoreLine={scoreLine} currentPlayer={currentPlayer}/>
-                                // <p key={index}>{scoreLine.rank} | {scoreLine.player.username} | {scoreLine.value}</p>
                             ))}
                         </div>
                     </div>
