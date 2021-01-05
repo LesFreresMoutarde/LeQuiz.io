@@ -35,6 +35,15 @@ You need to install some software to run the application:
 - [Docker CE](https://www.docker.com/community-edition)
 - [Docker Compose](https://docs.docker.com/compose/install)
 
+
+### Configuration
+
+Some values are dependent on the execution environment of the application, like URLs or database configuration. Those value are located in :
+- Backend: `backend/config/env.js`
+- Frontend: `frontend/src/config/env.js`
+
+You have to create those `env.js` files from the `env.default.js` templates in each directory described above, and fill in the values.
+
 ### Run project
 
 ```bash
