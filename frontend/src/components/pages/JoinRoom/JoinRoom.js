@@ -23,7 +23,7 @@ class JoinRoom extends React.Component {
 
     goToRoom = () => {
         if (this.state.valueInput != '') {
-            this.props.history.push('/room/' + this.state.valueInput)
+            this.props.history.push(`/room/${this.state.valueInput}`);
         }
     };
 
