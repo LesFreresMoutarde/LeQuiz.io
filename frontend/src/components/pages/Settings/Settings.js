@@ -2,6 +2,7 @@ import React from "react";
 import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
 import Util from "../../../util/Util";
+import BackArrow from "../../misc/BackArrow";
 
 class Settings extends React.Component {
     constructor(props) {
@@ -64,8 +65,14 @@ class Settings extends React.Component {
         }
     }
 
+    goBack = () => {
+        this.props.history.goBack();
+    };
+
     render = () => {
         return (
+            <>
+            <BackArrow onClick={this.goBack}/>
             <div className="flex-container">
                 <nav id="page-lateral-navigation">
                     <ul>
@@ -89,6 +96,7 @@ class Settings extends React.Component {
                     </div>
                 </div>
             </div>
+        </>
         )
     }
 }
