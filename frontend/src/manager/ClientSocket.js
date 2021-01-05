@@ -1,13 +1,14 @@
 import * as socketIoClient from 'socket.io-client';
 import Util from "../util/Util";
 import GameUtil from "../util/GameUtil";
+import env from "../config/env";
 
 class ClientSocket {
 
     socket;
 
     constructor() {
-        this.socket = socketIoClient(`${window.location.origin}:3000`);
+        this.socket = socketIoClient(env.socketEngineUrl);
     }
 
     connectToRoom = (roomId, username, isHost) => {
