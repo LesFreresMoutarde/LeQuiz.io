@@ -1,5 +1,4 @@
 import React from "react";
-import Title from "../../../components/misc/Title";
 import Logo from "../../misc/Logo";
 
 class Home extends React.Component {
