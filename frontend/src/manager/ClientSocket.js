@@ -2,6 +2,8 @@ import * as socketIoClient from 'socket.io-client';
 import Util from "../util/Util";
 import GameUtil from "../util/GameUtil";
 import env from "../config/env";
+import Toastr from "toastr2";
+const toastr = new Toastr();
 
 class ClientSocket {
 
@@ -38,6 +40,7 @@ class ClientSocket {
         });
 
         this.socket.on('connection-failure', () => {
+            toastr.error('Impossible de rejoindre cette room');
             Util.clearSessionStorage();
             roomComponent.props.history.replace('/');
             this.destructor()
