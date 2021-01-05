@@ -72,7 +72,9 @@ class Settings extends React.Component {
     render = () => {
         return (
             <>
-            <BackArrow onClick={this.goBack}/>
+            <div className="mb2">
+                <BackArrow onClick={this.goBack}/>
+            </div>
             <div className="flex-container">
                 <nav id="page-lateral-navigation">
                     <ul>
