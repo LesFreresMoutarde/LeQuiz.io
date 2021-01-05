@@ -11,12 +11,9 @@ class JoinRoom extends React.Component {
         this.state = {
             valueInput: ''
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.goToRoom = this.goToRoom.bind(this);
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({valueInput: event.target.value});
     }
 
@@ -25,8 +22,16 @@ class JoinRoom extends React.Component {
     };
 
     goToRoom = () => {
-        this.props.history.push('/room/'+ this.state.valueInput)
-    }
+        if (this.state.valueInput != '') {
+            this.props.history.push(`/room/${this.state.valueInput}`);
+        }
+    };
+
+    handleEnterKey = (event) => {
+        if(event.key === 'Enter'){
+            this.goToRoom();
+        }
+    };
 
     render = () => {
         return (
@@ -37,7 +42,7 @@ class JoinRoom extends React.Component {
                 </div>
             <div className="join-room-div">
                 <label htmlFor="join-room-input" className="join-room-label">Entrez le code de la partie</label>
-                <input type="text" id="join-room-input" value={this.state.valueInput} onChange={this.handleChange}/>
+                <input type="text" id="join-room-input" value={this.state.valueInput} onChange={this.handleChange} onKeyPress={this.handleEnterKey}/>
                 <button className="join-room-enter" onClick={this.goToRoom}>Entrer</button>
             </div>
             </>
