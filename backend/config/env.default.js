@@ -5,4 +5,27 @@ module.exports = {
     email: {
         apiKey: 'SENDGRID_API_KEY',
     },
+    database: {
+        development: {
+            username: "admin",
+            password: "admin",
+            database: "lequiz-io",
+            host: "database",
+            dialect: "postgres",
+        },
+        test: {
+            username: "TEST_DATABASE_USERNAME",
+            password: "TEST_DATABASE_PASSWORD",
+            database: "TEST_DATABASE_NAME",
+            host: "TEST_DATABASE_HOST",
+            dialect: "TEST_DATABASE_DIALECT", // one of 'mysql' | 'mariadb' | 'postgres' | 'mssql'
+        },
+        production: {
+            username: "PRODUCTION_DATABASE_USERNAME",
+            password: "PRODUCTION_DATABASE_PASSWORD",
+            database: "PRODUCTION_DATABASE_NAME",
+            host: "PRODUCTION_DATABASE_HOST",
+            dialect: "PRODUCTION_DATABASE_DIALECT", // one of 'mysql' | 'mariadb' | 'postgres' | 'mssql'
+        },
+    },
 };
