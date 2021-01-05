@@ -11,12 +11,9 @@ class JoinRoom extends React.Component {
         this.state = {
             valueInput: ''
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.goToRoom = this.goToRoom.bind(this);
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({valueInput: event.target.value});
     }
 
