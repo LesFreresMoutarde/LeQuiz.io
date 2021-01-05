@@ -45,16 +45,8 @@ class AuthController extends MainController {
             return;
         }
 
-        // Generate new couple of tokens from a refresh token
 
         const response = {};
-
-        // if(!AuthController.refreshTokens.includes(inputRefreshToken)) {
-        //     response.error = 'Unknown refresh token';
-        //     this.response = response;
-        //     this.statusCode = 400;
-        //     return;
-        // }
 
         const verification = AuthController.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
         if(!verification.verified) {
@@ -597,13 +589,6 @@ class AuthController extends MainController {
         delete payload.type;
 
         payload.type = type;
-
-        /* A SUPPRIMER UNIQUEMENT POUR TEST */
-       /* payload.user =  {
-            plan : 'free'
-        };*/
-        /* FIN SUPPRESSION */
-
 
         return jwt.sign(payload, AuthController.JWT_SECRET, {
             expiresIn,

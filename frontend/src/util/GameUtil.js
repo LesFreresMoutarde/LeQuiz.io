@@ -85,7 +85,6 @@ class GameUtil {
 
         switch (type) {
             case 'qcm':
-                console.log("la reponse depuis la verif", answer)
                 isGoodAnswer = answer['is_good_answer'];
                 break;
 

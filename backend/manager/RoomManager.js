@@ -16,8 +16,6 @@ module.exports = (server) => {
 
  io.on('connection', (socket) => {
 
-     console.log('user has connected');
-
      socket.on('join', ({roomId, username, isHost}) => {
         console.log('roomId', roomId);
         console.log('pseudo', username);
@@ -58,12 +56,10 @@ module.exports = (server) => {
          const room = findRoom(roomId)[0];
 
          if (room) {
-             // console.log("le quiz pour la room suivante", room);
-             // console.log("avec la conf suivante", gameConfiguration);
+
              const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
              const quiz = await GameUtil.executeQuizQuery(quizQuery);
-             // console.log('temon quiz');
-             // Creation quiz
+
              room.game.quiz = quiz;
              room.game.quizLength = quiz.length;
              io.to(room.id).emit('quiz-sent', quiz);
@@ -75,7 +71,7 @@ module.exports = (server) => {
          const room = findRoom(roomId)[0];
 
          if (room) {
-             room.state = 'question' // inGame
+             room.state = 'question';
              socket.emit('ask-question');
          }
 
@@ -157,7 +153,6 @@ module.exports = (server) => {
 
          else player = player[0];
 
-         console.log("le nouveau joueur", player);
          return player;
      };
 
@@ -183,7 +178,6 @@ module.exports = (server) => {
         if (room.length > 0) {
             room = room[0]
             joined = playerJoinRoom(player, room);
-            //return room;
 
         } else {
 
@@ -262,14 +256,11 @@ module.exports = (server) => {
 
     const handlePlayerDisconnect = (socketId) => {
 
-        console.log('la socketId du gars a deco', socketId);
         const player = findPlayer(socketId)[0];
-        console.log("le player a deco", player);
 
         if (!player) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
         let room = findRoomByPlayer(player);
-        console.log("la room du mec", room);
 
         if (!room) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
@@ -320,7 +311,6 @@ module.exports = (server) => {
     };
 
     const deleteRoom = (room) => {
-        console.log('on va delete la room');
         let index = -1;
 
         rooms.forEach((activeRoom, i) => {
@@ -363,11 +353,7 @@ module.exports = (server) => {
 
         if (player) {
 
-            console.log("player handleplayeresult",player);
-
             const room = findRoomByPlayer(player);
-            console.log('roomScores',room.game.scores);
-            //let receivedAllAnswers = true;
 
             room.game.scores.forEach((scoreLine) => {
                 if (scoreLine.player.socketId === player.socketId) {
@@ -381,8 +367,6 @@ module.exports = (server) => {
             room.game.hasAnswered.push(player.socketId);
 
             const receivedAllAnswers = checkIfAllAnswersReceived(room);
-
-            console.log("tableau des scores", room.game.scores);
 
             if (receivedAllAnswers) {
                 room.game.quiz.shift();
