@@ -1,4 +1,5 @@
 import App from "../components/App";
+import env from "../config/env";
 
 class Util {
     static isVerbose = true; // TODO env
@@ -323,6 +324,6 @@ class Util {
 
 }
 
-Util.APP_BACKEND_URL = `${window.location.protocol}//${window.location.hostname}:3000`; // TODO ENV
+Util.APP_BACKEND_URL = env.apiUrl;
 
 export default Util;
