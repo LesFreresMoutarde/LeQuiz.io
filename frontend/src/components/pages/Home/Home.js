@@ -16,7 +16,7 @@ class Home extends React.Component {
             <>
                 <Logo height="200" width="300"/>
                 <div>
-                    <h1 className="home-title-description">Plateforme de quiz multijoueur en temps réel – Générez des quiz sur des thématiques variées, définissez les options de jeu et jouez avec vos amis</h1>
+                    <h1 className="home-title-description">Plateforme de quiz multijoueur en temps réel</h1>
                 </div>
                 <div className="home-menu">
                     <button className="homepage-button create-room-button" onClick={this.createRoom}>
