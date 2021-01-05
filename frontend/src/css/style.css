@@ -792,10 +792,12 @@ button:disabled {
 
 .player-score-info {
     padding: 20px 10px;
+    width: 100%;
 }
 
 .player-username {
     margin-right: 150px;
+    width: 100%;
 }
 
 .lobby-container {

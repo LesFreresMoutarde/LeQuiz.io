@@ -11,7 +11,7 @@ const PlayerScore = ({scoreLine, currentPlayer}) =>{
             </div>
             <div className={`player-box player-score-info player-score-info-container ${colorClass}`}>
                 <p className="player-username">{scoreLine.player.username}</p>
-                <p>{scoreLine.value}</p>
+                <p className="player-score">{scoreLine.value}</p>
             </div>
         </div>
     )
