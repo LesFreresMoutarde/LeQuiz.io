@@ -26,8 +26,6 @@ class Answer extends React.Component {
                header = {text:'Bonne réponse', colorClass: 'text-green'}
         });
 
-        // console.log('tableauxSCORES', scores);
-
         let roundInfo = `Question ${round} sur ${quizLength}`;
 
         if (round === quizLength) roundInfo = 'Partie terminée';
