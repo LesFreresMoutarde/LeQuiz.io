@@ -2,6 +2,8 @@ const GameUtil = require("../util/GameUtil");
 
 const socketEngine = require('socket.io');
 
+const env = require('../config/env');
+
 module.exports = (server) => {
 
     const rooms = [];
@@ -10,119 +12,118 @@ module.exports = (server) => {
 
     const io = socketEngine(server, {
         cors: {
-            origin: 'http://localhost',
+            origin: env.frontUrl,
         }
     });
 
- io.on('connection', (socket) => {
+    io.on('connection', (socket) => {
 
-     socket.on('join', ({roomId, username, isHost}) => {
-        console.log('roomId', roomId);
-        console.log('pseudo', username);
-        console.log('isHost ?', isHost);
-        const player = handleNewPlayer(username, socket.id);
+        socket.on('join', ({roomId, username, isHost}) => {
+            console.log('roomId', roomId);
+            console.log('pseudo', username);
+            console.log('isHost ?', isHost);
+            const player = handleNewPlayer(username, socket.id);
 
-        const {room, joined} = handleRoomJoining(roomId, isHost, player);
+            const {room, joined} = handleRoomJoining(roomId, isHost, player);
 
-        if (!joined) {
+            if (!joined) {
 
-            socket.emit('connection-failure')
+                socket.emit('connection-failure')
 
-        } else {
-            socket.join(room.id);
-            socket.emit('connection-success', {room, player});
+            } else {
+                socket.join(room.id);
+                socket.emit('connection-success', {room, player});
 
-            // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
-            io.to(room.id).emit('room-updated', room);
+                // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
+                io.to(room.id).emit('room-updated', room);
 
-            if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
-        }
+                if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
+            }
 
-     });
+        });
 
-     socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
-         io.to(socketId).emit('game-config-host', gameConfiguration);
-     });
-
-
-     socket.on('game-config-update', ({gameConfiguration, roomId}) => {
-         //TODO V2 broadcast
-         io.to(roomId).emit('game-config-updated-sent', gameConfiguration);
-     })
+        socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
+            io.to(socketId).emit('game-config-host', gameConfiguration);
+        });
 
 
-     socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
-
-         const room = findRoom(roomId)[0];
-
-         if (room) {
-
-             const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
-             const quiz = await GameUtil.executeQuizQuery(quizQuery);
-
-             room.game.quiz = quiz;
-             room.game.quizLength = quiz.length;
-             io.to(room.id).emit('quiz-sent', quiz);
-         }
-
-     });
-
-     socket.on('quiz-received', (roomId) => {
-         const room = findRoom(roomId)[0];
-
-         if (room) {
-             room.state = 'question';
-             socket.emit('ask-question');
-         }
-
-     });
-
-     socket.on('next-question', (roomId) => {
-         const room = findRoom(roomId)[0];
-
-         if (room) {
-             room.state = 'question';
-             socket.emit('ask-question')
-         }
-
-     });
-
-     socket.on('player-result', ({result}) => {
-         console.log("player-result event catch");
-         const {receivedAllAnswers, room} = handlePlayerResult(socket.id, result);
-
-         if (room) {
-             room.state = 'answer';
-
-             if (receivedAllAnswers) {
-                 const eventToEmit = getEventToEmit(room);
-                 io.to(room.id).emit(eventToEmit, room);
-             }
-         }
-     });
-
-     socket.on('game-reinit',(roomId) => {
-         const room = findRoom(roomId)[0];
-
-         if (room) reinitRoomGame(room)
-     })
-
-     socket.on('disconnect', () => {
-         console.log('deconnexion');
-
-         const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
-
-         if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
-
-         if (hasScoresToBeDisplayed) {
-             const eventToEmit = getEventToEmit(room);
-             io.to(room.id).emit(eventToEmit, room);
-         }
-
-     })
+        socket.on('game-config-update', ({gameConfiguration, roomId}) => {
+            //TODO V2 broadcast
+            io.to(roomId).emit('game-config-updated-sent', gameConfiguration);
+        })
 
 
- });
+        socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
+
+            const room = findRoom(roomId)[0];
+
+            if (room) {
+
+                const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
+                const quiz = await GameUtil.executeQuizQuery(quizQuery);
+
+                room.game.quiz = quiz;
+                room.game.quizLength = quiz.length;
+                io.to(room.id).emit('quiz-sent', quiz);
+            }
+
+        });
+
+        socket.on('quiz-received', (roomId) => {
+            const room = findRoom(roomId)[0];
+
+            if (room) {
+                room.state = 'question';
+                socket.emit('ask-question');
+            }
+
+        });
+
+        socket.on('next-question', (roomId) => {
+            const room = findRoom(roomId)[0];
+
+            if (room) {
+                room.state = 'question';
+                socket.emit('ask-question')
+            }
+
+        });
+
+        socket.on('player-result', ({result}) => {
+            console.log("player-result event catch");
+            const {receivedAllAnswers, room} = handlePlayerResult(socket.id, result);
+
+            if (room) {
+                room.state = 'answer';
+
+                if (receivedAllAnswers) {
+                    const eventToEmit = getEventToEmit(room);
+                    io.to(room.id).emit(eventToEmit, room);
+                }
+            }
+        });
+
+        socket.on('game-reinit', (roomId) => {
+            const room = findRoom(roomId)[0];
+
+            if (room) reinitRoomGame(room)
+        })
+
+        socket.on('disconnect', () => {
+            console.log('deconnexion');
+
+            const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
+
+            if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
+
+            if (hasScoresToBeDisplayed) {
+                const eventToEmit = getEventToEmit(room);
+                io.to(room.id).emit(eventToEmit, room);
+            }
+
+        })
+
+    });
 
     const reinitRoomGame = (room) => {
         room.state = 'lobby';
@@ -146,15 +147,15 @@ module.exports = (server) => {
         return 'end-game'
     };
 
-     const handleNewPlayer = (username, socketId) => {
+    const handleNewPlayer = (username, socketId) => {
         let player = findPlayer(socketId);
 
-         if (player.length === 0) player = createPlayer(username, socketId)
+        if (player.length === 0) player = createPlayer(username, socketId)
 
-         else player = player[0];
+        else player = player[0];
 
-         return player;
-     };
+        return player;
+    };
 
     const findPlayer = (socketId) => {
         return players.filter(player => player.socketId === socketId)
@@ -193,7 +194,7 @@ module.exports = (server) => {
     };
 
     const findRoom = (roomId) => {
-         return rooms.filter(room => room.id === roomId)
+        return rooms.filter(room => room.id === roomId)
     };
 
     const findRoomByPlayer = (player) => {
@@ -209,30 +210,30 @@ module.exports = (server) => {
     };
 
     const createRoom = (roomId, host) => {
-       const room = {
-           id: roomId,
-           host,
-           state: 'lobby',
-           players: [host],
-           game: {
-               quizLength: 0,
-               round: 0,
-               quiz: [],
-               scores: [
-                       {
-                           player: host,
-                           value: 0,
-                           rank: 0,
-                           lastAnswer: null,
-                       }
-               ],
-               hasAnswered: []
-           }
-       };
+        const room = {
+            id: roomId,
+            host,
+            state: 'lobby',
+            players: [host],
+            game: {
+                quizLength: 0,
+                round: 0,
+                quiz: [],
+                scores: [
+                    {
+                        player: host,
+                        value: 0,
+                        rank: 0,
+                        lastAnswer: null,
+                    }
+                ],
+                hasAnswered: []
+            }
+        };
 
-       rooms.push(room);
+        rooms.push(room);
 
-       return room;
+        return room;
     };
 
     const playerJoinRoom = (player, room) => {
@@ -271,7 +272,7 @@ module.exports = (server) => {
 
         let hasScoresToBeDisplayed = false;
 
-        if (isRoomDeletable)  {
+        if (isRoomDeletable) {
             deleteRoom(room);
             hasRoomToBeUpdated = false;
         } else {
@@ -284,13 +285,13 @@ module.exports = (server) => {
 
         deletePlayer(player);
 
-        return {hasRoomToBeUpdated, hasScoresToBeDisplayed,room};
+        return {hasRoomToBeUpdated, hasScoresToBeDisplayed, room};
     };
 
 
     const playerLeaveRoom = (player, room) => {
-       let playerIndex = -1;
-       let scoreIndex = -1;
+        let playerIndex = -1;
+        let scoreIndex = -1;
 
 
         room.game.scores.forEach((lineScore, index) => {
@@ -385,7 +386,7 @@ module.exports = (server) => {
         let receivedAllAnswers = true;
 
         room.players.forEach((player) => {
-            if(!room.game.hasAnswered.includes(player.socketId)) receivedAllAnswers = false
+            if (!room.game.hasAnswered.includes(player.socketId)) receivedAllAnswers = false
         });
 
         return receivedAllAnswers;
@@ -400,15 +401,15 @@ module.exports = (server) => {
         scores[0].rank = 1;
 
         for (let i = 1; i < scores.length; i++) {
-            scores[i].rank = i+1;
+            scores[i].rank = i + 1;
 
-            if (scores[i-1].value === scores[i].value) scores[i].rank = scores[i-1].rank;
+            if (scores[i - 1].value === scores[i].value) scores[i].rank = scores[i - 1].rank;
         }
 
         return scores;
     }
 
-     //TODO Handle socket.on('error')
+    //TODO Handle socket.on('error')
 
 
 };
