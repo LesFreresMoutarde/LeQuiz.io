@@ -94,6 +94,8 @@ class App extends React.Component {
 
         toastr.success("Vous n'êtes plus connecté");
 
+        this.redirectTo('/');
+
         return true;
     }
 
