@@ -4,6 +4,7 @@ import App from "../../App";
 import Util from "../../../util/Util";
 
 import Toastr from "toastr2";
+import BackArrow from "../../misc/BackArrow";
 const toastr = new Toastr();
 
 class Register extends React.Component {
@@ -18,6 +19,10 @@ class Register extends React.Component {
         Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
     }
 
+    goBack = () => {
+        this.props.history.goBack();
+    };
+
     render = () => {
         if(this.state.redirect) {
             return(
@@ -26,32 +31,35 @@ class Register extends React.Component {
         }
 
         return(
-            <div className="text-center">
-                <h1 className="mb">Inscription</h1>
-                <p className="mb2">Tu as déjà un compte ? <Link to="/login">Connexion</Link></p>
-                <form id="register-form" onSubmit={this.onRegisterFormSubmit}>
-                    <div className="mb3 mt3">
-                        <input className={"full-width" + (this.state.formErrors.username ? ' error' : '')} id="username-input" name="username" placeholder="Nom d'utilisateur" autoFocus autoComplete="username"/>
-                    </div>
-                    <div className="mb3">
-                        <input className={"full-width" + (this.state.formErrors.email ? ' error' : '')} id="email-input" type="email" name="email" placeholder="Adresse email" autoComplete="email"/>
-                    </div>
-                    <div className="mb3">
-                        <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="new-password"/>
-                    </div>
-                    <div className="mb3">
-                        <input className={"full-width" + (this.state.formErrors.confirmPassword ? ' error' : '')} id="confirm-password-input" type="password" name="confirmPassword" placeholder="Confirmation du mot de passe" autoComplete="new-password"/>
-                    </div>
-                    <div className="mb3 text-left">
-                        <label className="checkbox">
-                            <input type="checkbox" id="stay-logged-in-checkbox" name="stayLoggedIn"/>
-                            <span>Rester connecté</span>
-                        </label>
-                    </div>
+            <>
+                <BackArrow onClick={this.goBack}/>
+                <div className="text-center">
+                    <h1 className="mb">Inscription</h1>
+                    <p className="mb2">Tu as déjà un compte ? <Link to="/login">Connexion</Link></p>
+                    <form id="register-form" onSubmit={this.onRegisterFormSubmit}>
+                        <div className="mb3 mt3">
+                            <input className={"full-width" + (this.state.formErrors.username ? ' error' : '')} id="username-input" name="username" placeholder="Nom d'utilisateur" autoFocus autoComplete="username"/>
+                        </div>
+                        <div className="mb3">
+                            <input className={"full-width" + (this.state.formErrors.email ? ' error' : '')} id="email-input" type="email" name="email" placeholder="Adresse email" autoComplete="email"/>
+                        </div>
+                        <div className="mb3">
+                            <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="new-password"/>
+                        </div>
+                        <div className="mb3">
+                            <input className={"full-width" + (this.state.formErrors.confirmPassword ? ' error' : '')} id="confirm-password-input" type="password" name="confirmPassword" placeholder="Confirmation du mot de passe" autoComplete="new-password"/>
+                        </div>
+                        <div className="mb3 text-left">
+                            <label className="checkbox">
+                                <input type="checkbox" id="stay-logged-in-checkbox" name="stayLoggedIn"/>
+                                <span>Rester connecté</span>
+                            </label>
+                        </div>
 
-                    <button type="submit" className="button green mb3">Inscription</button>
-                </form>
-            </div>
+                        <button type="submit" className="button green mb3">Inscription</button>
+                    </form>
+                </div>
+            </>
         )
     }
 
