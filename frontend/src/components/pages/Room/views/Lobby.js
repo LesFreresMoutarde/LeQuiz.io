@@ -13,27 +13,36 @@ class Lobby extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            hover: false
-        };
+
+        this.roomCodeHoverTimeout = null;
     }
 
-    onMouseEnter = () => {
-        this.setState({hover: true});
+    onRoomCodeMouseEnter = () => {
+        const hiddenCodeMessage = document.getElementById('lobby-hidden-code-message');
+        const codeSpan = document.getElementById('lobby-room-code');
+
+        hiddenCodeMessage.classList.add('is-hover');
+        this.roomCodeHoverTimeout = setTimeout(() => {
+            codeSpan.classList.add('visible');
+            hiddenCodeMessage.classList.remove('visible');
+        }, 300);
     };
 
-    onMouseLeave = () => {
-        this.setState({hover: false});
+    onRoomCodeMouseLeave = () => {
+        const hiddenCodeMessage = document.getElementById('lobby-hidden-code-message');
+        const codeSpan = document.getElementById('lobby-room-code');
+
+        clearTimeout(this.roomCodeHoverTimeout);
+        hiddenCodeMessage.classList.remove('is-hover');
+        codeSpan.classList.remove('visible');
+        hiddenCodeMessage.classList.add('visible');
     }
 
     render() {
         const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz, changeOptions, leaveRoom } = this.props;
-        const { hover } = this.state;
 
             let displayClass = 'hidden';
             if(isHost) displayClass = 'visible';
-
-        const roomCodeText = hover ? roomData.id : 'Survolez pour afficher le code du salon';
 
         return (
             <div className="lobby-container">
@@ -68,8 +77,9 @@ class Lobby extends React.Component {
                 </div>
                 <div>
                     <p className="lobby-room-code">
-                        <span onMouseEnter={() => this.onMouseEnter()} onMouseLeave={() => this.onMouseLeave()}>
-                            {roomCodeText}
+                        <span id="lobby-hover-to-show-code" onMouseEnter={this.onRoomCodeMouseEnter} onMouseLeave={this.onRoomCodeMouseLeave}>
+                            <span id="lobby-hidden-code-message" className="visible">Survolez pour afficher le code du salon</span>
+                            <span id="lobby-room-code">{roomData.id}</span>
                         </span>
                     </p>
                 </div>
