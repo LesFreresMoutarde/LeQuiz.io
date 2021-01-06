@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').createServer(app);
 const port = 3000;
+const env = require('./config/env');
 
 const AuthController = require('./controllers/AuthController');
 require('./manager/RoomManager')(server);
@@ -12,7 +13,7 @@ const mainRouter = require('./routes/mainRouter');
 
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', env.frontUrl);
     res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     next();
