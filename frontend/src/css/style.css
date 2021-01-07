@@ -245,6 +245,10 @@ label.checkbox > input:checked + span::after {
     opacity: 1;
 }
 
+button {
+    font-family: "Lato", sans-serif;
+}
+
 button:disabled {
     opacity: 0.6;
 }
