@@ -2,6 +2,7 @@
 
 module.exports = {
     frontUrl: 'APP_FRONT_URL', // Without trailing slash, example: 'https://www.example.com'
+    jwtSecret: 'SuperSecret', // Change this in production, it is the secret signing key for JWTs
     email: {
         apiKey: 'SENDGRID_API_KEY',
     },
