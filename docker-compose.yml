@@ -41,6 +41,17 @@ services:
     command: sh -c "./scripts/start.sh"
     stdin_open: true
 
+  back-office:
+    build: ./back-office/Dockerfile
+    image: lequiz-io:back-office
+    restart: always
+    ports:
+    - 8000:80
+    volumes:
+    - ./back-office:/app
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+
   adminer:
     image: adminer:standalone
     container_name: lequiz.io-adminer
