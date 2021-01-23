@@ -40,14 +40,14 @@ class Category
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`createdAt`", type="datetimetz", nullable=false)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`updatedAt`", type="datetimetz", nullable=false)
      */
     private $updatedAt;
 
@@ -59,7 +59,7 @@ class Category
     private $customQuizzes;
 
     /**
-     * @var Question[]
+    // * @var Collection|Question[]
      *
      * @ManyToMany(targetEntity="Question", mappedBy="categories")
      */

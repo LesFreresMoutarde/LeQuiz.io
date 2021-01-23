@@ -32,7 +32,7 @@ class RefreshToken
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expirationDate", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`expirationDate`", type="datetimetz", nullable=false)
      */
     private $expirationDate;
 
@@ -40,7 +40,7 @@ class RefreshToken
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="`userId`", referencedColumnName="id")
      */
     private $user;
 

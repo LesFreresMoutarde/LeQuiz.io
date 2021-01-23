@@ -11,3 +11,5 @@ Type::overrideType('time', 'Doctrine\DBAL\Types\VarDateTimeType');
 Type::overrideType('datetime_immutable', 'Doctrine\DBAL\Types\VarDateTimeImmutableType');
 Type::overrideType('datetimetz_immutable', 'Doctrine\DBAL\Types\VarDateTimeImmutableType');
 Type::overrideType('time_immutable', 'Doctrine\DBAL\Types\VarDateTimeImmutableType');
+
+class DatetimeOverride {}

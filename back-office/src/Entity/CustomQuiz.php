@@ -88,8 +88,8 @@ class CustomQuiz
      *
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="customQuizzes")
      * @ORM\JoinTable(name="category_custom_quiz",
-     *     joinColumns={@ORM\JoinColumn(name="customQuizId", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="categoryId", referencedColumnName="id")}
+     *     joinColumns={@ORM\JoinColumn(name="`customQuizId`", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="`categoryId`", referencedColumnName="id")}
      *     )
      */
     private $categories;

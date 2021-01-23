@@ -84,14 +84,14 @@ class Question
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`createdAt`", type="datetimetz", nullable=false)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`updatedAt`", type="datetimetz", nullable=false)
      */
     private $updatedAt;
 
@@ -99,7 +99,7 @@ class Question
      * @var CustomQuiz
      *
      * @ORM\ManyToOne(targetEntity="CustomQuiz", inversedBy="questions")
-     * @ORM\JoinColumn(name="customQuizId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="`customQuizId`", referencedColumnName="id")
      */
     private $customQuiz;
 
@@ -111,8 +111,8 @@ class Question
      *
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="questions")
      * @ORM\JoinTable(name="category_question",
-     *     joinColumns={@ORM\JoinColumn(name="questionId", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="categoryId", referencedColumnName="id")}
+     *     joinColumns={@ORM\JoinColumn(name="`questionId`", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="`categoryId`", referencedColumnName="id")}
      *     )
      */
     private $categories;

@@ -16,7 +16,7 @@ class QuestionPosition
     /**
      * @var string
      *
-     * @ORM\Column(name="questionId", type="guid", nullable=false)
+     * @ORM\Column(name="`questionId`", type="guid", nullable=false)
      * @ORM\Id
 //     * @ORM\GeneratedValue(strategy="NONE") PE A UNCOMMENT
 //     * @ORM\SequenceGenerator(sequenceName="question_position_questionId_seq", allocationSize=1, initialValue=1)
@@ -33,14 +33,14 @@ class QuestionPosition
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`createdAt`", type="datetimetz", nullable=false)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`updatedAt`", type="datetimetz", nullable=false)
      */
     private $updatedAt;
 
@@ -48,7 +48,7 @@ class QuestionPosition
      * @var Question
      *
      * @ORM\OneToOne(targetEntity="Question", inversedBy="position")
-     * @ORM\JoinColumn(name="questionId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="`questionId`", referencedColumnName="id")
      */
     private $question;
 
