@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User
  *
  * @ORM\Table(
- *     name="user",
+ *     name="`user`",
  *     uniqueConstraints={
  *     @ORM\UniqueConstraint(name="user_passwordResetToken_key", columns={"passwordResetToken"}),
  *     @ORM\UniqueConstraint(name="user_username_key", columns={"username"}),
@@ -57,14 +57,14 @@ class User
     /**
      * @var string|null
      *
-     * @ORM\Column(name="passwordResetToken", type="string", length=255, nullable=true)
+     * @ORM\Column(name="`passwordResetToken`", type="string", length=255, nullable=true)
      */
     private $passwordResetToken;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="lastResetPasswordEmailSendDate", type="datetimetz", nullable=true)
+     * @ORM\Column(name="`lastResetPasswordEmailSendDate`", type="datetimetz", nullable=true)
      */
     private $lastResetPasswordEmailSendDate;
 
@@ -85,49 +85,49 @@ class User
     /**
      * @var bool
      *
-     * @ORM\Column(name="isTrustyWriter", type="boolean", nullable=false)
+     * @ORM\Column(name="`isTrustyWriter`", type="boolean", nullable=false)
      */
     private $isTrustyWriter;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="isActive", type="boolean", nullable=false)
+     * @ORM\Column(name="`isActive`", type="boolean", nullable=false)
      */
     private $isActive;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="isBanned", type="boolean", nullable=false)
+     * @ORM\Column(name="`isBanned`", type="boolean", nullable=false)
      */
     private $isBanned;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="unbanDate", type="datetimetz", nullable=true)
+     * @ORM\Column(name="`unbanDate`", type="datetimetz", nullable=true)
      */
     private $unbanDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`createdAt`", type="datetimetz", nullable=false)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
+     * @ORM\Column(name="`updatedAt`", type="datetimetz", nullable=false)
      */
     private $updatedAt;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="deletedAt", type="datetimetz", nullable=true)
+     * @ORM\Column(name="`deletedAt`", type="datetimetz", nullable=true)
      */
     private $deletedAt;
 

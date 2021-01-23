@@ -162,6 +162,4 @@ class UserReview
         return $this;
     }
 
-
-
 }
