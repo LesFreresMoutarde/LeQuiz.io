@@ -7,8 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UserReview
  *
- * @ORM\Table(name="user_review", indexes={@ORM\Index(name="user_review_reviewer_id", columns={"reviewerId"}), @ORM\Index(name="user_review_custom_quiz_id", columns={"customQuizId"}), @ORM\Index(name="user_review_status", columns={"status"})})
- * @ORM\Entity
+ * @ORM\Table(
+ *     name="user_review",
+ *     indexes={
+ *     @ORM\Index(name="user_review_reviewer_id", columns={"reviewerId"}),
+ *     @ORM\Index(name="user_review_custom_quiz_id", columns={"customQuizId"}),
+ *     @ORM\Index(name="user_review_status", columns={"status"})})
+ * @ORM\Entity(repositoryClass="App\Repository\UserReviewRepository")
  */
 class UserReview
 {
@@ -22,19 +27,19 @@ class UserReview
      */
     private $id;
 
-    /**
+   /* /**
      * @var string|null
      *
      * @ORM\Column(name="reviewerId", type="guid", nullable=true)
      */
-    private $reviewerid;
+//    private $reviewerid;
 
-    /**
+   /* /**
      * @var string
      *
      * @ORM\Column(name="customQuizId", type="guid", nullable=false)
      */
-    private $customquizid;
+//    private $customquizid;
 
     /**
      * @var string
@@ -55,34 +60,108 @@ class UserReview
      *
      * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
      */
-    private $createdat;
+    private $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
      */
-    private $updatedat;
+    private $updatedAt;
 
     /**
-     * @var \CustomQuiz
+     * @var CustomQuiz
      *
-     * @ORM\ManyToOne(targetEntity="CustomQuiz")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name=""customQuizId"", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="CustomQuiz", inversedBy="reviews")
+     * @ORM\JoinColumn(name="customQuizId", referencedColumnName="id")
      */
-    private $"customquizid";
+    private $customQuiz;
 
     /**
-     * @var \User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name=""reviewerId"", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="reviews")
+     * @ORM\JoinColumn(name="reviewerId", referencedColumnName="id")
      */
-    private $"reviewerid";
+    private $reviewer;
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCustomQuiz(): ?CustomQuiz
+    {
+        return $this->customQuiz;
+    }
+
+    public function setCustomQuiz(?CustomQuiz $customQuiz): self
+    {
+        $this->customQuiz = $customQuiz;
+
+        return $this;
+    }
+
+    public function getReviewer(): ?User
+    {
+        return $this->reviewer;
+    }
+
+    public function setReviewer(?User $reviewer): self
+    {
+        $this->reviewer = $reviewer;
+
+        return $this;
+    }
+
 
 
 }

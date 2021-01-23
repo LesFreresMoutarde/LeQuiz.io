@@ -7,8 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Subscription
  *
- * @ORM\Table(name="subscription", uniqueConstraints={@ORM\UniqueConstraint(name="subscription_reference_key", columns={"reference"})}, indexes={@ORM\Index(name="subscription_expiration_date", columns={"expirationDate"}), @ORM\Index(name="subscription_user_id", columns={"userId"})})
- * @ORM\Entity
+ * @ORM\Table(
+ *     name="subscription",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="subscription_reference_key", columns={"reference"})},
+ *     indexes={
+ *         @ORM\Index(name="subscription_expiration_date", columns={"expirationDate"}),
+ *         @ORM\Index(name="subscription_user_id", columns={"userId"})
+ *     }
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\SubscriptionRepository")
  */
 class Subscription
 {
@@ -29,50 +36,128 @@ class Subscription
      */
     private $reference;
 
-    /**
+/*    /**
      * @var string
      *
      * @ORM\Column(name="userId", type="guid", nullable=false)
      */
-    private $userid;
+    //private $userid;
+
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="startDate", type="date", nullable=false)
      */
-    private $startdate;
+    private $startDate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="expirationDate", type="date", nullable=false)
      */
-    private $expirationdate;
+    private $expirationDate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
      */
-    private $createdat;
+    private $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
      */
-    private $updatedat;
+    private $updatedAt;
 
     /**
-     * @var \User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name=""userId"", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptions")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
-    private $"userid";
+    private $user;
+
+    //private $"userid";
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getExpirationDate(): ?\DateTimeInterface
+    {
+        return $this->expirationDate;
+    }
+
+    public function setExpirationDate(\DateTimeInterface $expirationDate): self
+    {
+        $this->expirationDate = $expirationDate;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
 
 }

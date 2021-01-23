@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * RefreshToken
  *
- * @ORM\Table(name="refresh_token", indexes={@ORM\Index(name="IDX_C74F2195D6C9F383", columns={""userId""})})
- * @ORM\Entity
+ * @ORM\Table(name="refresh_token", indexes={@ORM\Index(name="IDX_C74F2195D6C9F383", columns={"userId"})})
+ * @ORM\Entity(repositoryClass="App\Repository\RefreshTokenRepository")
  */
 class RefreshToken
 {
@@ -22,29 +22,56 @@ class RefreshToken
      */
     private $token;
 
-    /**
+    /*/**
      * @var string|null
      *
      * @ORM\Column(name="userId", type="guid", nullable=true)
      */
-    private $userid;
+//    private $userid;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="expirationDate", type="datetimetz", nullable=false)
      */
-    private $expirationdate;
+    private $expirationDate;
 
     /**
-     * @var \User
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name=""userId"", referencedColumnName="id")
-     * })
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
-    private $"userid";
+    private $user;
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function getExpirationDate(): ?\DateTimeInterface
+    {
+        return $this->expirationDate;
+    }
+
+    public function setExpirationDate(\DateTimeInterface $expirationDate): self
+    {
+        $this->expirationDate = $expirationDate;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
 
 }

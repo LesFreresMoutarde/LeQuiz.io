@@ -2,13 +2,22 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * Question
  *
- * @ORM\Table(name="question", indexes={@ORM\Index(name="question_type", columns={"type"}), @ORM\Index(name="question_difficulty", columns={"difficulty"}), @ORM\Index(name="question_custom_quiz_id", columns={"customQuizId"}), @ORM\Index(name="question_status", columns={"status"})})
- * @ORM\Entity
+ * @ORM\Table(
+ *     name="question",
+ *     indexes={
+ *         @ORM\Index(name="question_type", columns={"type"}),
+ *         @ORM\Index(name="question_difficulty", columns={"difficulty"}),
+ *         @ORM\Index(name="question_custom_quiz_id", columns={"customQuizId"}),
+ *         @ORM\Index(name="question_status", columns={"status"})})
+ * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
  */
 class Question
 {
@@ -64,36 +73,220 @@ class Question
      */
     private $media;
 
+    /*
     /**
      * @var string|null
      *
      * @ORM\Column(name="customQuizId", type="guid", nullable=true)
      */
-    private $customquizid;
+//    private $customquizid;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
      */
-    private $createdat;
+    private $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
      */
-    private $updatedat;
+    private $updatedAt;
 
     /**
-     * @var \CustomQuiz
+     * @var CustomQuiz
      *
-     * @ORM\ManyToOne(targetEntity="CustomQuiz")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name=""customQuizId"", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="CustomQuiz", inversedBy="questions")
+     * @ORM\JoinColumn(name="customQuizId", referencedColumnName="id")
      */
-    private $"customquizid";
+    private $customQuiz;
+
+    //private $"customquizid";
 
 
+    /**
+     * @var Category[]
+     *
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="questions")
+     * @ORM\JoinTable(name="category_question",
+     *     joinColumns={@ORM\JoinColumn(name="questionId", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="categoryId", referencedColumnName="id")}
+     *     )
+     */
+    private $categories;
+
+
+    /**
+     * @var QuestionPosition
+     *
+     * @ORM\OneToOne(targetEntity="QuestionPosition", mappedBy="question")
+     */
+    private $position;
+
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDifficulty(): ?string
+    {
+        return $this->difficulty;
+    }
+
+    public function setDifficulty(?string $difficulty): self
+    {
+        $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getAnswer(): ?array
+    {
+        return $this->answer;
+    }
+
+    public function setAnswer(array $answer): self
+    {
+        $this->answer = $answer;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getMedia(): ?array
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?array $media): self
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCustomQuiz(): ?CustomQuiz
+    {
+        return $this->customQuiz;
+    }
+
+    public function setCustomQuiz(?CustomQuiz $customQuiz): self
+    {
+        $this->customQuiz = $customQuiz;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getPosition(): ?QuestionPosition
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?QuestionPosition $position): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($position === null && $this->position !== null) {
+            $this->position->setQuestion(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($position !== null && $position->getQuestion() !== $this) {
+            $position->setQuestion($this);
+        }
+
+        $this->position = $position;
+
+        return $this;
+    }
 }
