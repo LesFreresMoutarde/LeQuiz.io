@@ -4,6 +4,8 @@
 namespace App\Manager;
 
 
+use App\Entity\Question;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\RefreshTokenRepository;
@@ -36,12 +38,34 @@ class TestManager
 
     public function userTest()
     {
-        $users = $this->userRepository->findAll();
+        $user = new User();
+        $user->setEmail('dddtoto@makoto.fr');
+        $user->setUsername('ddd');
+        $user->setPassword('password');
+        $user->setIsBanned(false);
+        $user->setIsActive(true);
+        $user->setIsTrustyWriter(false);
+        $user->setRole('member');
+        $user->setPlan('free');
 
-        foreach ($users as $user) {
-            dump($user);
-        }
-        //die();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+        dd($user);
+//        sleep(2);
+//        $toto = $this->userRepository->findOneBy(['username' => 'ddd']);
+//        $toto->setUsername('UsernameModified');
+//        $this->entityManager->flush();
+//
+//
+//        $totoUpdate = $this->userRepository->findOneBy(['username' => 'UsernameModified']);
+//        dd($totoUpdate);
+//        $users = $this->userRepository->findAll();
+//
+//        foreach ($users as $user) {
+//            dump($user);
+//        }
+//        //die();
+//        echo 'toto';
     }
 
     public function categoryTest()
@@ -55,6 +79,7 @@ class TestManager
         foreach ($histQuest as $quest) {
             dump($quest);
         }
+        echo 'fin cat';
     }
 
 
@@ -63,6 +88,18 @@ class TestManager
         $questions = $this->questionRepository->findAll();
 
         dump($questions[0]->getCategories()[0]);
+
+        $newQuest = new Question();
+        $newQuest->setType('qcm')->setContent('Question a la con')->setStatus('approved')
+            ->setAnswer([
+                ['content' => "toto", 'is_good_answer' => false],
+                ['content' => 'momo', 'is_good_answer' => true]
+            ]);
+
+        $this->entityManager->persist($newQuest);
+        $this->entityManager->flush();
+
+        dd($newQuest);
     }
 
     public function refreshTokenTest()

@@ -20,15 +20,16 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Index(name="user_username", columns={"username"}),
  *     @ORM\Index(name="user_plan", columns={"plan"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class User
+class User extends EntityBase
 {
     /**
      * @var string
      *
      * @ORM\Column(name="id", type="guid", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\SequenceGenerator(sequenceName="user_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
@@ -109,20 +110,6 @@ class User
      * @ORM\Column(name="`unbanDate`", type="datetimetz", nullable=true)
      */
     private $unbanDate;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="`createdAt`", type="datetimetz", nullable=false)
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="`updatedAt`", type="datetimetz", nullable=false)
-     */
-    private $updatedAt;
 
     /**
      * @var \DateTime|null
@@ -293,30 +280,6 @@ class User
     public function setUnbanDate(?\DateTimeInterface $unbanDate): self
     {
         $this->unbanDate = $unbanDate;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -24,9 +24,10 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        $this->testManager->userTest();
+//        $this->testManager->userTest();
+//        $this->testManager->categoryTest();
         $this->testManager->questionTest();
-        $this->testManager->refreshTokenTest();
+      //  $this->testManager->refreshTokenTest();
         die();
 
         return $this->render('home/index.html.twig', [

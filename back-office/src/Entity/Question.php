@@ -18,15 +18,16 @@ use Doctrine\ORM\Mapping as ORM;
  *         @ORM\Index(name="question_custom_quiz_id", columns={"customQuizId"}),
  *         @ORM\Index(name="question_status", columns={"status"})})
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class Question
+class Question extends EntityBase
 {
     /**
      * @var string
      *
      * @ORM\Column(name="id", type="guid", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\SequenceGenerator(sequenceName="question_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
@@ -73,28 +74,6 @@ class Question
      */
     private $media;
 
-    /*
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="customQuizId", type="guid", nullable=true)
-     */
-//    private $customquizid;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="`createdAt`", type="datetimetz", nullable=false)
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="`updatedAt`", type="datetimetz", nullable=false)
-     */
-    private $updatedAt;
-
     /**
      * @var CustomQuiz
      *
@@ -102,9 +81,6 @@ class Question
      * @ORM\JoinColumn(name="`customQuizId`", referencedColumnName="id")
      */
     private $customQuiz;
-
-    //private $"customquizid";
-
 
     /**
      * @var Category[]
@@ -117,14 +93,12 @@ class Question
      */
     private $categories;
 
-
     /**
      * @var QuestionPosition
      *
      * @ORM\OneToOne(targetEntity="QuestionPosition", mappedBy="question")
      */
     private $position;
-
 
     public function __construct()
     {
@@ -204,30 +178,6 @@ class Question
     public function setMedia(?array $media): self
     {
         $this->media = $media;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -17,17 +17,8 @@ class RefreshToken
      *
      * @ORM\Column(name="token", type="text", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="refresh_token_token_seq", allocationSize=1, initialValue=1)
      */
     private $token;
-
-    /*/**
-     * @var string|null
-     *
-     * @ORM\Column(name="userId", type="guid", nullable=true)
-     */
-//    private $userid;
 
     /**
      * @var \DateTime

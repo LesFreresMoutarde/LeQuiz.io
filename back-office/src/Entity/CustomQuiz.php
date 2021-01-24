@@ -18,15 +18,16 @@ use Doctrine\ORM\Mapping as ORM;
  *         @ORM\Index(name="custom_quiz_reviews_requested", columns={"reviewsRequested"}),
  *         @ORM\Index(name="custom_quiz_status", columns={"status"})})
  * @ORM\Entity(repositoryClass="App\Repository\CustomQuizRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class CustomQuiz
+class CustomQuiz extends EntityBase
 {
     /**
      * @var string
      *
      * @ORM\Column(name="id", type="guid", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\SequenceGenerator(sequenceName="custom_quiz_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
@@ -37,13 +38,6 @@ class CustomQuiz
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
-
-   /* /**
-     * @var string|null
-     *
-     * @ORM\Column(name="authorId", type="guid", nullable=true)
-     */
-  //  private $authorid;
 
     /**
      * @var bool
@@ -60,28 +54,12 @@ class CustomQuiz
     private $status;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
-     */
-    private $updatedAt;
-
-    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="customQuizzes")
      * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
      */
     private $author;
-
-    //private $"authorid";
 
     /**
      * @var Category[]
@@ -93,7 +71,6 @@ class CustomQuiz
      *     )
      */
     private $categories;
-
 
     /**
      * @var Question[]
@@ -154,30 +131,6 @@ class CustomQuiz
     public function setStatus(string $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

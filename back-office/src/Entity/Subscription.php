@@ -16,15 +16,16 @@ use Doctrine\ORM\Mapping as ORM;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SubscriptionRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class Subscription
+class Subscription extends EntityBase
 {
     /**
      * @var string
      *
      * @ORM\Column(name="id", type="guid", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\SequenceGenerator(sequenceName="subscription_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
@@ -35,14 +36,6 @@ class Subscription
      * @ORM\Column(name="reference", type="string", length=255, nullable=false)
      */
     private $reference;
-
-/*    /**
-     * @var string
-     *
-     * @ORM\Column(name="userId", type="guid", nullable=false)
-     */
-    //private $userid;
-
 
     /**
      * @var \DateTime
@@ -59,28 +52,12 @@ class Subscription
     private $expirationDate;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdAt", type="datetimetz", nullable=false)
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updatedAt", type="datetimetz", nullable=false)
-     */
-    private $updatedAt;
-
-    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptions")
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private $user;
-
-    //private $"userid";
 
     public function getId(): ?string
     {
@@ -123,30 +100,6 @@ class Subscription
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -158,6 +111,5 @@ class Subscription
 
         return $this;
     }
-
 
 }

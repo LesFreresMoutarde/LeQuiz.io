@@ -1,6 +1,13 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
+        types:
+            datetime: Doctrine\DBAL\Types\VarDateTimeType
+            datetimetz: Doctrine\DBAL\Types\VarDateTimeType
+            time: Doctrine\DBAL\Types\VarDateTimeType
+            datetime_immutable: Doctrine\DBAL\Types\VarDateTimeImmutableType
+            datetimetz_immutable: Doctrine\DBAL\Types\VarDateTimeImmutableType
+            time_immutable: Doctrine\DBAL\Types\VarDateTimeImmutableType
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)

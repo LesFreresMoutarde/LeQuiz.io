@@ -7,19 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * QuestionPosition
  *
- * @ORM\Table(
- *     name="question_position", indexes={@ORM\Index(name="question_position_position", columns={"position"})})
+ * @ORM\Table(name="question_position", indexes={@ORM\Index(name="question_position_position", columns={"position"})})
  * @ORM\Entity(repositoryClass="App\Repository\QuestionPositionRepository")
  */
-class QuestionPosition
+class QuestionPosition extends EntityBase
 {
     /**
      * @var string
      *
      * @ORM\Column(name="`questionId`", type="guid", nullable=false)
      * @ORM\Id
-//     * @ORM\GeneratedValue(strategy="NONE") PE A UNCOMMENT
-//     * @ORM\SequenceGenerator(sequenceName="question_position_questionId_seq", allocationSize=1, initialValue=1)
      */
     private $questionId;
 
@@ -29,20 +26,6 @@ class QuestionPosition
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="`createdAt`", type="datetimetz", nullable=false)
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="`updatedAt`", type="datetimetz", nullable=false)
-     */
-    private $updatedAt;
 
    /**
      * @var Question
@@ -65,30 +48,6 @@ class QuestionPosition
     public function setPosition(int $position): self
     {
         $this->position = $position;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
