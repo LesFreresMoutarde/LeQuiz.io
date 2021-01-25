@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Manager\TestManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
@@ -18,11 +16,8 @@ class HomeController extends AbstractController
         $this->testManager = $testManager;
     }
 
-    /**
-     * @Route("/", name="home")
-     * @return Response
 
-     */
+    #[Route('/', name: 'home')]
     public function index(): Response
     {
 
