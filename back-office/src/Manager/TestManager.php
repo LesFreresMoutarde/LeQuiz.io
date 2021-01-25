@@ -11,6 +11,7 @@ use App\Repository\QuestionRepository;
 use App\Repository\RefreshTokenRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class TestManager
 {
@@ -19,6 +20,7 @@ class TestManager
     private $categoryRepository;
     private $questionRepository;
     private $refreshTokenRepository;
+    private $passwordEncoder;
 
     public function __construct
     (
@@ -26,7 +28,8 @@ class TestManager
         UserRepository $userRepository,
         CategoryRepository $categoryRepository,
         QuestionRepository $questionRepository,
-        RefreshTokenRepository $refreshTokenRepository
+        RefreshTokenRepository $refreshTokenRepository,
+        UserPasswordEncoderInterface $passwordEncoder
     )
     {
         $this->entityManager = $entityManager;
@@ -34,6 +37,7 @@ class TestManager
         $this->categoryRepository = $categoryRepository;
         $this->questionRepository = $questionRepository;
         $this->refreshTokenRepository = $refreshTokenRepository;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function userTest()
@@ -41,7 +45,8 @@ class TestManager
         $user = new User();
         $user->setEmail('dddtoto@makoto.fr');
         $user->setUsername('ddd');
-        $user->setPassword('password');
+        $password = $this->passwordEncoder->encodePassword($user, 'password');
+        $user->setPassword($password);
         $user->setIsBanned(false);
         $user->setIsActive(true);
         $user->setIsTrustyWriter(false);
