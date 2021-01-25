@@ -392,7 +392,6 @@ class User extends EntityBase implements UserInterface
      */
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
         return ['ROLE_'.strtoupper($this->role)];
     }
 

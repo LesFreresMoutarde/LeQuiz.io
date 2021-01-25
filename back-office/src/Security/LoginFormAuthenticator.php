@@ -99,8 +99,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         return false;
-
-        //return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
     /**
