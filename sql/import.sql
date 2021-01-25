@@ -2,6 +2,8 @@
 
 \connect "lequiz-io";
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 DROP TABLE IF EXISTS "SequelizeMeta";
 CREATE TABLE "public"."SequelizeMeta" (
     "name" character varying(255) NOT NULL,
