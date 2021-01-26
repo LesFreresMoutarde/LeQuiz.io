@@ -77,13 +77,14 @@ class TestManager
     {
         $histCat = $this->categoryRepository->findOneBy(['name' => 'Histoire']);
 
-        dump($histCat);
+        //dump($histCat);
 
         $histQuest = $histCat->getQuestions();
 
         foreach ($histQuest as $quest) {
             dump($quest);
         }
+        die();
         echo 'fin cat';
     }
 
