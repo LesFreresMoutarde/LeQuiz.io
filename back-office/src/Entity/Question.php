@@ -83,7 +83,7 @@ class Question extends EntityBase
     private $customQuiz;
 
     /**
-     * @var Category[]
+     * @var Collection|Category[]
      *
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="questions")
      * @ORM\JoinTable(name="category_question",
