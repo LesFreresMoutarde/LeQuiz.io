@@ -45,16 +45,16 @@
                 <input type="text" name="answer-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}" required/>
                 {% if answer['is_good_answer'] == true %}
                     <input type="radio" id="good-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}"
-                           value="true" checked/>
+                           value="1" checked/>
                     <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
 
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="false"/>
+                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="0"/>
                     <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
                 {% else %}
-                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="true"/>
+                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="1"/>
                     <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
 
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="false" checked/>
+                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="0" checked/>
                     <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
                {% endif %}
             </div>
@@ -64,6 +64,16 @@
         <div>
 {#        TODO RESPONSE MEDIA FILE INPUT #}
         </div>
+        <label for="question-difficulty-select">Difficulté</label>
+        <select name="question-difficulty" id="question-difficulty-select">
+            {% for difficulty in questionDifficulty %}
+                {% if question.difficulty == difficulty %}
+                    <option value="{{ difficulty }}" selected>{{ difficulty }}</option>>
+                {% else %}
+                    <option value="{{ difficulty }}">{{ difficulty }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
         <label for="question-status-select">Statut</label>
         <select name="question-status" id="question-status-select">
             {% for status in questionStatuses %}
@@ -74,7 +84,7 @@
                 {% endif %}
             {% endfor %}
         </select>
-        <input type="hidden" name="token" value="{{ csrf_token(token) }}"/>
+        <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
         <button type="submit">Envoyer</button>
     </form>
 

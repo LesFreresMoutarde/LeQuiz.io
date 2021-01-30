@@ -59,34 +59,36 @@ class QuestionController extends AbstractController
        //Form  = type, difficulty, content, answer, status, media
         // Lors de la validation, vérifier les types des values de l'user
         // Verifier si les valeurs sont correctes
-        // Verifier si la valeur est acceptable (une quest ayant plusieurs props, ne peut etre input)
+        // Verifier si la valeur est acceptable (une quest ayant plusieurs props, ne peut etre input) Bah si justement
 
         //Recupérer les types
         $questionTypes = Enums::QUESTION_TYPES;
         $questionDifficulty = Enums::QUESTION_DIFFICULTY;
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
-        $token = random_bytes(16);
 
         if ($request->getMethod() === 'POST') {
 //            dd($_POST);
             if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
 
-            if (!$this->isCsrfTokenValid('question_edit', $submittedToken)) throw new \Exception('Invalid token');
+            if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
 
-            $this->isFormValid($request->request);
-            // verifier si tous les champs sont présens
+            $this->isFormValid($request->request, $categories);
+
+            dd($_POST);
+            // Construire les 2 json (answers et
+            //TODO JSON FOR MEDIA UPLOADING
+
 
             //return $this->redirectToRoute('question_index');
         }
-//        dd($question);
+       // dd($question);
         return $this->render('question/edit.html.twig', [
             'question' => $question,
             'questionTypes' => $questionTypes,
             'questionDifficulty' => $questionDifficulty,
             'questionStatuses' => $questionStatuses,
-            'categories' => $categories,
-            'token' => $token
+            'categories' => $categories
         ]);
     }
 
@@ -102,8 +104,77 @@ class QuestionController extends AbstractController
         return $this->redirectToRoute('question_index');
     }
 
-    private function isFormValid($formData) {
+    private function generateJson() {
+        $answers = [];
+        foreach ($_POST as $formInputName => $formInput) {
+            // Si answer-n ou bool-answer-n a déjà été ajouté à $answers, throw excep
+
+            if (preg_match('/^answer-/', $formInputName)) {
+                $answerId = explode('-', $formInputName)[1];
+
+            }
+            // $answers['answers'][] =
+        }
+    }
+
+    private function isFormValid($formData, array $allCategories) {
         $this->hasFormRequiredFields();
+
+        $pickedCategories = [];
+        foreach ($_POST as $formInputName => $formInput) {
+            if (preg_match('/^cbx-/', $formInputName)) {
+//                array_push($pickedCategories, explode('-', $formInputName)[1]);
+                $pickedCategories[] = explode('-', $formInputName)[1];
+            }
+        }
+
+        $this->hasFormValidValues($allCategories, $pickedCategories);
+        // Verifier qu'il y ait au moins une bonne reponse si QCM
+        // que des bonnes reponses si input
+    }
+
+    private function hasFormValidValues(array $allCategories, array $pickedCategories) {
+
+        if (!in_array($_POST['question-type'], Enums::QUESTION_TYPES))
+            throw new \Exception('Invalid type');
+
+        if (!in_array($_POST['question-status'], Enums::STATUSES))
+            throw new \Exception('Invalid status');
+
+        if (!in_array($_POST['question-difficulty'], Enums::QUESTION_DIFFICULTY))
+            throw new \Exception('Invalid difficulty');
+
+        foreach ($pickedCategories as $category) {
+            if (!in_array($category, $allCategories)) throw new \Exception('Invalid category');
+        }
+
+        $answers = [];
+        $goodAnswersCount = 0;
+        foreach ($_POST as $formInputName => $formInput) {
+            if (preg_match('/^bool-answer-/', $formInputName)) {
+
+                $answerId = explode('-', $formInputName)[2];
+                if(!array_key_exists('answer-'.$answerId, $_POST)) throw new \Exception('Invalid Answer');
+
+                $answers[$formInputName] = $formInput;
+                if ((boolean) $formInput) $goodAnswersCount++;
+            }
+        }
+
+        switch ($_POST['question-type']) {
+            // Only one good answer
+            case Enums::QCM_QUESTION_TYPE:
+                if ($goodAnswersCount !== 1) throw new \Exception('QCM Invalid Answer');
+                break;
+
+            // Only good answers
+            case Enums::INPUT_QUESTION_TYPE:
+                if ($goodAnswersCount !== count($answers)) throw new \Exception("Input Invalid Answer");
+                break;
+
+            default:
+                break;
+        }
     }
 
     /**
@@ -112,7 +183,7 @@ class QuestionController extends AbstractController
      * @throws \Exception
      */
     private function hasFormRequiredFields() {
-        define('REQUIRED_FIELDS', array('question-content', 'question-type', 'question-status'));
+        define('REQUIRED_FIELDS', array('question-content', 'question-type', 'question-difficulty', 'question-status'));
         define('DYNAMIC_REQUIRED_FIELDS', array('cbx', 'answer', 'bool-answer'));
         $dynamicFieldsMatch = [];
         foreach (REQUIRED_FIELDS as $requiredField) {
@@ -127,6 +198,8 @@ class QuestionController extends AbstractController
                     }
             }
         }
-        if (count($dynamicFieldsMatch) !== count(DYNAMIC_REQUIRED_FIELDS)) throw new \Exception('Dynamic');
+
+        if (count($dynamicFieldsMatch) !== count(DYNAMIC_REQUIRED_FIELDS))
+            throw new \Exception('Invalid Form');
     }
 }
