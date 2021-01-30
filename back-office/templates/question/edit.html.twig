@@ -3,11 +3,80 @@
 {% block title %}Edit Question{% endblock %}
 
 {% block body %}
-    <h1>Edit Question</h1>
+{#    <h1>Edit Question</h1>#}
 
-    {{ include('question/_form.html.twig', {'button_label': 'Update'}) }}
+{#    {{ include('question/_form.html.twig', {'button_label': 'Update'}) }}#}
 
     <a href="{{ path('question_index') }}">back to list</a>
 
-    {{ include('question/_delete_form.html.twig') }}
+{#    {{ include('question/_delete_form.html.twig') }}#}
+{#    <a href={{ path('question_edit', {id: question.id})}}>Linko</a>#}
+    <form action='{{ path('question_edit', {id: question.id})}}' method="post">
+{#        Form  = type, difficulty, content, answer, status, media#}
+{#        Lors de la validation, vérifier les types des values de l'user#}
+{#        Verifier si les valeurs sont correctes#}
+{#        Verifier si la valeur est acceptable (une quest ayant plusieurs props, ne peut etre input)#}
+        <label for="question-content">Question :</label>
+        <textarea id="question-content" name="question-content" required>{{ question.content }}</textarea>
+        <label for="question-type-select">Type</label>
+        <select name="question-type" id="question-type-select" required>
+            {% for type in questionTypes %}
+                {% if question.type == type %}
+                    <option value="{{ type }}" selected>{{ type }}</option>
+                {% else %}
+                    <option value="{{ type }}">{{ type }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <div>
+            {% for category in categories %}
+                {% if category.name in question.categories %}
+                    <input type="checkbox" id="cbx-{{ category }}" name="cbx-{{ category }}" checked>
+                {% else %}
+                    <input type="checkbox" id="cbx-{{ category }}" name="cbx-{{ category }}">
+                {% endif %}
+                <label for="cbx-{{ category }}">{{ category }}</label>
+            {% endfor %}
+        </div>
+        {#      TODO  Answer #}
+        <p>Réponses</p>
+        {% for answer in question.answer['answers'] %}
+            <div>
+                <input type="text" name="answer-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}" required/>
+                {% if answer['is_good_answer'] == true %}
+                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}"
+                           value="true" checked/>
+                    <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
+
+                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="false"/>
+                    <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
+                {% else %}
+                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="true"/>
+                    <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
+
+                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="false" checked/>
+                    <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
+               {% endif %}
+            </div>
+        {% endfor %}
+        <label for="additional-response-info">Information supplémentaire</label>
+        <textarea name="additional-response-info" id="additional-response-info">{{ question.answer['additional']['responseMedia']['info'] ?? '' }}</textarea>
+        <div>
+{#        TODO RESPONSE MEDIA FILE INPUT #}
+        </div>
+        <label for="question-status-select">Statut</label>
+        <select name="question-status" id="question-status-select">
+            {% for status in questionStatuses %}
+                {% if question.status == status %}
+                    <option value="{{ status }}" selected>{{ status }}</option>>
+                {% else %}
+                    <option value="{{ status }}">{{ status }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="hidden" name="token" value="{{ csrf_token(token) }}"/>
+        <button type="submit">Envoyer</button>
+    </form>
+
+
 {% endblock %}

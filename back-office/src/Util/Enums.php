@@ -23,6 +23,16 @@ class Enums
 
     public const QUESTION_TYPES = [self::QCM_QUESTION_TYPE, self::INPUT_QUESTION_TYPE];
 
+    public const EASY_QUESTION_DIFFICULTY = 'easy';
+    public const MEDIUM_QUESTION_DIFFICULTY = 'medium';
+    public const HARD_QUESTION_DIFFICULTY = 'hard';
+
+    public const QUESTION_DIFFICULTY = [
+        self::EASY_QUESTION_DIFFICULTY,
+        self::MEDIUM_QUESTION_DIFFICULTY,
+        self::HARD_QUESTION_DIFFICULTY
+    ];
+
     public const APPROVED_STATUS = 'approved';
     public const PENDING_STATUS = 'pending';
     public const DISAPPROVED_STATUS = 'disapproved';
