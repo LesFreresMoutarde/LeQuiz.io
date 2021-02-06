@@ -75,9 +75,10 @@ class QuestionController extends AbstractController
 
             $this->isFormValid($request->request, $categories);
 
-            dd($_POST);
+//            dd($_POST);
             // Construire les 2 json (answers et
             //TODO JSON FOR MEDIA UPLOADING
+            $this->generateJson();
 
 
             //return $this->redirectToRoute('question_index');
@@ -105,16 +106,40 @@ class QuestionController extends AbstractController
     }
 
     private function generateJson() {
-        $answers = [];
+        $answers = ['answers' => [], 'additional' => []];
+//        $answers['answers'] = [];
+
         foreach ($_POST as $formInputName => $formInput) {
-            // Si answer-n ou bool-answer-n a déjà été ajouté à $answers, throw excep
 
             if (preg_match('/^answer-/', $formInputName)) {
-                $answerId = explode('-', $formInputName)[1];
 
+                foreach ($answers['answers'] as $answer) {
+                    if ($answer['content'] === $formInput) throw new \Exception('Invalid JSON');
+                }
+
+                $answerId = explode('-', $formInputName)[1];
+                
+                $answers['answers'][] = [
+                    'content' => $formInput,
+                    'is_good_answer' => (boolean) $_POST['bool-answer-'.$answerId]
+                ];
             }
-            // $answers['answers'][] =
+
+            if (preg_match('/^additional-/', $formInputName)) {
+                dd(lcfirst(str_replace('-', '', ucwords($formInputName, '-'))));
+                $fieldInfo = explode('-', $formInputName);
+                dd($fieldInfo);
+                //$answers[$fieldInfo]
+            }
         }
+
+        dd(count($answers['additional'])); // ,Si additionnal = 0, le degagez
+        dd($answers);
+    }
+
+    private function generate(array $dataToTransform)
+    {
+
     }
 
     private function isFormValid($formData, array $allCategories) {
@@ -123,14 +148,11 @@ class QuestionController extends AbstractController
         $pickedCategories = [];
         foreach ($_POST as $formInputName => $formInput) {
             if (preg_match('/^cbx-/', $formInputName)) {
-//                array_push($pickedCategories, explode('-', $formInputName)[1]);
                 $pickedCategories[] = explode('-', $formInputName)[1];
             }
         }
 
         $this->hasFormValidValues($allCategories, $pickedCategories);
-        // Verifier qu'il y ait au moins une bonne reponse si QCM
-        // que des bonnes reponses si input
     }
 
     private function hasFormValidValues(array $allCategories, array $pickedCategories) {
@@ -164,7 +186,7 @@ class QuestionController extends AbstractController
         switch ($_POST['question-type']) {
             // Only one good answer
             case Enums::QCM_QUESTION_TYPE:
-                if ($goodAnswersCount !== 1) throw new \Exception('QCM Invalid Answer');
+                if ($goodAnswersCount !== 1 || count($answers) !== 4) throw new \Exception('QCM Invalid Answer');
                 break;
 
             // Only good answers
