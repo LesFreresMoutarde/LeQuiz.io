@@ -80,6 +80,8 @@ class QuestionController extends AbstractController
             //TODO JSON FOR MEDIA UPLOADING
             $this->generateJson();
 
+//            $answersJson = $this->generateJsonFromForm($_POST, ['answers', 'additional'], ['answers-content-*' => 'answers-is_good_answer-*']);
+
 
             //return $this->redirectToRoute('question_index');
         }
@@ -105,42 +107,51 @@ class QuestionController extends AbstractController
         return $this->redirectToRoute('question_index');
     }
 
-    private function generateJson() {
-        $answers = ['answers' => [], 'additional' => []];
-//        $answers['answers'] = [];
+
+    private function hasMultipleFields(string $formInput)
+    {
+        $parsedFormInput = explode('-',$formInput);
+
+        return is_numeric($parsedFormInput[count($parsedFormInput) - 1]);
+    }
+
+    private function generateAnswersJson() {
+        $answers = ['answers' => []];
 
         foreach ($_POST as $formInputName => $formInput) {
 
-            if (preg_match('/^answer-/', $formInputName)) {
+            $parsedFormInput = explode('-', $formInputName);
+
+            if (preg_match('/^answers-content/', $formInputName)) {
 
                 foreach ($answers['answers'] as $answer) {
-                    if ($answer['content'] === $formInput) throw new \Exception('Invalid JSON');
+                    if ($answer['content'] === $formInput) throw new \Exception('Value not unique');
                 }
 
-                $answerId = explode('-', $formInputName)[1];
-                
+//                $parsedFormInput = explode('-', $formInputName);
+
+                $answerId = $parsedFormInput[count($parsedFormInput) - 1];
+
                 $answers['answers'][] = [
                     'content' => $formInput,
-                    'is_good_answer' => (boolean) $_POST['bool-answer-'.$answerId]
+                    'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
                 ];
             }
 
             if (preg_match('/^additional-/', $formInputName)) {
-                dd(lcfirst(str_replace('-', '', ucwords($formInputName, '-'))));
-                $fieldInfo = explode('-', $formInputName);
-                dd($fieldInfo);
-                //$answers[$fieldInfo]
+
+                list($fistKey, $midKey, $lastKey) = $parsedFormInput;
+
+                if ($formInput) $answers[$fistKey][$midKey][$lastKey] = $formInput;
             }
         }
 
-        dd(count($answers['additional'])); // ,Si additionnal = 0, le degagez
-        dd($answers);
+//        dd(count($answers['additional'])); // ,Si additionnal = 0, le degagez
+        dump($answers);
+        dd(json_encode($answers));
     }
 
-    private function generate(array $dataToTransform)
-    {
 
-    }
 
     private function isFormValid($formData, array $allCategories) {
         $this->hasFormRequiredFields();
@@ -173,10 +184,10 @@ class QuestionController extends AbstractController
         $answers = [];
         $goodAnswersCount = 0;
         foreach ($_POST as $formInputName => $formInput) {
-            if (preg_match('/^bool-answer-/', $formInputName)) {
+            if (preg_match('/^answers-is_good_answer-/', $formInputName)) {
 
                 $answerId = explode('-', $formInputName)[2];
-                if(!array_key_exists('answer-'.$answerId, $_POST)) throw new \Exception('Invalid Answer');
+                if(!array_key_exists('answers-content-'.$answerId, $_POST)) throw new \Exception('Invalid Answer');
 
                 $answers[$formInputName] = $formInput;
                 if ((boolean) $formInput) $goodAnswersCount++;
@@ -206,7 +217,7 @@ class QuestionController extends AbstractController
      */
     private function hasFormRequiredFields() {
         define('REQUIRED_FIELDS', array('question-content', 'question-type', 'question-difficulty', 'question-status'));
-        define('DYNAMIC_REQUIRED_FIELDS', array('cbx', 'answer', 'bool-answer'));
+        define('DYNAMIC_REQUIRED_FIELDS', array('cbx', 'answers-content', 'answers-is_good_answer'));
         $dynamicFieldsMatch = [];
         foreach (REQUIRED_FIELDS as $requiredField) {
             if (!array_key_exists($requiredField, $_POST)) throw new \Exception('Invalid Form');

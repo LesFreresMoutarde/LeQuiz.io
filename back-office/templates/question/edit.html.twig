@@ -42,25 +42,27 @@
         <p>Réponses</p>
         {% for answer in question.answer['answers'] %}
             <div>
-                <input type="text" name="answer-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}" required/>
+                <input type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}" required/>
                 {% if answer['is_good_answer'] == true %}
-                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}"
+                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}"
                            value="1" checked/>
                     <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
 
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="0"/>
+                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="0"/>
                     <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
                 {% else %}
-                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="1"/>
+                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="1"/>
                     <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
 
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="bool-answer-{{ loop.index }}" value="0" checked/>
+                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="0" checked/>
                     <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
                {% endif %}
             </div>
         {% endfor %}
-        <label for="additional-response-info">Information supplémentaire</label>
+        <label for="additional-response_media-info">Information supplémentaire</label>
         <textarea name="additional-response_media-info" id="additional-response_media-info">{{ question.answer['additional']['responseMedia']['info'] ?? '' }}</textarea>
+{#        <input type="hidden"  name="additional-response_media-url" value="http://uneimage.com/toto.jpg">#}
+{#        <input type="hidden"  name="additional-nothing-value" value="toto">#}
         <div>
 {#        TODO RESPONSE MEDIA FILE INPUT #}
         </div>
