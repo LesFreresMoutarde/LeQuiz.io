@@ -67,32 +67,36 @@ class QuestionController extends AbstractController
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
 
-        if ($request->getMethod() === 'POST') {
-//            dd($_POST);
-            if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
+        try {
 
-            if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
+            if ($request->getMethod() === 'POST') {
+            dd($_POST);
+                if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
 
-            $this->isFormValid($request->request, $categories);
+                if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
 
-//            dd($_POST);
-            // Construire les 2 json (answers et
-            //TODO JSON FOR MEDIA UPLOADING
-            $this->generateJson();
+                $this->isFormValid($request->request, $categories);
 
-//            $answersJson = $this->generateJsonFromForm($_POST, ['answers', 'additional'], ['answers-content-*' => 'answers-is_good_answer-*']);
+                // Construire les 2 json (answers et
+                //TODO JSON FOR MEDIA UPLOADING
 
+                $answersJson = $this->generateAnswersJson();
+                dd($answersJson);
 
-            //return $this->redirectToRoute('question_index');
+                //return $this->redirectToRoute('question_index');
+            }
+            // dd($question);
+            return $this->render('question/edit.html.twig', [
+                'question' => $question,
+                'questionTypes' => $questionTypes,
+                'questionDifficulty' => $questionDifficulty,
+                'questionStatuses' => $questionStatuses,
+                'categories' => $categories
+            ]);
+        } catch (\Exception $e) {
+            dump(e);
         }
-       // dd($question);
-        return $this->render('question/edit.html.twig', [
-            'question' => $question,
-            'questionTypes' => $questionTypes,
-            'questionDifficulty' => $questionDifficulty,
-            'questionStatuses' => $questionStatuses,
-            'categories' => $categories
-        ]);
+
     }
 
     #[Route('/{id}', name: 'question_delete', methods: ['DELETE'])]
@@ -146,9 +150,8 @@ class QuestionController extends AbstractController
             }
         }
 
-//        dd(count($answers['additional'])); // ,Si additionnal = 0, le degagez
-        dump($answers);
-        dd(json_encode($answers));
+        return json_encode($answers);
+
     }
 
 
