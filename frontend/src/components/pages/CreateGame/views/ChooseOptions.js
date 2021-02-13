@@ -49,12 +49,14 @@ export default class ChooseOptions extends React.Component {
                      questionType.checked = true;
                 });
 
+                console.log('questionTypes', questionTypes);
+
                 if (gameConfiguration.questionTypes.length > 0) {
 
-                    const pickedQuestionTypes = gameConfiguration.questionTypes.map(questionType => questionType.type);
+                    const pickedQuestionTypes = gameConfiguration.questionTypes.map(questionType => questionType.name);
 
                     questionTypes.forEach(questionType => {
-                        if (!pickedQuestionTypes.includes(questionType.type))
+                        if (!pickedQuestionTypes.includes(questionType.name))
                             questionType.checked = false;
                     });
 
@@ -81,13 +83,13 @@ export default class ChooseOptions extends React.Component {
     pickQuestionType = (questionTypePicked) => {
         try {
             const { questionTypes } = this.state;
-            const questionTypesLabel = questionTypes.map(questionType => (questionType.type));
+            const questionTypesLabel = questionTypes.map(questionType => (questionType.name));
 
-            if (!questionTypesLabel.includes(questionTypePicked.type))
+            if (!questionTypesLabel.includes(questionTypePicked.name))
                 throw new Error('Invalid Question Type');
 
             questionTypes.forEach(questionType => {
-                if (questionType.type === questionTypePicked.type) questionType.checked = questionTypePicked.checked;
+                if (questionType.name === questionTypePicked.name) questionType.checked = questionTypePicked.checked;
             });
 
             this.setState({questionTypes});

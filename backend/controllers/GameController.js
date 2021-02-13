@@ -175,7 +175,8 @@ class GameController extends MainController {
 
     getQuestionTypes = async (categories) => {
 
-        return await db.sequelize.query(`SELECT "question_type"."name", "question_type"."label", COUNT(*) as "nbQuestions"
+        return await db.sequelize.query(`SELECT "question_type"."name", "question_type"."label",
+            "question_type"."id", COUNT(*) as "nbQuestions"
             FROM "question_type" 
             INNER JOIN "question_type_question" ON "question_type"."id" = "question_type_question"."questionTypeId"
             INNER JOIN "question" ON "question"."id" = "question_type_question"."questionId"
@@ -183,7 +184,7 @@ class GameController extends MainController {
             INNER JOIN "category" ON "category"."id" = "category_question"."categoryId"
             WHERE "category_question"."categoryId" IN (:categories)
             AND "question"."status" = :status
-            GROUP BY "question_type"."name", "question_type"."label"
+            GROUP BY "question_type"."name", "question_type"."label", "question_type"."id"
             ORDER BY "question_type"."label";`,
             {
                 replacements: {
@@ -192,19 +193,6 @@ class GameController extends MainController {
                 },
                 type: db.sequelize.QueryTypes.SELECT
             });
-
-        //  return await db.sequelize.query(`SELECT "question"."type", COUNT(*) as "nbQuestions" FROM "question"
-        //     INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
-        //     WHERE "category_question"."categoryId" IN (:categories)
-        //     AND "question"."status" = :status
-        //     GROUP BY "question"."type"`,
-        //     {
-        //         replacements: {
-        //             categories: categories,
-        //             status: db.Question.STATUS_APPROVED
-        //         },
-        //         type: db.sequelize.QueryTypes.SELECT
-        // });
 
     };
 

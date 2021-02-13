@@ -10,7 +10,9 @@ const QuestionTypes = ({questionTypes, pickQuestionType}) => {
                         return(
                             <div key={index}>
                                 <QuestionType pickQuestionType={pickQuestionType}
-                                              type={questionType.type} checked={questionType.checked}/>
+                                              name={questionType.name}
+                                              label={questionType.label}
+                                              checked={questionType.checked}/>
                             </div>
                         )
                     }
