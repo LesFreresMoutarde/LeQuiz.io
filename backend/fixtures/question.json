@@ -37,7 +37,6 @@
         "url": "http://example.com/calculatrice.png"
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
@@ -70,7 +69,6 @@
 
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
@@ -103,7 +101,6 @@
 
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
@@ -143,7 +140,6 @@
 
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
@@ -176,7 +172,6 @@
 
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
@@ -209,7 +204,6 @@
 
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
@@ -242,7 +236,6 @@
 
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
@@ -282,13 +275,16 @@
 
       },
       "categories": [{"name": "Histoire"}]
-
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [
+        {
+          "name": "qcm"
+        }
+      ],
       "difficulty": null,
       "content": "Qui fut vainqueur de la Guerre de Troie, conflit légendaire de la mythologie grecque ?",
       "status": "approved",
@@ -298,25 +294,29 @@
           {
             "is_good_answer": false,
             "content": "Sophocle"
-          },{
+          },
+          {
             "is_good_answer": false,
             "content": "Ajax"
           },
           {
             "is_good_answer": true,
             "content": "Ulysse"
-          },{
+          },
+          {
             "is_good_answer": false,
             "content": "Arkantos"
           }
         ]
       },
       "media": {
-
-      }
-
-    },
-    "categories": [{"name": "Histoire"}]
+      },
+      "categories": [
+        {
+          "name": "Histoire"
+        }
+      ]
+    }
   },
   {
     "model": "Question",
