@@ -61,10 +61,6 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             defaultValue: DataTypes.UUIDV4
         },
-        type: {
-            type: DataTypes.STRING(40),
-            allowNull: false,
-        },
         difficulty: {
             type: DataTypes.STRING(30),
         },

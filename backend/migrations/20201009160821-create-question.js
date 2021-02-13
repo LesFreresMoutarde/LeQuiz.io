@@ -9,11 +9,6 @@ module.exports = {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4
             },
-            //TODO REMOVE TYPE COLUMN
-            type: {
-                type: Sequelize.STRING(40),
-                allowNull: false
-            },
             difficulty: {
                 type: Sequelize.STRING(30),
             },

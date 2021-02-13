@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'questions'
             })
         }
-    };
+    }
     QuestionType.init({
         id: {
             type: DataTypes.UUID,
@@ -27,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         name: {
             type: DataTypes.STRING(50),
+            unique: true,
+            allowNull: false
+        },
+        label: {
+            type: DataTypes.STRING(80),
             unique: true,
             allowNull: false
         }
