@@ -52,6 +52,12 @@ services:
     environment:
       WEB_DOCUMENT_ROOT: /app/public
 
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+
   adminer:
     image: adminer:standalone
     container_name: lequiz.io-adminer
