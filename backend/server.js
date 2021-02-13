@@ -30,7 +30,6 @@ app.all('*', (req, res, next) => {
 
     const excludedUrls = [ // The URLs for which the access token is not required
         '/auth/access-token',
-        '/game/options'
     ];
 
     if(excludedUrls.includes(req.url.split('?')[0])) {
