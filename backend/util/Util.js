@@ -21,14 +21,7 @@ class Util {
         FROM_NAME: 'LeQuiz.io',
         FROM_NOREPLY_ADDRESS: 'noreply@lequiz.io',
 
-        transport: nodemailer.createTransport({
-            host: env.email.host,
-            port: env.email.port,
-            auth: {
-                user: env.email.user,
-                pass: env.email.password,
-            },
-        }),
+        transport: nodemailer.createTransport(env.email),
 
         /**
          * @param {string} email
@@ -77,10 +70,7 @@ class Util {
          * @returns {Promise}
          */
         sendEmailFromNoreply: async(message = {}) => {
-            message.from = {
-                email: Util.Email.FROM_NOREPLY_ADDRESS,
-                name: Util.Email.FROM_NAME,
-            }
+            message.from = `"${Util.Email.FROM_NAME}" <${Util.Email.FROM_NOREPLY_ADDRESS}>`;
 
             return await Util.Email.sendEmail(message);
         },
