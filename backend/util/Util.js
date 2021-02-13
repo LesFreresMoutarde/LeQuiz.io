@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 // const sendgrid = require('@sendgrid/mail');
 const env = require('../config/env');
 
-sendgrid.setApiKey(env.email.apiKey);
+// sendgrid.setApiKey(env.email.apiKey);
 
 class Util {
     static Password = {
@@ -55,7 +55,7 @@ class Util {
          */
         sendEmail: (message = {}) => {
             return new Promise((resolve, reject) => {
-                Util.Email.transport.sendEmail(message, (error, info) => {
+                Util.Email.transport.sendMail(message, (error, info) => {
                     if (error) {
                         reject(error);
                     }
