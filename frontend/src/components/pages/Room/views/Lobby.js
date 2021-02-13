@@ -17,8 +17,6 @@ class Lobby extends React.Component {
         super(props);
 
         this.roomCodeHoverTimeout = null;
-
-        console.log("gameConfig", Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key));
     }
 
     onRoomCodeMouseEnter = () => {
