@@ -1,9 +1,6 @@
 const argon2 = require('argon2');
 const nodemailer = require('nodemailer');
-// const sendgrid = require('@sendgrid/mail');
 const env = require('../config/env');
-
-// sendgrid.setApiKey(env.email.apiKey);
 
 class Util {
     static Password = {
