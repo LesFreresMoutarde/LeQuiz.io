@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Category
@@ -40,14 +39,14 @@ class Category extends EntityBase
     /**
      * @var CustomQuiz[]
      *
-     * @ManyToMany(targetEntity="CustomQuiz", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="CustomQuiz", mappedBy="categories")
      */
     private $customQuizzes;
 
     /**
      * @var Question[]
      *
-     * @ManyToMany(targetEntity="Question", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="Question", mappedBy="categories")
      */
     private $questions;
 
