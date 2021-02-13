@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
             this.belongsToMany(models.QuestionType, {
                 foreignKey: 'questionId',
                 through: 'question_type_question',
-                as: 'questionTypes'
+                as: 'types'
             });
 
             this.belongsTo(models.CustomQuiz, {
@@ -91,7 +91,7 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Question',
         tableName: 'question',
         indexes: [{
-            fields: ['type', 'difficulty', 'status', 'customQuizId']
+            fields: ['difficulty', 'status', 'customQuizId']
         }]
     });
     return Question;

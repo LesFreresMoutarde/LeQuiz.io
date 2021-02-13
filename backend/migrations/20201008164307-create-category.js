@@ -23,7 +23,6 @@ module.exports = {
                 type: Sequelize.DATE,
             }
         });
-        await queryInterface.addIndex('category', ['name']);
     },
     down: async (queryInterface, Sequelize) => {
         await queryInterface.dropTable('category');

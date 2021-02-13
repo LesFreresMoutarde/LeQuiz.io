@@ -23,7 +23,6 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    await queryInterface.addIndex('question_type', ['name']);
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('question_type');

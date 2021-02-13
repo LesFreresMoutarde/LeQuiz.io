@@ -40,9 +40,6 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'Category',
         tableName: 'category',
-        indexes: [{
-            fields: ['name']
-        }]
     });
     return Category;
 };

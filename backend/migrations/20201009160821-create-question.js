@@ -9,6 +9,7 @@ module.exports = {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4
             },
+            //TODO REMOVE TYPE COLUMN
             type: {
                 type: Sequelize.STRING(40),
                 allowNull: false
@@ -45,7 +46,7 @@ module.exports = {
                 type: Sequelize.DATE,
             }
         });
-        await queryInterface.addIndex('question', ['type']);
+        // await queryInterface.addIndex('question', ['type']);
         await queryInterface.addIndex('question', ['difficulty']);
         await queryInterface.addIndex('question', ['status']);
         await queryInterface.addIndex('question', ['customQuizId']);

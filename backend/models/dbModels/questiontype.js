@@ -34,9 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'QuestionType',
         tableName: 'question_type',
-        indexes: [{
-            fields: ['name']
-        }]
     });
     return QuestionType;
 };
