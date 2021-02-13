@@ -41,7 +41,6 @@ module.exports = {
                 type: Sequelize.DATE,
             }
         });
-        // await queryInterface.addIndex('question', ['type']);
         await queryInterface.addIndex('question', ['difficulty']);
         await queryInterface.addIndex('question', ['status']);
         await queryInterface.addIndex('question', ['customQuizId']);
