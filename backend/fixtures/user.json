@@ -4,7 +4,7 @@
     "data": {
       "username": "user1",
       "email": "user1@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "member",
       "isActive": true,
@@ -17,7 +17,7 @@
     "data": {
       "username": "user2",
       "email": "user2@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "member",
       "isActive": true,
@@ -30,7 +30,7 @@
     "data": {
       "username": "user3",
       "email": "user3@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "member",
       "isActive": true,
@@ -43,7 +43,7 @@
     "data": {
       "username": "user4",
       "email": "user4@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "vip",
       "role": "member",
       "isActive": true,
@@ -56,7 +56,7 @@
     "data": {
       "username": "user5",
       "email": "user5@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "premium",
       "role": "member",
       "isActive": true,
@@ -69,7 +69,7 @@
     "data": {
       "username": "user6",
       "email": "user6@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "member",
       "isActive": false,
@@ -82,7 +82,7 @@
     "data": {
       "username": "user7",
       "email": "user7@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "member",
       "isActive": false,
@@ -95,7 +95,7 @@
     "data": {
       "username": "user8",
       "email": "user8@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "member",
       "isActive": true,
@@ -108,7 +108,7 @@
     "data": {
       "username": "user9",
       "email": "user9@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "member",
       "isActive": true,
@@ -121,7 +121,7 @@
     "data": {
       "username": "reviewer1",
       "email": "reviewer1@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "free",
       "role": "reviewer",
       "isActive": true,
@@ -134,7 +134,7 @@
     "data": {
       "username": "reviewer2",
       "email": "reviewer2@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "vip",
       "role": "reviewer",
       "isActive": true,
@@ -147,7 +147,7 @@
     "data": {
       "username": "admin1",
       "email": "admin1@lequiz.com",
-      "password": "password",
+      "password" : "$argon2id$v=19$m=16,t=2,p=1$UWp5MGpEb0c2VEMweU5lZg$GH9BZVXJ5clwStvOmRoKdA",
       "plan": "vip",
       "role": "admin",
       "isActive": true,
