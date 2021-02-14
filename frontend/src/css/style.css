@@ -902,7 +902,6 @@ button:disabled {
 }
 
 .lobby-value {
-    text-transform: capitalize;
     text-align: center;
 }
 

@@ -9,10 +9,6 @@ module.exports = {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4
             },
-            type: {
-                type: Sequelize.STRING(40),
-                allowNull: false
-            },
             difficulty: {
                 type: Sequelize.STRING(30),
             },
@@ -45,7 +41,6 @@ module.exports = {
                 type: Sequelize.DATE,
             }
         });
-        await queryInterface.addIndex('question', ['type']);
         await queryInterface.addIndex('question', ['difficulty']);
         await queryInterface.addIndex('question', ['status']);
         await queryInterface.addIndex('question', ['customQuizId']);

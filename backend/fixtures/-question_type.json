@@ -1,0 +1,16 @@
+[
+  {
+    "model": "QuestionType",
+    "data": {
+      "name": "qcm",
+      "label": "QCM"
+    }
+  },
+  {
+    "model": "QuestionType",
+    "data": {
+      "name": "input",
+      "label": "Réponse libre"
+    }
+  }
+]

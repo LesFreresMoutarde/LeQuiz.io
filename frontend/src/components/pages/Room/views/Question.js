@@ -13,7 +13,7 @@ class Question extends React.Component {
     }
 
     render() {
-        const {content, type, round, category, answer} = this.props.currentQuestion;
+        const {content, type, round, category, answer, typeLabel} = this.props.currentQuestion;
         const { submitAnswer, timeLeft, questionInputDisabled, leaveRoom } = this.props;
         switch (type) {
             case 'qcm':
@@ -43,7 +43,7 @@ class Question extends React.Component {
                             <div className="question-screen-right">
                                 <div className="question-header-info">
                                     <p className={`question-header-info-box ${this.qcmAnswersColors[0]}`}>{category}</p>
-                                    <p className={`question-header-info-box ${this.qcmAnswersColors[1]}`}>{type}</p>
+                                    <p className={`question-header-info-box ${this.qcmAnswersColors[1]}`}>{typeLabel}</p>
                                 </div>
                             </div>
                     </div>);
