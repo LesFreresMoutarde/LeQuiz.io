@@ -13,7 +13,10 @@
             </tr>
             <tr>
                 <th>Type</th>
-                <td>{{ question.type }}</td>
+                <td>{% for type in question.types %}
+                        {{ type }}
+                    {% endfor %}
+                </td>
             </tr>
             <tr>
                 <th>Difficulty</th>

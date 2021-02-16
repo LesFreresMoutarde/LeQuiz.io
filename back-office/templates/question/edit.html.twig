@@ -19,23 +19,30 @@
         <label for="question-content">Question :</label>
         <textarea id="question-content" name="question-content" required>{{ question.content }}</textarea>
         <label for="question-type-select">Type</label>
-        <select name="question-type" id="question-type-select" required>
+{#        <select name="question-type" id="question-type-select" required>#}
             {% for type in questionTypes %}
-                {% if question.type == type %}
-                    <option value="{{ type }}" selected>{{ type }}</option>
+{#                TODO VERIFIER LA PRESENCE DU TYPE DANS LE TABLEAU DE TYPE DE LA QUESTION#}
+{#                {% if question.type == type.name %}#}
+                {% if type.name in question.types %}
+{#                    <option value="{{ type.name }}" selected>{{ type }}</option>#}
+                    <input type="checkbox" id="cbx-type-{{ type.name }}"
+                           name="cbx-type-{{ type.name }}" value="{{ type.name }}" checked>
                 {% else %}
-                    <option value="{{ type }}">{{ type }}</option>
+{#                    <option value="{{ type.name }}">{{ type }}</option>#}
+                    <input type="checkbox" id="cbx-type-{{ type.name }}"
+                           name="cbx-type-{{ type.name }}" value="{{ type.name }}">
                 {% endif %}
+                <label for="cbx-type-{{ type.name }}">{{ type }}</label>
             {% endfor %}
         </select>
         <div>
             {% for category in categories %}
                 {% if category.name in question.categories %}
-                    <input type="checkbox" id="cbx-{{ category }}" name="cbx-{{ category }}" checked>
+                    <input type="checkbox" id="cbx-category-{{ category }}" name="cbx-category-{{ category }}" checked>
                 {% else %}
-                    <input type="checkbox" id="cbx-{{ category }}" name="cbx-{{ category }}">
+                    <input type="checkbox" id="cbx-category-{{ category }}" name="cbx-category-{{ category }}">
                 {% endif %}
-                <label for="cbx-{{ category }}">{{ category }}</label>
+                <label for="cbx-category-{{ category }}">{{ category }}</label>
             {% endfor %}
         </div>
         {#      TODO  Answer #}

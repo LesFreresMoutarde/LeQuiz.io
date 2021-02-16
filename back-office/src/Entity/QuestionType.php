@@ -2,19 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * QuestionType
  *
- * @ORM\Table(
- *     name="question_type",
- *     uniqueConstraints={
- *     @ORM\UniqueConstraint(name="question_type_label_key", columns={"label"}),
- *     @ORM\UniqueConstraint(name="question_type_name_key", columns={"name"})})
+ * @ORM\Table(name="question_type", uniqueConstraints={@ORM\UniqueConstraint(name="question_type_label_key", columns={"label"}), @ORM\UniqueConstraint(name="question_type_name_key", columns={"name"})})
  * @ORM\Entity(repositoryClass="App\Repository\QuestionTypeRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class QuestionType extends EntityBase
 {
@@ -43,16 +38,12 @@ class QuestionType extends EntityBase
     private $label;
 
     /**
-     * @var Question[]
+     * @var bool
      *
-     * @ORM\ManyToMany(targetEntity="Question", mappedBy="types")
+     * @ORM\Column(name="`isChild`", type="boolean", nullable=false)
      */
-    private $questions;
+    private $ischild;
 
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
 
     public function getId(): ?string
     {
@@ -83,31 +74,21 @@ class QuestionType extends EntityBase
         return $this;
     }
 
-    /**
-     * @return Collection|Question[]
-     */
-    public function getQuestions(): Collection
+    public function getIschild(): ?bool
     {
-        return $this->questions;
+        return $this->ischild;
     }
 
-    public function addQuestion(Question $question): self
+    public function setIschild(bool $ischild): self
     {
-        if (!$this->questions->contains($question)) {
-            $this->questions[] = $question;
-            $question->addType($this);
-        }
+        $this->ischild = $ischild;
 
         return $this;
     }
 
-    public function removeQuestion(Question $question): self
+    public function __toString()
     {
-        if ($this->questions->removeElement($question)) {
-            $question->removeType($this);
-        }
-
-        return $this;
+        return $this->name;
     }
 
 }

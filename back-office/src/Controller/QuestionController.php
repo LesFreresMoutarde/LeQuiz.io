@@ -7,6 +7,7 @@ use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,10 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'question_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Question $question, CategoryRepository $categoryRepository): Response
+    public function edit(Request $request,
+                         Question $question,
+                         CategoryRepository $categoryRepository,
+                         QuestionTypeRepository $questionTypeRepository): Response
     {
        //Form  = type, difficulty, content, answer, status, media
         // Lors de la validation, vérifier les types des values de l'user
@@ -62,7 +66,8 @@ class QuestionController extends AbstractController
         // Verifier si la valeur est acceptable (une quest ayant plusieurs props, ne peut etre input) Bah si justement
 
         //Recupérer les types
-        $questionTypes = Enums::QUESTION_TYPES;
+//        $questionTypes = Enums::QUESTION_TYPES;
+        $questionTypes = $questionTypeRepository->findAll();
         $questionDifficulty = Enums::QUESTION_DIFFICULTY;
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
@@ -70,12 +75,13 @@ class QuestionController extends AbstractController
         try {
 
             if ($request->getMethod() === 'POST') {
-            dd($_POST);
+//                dd($_POST);
                 if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
 
                 if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
 
-                $this->isFormValid($request->request, $categories);
+//                dd('temoin');
+                $this->isFormValid($request->request, $categories, $questionTypes);
 
                 // Construire les 2 json (answers et
                 //TODO JSON FOR MEDIA UPLOADING
@@ -84,7 +90,9 @@ class QuestionController extends AbstractController
                 dd($answersJson);
 
                 //return $this->redirectToRoute('question_index');
+                return $this->redirectToRoute('question_index');
             }
+
             // dd($question);
             return $this->render('question/edit.html.twig', [
                 'question' => $question,
@@ -94,9 +102,8 @@ class QuestionController extends AbstractController
                 'categories' => $categories
             ]);
         } catch (\Exception $e) {
-            dump(e);
+            dd($e);
         }
-
     }
 
     #[Route('/{id}', name: 'question_delete', methods: ['DELETE'])]
@@ -156,23 +163,35 @@ class QuestionController extends AbstractController
 
 
 
-    private function isFormValid($formData, array $allCategories) {
+    private function isFormValid($formData, array $allCategories, array $allQuestionTypes) {
+
         $this->hasFormRequiredFields();
 
         $pickedCategories = [];
+        $pickedQuestionTypes = [];
+
         foreach ($_POST as $formInputName => $formInput) {
-            if (preg_match('/^cbx-/', $formInputName)) {
-                $pickedCategories[] = explode('-', $formInputName)[1];
+            if (preg_match('/^cbx-category-/', $formInputName)) {
+                $parsedCategoriesInput = explode('-', $formInputName);
+                $pickedCategories[] = $parsedCategoriesInput[count($parsedCategoriesInput) - 1];
+
+            } else if (preg_match('/^cbx-type-/', $formInputName)) {
+                $parsedQuestionTypesInput = explode('-', $formInputName);
+                $pickedQuestionTypes[] = $parsedQuestionTypesInput[count($parsedQuestionTypesInput) - 1];
             }
         }
 
-        $this->hasFormValidValues($allCategories, $pickedCategories);
+
+        $this->hasFormValidValues($allCategories, $pickedCategories, $allQuestionTypes, $pickedQuestionTypes);
     }
 
-    private function hasFormValidValues(array $allCategories, array $pickedCategories) {
+    private function hasFormValidValues(array $allCategories,
+                                        array $pickedCategories,
+                                        array $allQuestionTypes,
+                                        array $pickedQuestionTypes)
+    {
 
-        if (!in_array($_POST['question-type'], Enums::QUESTION_TYPES))
-            throw new \Exception('Invalid type');
+        dd($pickedQuestionTypes);
 
         if (!in_array($_POST['question-status'], Enums::STATUSES))
             throw new \Exception('Invalid status');
@@ -183,6 +202,17 @@ class QuestionController extends AbstractController
         foreach ($pickedCategories as $category) {
             if (!in_array($category, $allCategories)) throw new \Exception('Invalid category');
         }
+
+        foreach ($pickedQuestionTypes as $type) {
+            if (!in_array($type, $allQuestionTypes)) throw new \Exception('Invalid question type');
+
+        }
+
+
+        //TODO Type Incompatible (qcm et input)
+
+        dd("temoins");
+
 
         $answers = [];
         $goodAnswersCount = 0;
@@ -219,9 +249,10 @@ class QuestionController extends AbstractController
      * @throws \Exception
      */
     private function hasFormRequiredFields() {
-        define('REQUIRED_FIELDS', array('question-content', 'question-type', 'question-difficulty', 'question-status'));
-        define('DYNAMIC_REQUIRED_FIELDS', array('cbx', 'answers-content', 'answers-is_good_answer'));
+        define('REQUIRED_FIELDS', array('question-content', 'question-difficulty', 'question-status'));
+        define('DYNAMIC_REQUIRED_FIELDS', array('cbx-type', 'cbx-category', 'answers-content', 'answers-is_good_answer'));
         $dynamicFieldsMatch = [];
+
         foreach (REQUIRED_FIELDS as $requiredField) {
             if (!array_key_exists($requiredField, $_POST)) throw new \Exception('Invalid Form');
         }

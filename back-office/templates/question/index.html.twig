@@ -24,7 +24,10 @@
         {% for question in questions %}
             <tr>
                 <td>{{ question.id }}</td>
-                <td>{{ question.type }}</td>
+{#                <td>{% for type in question.types %}#}
+{#                        {{ type }}#}
+{#                    {% endfor %}#}
+{#                </td>#}
                 <td>{{ question.difficulty }}</td>
                 <td>{{ question.content }}</td>
                 <td>{{ question.answer ? question.answer|json_encode : '' }}</td>
