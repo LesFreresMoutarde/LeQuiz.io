@@ -11,7 +11,8 @@ module.exports = {
             },
             name: {
                 type: Sequelize.STRING(50),
-                allowNull: false
+                allowNull: false,
+                unique: true
             },
             createdAt: {
                 allowNull: false,
@@ -22,7 +23,6 @@ module.exports = {
                 type: Sequelize.DATE,
             }
         });
-        await queryInterface.addIndex('category', ['name']);
     },
     down: async (queryInterface, Sequelize) => {
         await queryInterface.dropTable('category');

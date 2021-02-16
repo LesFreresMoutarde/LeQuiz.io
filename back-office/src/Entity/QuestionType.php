@@ -7,17 +7,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Category
+ * QuestionType
  *
  * @ORM\Table(
- *     name="category",
- *     indexes={@ORM\Index(name="category_name", columns={"name"})}
- *     )
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
- * @ORM\HasLifecycleCallbacks
+ *     name="question_type",
+ *     uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="question_type_label_key", columns={"label"}),
+ *     @ORM\UniqueConstraint(name="question_type_name_key", columns={"name"})})
+ * @ORM\Entity(repositoryClass="App\Repository\QuestionTypeRepository")
  */
-
-class Category extends EntityBase
+class QuestionType extends EntityBase
 {
     /**
      * @var string
@@ -25,7 +24,7 @@ class Category extends EntityBase
      * @ORM\Column(name="id", type="guid", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\SequenceGenerator(sequenceName="category_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="question_type_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
@@ -37,21 +36,21 @@ class Category extends EntityBase
     private $name;
 
     /**
-     * @var CustomQuiz[]
+     * @var string
      *
-     * @ORM\ManyToMany(targetEntity="CustomQuiz", mappedBy="categories")
+     * @ORM\Column(name="label", type="string", length=80, nullable=false)
      */
-    private $customQuizzes;
+    private $label;
 
     /**
      * @var Question[]
      *
-     * @ORM\ManyToMany(targetEntity="Question", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="Question", mappedBy="types")
      */
     private $questions;
 
-    public function __construct() {
-        $this->customQuizzes = new ArrayCollection();
+    public function __construct()
+    {
         $this->questions = new ArrayCollection();
     }
 
@@ -72,29 +71,14 @@ class Category extends EntityBase
         return $this;
     }
 
-    /**
-     * @return Collection|CustomQuiz[]
-     */
-    public function getCustomQuizzes(): Collection
+    public function getLabel(): ?string
     {
-        return $this->customQuizzes;
+        return $this->label;
     }
 
-    public function addCustomQuiz(CustomQuiz $customQuiz): self
+    public function setLabel(string $label): self
     {
-        if (!$this->customQuizzes->contains($customQuiz)) {
-            $this->customQuizzes[] = $customQuiz;
-            $customQuiz->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCustomQuiz(CustomQuiz $customQuiz): self
-    {
-        if ($this->customQuizzes->removeElement($customQuiz)) {
-            $customQuiz->removeCategory($this);
-        }
+        $this->label = $label;
 
         return $this;
     }
@@ -111,7 +95,7 @@ class Category extends EntityBase
     {
         if (!$this->questions->contains($question)) {
             $this->questions[] = $question;
-            $question->addCategory($this);
+            $question->addType($this);
         }
 
         return $this;
@@ -120,9 +104,10 @@ class Category extends EntityBase
     public function removeQuestion(Question $question): self
     {
         if ($this->questions->removeElement($question)) {
-            $question->removeCategory($this);
+            $question->removeType($this);
         }
 
         return $this;
     }
+
 }

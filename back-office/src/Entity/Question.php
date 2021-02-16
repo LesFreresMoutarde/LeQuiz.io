@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="question",
  *     indexes={
- *         @ORM\Index(name="question_type", columns={"type"}),
  *         @ORM\Index(name="question_difficulty", columns={"difficulty"}),
  *         @ORM\Index(name="question_custom_quiz_id", columns={"customQuizId"}),
  *         @ORM\Index(name="question_status", columns={"status"})})
@@ -31,13 +30,6 @@ class Question extends EntityBase
      * @ORM\SequenceGenerator(sequenceName="question_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=40, nullable=false)
-     */
-    private $type;
 
     /**
      * @var string|null
@@ -94,6 +86,17 @@ class Question extends EntityBase
     private $categories;
 
     /**
+     * @var QuestionType[]
+     *
+     * @ORM\ManyToMany(targetEntity="QuestionType", inversedBy="questions")
+     * @ORM\JoinTable(name="question_type_question",
+     *     joinColumns={@ORM\JoinColumn(name="`questionId`", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="`questionTypeId`", referencedColumnName="id")}
+     *     )
+     */
+    private $types;
+
+    /**
      * @var QuestionPosition
      *
      * @ORM\OneToOne(targetEntity="QuestionPosition", mappedBy="question")
@@ -103,23 +106,12 @@ class Question extends EntityBase
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->types = new ArrayCollection();
     }
 
     public function getId(): ?string
     {
         return $this->id;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     public function getDifficulty(): ?string
@@ -236,6 +228,30 @@ class Question extends EntityBase
         }
 
         $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QuestionType[]
+     */
+    public function getTypes(): Collection
+    {
+        return $this->types;
+    }
+
+    public function addType(QuestionType $type): self
+    {
+        if (!$this->types->contains($type)) {
+            $this->types[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(QuestionType $type): self
+    {
+        $this->types->removeElement($type);
 
         return $this;
     }

@@ -2,7 +2,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Combien fait 1 + 4 ?",
       "status": "approved",
@@ -37,12 +37,13 @@
         "url": "http://example.com/calculatrice.png"
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "En quelle année, Mao a-t-il lancé sa révolution culturelle ?",
       "status": "approved",
@@ -69,12 +70,13 @@
 
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "En quelle année les États-Unis ont-ils pris part à la Première Guerre mondiale ?",
       "status": "approved",
@@ -101,12 +103,13 @@
 
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quels Jeux olympiques ont été supprimés à cause de la Seconde Guerre mondiale ?",
       "status": "approved",
@@ -140,12 +143,13 @@
 
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans les plaines de quel champ de bataille se dresse la Butte du Lion ?",
       "status": "approved",
@@ -172,12 +176,13 @@
 
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quelle ligne de défense française fut contournée par les Allemands en 1940 ?",
       "status": "approved",
@@ -204,12 +209,13 @@
 
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Le général Cambronne, qui commandait la vieille garde, eut une conduite héroïque à...",
       "status": "approved",
@@ -236,12 +242,13 @@
 
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Où a eu lieu le grand procès des criminels de guerre nazis ?",
       "status": "approved",
@@ -275,16 +282,13 @@
 
       },
       "categories": [{"name": "Histoire"}]
+
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [
-        {
-          "name": "qcm"
-        }
-      ],
+      "type": "qcm",
       "difficulty": null,
       "content": "Qui fut vainqueur de la Guerre de Troie, conflit légendaire de la mythologie grecque ?",
       "status": "approved",
@@ -294,34 +298,30 @@
           {
             "is_good_answer": false,
             "content": "Sophocle"
-          },
-          {
+          },{
             "is_good_answer": false,
             "content": "Ajax"
           },
           {
             "is_good_answer": true,
             "content": "Ulysse"
-          },
-          {
+          },{
             "is_good_answer": false,
             "content": "Arkantos"
           }
         ]
       },
       "media": {
-      },
-      "categories": [
-        {
-          "name": "Histoire"
-        }
-      ]
-    }
+
+      }
+
+    },
+    "categories": [{"name": "Histoire"}]
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "En quelle année la bataille de Waterloo a-t-elle eu lieu, à vingt kilomètres au sud de Bruxelles ?",
       "status": "approved",
@@ -354,7 +354,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel basketteur américain a été champion NBA en 1998 pour la sixième fois de sa carrière ?",
       "status": "approved",
@@ -387,7 +387,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans quelle pays est né le joueur de basket-ball professionnel Tony Parker ?",
       "status": "approved",
@@ -427,7 +427,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Qui a été élu joueur de la décennie 2000 suite à un sondage du site officiel NBA ?",
       "status": "approved",
@@ -460,7 +460,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel concours de dunks est organisé par la NBA durant le NBA All-Star Week-end ?",
       "status": "approved",
@@ -493,7 +493,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel basketteur américain a réalisé en 2000 un 360 degrés inversé mythique ?",
       "status": "approved",
@@ -526,7 +526,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel joueur de NBA se définit lui-même comme un « viking africain » ?",
       "status": "approved",
@@ -559,7 +559,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel événement annuel majeur de la NBA est comparable à une bourse de joueurs ?",
       "status": "approved",
@@ -592,7 +592,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Combien de titres de champion NBA Michael Jordan a-t-il obtenu ?",
       "status": "approved",
@@ -625,7 +625,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Qui est le premier joueur français à avoir été sacré champion NBA ?",
       "status": "approved",
@@ -658,7 +658,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Qui a été élu deux fois meilleur joueur de la NBA, en 2005 et 2006 ?",
       "status": "approved",
@@ -691,7 +691,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel gagnant de la « Nouvelle Star », diffusée sur M6, est surnommé « La Tortue » ?",
       "status": "approved",
@@ -724,7 +724,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "En 1991, quel tube Yannick Noah a-t-il associé à la victoire de la France en coupe Davis ?",
       "status": "approved",
@@ -757,7 +757,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel chanteur prénommé Mathieu a émergé du succès remporté par les Linkup ?",
       "status": "approved",
@@ -790,7 +790,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel est le style musical de l'album de Rohff, « La fierté des années » ?",
       "status": "approved",
@@ -823,7 +823,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel Américano-Libanais est entré dans les charts avec « Life in Cartoon Motion » ?",
       "status": "approved",
@@ -856,7 +856,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Qui a chanté au pied de …onnes le 10 juin 2000 ?",
       "status": "approved",
@@ -889,7 +889,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Sous quel nom le rappeur et homme d'affaires américain Curtis Jackson fait-il carrière ?",
       "status": "approved",
@@ -922,7 +922,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Avec quel chanteur le top model Heidi Klum a-t-elle été mariée durant sept ans ?",
       "status": "approved",
@@ -955,7 +955,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel DJ a repris un titre des années 80 pour faire un tube avec « Living On Video » ?",
       "status": "approved",
@@ -988,7 +988,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel chanteur a sorti « Musicology » puis « 3121 » deux ans plus tard ?",
       "status": "approved",
@@ -1021,7 +1021,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans quel pays se situe le circuit de course automobile du Mans ?",
       "status": "approved",
@@ -1054,7 +1054,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "À quel modèle de voiture ressemble le vieux tacot jaune que conduit Gaston Lagaffe ?",
       "status": "approved",
@@ -1087,7 +1087,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel sport automobile consiste à accélérer le plus rapidement possible avec son véhicule ?",
       "status": "approved",
@@ -1120,7 +1120,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Comment s'appelle le véhicule du personnage de bande dessinée Batman ?",
       "status": "approved",
@@ -1153,7 +1153,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "De quand date le Duster, véhicule utilitaire sport vendu par la marque roumaine Dacia ?",
       "status": "approved",
@@ -1186,7 +1186,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "En France, refuser une priorité peut vous coûter combien de points sur le permis ?",
       "status": "approved",
@@ -1219,7 +1219,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quelle principauté accueille l'un des plus prestigieux Grand Prix de Formule 1 ?",
       "status": "approved",
@@ -1252,7 +1252,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans le monde automobile, quel sigle correspond au Grand Tourisme Injection ?",
       "status": "approved",
@@ -1285,7 +1285,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quelle société appartenant au groupe Belron « répare et remplace » votre pare-brise ?",
       "status": "approved",
@@ -1318,7 +1318,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quelle firme automobile, filiale française de FIAT, a ensuite intégré le groupe Chrysler ?",
       "status": "approved",
@@ -1351,7 +1351,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans quel jeu peux on voir des Chocobos ?",
       "status": "approved",
@@ -1384,7 +1384,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Salamèche évolue en ",
       "status": "approved",
@@ -1417,7 +1417,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Zelda est un jeu du genre",
       "status": "approved",
@@ -1450,7 +1450,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Sur quelle plateforme le jeu Tekken est sorti en premier ?",
       "status": "approved",
@@ -1483,7 +1483,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans quel jeu le personnage de Mario a-t-il été développé en premier ?",
       "status": "approved",
@@ -1516,7 +1516,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "La série Fallout est la suite « spirituelle » de quel jeu ?",
       "status": "approved",
@@ -1549,7 +1549,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Que signifie le nom de la serie GTA ?",
       "status": "approved",
@@ -1582,7 +1582,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Le jeu Counter Strike dérive de quel autre jeu ?",
       "status": "approved",
@@ -1615,7 +1615,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans Pac man qu'est ce qui hante le labyrinthe ?",
       "status": "approved",
@@ -1648,7 +1648,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Dans la légende de Zelda, comment s'appelle le héros ?",
       "status": "approved",
@@ -1681,7 +1681,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "input"}],
+      "type": "input",
       "difficulty": null,
       "content": "Qui est le compagnon de Batman ?",
       "status": "pending",
@@ -1704,7 +1704,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "input"}],
+      "type": "input",
       "difficulty": null,
       "content": "Quel super héros ne se sépare jamais de son marteau forgé par les nains ",
       "status": "pending",
@@ -1727,7 +1727,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel super-héros à la force surhumaine ressemble à un être de pierre ?",
       "status": "disapproved",
@@ -1760,7 +1760,7 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "type": "qcm",
       "difficulty": null,
       "content": "Quel super-héros porte un costume inspiré du drapeau américain ?",
       "status": "disapproved",

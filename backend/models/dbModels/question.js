@@ -35,6 +35,12 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'categories'
             });
 
+            this.belongsToMany(models.QuestionType, {
+                foreignKey: 'questionId',
+                through: 'question_type_question',
+                as: 'types'
+            });
+
             this.belongsTo(models.CustomQuiz, {
                 foreignKey: 'customQuizId',
                 as: 'customQuiz'
@@ -54,10 +60,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
             defaultValue: DataTypes.UUIDV4
-        },
-        type: {
-            type: DataTypes.STRING(40),
-            allowNull: false,
         },
         difficulty: {
             type: DataTypes.STRING(30),
@@ -85,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Question',
         tableName: 'question',
         indexes: [{
-            fields: ['type', 'difficulty', 'status', 'customQuizId']
+            fields: ['difficulty', 'status', 'customQuizId']
         }]
     });
     return Question;

@@ -27,24 +27,27 @@ class GameUtil {
 
     static generateSerieQuizQuery = (gameConfiguration) => {
 
-        const questionTypesLabel = gameConfiguration.questionTypes.map(questionType => questionType.type);
-        const categoriesLabel = gameConfiguration.categories.map(category => category.id);
+        const questionTypesId = gameConfiguration.questionTypes.map(questionType => questionType.id);
+        const categoriesId = gameConfiguration.categories.map(category => category.id);
         const limit = Number(gameConfiguration.winCriterion);
 
         return {
-            query:`SELECT "question"."type", "question"."content", 
-                "question"."answer", "question"."media", "category"."name" as "category" 
+            query:`SELECT "question"."content", "question"."answer", "question"."media", 
+                "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
+                "category"."name" as "category" 
                 FROM "question"
                 INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
                 INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
-                WHERE "question"."status" = 'approved' AND "question"."type" IN (:questionTypes)
+                INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
+                INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
+                WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
                 AND "category_question"."categoryId" IN (:categories) 
                 ORDER BY random() LIMIT :limit;`
             ,
             options: {
                 replacements: {
-                    questionTypes: questionTypesLabel,
-                    categories: categoriesLabel,
+                    questionTypes: questionTypesId,
+                    categories: categoriesId,
                     limit,
 
                 },
