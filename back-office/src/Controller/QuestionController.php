@@ -54,6 +54,8 @@ class QuestionController extends AbstractController
         ]);
     }
 
+
+    //TODO QUestionPosition !!!
     #[Route('/{id}/edit', name: 'question_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,
                          Question $question,
@@ -71,8 +73,7 @@ class QuestionController extends AbstractController
         $questionDifficulty = Enums::QUESTION_DIFFICULTY;
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
-
-        try {
+//        try {
 
             if ($request->getMethod() === 'POST') {
 //                dd($_POST);
@@ -80,17 +81,52 @@ class QuestionController extends AbstractController
 
                 if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
 
-//                dd('temoin');
-                $this->isFormValid($request->request, $categories, $questionTypes);
+                list(
+                    $completePickedQuestionTypes,
+                    $completePickedCategories
+                ) = $this->isFormValid($request->request, $categories, $questionTypes);
+//
+//                dump($completePickedCategories);
+//                dd($completePickedQuestionTypes);
 
-                // Construire les 2 json (answers et
                 //TODO JSON FOR MEDIA UPLOADING
 
                 $answersJson = $this->generateAnswersJson();
-                dd($answersJson);
+//                dd($answersJson);
+
+                //TODO Remplir le nouvel objet question
+                // Récupérer les questionTypes et Categories associés
+
+                //$question->setContent()
+                $question->setContent($_POST['question-content']);
+                $question->setDifficulty($_POST['question-difficulty']);
+                $question->setStatus($_POST['question-status']);
+                $question->setAnswer($answersJson);
+
+                foreach ($question->getCategories() as $category) {
+                    $question->removeCategory($category);
+                }
+
+                foreach ($question->getTypes() as $type) {
+                    $question->removeType($type);
+                }
+
+                foreach ($completePickedQuestionTypes as $questionType) {
+                    $question->addType($questionType);
+                }
+
+                foreach ($completePickedCategories as $category) {
+                    $question->addCategory($category);
+                }
+
+                $entityManager = $this->getDoctrine()->getManager();
+                //dd($question);
+                $entityManager->flush();
 
                 //return $this->redirectToRoute('question_index');
-                return $this->redirectToRoute('question_index');
+                return $this->redirectToRoute('question_show', [
+                    'id' => $question->getId()
+                ]);
             }
 
             // dd($question);
@@ -101,9 +137,10 @@ class QuestionController extends AbstractController
                 'questionStatuses' => $questionStatuses,
                 'categories' => $categories
             ]);
-        } catch (\Exception $e) {
-            dd($e);
-        }
+//        } catch (\Exception $e) {
+////            dd($e);
+//             return($e);
+//        }
     }
 
     #[Route('/{id}', name: 'question_delete', methods: ['DELETE'])]
@@ -119,14 +156,8 @@ class QuestionController extends AbstractController
     }
 
 
-    private function hasMultipleFields(string $formInput)
+    private function generateAnswersJson()
     {
-        $parsedFormInput = explode('-',$formInput);
-
-        return is_numeric($parsedFormInput[count($parsedFormInput) - 1]);
-    }
-
-    private function generateAnswersJson() {
         $answers = ['answers' => []];
 
         foreach ($_POST as $formInputName => $formInput) {
@@ -143,10 +174,15 @@ class QuestionController extends AbstractController
 
                 $answerId = $parsedFormInput[count($parsedFormInput) - 1];
 
-                $answers['answers'][] = [
-                    'content' => $formInput,
-                    'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
-                ];
+                if ($formInput !== '')  {
+
+                    $answers['answers'][] = [
+                        'content' => $formInput,
+                        'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
+                    ];
+                }
+
+
             }
 
             if (preg_match('/^additional-/', $formInputName)) {
@@ -157,13 +193,15 @@ class QuestionController extends AbstractController
             }
         }
 
-        return json_encode($answers);
+        return $answers;
+//        return json_encode($answers);
 
     }
 
 
 
-    private function isFormValid($formData, array $allCategories, array $allQuestionTypes) {
+    private function isFormValid($formData, array $allCategories, array $allQuestionTypes)
+    {
 
         $this->hasFormRequiredFields();
 
@@ -172,17 +210,16 @@ class QuestionController extends AbstractController
 
         foreach ($_POST as $formInputName => $formInput) {
             if (preg_match('/^cbx-category-/', $formInputName)) {
-                $parsedCategoriesInput = explode('-', $formInputName);
-                $pickedCategories[] = $parsedCategoriesInput[count($parsedCategoriesInput) - 1];
+
+                $pickedCategories[] = $formInput;
 
             } else if (preg_match('/^cbx-type-/', $formInputName)) {
-                $parsedQuestionTypesInput = explode('-', $formInputName);
-                $pickedQuestionTypes[] = $parsedQuestionTypesInput[count($parsedQuestionTypesInput) - 1];
+
+                $pickedQuestionTypes[] = $formInput;
             }
         }
 
-
-        $this->hasFormValidValues($allCategories, $pickedCategories, $allQuestionTypes, $pickedQuestionTypes);
+        return $this->hasFormValidValues($allCategories, $pickedCategories, $allQuestionTypes, $pickedQuestionTypes);
     }
 
     private function hasFormValidValues(array $allCategories,
@@ -191,7 +228,77 @@ class QuestionController extends AbstractController
                                         array $pickedQuestionTypes)
     {
 
-        dd($pickedQuestionTypes);
+        // Retrieving Question Types Models from user choices
+        $completePickedQuestionTypes = [];
+
+        foreach ($allQuestionTypes as $dbQuestionType) {
+
+            foreach ($pickedQuestionTypes as $pickedQuestionType) {
+
+                if ($dbQuestionType->getName() === $pickedQuestionType) {
+
+                    $completePickedQuestionTypes[] = $dbQuestionType;
+                }
+            }
+        }
+
+        $parentQuestionType = null;
+
+        // Verify if questions types are valid
+        if (count($completePickedQuestionTypes) !== count($pickedQuestionTypes)) {
+
+            throw new \Exception('Invalid question type');
+
+        } else if (count($completePickedQuestionTypes) === 1) {
+
+            $parentQuestionType = $completePickedQuestionTypes[0];
+
+            if ($completePickedQuestionTypes[0]->getIsChild()) throw new \Exception('A child type cannot be alone');
+
+        } else if (count($completePickedQuestionTypes) === 2) {
+
+            $isParentPresent = false;
+            $isChildPresent = false;
+
+            foreach ($completePickedQuestionTypes as $completePickedQuestionType) {
+
+                if ($completePickedQuestionType->getIsChild())  {
+                    $isChildPresent = true;
+                }
+                else {
+                    $parentQuestionType = $completePickedQuestionType;
+                    $isParentPresent = true;
+                }
+            }
+
+            if (!$isParentPresent || !$isChildPresent) throw new \Exception('Invalid question types combination');
+
+        } else {
+
+            throw new \Exception('Too many question types');
+        }
+
+        $completePickedCategories = [];
+
+        foreach ($allCategories as $dbCategory) {
+
+            foreach ($pickedCategories as $pickedCategory) {
+
+                if ($dbCategory->getName() === $pickedCategory) {
+
+                    $completePickedCategories[] = $dbCategory;
+                }
+            }
+        }
+
+        if (count($completePickedCategories) !== count($pickedCategories)) {
+
+            throw new \Exception('Invalid category');
+
+        } else if (count($completePickedCategories) > 2) {
+
+            throw new \Exception('Too many categories');
+        }
 
         if (!in_array($_POST['question-status'], Enums::STATUSES))
             throw new \Exception('Invalid status');
@@ -199,48 +306,40 @@ class QuestionController extends AbstractController
         if (!in_array($_POST['question-difficulty'], Enums::QUESTION_DIFFICULTY))
             throw new \Exception('Invalid difficulty');
 
-        foreach ($pickedCategories as $category) {
-            if (!in_array($category, $allCategories)) throw new \Exception('Invalid category');
-        }
-
-        foreach ($pickedQuestionTypes as $type) {
-            if (!in_array($type, $allQuestionTypes)) throw new \Exception('Invalid question type');
-
-        }
-
-
-        //TODO Type Incompatible (qcm et input)
-
-        dd("temoins");
-
 
         $answers = [];
         $goodAnswersCount = 0;
+
         foreach ($_POST as $formInputName => $formInput) {
             if (preg_match('/^answers-is_good_answer-/', $formInputName)) {
 
                 $answerId = explode('-', $formInputName)[2];
                 if(!array_key_exists('answers-content-'.$answerId, $_POST)) throw new \Exception('Invalid Answer');
 
-                $answers[$formInputName] = $formInput;
-                if ((boolean) $formInput) $goodAnswersCount++;
+                if ($_POST['answers-content-'.$answerId]) {
+
+                    $answers[$formInputName] = $formInput;
+                    if ((boolean) $formInput) $goodAnswersCount++;
+                }
             }
         }
 
-        switch ($_POST['question-type']) {
+        switch ($parentQuestionType->getName()) {
             // Only one good answer
             case Enums::QCM_QUESTION_TYPE:
-                if ($goodAnswersCount !== 1 || count($answers) !== 4) throw new \Exception('QCM Invalid Answer');
+                if ($goodAnswersCount !== 1 || count($answers) !== 4) throw new \Exception('QCM Invalid Answers');
                 break;
 
             // Only good answers
             case Enums::INPUT_QUESTION_TYPE:
-                if ($goodAnswersCount !== count($answers)) throw new \Exception("Input Invalid Answer");
+                if ($goodAnswersCount !== count($answers)) throw new \Exception("Input Invalid Answers");
                 break;
 
             default:
                 break;
         }
+
+        return [$completePickedQuestionTypes, $completePickedCategories];
     }
 
     /**

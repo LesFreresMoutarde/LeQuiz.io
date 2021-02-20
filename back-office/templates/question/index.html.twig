@@ -9,8 +9,9 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Type</th>
+                <th>Types</th>
                 <th>Difficulty</th>
+                <th>Categories</th>
                 <th>Content</th>
                 <th>Answer</th>
                 <th>Status</th>
@@ -24,11 +25,15 @@
         {% for question in questions %}
             <tr>
                 <td>{{ question.id }}</td>
-{#                <td>{% for type in question.types %}#}
-{#                        {{ type }}#}
-{#                    {% endfor %}#}
-{#                </td>#}
+                <td>{% for type in question.types %}
+                        {{ type }}
+                    {% endfor %}
+                </td>
                 <td>{{ question.difficulty }}</td>
+                <td>{% for category in question.categories %}
+                        {{ category }}
+                    {% endfor %}
+                </td>
                 <td>{{ question.content }}</td>
                 <td>{{ question.answer ? question.answer|json_encode : '' }}</td>
                 <td>{{ question.status }}</td>

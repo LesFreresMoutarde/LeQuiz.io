@@ -38,18 +38,18 @@
         <div>
             {% for category in categories %}
                 {% if category.name in question.categories %}
-                    <input type="checkbox" id="cbx-category-{{ category }}" name="cbx-category-{{ category }}" checked>
+                    <input type="checkbox" id="cbx-category-{{ category.name }}" name="cbx-category-{{ category.name }}" value="{{ category.name }}" checked>
                 {% else %}
-                    <input type="checkbox" id="cbx-category-{{ category }}" name="cbx-category-{{ category }}">
+                    <input type="checkbox" id="cbx-category-{{ category.name }}" name="cbx-category-{{ category.name }}" value="{{ category.name }}">
                 {% endif %}
-                <label for="cbx-category-{{ category }}">{{ category }}</label>
+                <label for="cbx-category-{{ category.name }}">{{ category }}</label>
             {% endfor %}
         </div>
         {#      TODO  Answer #}
         <p>Réponses</p>
         {% for answer in question.answer['answers'] %}
             <div>
-                <input type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}" required/>
+                <input type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}"/>
                 {% if answer['is_good_answer'] == true %}
                     <input type="radio" id="good-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}"
                            value="1" checked/>
@@ -93,6 +93,10 @@
                 {% endif %}
             {% endfor %}
         </select>
+{#        {% if question.customQuiz %}#}
+{#        TODO handling when changing a question Position. The position of the question below and above should move
+           consequently #}
+{#        {% endif %}#}
         <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
         <button type="submit">Envoyer</button>
     </form>

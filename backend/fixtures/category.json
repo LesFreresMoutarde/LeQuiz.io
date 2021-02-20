@@ -2,37 +2,43 @@
   {
     "model": "Category",
     "data": {
-      "name": "Histoire"
+      "name": "histoire",
+      "label": "Histoire"
     }
   },
   {
     "model": "Category",
     "data": {
-      "name": "Sport"
+      "name": "sport",
+      "label": "Sport"
     }
   },
   {
     "model": "Category",
     "data": {
-      "name": "Jeu-Vidéo"
+      "name": "jeu-video",
+      "label": "Jeu vidéo"
     }
   },
   {
     "model": "Category",
     "data": {
-      "name": "Cinéma"
+      "name": "cinema",
+      "label": "Cinéma"
     }
   },
   {
     "model": "Category",
     "data": {
-      "name": "Musique"
+      "name": "musique",
+      "label": "Musique"
     }
   },
   {
     "model": "Category",
     "data": {
-      "name": "Automobile"
+      "name": "automobile",
+      "label": "Automobile"
     }
   }
 ]

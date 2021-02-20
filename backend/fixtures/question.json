@@ -36,7 +36,7 @@
         "type": "image/png",
         "url": "http://example.com/calculatrice.png"
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -68,7 +68,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -100,7 +100,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -139,7 +139,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -171,7 +171,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -203,7 +203,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -235,7 +235,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -274,7 +274,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
     }
   },
   {
@@ -313,7 +313,7 @@
       },
       "categories": [
         {
-          "name": "Histoire"
+          "name": "histoire"
         }
       ]
     }
@@ -347,7 +347,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Histoire"}]
+      "categories": [{"name": "histoire"}]
 
     }
   },
@@ -380,7 +380,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -420,7 +420,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -453,7 +453,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -486,7 +486,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -519,7 +519,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -552,7 +552,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -585,7 +585,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -618,7 +618,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -651,7 +651,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -684,7 +684,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Sport"}]
+      "categories": [{"name": "sport"}]
 
     }
   },
@@ -717,7 +717,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -750,7 +750,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -783,7 +783,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -816,7 +816,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -849,7 +849,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -882,7 +882,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -915,7 +915,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -948,7 +948,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -981,7 +981,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -1014,7 +1014,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Musique"}]
+      "categories": [{"name": "musique"}]
 
     }
   },
@@ -1047,7 +1047,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1080,7 +1080,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1113,7 +1113,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1146,7 +1146,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1179,7 +1179,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1212,7 +1212,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1245,7 +1245,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1261,7 +1261,7 @@
         "answers": [
           {
             "is_good_answer": false,
-            "content": "Sport"
+            "content": "sport"
           },{
             "is_good_answer": true,
             "content": "Gti"
@@ -1278,7 +1278,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1311,7 +1311,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1344,7 +1344,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Automobile"}]
+      "categories": [{"name": "automobile"}]
 
     }
   },
@@ -1377,7 +1377,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1410,7 +1410,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1443,7 +1443,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1476,7 +1476,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1509,7 +1509,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1542,7 +1542,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1575,7 +1575,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1608,7 +1608,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1641,7 +1641,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1674,7 +1674,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Jeu-Vidéo"}]
+      "categories": [{"name": "jeu-video"}]
 
     }
   },
@@ -1697,7 +1697,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Cinéma"}]
+      "categories": [{"name": "cinema"}]
 
     }
   },
@@ -1720,7 +1720,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Cinéma"}]
+      "categories": [{"name": "cinema"}]
 
     }
   },
@@ -1753,7 +1753,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Cinéma"}]
+      "categories": [{"name": "cinema"}]
 
     }
   },
@@ -1786,7 +1786,7 @@
       "media": {
 
       },
-      "categories": [{"name": "Cinéma"}]
+      "categories": [{"name": "cinema"}]
 
     }
   }

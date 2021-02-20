@@ -15,7 +15,7 @@ const CategoriesBox = ({categories, changeOptions, displayClass}) => {
             <div className="lobby-box-content">
                 <div className="lobby-value-container">
                     {categories.map((category, index) =>  (
-                        <LobbyValue key={index} value={category.name}/>
+                        <LobbyValue key={index} value={category.label}/>
                     ))}
                 </div>
 

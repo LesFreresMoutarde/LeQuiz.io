@@ -34,7 +34,7 @@ class App extends React.Component {
             redirect: false,
             isLoading: true,
             user: null,
-        }
+        };
 
         this.nextRedirect = null;
 
