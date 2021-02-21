@@ -112,8 +112,8 @@ DROP TABLE IF EXISTS "category_custom_quiz";
 CREATE TABLE "public"."category_custom_quiz" (
     "categoryId" uuid NOT NULL,
     "customQuizId" uuid NOT NULL,
-    "createdAt" timestamptz NOT NULL,
-    "updatedAt" timestamptz NOT NULL,
+    "createdAt" timestamptz DEFAULT now() NOT NULL,
+    "updatedAt" timestamptz DEFAULT now() NOT NULL,
     CONSTRAINT "category_custom_quiz_pkey" PRIMARY KEY ("categoryId", "customQuizId"),
     CONSTRAINT "category_custom_quiz_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES category(id) ON DELETE RESTRICT NOT DEFERRABLE,
     CONSTRAINT "category_custom_quiz_customQuizId_fkey" FOREIGN KEY ("customQuizId") REFERENCES custom_quiz(id) ON DELETE RESTRICT NOT DEFERRABLE
@@ -250,8 +250,8 @@ DROP TABLE IF EXISTS "category_question";
 CREATE TABLE "public"."category_question" (
     "categoryId" uuid NOT NULL,
     "questionId" uuid NOT NULL,
-    "createdAt" timestamptz NOT NULL,
-    "updatedAt" timestamptz NOT NULL,
+    "createdAt" timestamptz DEFAULT now() NOT NULL,
+    "updatedAt" timestamptz DEFAULT now() NOT NULL,
     CONSTRAINT "category_question_pkey" PRIMARY KEY ("categoryId", "questionId"),
     CONSTRAINT "category_question_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES category(id) ON DELETE RESTRICT NOT DEFERRABLE,
     CONSTRAINT "category_question_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES question(id) ON DELETE RESTRICT NOT DEFERRABLE
@@ -346,8 +346,8 @@ DROP TABLE IF EXISTS "question_type_question";
 CREATE TABLE "public"."question_type_question" (
     "questionTypeId" uuid NOT NULL,
     "questionId" uuid NOT NULL,
-    "createdAt" timestamptz NOT NULL,
-    "updatedAt" timestamptz NOT NULL,
+    "createdAt" timestamptz DEFAULT now() NOT NULL,
+    "updatedAt" timestamptz DEFAULT now() NOT NULL,
     CONSTRAINT "question_type_question_pkey" PRIMARY KEY ("questionTypeId", "questionId"),
     CONSTRAINT "question_type_question_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES question(id) ON DELETE RESTRICT NOT DEFERRABLE,
     CONSTRAINT "question_type_question_questionTypeId_fkey" FOREIGN KEY ("questionTypeId") REFERENCES question_type(id) ON DELETE RESTRICT NOT DEFERRABLE

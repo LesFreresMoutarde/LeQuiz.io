@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
+use App\Util\Util;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Annotation\Route; //To Keep (even if IDE said it's unused)
 
 #[Route('/question')]
 class QuestionController extends AbstractController
@@ -54,50 +54,35 @@ class QuestionController extends AbstractController
         ]);
     }
 
+    //TODO : - QuestionPosition When CustomQuiz Implemented
+    //       - JSON FOR MEDIA UPLOADING
+    //       - Try/Catch Handling when toastr Ready
 
-    //TODO QUestionPosition !!!
     #[Route('/{id}/edit', name: 'question_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,
                          Question $question,
                          CategoryRepository $categoryRepository,
                          QuestionTypeRepository $questionTypeRepository): Response
     {
-       //Form  = type, difficulty, content, answer, status, media
-        // Lors de la validation, vérifier les types des values de l'user
-        // Verifier si les valeurs sont correctes
-        // Verifier si la valeur est acceptable (une quest ayant plusieurs props, ne peut etre input) Bah si justement
-
-        //Recupérer les types
-//        $questionTypes = Enums::QUESTION_TYPES;
         $questionTypes = $questionTypeRepository->findAll();
         $questionDifficulty = Enums::QUESTION_DIFFICULTY;
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
-//        try {
 
+
+        //try {
+            /* Form Submitted */
             if ($request->getMethod() === 'POST') {
-//                dd($_POST);
+
                 if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
 
                 if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
 
-                list(
-                    $completePickedQuestionTypes,
-                    $completePickedCategories
-                ) = $this->isFormValid($request->request, $categories, $questionTypes);
-//
-//                dump($completePickedCategories);
-//                dd($completePickedQuestionTypes);
-
-                //TODO JSON FOR MEDIA UPLOADING
+                list($completePickedQuestionTypes,
+                    $completePickedCategories) = $this->isFormValid($categories, $questionTypes);
 
                 $answersJson = $this->generateAnswersJson();
-//                dd($answersJson);
 
-                //TODO Remplir le nouvel objet question
-                // Récupérer les questionTypes et Categories associés
-
-                //$question->setContent()
                 $question->setContent($_POST['question-content']);
                 $question->setDifficulty($_POST['question-difficulty']);
                 $question->setStatus($_POST['question-status']);
@@ -120,16 +105,13 @@ class QuestionController extends AbstractController
                 }
 
                 $entityManager = $this->getDoctrine()->getManager();
-                //dd($question);
                 $entityManager->flush();
 
-                //return $this->redirectToRoute('question_index');
                 return $this->redirectToRoute('question_show', [
                     'id' => $question->getId()
                 ]);
             }
 
-            // dd($question);
             return $this->render('question/edit.html.twig', [
                 'question' => $question,
                 'questionTypes' => $questionTypes,
@@ -156,51 +138,7 @@ class QuestionController extends AbstractController
     }
 
 
-    private function generateAnswersJson()
-    {
-        $answers = ['answers' => []];
-
-        foreach ($_POST as $formInputName => $formInput) {
-
-            $parsedFormInput = explode('-', $formInputName);
-
-            if (preg_match('/^answers-content/', $formInputName)) {
-
-                foreach ($answers['answers'] as $answer) {
-                    if ($answer['content'] === $formInput) throw new \Exception('Value not unique');
-                }
-
-//                $parsedFormInput = explode('-', $formInputName);
-
-                $answerId = $parsedFormInput[count($parsedFormInput) - 1];
-
-                if ($formInput !== '')  {
-
-                    $answers['answers'][] = [
-                        'content' => $formInput,
-                        'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
-                    ];
-                }
-
-
-            }
-
-            if (preg_match('/^additional-/', $formInputName)) {
-
-                list($fistKey, $midKey, $lastKey) = $parsedFormInput;
-
-                if ($formInput) $answers[$fistKey][$midKey][$lastKey] = $formInput;
-            }
-        }
-
-        return $answers;
-//        return json_encode($answers);
-
-    }
-
-
-
-    private function isFormValid($formData, array $allCategories, array $allQuestionTypes)
+    private function isFormValid(array $allCategories, array $allQuestionTypes)
     {
 
         $this->hasFormRequiredFields();
@@ -278,6 +216,7 @@ class QuestionController extends AbstractController
             throw new \Exception('Too many question types');
         }
 
+        // Retrieving Category Models from user choices
         $completePickedCategories = [];
 
         foreach ($allCategories as $dbCategory) {
@@ -291,6 +230,7 @@ class QuestionController extends AbstractController
             }
         }
 
+        // Verify if categories are valid
         if (count($completePickedCategories) !== count($pickedCategories)) {
 
             throw new \Exception('Invalid category');
@@ -310,6 +250,7 @@ class QuestionController extends AbstractController
         $answers = [];
         $goodAnswersCount = 0;
 
+        // Push each answers and its value (true or false) into answers array
         foreach ($_POST as $formInputName => $formInput) {
             if (preg_match('/^answers-is_good_answer-/', $formInputName)) {
 
@@ -324,6 +265,8 @@ class QuestionController extends AbstractController
             }
         }
 
+        // Based on the parent question type picked by the user, check if answers array have valid count of answers and
+        // goodAnswers
         switch ($parentQuestionType->getName()) {
             // Only one good answer
             case Enums::QCM_QUESTION_TYPE:
@@ -367,5 +310,46 @@ class QuestionController extends AbstractController
 
         if (count($dynamicFieldsMatch) !== count(DYNAMIC_REQUIRED_FIELDS))
             throw new \Exception('Invalid Form');
+    }
+
+
+    private function generateAnswersJson()
+    {
+        $answers = ['answers' => []];
+
+        foreach ($_POST as $formInputName => $formInput) {
+
+            $parsedFormInput = explode('-', $formInputName);
+
+            if (preg_match('/^answers-content/', $formInputName)) {
+
+                foreach ($answers['answers'] as $answer) {
+                    if ($answer['content'] === $formInput) throw new \Exception('Value not unique');
+                }
+
+                $answerId = $parsedFormInput[count($parsedFormInput) - 1];
+
+                if ($formInput !== '')  {
+
+                    $answers['answers'][] = [
+                        'content' => $formInput,
+                        'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
+                    ];
+                }
+            }
+
+            if (preg_match('/^additional-/', $formInputName)) {
+
+                list($fistKey, $midKey, $lastKey) = $parsedFormInput;
+
+                $fistKey = Util::snakeToCamel($fistKey);
+                $midKey = Util::snakeToCamel($midKey);
+                $lastKey = Util::snakeToCamel($lastKey);
+
+                if ($formInput) $answers[$fistKey][$midKey][$lastKey] = $formInput;
+            }
+        }
+
+        return $answers;
     }
 }
