@@ -28,7 +28,52 @@
             </tr>
             <tr>
                 <th>Answer</th>
-                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>
+{#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
+                <td>
+                    <table>
+                    {% for key, field in question.answer %}
+                        {% if key == 'answers' %}
+                            <tr>
+                                <th>answers</th>
+                                <td>
+                                    <table>
+                                    {% for answer in field %}
+                                        <tr>
+                                        {% for key, answerField in answer %}
+                                            <td>
+                                            {% if key == 'content' %}
+                                                {{ answerField }}
+                                            {% elseif key == 'is_good_answer' and answerField %}
+                                                (Bonne réponse)
+                                             {% endif %}
+                                            </td>
+                                        {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                    </table>
+                                </td>
+                            </tr>
+                        {% elseif key == 'additional' %}
+                            <tr>
+                                <th>additional</th>
+                                <td>
+                                    <table>
+                                        {% for additional in field %}
+                                            {% for key, additionalField in additional %}
+                                            <tr>
+                                                <td>
+                                                    {{ key }} : {{ additionalField }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </table>
+                                </td>
+                            </tr>
+                       {% endif %}
+                    {% endfor  %}
+                    </table>
+                </td>
             </tr>
             <tr>
                 <th>Status</th>
@@ -36,7 +81,17 @@
             </tr>
             <tr>
                 <th>Media</th>
-                <td>{{ question.media ? question.media|json_encode : '' }}</td>
+{#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
+                <td>
+                    <table>
+                        {% for key, field in question.media %}
+                            <tr>
+                                <th>{{ key }} </th>
+                                <td>{{ field }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
             </tr>
             <tr>
                 <th>CreatedAt</th>
