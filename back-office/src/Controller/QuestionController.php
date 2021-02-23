@@ -26,24 +26,47 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/new', name: 'question_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request,
+                        CategoryRepository $categoryRepository,
+                        QuestionTypeRepository $questionTypeRepository): Response
     {
         $question = new Question();
-        $form = $this->createForm(QuestionType::class, $question);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $questionTypes = $questionTypeRepository->findAll();
+        $questionDifficulty = Enums::QUESTION_DIFFICULTY;
+        $questionStatuses = Enums::STATUSES;
+        $categories = $categoryRepository->findAll();
+
+        if ($request->getMethod() === 'POST') {
+
+            if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
+
+            if (!$this->isCsrfTokenValid('question_new_token', $submittedToken)) throw new \Exception('Invalid token');
+
+            list($completePickedQuestionTypes,
+                $completePickedCategories) = $this->isFormValid($categories, $questionTypes);
+
+            $answersJson = $this->generateAnswersJson();
+
+            $question = $this->setQuestionValues($question, $completePickedQuestionTypes, $completePickedCategories, $answersJson);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($question);
             $entityManager->flush();
 
-            return $this->redirectToRoute('question_index');
+            return $this->redirectToRoute('question_show', [
+                'id' => $question->getId()
+            ]);
         }
 
         return $this->render('question/new.html.twig', [
             'question' => $question,
-            'form' => $form->createView(),
+            'questionTypes' => $questionTypes,
+            'questionDifficulty' => $questionDifficulty,
+            'questionStatuses' => $questionStatuses,
+            'categories' => $categories
         ]);
+
     }
 
     #[Route('/{id}', name: 'question_show', methods: ['GET'])]
@@ -83,26 +106,7 @@ class QuestionController extends AbstractController
 
                 $answersJson = $this->generateAnswersJson();
 
-                $question->setContent($_POST['question-content']);
-                $question->setDifficulty($_POST['question-difficulty']);
-                $question->setStatus($_POST['question-status']);
-                $question->setAnswer($answersJson);
-
-                foreach ($question->getCategories() as $category) {
-                    $question->removeCategory($category);
-                }
-
-                foreach ($question->getTypes() as $type) {
-                    $question->removeType($type);
-                }
-
-                foreach ($completePickedQuestionTypes as $questionType) {
-                    $question->addType($questionType);
-                }
-
-                foreach ($completePickedCategories as $category) {
-                    $question->addCategory($category);
-                }
+                $question = $this->setQuestionValues($question, $completePickedQuestionTypes, $completePickedCategories, $answersJson);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->flush();
@@ -346,10 +350,42 @@ class QuestionController extends AbstractController
                 $midKey = Util::snakeToCamel($midKey);
                 $lastKey = Util::snakeToCamel($lastKey);
 
-                if ($formInput) $answers[$fistKey][$midKey][$lastKey] = $formInput;
+                if ($formInput !== '') $answers[$fistKey][$midKey][$lastKey] = $formInput;
             }
         }
 
         return $answers;
     }
+
+    //TODO Media
+    private function setQuestionValues(Question $question,
+                                       array $pickedQuestionTypes,
+                                       array $pickedCategories,
+                                       array $answersJson)
+    {
+        $question->setContent($_POST['question-content']);
+        $question->setDifficulty($_POST['question-difficulty']);
+        $question->setStatus($_POST['question-status']);
+        $question->setAnswer($answersJson);
+
+        foreach ($question->getCategories() as $category) {
+            $question->removeCategory($category);
+        }
+
+        foreach ($question->getTypes() as $type) {
+            $question->removeType($type);
+        }
+
+        foreach ($pickedQuestionTypes as $questionType) {
+            $question->addType($questionType);
+        }
+
+        foreach ($pickedCategories as $category) {
+            $question->addCategory($category);
+        }
+
+        return $question;
+
+    }
+
 }

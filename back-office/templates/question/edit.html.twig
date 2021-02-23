@@ -3,38 +3,22 @@
 {% block title %}Edit Question{% endblock %}
 
 {% block body %}
-{#    <h1>Edit Question</h1>#}
+    <h1>Edit Question</h1>
 
-{#    {{ include('question/_form.html.twig', {'button_label': 'Update'}) }}#}
-
-    <a href="{{ path('question_index') }}">back to list</a>
-
-{#    {{ include('question/_delete_form.html.twig') }}#}
-{#    <a href={{ path('question_edit', {id: question.id})}}>Linko</a>#}
     <form action='{{ path('question_edit', {id: question.id})}}' method="post">
-{#        Form  = type, difficulty, content, answer, status, media#}
-{#        Lors de la validation, vérifier les types des values de l'user#}
-{#        Verifier si les valeurs sont correctes#}
-{#        Verifier si la valeur est acceptable (une quest ayant plusieurs props, ne peut etre input)#}
         <label for="question-content">Question :</label>
         <textarea id="question-content" name="question-content" required>{{ question.content }}</textarea>
         <label for="question-type-select">Type</label>
-{#        <select name="question-type" id="question-type-select" required>#}
             {% for type in questionTypes %}
-{#                TODO VERIFIER LA PRESENCE DU TYPE DANS LE TABLEAU DE TYPE DE LA QUESTION#}
-{#                {% if question.type == type.name %}#}
                 {% if type.name in question.types %}
-{#                    <option value="{{ type.name }}" selected>{{ type }}</option>#}
                     <input type="checkbox" id="cbx-type-{{ type.name }}"
                            name="cbx-type-{{ type.name }}" value="{{ type.name }}" checked>
                 {% else %}
-{#                    <option value="{{ type.name }}">{{ type }}</option>#}
                     <input type="checkbox" id="cbx-type-{{ type.name }}"
                            name="cbx-type-{{ type.name }}" value="{{ type.name }}">
                 {% endif %}
                 <label for="cbx-type-{{ type.name }}">{{ type }}</label>
             {% endfor %}
-        </select>
         <div>
             {% for category in categories %}
                 {% if category.name in question.categories %}
@@ -45,7 +29,6 @@
                 <label for="cbx-category-{{ category.name }}">{{ category }}</label>
             {% endfor %}
         </div>
-        {#      TODO  Answer #}
         <p>Réponses</p>
         {% for answer in question.answer['answers'] %}
             <div>
@@ -66,33 +49,39 @@
                {% endif %}
             </div>
         {% endfor %}
-        <label for="additional-response_media-info">Information supplémentaire</label>
-        <textarea name="additional-response_media-info" id="additional-response_media-info">{{ question.answer['additional']['responseMedia']['info'] ?? '' }}</textarea>
-{#        <input type="hidden"  name="additional-response_media-url" value="http://uneimage.com/toto.jpg">#}
-{#        <input type="hidden"  name="additional-nothing-value" value="toto">#}
         <div>
-{#        TODO RESPONSE MEDIA FILE INPUT #}
+            <label for="additional-response_media-info">Information supplémentaire</label>
+            <textarea name="additional-response_media-info"
+                      id="additional-response_media-info"
+            >{{ question.answer['additional']['responseMedia']['info'] ?? '' }}</textarea>
         </div>
-        <label for="question-difficulty-select">Difficulté</label>
-        <select name="question-difficulty" id="question-difficulty-select">
-            {% for difficulty in questionDifficulty %}
-                {% if question.difficulty == difficulty %}
-                    <option value="{{ difficulty }}" selected>{{ difficulty }}</option>>
-                {% else %}
-                    <option value="{{ difficulty }}">{{ difficulty }}</option>
-                {% endif %}
-            {% endfor %}
+{#        <div>#}
+{#        TODO RESPONSE MEDIA FILE INPUT #}
+{#        </div>#}
+        <div>
+            <label for="question-difficulty-select">Difficulté</label>
+            <select name="question-difficulty" id="question-difficulty-select">
+                {% for difficulty in questionDifficulty %}
+                    {% if question.difficulty == difficulty %}
+                        <option value="{{ difficulty }}" selected>{{ difficulty }}</option>>
+                    {% else %}
+                        <option value="{{ difficulty }}">{{ difficulty }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="question-status-select">Statut</label>
+            <select name="question-status" id="question-status-select">
+                {% for status in questionStatuses %}
+                    {% if question.status == status %}
+                        <option value="{{ status }}" selected>{{ status }}</option>>
+                    {% else %}
+                        <option value="{{ status }}">{{ status }}</option>
+                    {% endif %}
+                {% endfor %}
         </select>
-        <label for="question-status-select">Statut</label>
-        <select name="question-status" id="question-status-select">
-            {% for status in questionStatuses %}
-                {% if question.status == status %}
-                    <option value="{{ status }}" selected>{{ status }}</option>>
-                {% else %}
-                    <option value="{{ status }}">{{ status }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
+        </div>
 {#        {% if question.customQuiz %}#}
 {#        TODO handling when changing a question Position. The position of the question below and above should move
            consequently #}
@@ -101,5 +90,8 @@
         <button type="submit">Envoyer</button>
     </form>
 
+    <a href="{{ path('question_index') }}">back to list</a>
+
+    {{ include('question/_delete_form.html.twig') }}
 
 {% endblock %}
