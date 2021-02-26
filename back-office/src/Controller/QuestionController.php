@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Question;
-use App\Form\QuestionType;
 use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
@@ -12,7 +11,7 @@ use App\Util\Util;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route; //To Keep (even if IDE said it's unused)
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/question')]
 class QuestionController extends AbstractController
