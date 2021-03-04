@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RefreshToken index{% endblock %}
+
+{% block body %}
+    <h1>RefreshToken index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Token</th>
+                <th>ExpirationDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for refresh_token in refresh_tokens %}
+            <tr>
+                <td>
+                   {{ refresh_token.user ? refresh_token.user.username : 'Guest' }}
+                </td>
+                <td>{{ refresh_token.token}}</td>
+{#                <td>{{ refresh_token.token|u.truncate(30, '...') }}</td>#}
+                <td>{{ refresh_token.expirationDate ? refresh_token.expirationDate|date('Y-m-d H:i:s T') : '' }}</td>
+                <td>
+                    <a href="{{ path('refresh_token_show', {'token': refresh_token.token}) }}">show</a>
+{#                    <a href="{{ path('refresh_token_edit', {'token': refresh_token.token}) }}">edit</a>#}
+                    {{ include('refresh_token/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{#    <a href="{{ path('refresh_token_new') }}">Create new</a>#}
+{% endblock %}

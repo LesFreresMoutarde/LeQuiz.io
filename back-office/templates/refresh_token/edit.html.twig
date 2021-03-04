@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RefreshToken{% endblock %}
+
+{% block body %}
+    <h1>Edit RefreshToken</h1>
+
+    {{ include('refresh_token/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('refresh_token_index') }}">back to list</a>
+
+    {{ include('refresh_token/_delete_form.html.twig') }}
+{% endblock %}
