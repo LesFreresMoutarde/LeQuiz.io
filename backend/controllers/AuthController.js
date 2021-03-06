@@ -634,10 +634,7 @@ class AuthController extends MainController {
 
     sendResetPasswordEmailToUser = async (user) => {
         await Util.Email.sendEmailFromNoreply({
-            to: {
-                name: user.username,
-                email: user.email,
-            },
+            to: `"${user.username}" <${user.email}>`,
             subject: 'Réinitialisez votre mot de passe',
             html:
 `<p>

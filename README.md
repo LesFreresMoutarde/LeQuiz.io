@@ -59,6 +59,7 @@ You should access to:
 
 - Application frontend: [http://127.0.0.1](http://127.0.0.1)
 - Application backend (API): [http://127.0.0.1:3000](http://127.0.0.1:3000)
+- Mailhog: [http://127.0.0.1:8025](http://127.0.0.1:8025)
 - adminer: [http://127.0.0.1:8080](http://127.0.0.1:8080)
   - system: PostgreSQL
   - host: `database`

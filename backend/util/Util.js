@@ -1,8 +1,6 @@
 const argon2 = require('argon2');
-const sendgrid = require('@sendgrid/mail');
+const nodemailer = require('nodemailer');
 const env = require('../config/env');
-
-sendgrid.setApiKey(env.email.apiKey);
 
 class Util {
     static Password = {
@@ -20,6 +18,8 @@ class Util {
         FROM_NAME: 'LeQuiz.io',
         FROM_NOREPLY_ADDRESS: 'noreply@lequiz.io',
 
+        transport: nodemailer.createTransport(env.email),
+
         /**
          * @param {string} email
          * @return {boolean}
@@ -33,28 +33,43 @@ class Util {
             return !!email.match(regex);
         },
 
-        sendEmail: async(message = {}) => {
-            await sendgrid.send(message);
+        /**
+         * @param {object} message The message options
+         * @param {string} message.from The sender
+         * @param {string} message.to The recipients, comma-separated
+         * @param {string} message.subject The email subject
+         * @param {string} message.text The email text content
+         * @param {string} message.html The email html content
+         * @param message
+         * @return {Promise}
+         */
+        sendEmail: (message = {}) => {
+            return new Promise((resolve, reject) => {
+                Util.Email.transport.sendMail(message, (error, info) => {
+                    if (error) {
+                        reject(error);
+                    }
+
+                    resolve(info);
+                });
+            });
+
+            // await sendgrid.send(message);
         },
 
         /**
          *
-         * @param {object} message
-         * @param {object} message.to
-         * @param {string} message.to.name The email recipient's name
-         * @param {string} message.to.email The email recipient's email address
+         * @param {object} message The message options
+         * @param {string} message.to The recipients, comma-separated
          * @param {string} message.subject The email subject
-         * @param {string} message.html The email HTML content
          * @param {string} message.text The email text content
-         * @returns {Promise<void>}
+         * @param {string} message.html The email html content
+         * @returns {Promise}
          */
         sendEmailFromNoreply: async(message = {}) => {
-            message.from = {
-                email: Util.Email.FROM_NOREPLY_ADDRESS,
-                name: Util.Email.FROM_NAME,
-            }
+            message.from = `"${Util.Email.FROM_NAME}" <${Util.Email.FROM_NOREPLY_ADDRESS}>`;
 
-            Util.Email.sendEmail(message);
+            return await Util.Email.sendEmail(message);
         },
     };
 
