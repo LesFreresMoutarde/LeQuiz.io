@@ -91,9 +91,9 @@ class QuestionController extends AbstractController
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
 
+//TODO
+//        try {
 
-        //try {
-            /* Form Submitted */
             if ($request->getMethod() === 'POST') {
 
                 if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
@@ -123,7 +123,7 @@ class QuestionController extends AbstractController
                 'categories' => $categories
             ]);
 //        } catch (\Exception $e) {
-////            dd($e);
+
 //             return($e);
 //        }
     }
@@ -344,10 +344,10 @@ class QuestionController extends AbstractController
             if (preg_match('/^additional-/', $formInputName)) {
 
                 list($fistKey, $midKey, $lastKey) = $parsedFormInput;
-
-                $fistKey = Util::snakeToCamel($fistKey);
-                $midKey = Util::snakeToCamel($midKey);
-                $lastKey = Util::snakeToCamel($lastKey);
+//
+//                $fistKey = Util::snakeToCamel($fistKey);
+//                $midKey = Util::snakeToCamel($midKey);
+//                $lastKey = Util::snakeToCamel($lastKey);
 
                 if ($formInput !== '') $answers[$fistKey][$midKey][$lastKey] = $formInput;
             }

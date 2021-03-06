@@ -25,7 +25,7 @@
           }
         ],
         "additional": {
-          "responseMedia": {
+          "response_media": {
             "url": "http://example.com/toto.png",
             "info": "0 + 0 égale ? ..."
           }
@@ -129,7 +129,7 @@
           }
         ],
         "additional": {
-          "responseMedia": {
+          "response_media": {
             "url": null,
             "info": "Les Jeux ont été rénovés par le baron Pierre de Coubertin à la fin du XIXe siècle."
           }
@@ -264,7 +264,7 @@
           }
         ],
         "additional": {
-          "responseMedia": {
+          "response_media": {
             "url": null,
             "info": "Le procès de Nuremberg fut intenté contre 24 responsables du Troisième Reich."
           }
@@ -410,7 +410,7 @@
           }
         ],
         "additional": {
-          "responseMedia": {
+          "response_media": {
             "url": null,
             "info": "Il évoluait dans l'équipe des Spurs de San Antonio depuis son arrivée dans la NBA en 2001."
           }
