@@ -25,7 +25,6 @@
                 <td>{{ refresh_token.expirationDate ? refresh_token.expirationDate|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>
                     <a href="{{ path('refresh_token_show', {'token': refresh_token.token}) }}">show</a>
-{#                    <a href="{{ path('refresh_token_edit', {'token': refresh_token.token}) }}">edit</a>#}
                     {{ include('refresh_token/_delete_form.html.twig') }}
                 </td>
             </tr>
@@ -36,6 +35,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-{#    <a href="{{ path('refresh_token_new') }}">Create new</a>#}
 {% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr>
+            <tr>
+                <th>PasswordResetToken</th>
+                <td>{{ user.passwordResetToken }}</td>
+            </tr>
+            <tr>
+                <th>LastResetPasswordEmailSendDate</th>
+                <td>{{ user.lastResetPasswordEmailSendDate ? user.lastResetPasswordEmailSendDate|date('Y-m-d H:i:s T') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Plan</th>
+                <td>{{ user.plan }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.role }}</td>
+            </tr>
+            <tr>
+                <th>IsTrustyWriter</th>
+                <td>{{ user.isTrustyWriter ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsBanned</th>
+                <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>UnbanDate</th>
+                <td>{{ user.unbanDate ? user.unbanDate|date('Y-m-d H:i:s T') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeletedAt</th>
+                <td>{{ user.deletedAt ? user.deletedAt|date('Y-m-d H:i:s T') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_index') }}">back to list</a>
+
+    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}
