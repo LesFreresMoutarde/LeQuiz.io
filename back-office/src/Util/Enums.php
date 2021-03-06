@@ -18,11 +18,6 @@ class Enums
 
     public const USER_ROLES = [self::USER_MEMBER_ROLE, self::USER_REVIEWER_ROLE, self::USER_ADMIN_ROLE];
 
-    public const QCM_QUESTION_TYPE = 'qcm';
-    public const INPUT_QUESTION_TYPE = 'input';
-
-    public const QUESTION_TYPES = [self::QCM_QUESTION_TYPE, self::INPUT_QUESTION_TYPE];
-
     public const EASY_QUESTION_DIFFICULTY = 'easy';
     public const MEDIUM_QUESTION_DIFFICULTY = 'medium';
     public const HARD_QUESTION_DIFFICULTY = 'hard';

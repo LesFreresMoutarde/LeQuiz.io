@@ -1,3 +1,4 @@
+# dbal types changed fo compatibility with Postgres DateTime
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'

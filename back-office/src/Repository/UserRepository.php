@@ -19,7 +19,13 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-
+    /**
+     * Added to make login works with username or email
+     *
+     * @param string $usernameOrEmail
+     * @return int|mixed|string|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function loadUserByUsername(string $usernameOrEmail)
     {
         $entityManager = $this->getEntityManager();
@@ -27,10 +33,10 @@ class UserRepository extends ServiceEntityRepository
         return $entityManager->createQuery(
             'SELECT u
                 FROM App\Entity\User u
-                WHERE u.username = :query
-                OR u.email = :query'
+                WHERE u.username = :param
+                OR u.email = :param'
         )
-            ->setParameter('query', $usernameOrEmail)
+            ->setParameter('param', $usernameOrEmail)
             ->getOneOrNullResult();
     }
 

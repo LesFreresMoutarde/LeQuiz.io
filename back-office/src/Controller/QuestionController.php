@@ -344,10 +344,6 @@ class QuestionController extends AbstractController
             if (preg_match('/^additional-/', $formInputName)) {
 
                 list($fistKey, $midKey, $lastKey) = $parsedFormInput;
-//
-//                $fistKey = Util::snakeToCamel($fistKey);
-//                $midKey = Util::snakeToCamel($midKey);
-//                $lastKey = Util::snakeToCamel($lastKey);
 
                 if ($formInput !== '') $answers[$fistKey][$midKey][$lastKey] = $formInput;
             }
