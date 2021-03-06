@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Util\Enums;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,7 +34,7 @@ class EditUserType extends AbstractType
             ->add('isTrustyWriter')
             ->add('isActive')
             ->add('isBanned')
-//            ->add('unbanDate') A GERER MANUELLEMENT SI CHANGEMENT IS BANNED
+            ->add('unbanDate')
         ;
     }
 
