@@ -5,17 +5,16 @@ namespace App\Form;
 use App\Entity\User;
 use App\Util\Enums;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class EditUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $userPlans = [];
         $userRoles = [];
 
@@ -25,7 +24,6 @@ class UserType extends AbstractType
         $builder
             ->add('username')
             ->add('email', EmailType::class)
-            ->add('password', PasswordType::class)
             ->add('plan', ChoiceType::class, [
                 'choices' => $userPlans
             ])
@@ -33,9 +31,9 @@ class UserType extends AbstractType
                 'choices' => $userRoles
             ])
             ->add('isTrustyWriter')
-            ->add('isActive', CheckboxType::class, [
-                'data' => true
-            ])
+            ->add('isActive')
+            ->add('isBanned')
+//            ->add('unbanDate') A GERER MANUELLEMENT SI CHANGEMENT IS BANNED
         ;
     }
 

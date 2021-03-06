@@ -36,7 +36,16 @@
                 <td>{{ user.isTrustyWriter ? 'Yes' : 'No' }}</td>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
                 <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
-                <td>{{ user.unbanDate ? user.unbanDate|date('Y-m-d H:i:s T') : 'Not banned' }}</td>
+                <td>
+                    {% if user.isBanned %}
+                        Banned
+                    {% elseif not user.isBanned and not user.unbanDate %}
+                        Not Banned
+                    {% else %}
+                        {{ user.unbanDate }}
+                    {% endif %}
+                </td>
+{#                <td>{{ user.unbanDate ? user.unbanDate|date('Y-m-d H:i:s T') : 'Not banned' }}</td>#}
                 <td>{{ user.deletedAt ? user.deletedAt|date('Y-m-d H:i:s T') : 'Not deleted' }}</td>
                 <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
