@@ -4,14 +4,14 @@
 namespace App\Manager;
 
 
-use App\Entity\Question;
-use App\Entity\User;
-use App\Repository\CategoryRepository;
-use App\Repository\QuestionRepository;
-use App\Repository\RefreshTokenRepository;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+//use App\Entity\Question;
+//use App\Entity\User;
+//use App\Repository\CategoryRepository;
+//use App\Repository\QuestionRepository;
+//use App\Repository\RefreshTokenRepository;
+//use App\Repository\UserRepository;
+//use Doctrine\ORM\EntityManagerInterface;
+//use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class TestManager
 {
@@ -24,38 +24,38 @@ class TestManager
 
     public function __construct
     (
-        EntityManagerInterface $entityManager,
-        UserRepository $userRepository,
-        CategoryRepository $categoryRepository,
-        QuestionRepository $questionRepository,
-        RefreshTokenRepository $refreshTokenRepository,
-        UserPasswordEncoderInterface $passwordEncoder
+//        EntityManagerInterface $entityManager,
+//        UserRepository $userRepository,
+//        CategoryRepository $categoryRepository,
+//        QuestionRepository $questionRepository,
+//        RefreshTokenRepository $refreshTokenRepository,
+//        UserPasswordEncoderInterface $passwordEncoder
     )
     {
-        $this->entityManager = $entityManager;
-        $this->userRepository = $userRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->questionRepository = $questionRepository;
-        $this->refreshTokenRepository = $refreshTokenRepository;
-        $this->passwordEncoder = $passwordEncoder;
+//        $this->entityManager = $entityManager;
+//        $this->userRepository = $userRepository;
+//        $this->categoryRepository = $categoryRepository;
+//        $this->questionRepository = $questionRepository;
+//        $this->refreshTokenRepository = $refreshTokenRepository;
+//        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function userTest()
     {
-        $user = new User();
-        $user->setEmail('dddtoto@makoto.fr');
-        $user->setUsername('ddd');
-        $password = $this->passwordEncoder->encodePassword($user, 'password');
-        $user->setPassword($password);
-        $user->setIsBanned(false);
-        $user->setIsActive(true);
-        $user->setIsTrustyWriter(false);
-        $user->setRole('member');
-        $user->setPlan('free');
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-        dd($user);
+//        $user = new User();
+//        $user->setEmail('dddtoto@makoto.fr');
+//        $user->setUsername('ddd');
+//        $password = $this->passwordEncoder->encodePassword($user, 'password');
+//        $user->setPassword($password);
+//        $user->setIsBanned(false);
+//        $user->setIsActive(true);
+//        $user->setIsTrustyWriter(false);
+//        $user->setRole('member');
+//        $user->setPlan('free');
+//
+//        $this->entityManager->persist($user);
+//        $this->entityManager->flush();
+//        dd($user);
 //        sleep(2);
 //        $toto = $this->userRepository->findOneBy(['username' => 'ddd']);
 //        $toto->setUsername('UsernameModified');
@@ -77,13 +77,14 @@ class TestManager
     {
         $histCat = $this->categoryRepository->findOneBy(['name' => 'Histoire']);
 
-        dump($histCat);
+        //dump($histCat);
 
         $histQuest = $histCat->getQuestions();
 
         foreach ($histQuest as $quest) {
             dump($quest);
         }
+        die();
         echo 'fin cat';
     }
 

@@ -42,7 +42,7 @@ class CustomQuiz extends EntityBase
     /**
      * @var bool
      *
-     * @ORM\Column(name="reviewsRequested", type="boolean", nullable=false)
+     * @ORM\Column(name="`reviewsRequested`", type="boolean", nullable=false)
      */
     private $reviewsRequested;
 
@@ -57,7 +57,7 @@ class CustomQuiz extends EntityBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="customQuizzes")
-     * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="`authorId`", referencedColumnName="id")
      */
     private $author;
 

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RefreshToken{% endblock %}
+
+{% block body %}
+    <h1>Create new RefreshToken</h1>
+
+    {{ include('refresh_token/_form.html.twig') }}
+
+    <a href="{{ path('refresh_token_index') }}">back to list</a>
+{% endblock %}

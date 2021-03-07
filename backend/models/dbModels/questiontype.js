@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(80),
             unique: true,
             allowNull: false
+        },
+        isChild: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
         }
     }, {
         sequelize,

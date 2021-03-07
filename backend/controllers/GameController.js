@@ -126,7 +126,7 @@ class GameController extends MainController {
 
         const categories = [];
 
-        const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", 
+        const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label", 
             COUNT(*) as "nbQuestions", "question_type"."name" as "type" 
             FROM "category" 
             INNER JOIN "category_question" 
@@ -153,6 +153,7 @@ class GameController extends MainController {
                 categories.push({
                     id: records[i].id,
                     name: records[i].name,
+                    label: records[i].label,
                     nbQuestions : {
                         [records[i].type]: records[i].nbQuestions
                     }
@@ -163,6 +164,7 @@ class GameController extends MainController {
                 categories.push({
                     id: records[i].id,
                     name: records[i].name,
+                    label: records[i].label,
                     nbQuestions : {
                         [records[i].type]: records[i].nbQuestions
                     }

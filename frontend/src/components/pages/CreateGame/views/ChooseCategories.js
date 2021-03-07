@@ -34,6 +34,8 @@ export default class ChooseCategories extends React.Component {
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                 const categories = await this.getCategories();
 
+                console.log(categories)
+
                 this.setState({
                     isLoading: false,
                     categories

@@ -23,7 +23,7 @@ class GameUtil {
 
         return query;
 
-    }
+    };
 
     static generateSerieQuizQuery = (gameConfiguration) => {
 
@@ -31,10 +31,12 @@ class GameUtil {
         const categoriesId = gameConfiguration.categories.map(category => category.id);
         const limit = Number(gameConfiguration.winCriterion);
 
+        //TODO Prendre les infos pertinentes concernant les catégories et les types
+        // Revenir dessus quand edit de question (back office) fonctionnel
         return {
             query:`SELECT "question"."content", "question"."answer", "question"."media", 
                 "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
-                "category"."name" as "category" 
+                "category"."name" as "category", "category"."label" as "categoryLabel"
                 FROM "question"
                 INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
                 INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"

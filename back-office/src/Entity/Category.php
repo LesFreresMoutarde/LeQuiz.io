@@ -2,21 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Category
  *
- * @ORM\Table(
- *     name="category",
- *     indexes={@ORM\Index(name="category_name", columns={"name"})}
- *     )
+ * @ORM\Table(name="category", uniqueConstraints={@ORM\UniqueConstraint(name="category_name_key", columns={"name"}), @ORM\UniqueConstraint(name="category_label_key", columns={"label"})})
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\HasLifecycleCallbacks
  */
-
 class Category extends EntityBase
 {
     /**
@@ -37,23 +31,11 @@ class Category extends EntityBase
     private $name;
 
     /**
-     * @var CustomQuiz[]
+     * @var string
      *
-     * @ORM\ManyToMany(targetEntity="CustomQuiz", mappedBy="categories")
+     * @ORM\Column(name="label", type="string", length=50, nullable=false)
      */
-    private $customQuizzes;
-
-    /**
-     * @var Question[]
-     *
-     * @ORM\ManyToMany(targetEntity="Question", mappedBy="categories")
-     */
-    private $questions;
-
-    public function __construct() {
-        $this->customQuizzes = new ArrayCollection();
-        $this->questions = new ArrayCollection();
-    }
+    private $label;
 
     public function getId(): ?string
     {
@@ -72,57 +54,21 @@ class Category extends EntityBase
         return $this;
     }
 
-    /**
-     * @return Collection|CustomQuiz[]
-     */
-    public function getCustomQuizzes(): Collection
+    public function getLabel(): ?string
     {
-        return $this->customQuizzes;
+        return $this->label;
     }
 
-    public function addCustomQuiz(CustomQuiz $customQuiz): self
+    public function setLabel(string $label): self
     {
-        if (!$this->customQuizzes->contains($customQuiz)) {
-            $this->customQuizzes[] = $customQuiz;
-            $customQuiz->addCategory($this);
-        }
+        $this->label = $label;
 
         return $this;
     }
 
-    public function removeCustomQuiz(CustomQuiz $customQuiz): self
+    public function __toString()
     {
-        if ($this->customQuizzes->removeElement($customQuiz)) {
-            $customQuiz->removeCategory($this);
-        }
-
-        return $this;
+        return $this->name;
     }
 
-    /**
-     * @return Collection|Question[]
-     */
-    public function getQuestions(): Collection
-    {
-        return $this->questions;
-    }
-
-    public function addQuestion(Question $question): self
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions[] = $question;
-            $question->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(Question $question): self
-    {
-        if ($this->questions->removeElement($question)) {
-            $question->removeCategory($this);
-        }
-
-        return $this;
-    }
 }

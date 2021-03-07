@@ -3,14 +3,24 @@
     "model": "QuestionType",
     "data": {
       "name": "qcm",
-      "label": "QCM"
+      "label": "QCM",
+      "isChild": false
     }
   },
   {
     "model": "QuestionType",
     "data": {
       "name": "input",
-      "label": "Réponse libre"
+      "label": "Réponse libre",
+      "isChild": false
+    }
+  },
+  {
+    "model": "QuestionType",
+    "data": {
+      "name": "blind-test",
+      "label": "Blind Test",
+      "isChild": true
     }
   }
 ]

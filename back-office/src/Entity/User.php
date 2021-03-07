@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -21,6 +23,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *     @ORM\Index(name="user_username", columns={"username"}),
  *     @ORM\Index(name="user_plan", columns={"plan"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username", message="{{ value }} is already used")
+ * @UniqueEntity("email", message="{{ value }} is already used")
  * @ORM\HasLifecycleCallbacks
  */
 class User extends EntityBase implements UserInterface
@@ -46,6 +50,7 @@ class User extends EntityBase implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=191, nullable=false)
+     * @Assert\Email(message="{{ value }} is not a valid email")
      */
     private $email;
 
@@ -53,6 +58,7 @@ class User extends EntityBase implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @Assert\Length(min=8)
      */
     private $password;
 

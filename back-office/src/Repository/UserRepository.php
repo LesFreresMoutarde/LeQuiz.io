@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -13,13 +12,20 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
+class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * Added to make login works with username or email
+     *
+     * @param string $usernameOrEmail
+     * @return int|mixed|string|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function loadUserByUsername(string $usernameOrEmail)
     {
         $entityManager = $this->getEntityManager();
@@ -27,10 +33,10 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
         return $entityManager->createQuery(
             'SELECT u
                 FROM App\Entity\User u
-                WHERE u.username = :query
-                OR u.email = :query'
+                WHERE u.username = :param
+                OR u.email = :param'
         )
-            ->setParameter('query', $usernameOrEmail)
+            ->setParameter('param', $usernameOrEmail)
             ->getOneOrNullResult();
     }
 

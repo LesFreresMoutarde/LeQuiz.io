@@ -15,7 +15,7 @@ function myLogging(defaultLog) {
 
 (async () => {
     try {
-        await sequelize_fixtures.loadFile('fixtures/*.json', models, { log: myLogging} );
+        await sequelize_fixtures.loadFile('fixtures/*.json', models, {log: myLogging,});
     } catch (e) {
         console.error(e);
     }

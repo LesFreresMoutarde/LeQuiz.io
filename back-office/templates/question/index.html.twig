@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question index{% endblock %}
+
+{% block body %}
+    <h1>Question index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Types</th>
+                <th>Difficulty</th>
+                <th>Categories</th>
+                <th>Content</th>
+                <th>Answer</th>
+                <th>Status</th>
+                <th>Media</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{% for type in question.types %}
+                        {{ type }}
+                    {% endfor %}
+                </td>
+                <td>{{ question.difficulty }}</td>
+                <td>{% for category in question.categories %}
+                        {{ category }}
+                    {% endfor %}
+                </td>
+                <td>{{ question.content }}</td>
+{#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
+                <td>
+                    <table>
+                        {% for key, field in question.answer %}
+                            {% if key == 'answers' %}
+                                <tr>
+                                    <th>answers</th>
+                                    <td>
+                                        <table>
+                                            {% for answer in field %}
+                                                <tr>
+                                                    {% for key, answerField in answer %}
+                                                        <td>
+                                                            {% if key == 'content' %}
+                                                                {{ answerField }}
+                                                            {% elseif key == 'is_good_answer' and answerField %}
+                                                                (Bonne réponse)
+                                                            {% endif %}
+                                                        </td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% elseif key == 'additional' %}
+                                <tr>
+                                    <th>additional</th>
+                                    <td>
+                                        <table>
+                                            {% for additional in field %}
+                                                {% for key, additionalField in additional %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ key }} : {{ additionalField }}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor  %}
+                    </table>
+                </td>
+                <td>{{ question.status }}</td>
+{#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
+                <td>
+                    <table>
+                        {% for key, field in question.media %}
+                            <tr>
+                                <th>{{ key }} </th>
+                                <td>{{ field }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
+                <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
+                <td>
+                    <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
+                    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('question_new') }}">Create new</a>
+{% endblock %}
