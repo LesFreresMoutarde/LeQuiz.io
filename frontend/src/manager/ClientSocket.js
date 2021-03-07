@@ -89,6 +89,7 @@ class ClientSocket {
         this.socket.on('ask-question', () => {
             roomComponent.askQuestion();
 
+            // A déporter côté server
             roomComponent.handleTimeLeft('question');
 
             roomComponent.timeoutId = window.setTimeout(() => {

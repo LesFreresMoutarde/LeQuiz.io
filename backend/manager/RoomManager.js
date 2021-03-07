@@ -216,6 +216,7 @@ module.exports = (server) => {
             state: 'lobby',
             players: [host],
             game: {
+                timer: null,
                 quizLength: 0,
                 round: 0,
                 quiz: [],
