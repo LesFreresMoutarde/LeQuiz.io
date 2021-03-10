@@ -69,22 +69,25 @@ module.exports = (server) => {
 
         });
 
+        //TODO Verifier que tous les joueurs aient reçus
         socket.on('quiz-received', (roomId) => {
             const room = findRoom(roomId)[0];
 
             if (room) {
                 room.state = 'question';
                 socket.emit('ask-question');
+                handleRoomTimers(room);
             }
 
         });
 
         socket.on('next-question', (roomId) => {
             const room = findRoom(roomId)[0];
-
+            console.log(room);
             if (room) {
                 room.state = 'question';
-                socket.emit('ask-question')
+                socket.emit('ask-question');
+                handleRoomTimers(room);
             }
 
         });
@@ -97,6 +100,7 @@ module.exports = (server) => {
                 room.state = 'answer';
 
                 if (receivedAllAnswers) {
+                    // Kill les timers
                     const eventToEmit = getEventToEmit(room);
                     io.to(room.id).emit(eventToEmit, room);
                 }
@@ -124,6 +128,27 @@ module.exports = (server) => {
         })
 
     });
+
+    const handleRoomTimers = (room) => {
+        console.log(GameUtil.ROUND_TIME / 1000+" secondes");
+        clearTimeout(room.game.timeoutTimer);
+
+        let roundToMinus = GameUtil.ROUND_TIME
+        io.to(room.id).emit("timer", roundToMinus / 1000);
+
+        room.game.intervalTimer = setInterval(() => {
+            roundToMinus -= 1000;
+            console.log(roundToMinus / 1000+" secondes");
+            io.to(room.id).emit("timer", roundToMinus / 1000);// room.emit()
+        }, 1000)
+
+        room.game.timeoutTimer = setTimeout(() => {
+            console.log("Fin du chrono");
+            io.to(room.id).emit("timeout", roundToMinus / 1000)
+            clearInterval(room.game.intervalTimer);
+            // clearTimeout(room.game.timeoutTimer);
+        },GameUtil.ROUND_TIME)
+    }
 
     const reinitRoomGame = (room) => {
         room.state = 'lobby';
@@ -216,7 +241,8 @@ module.exports = (server) => {
             state: 'lobby',
             players: [host],
             game: {
-                timer: null,
+                timeoutTimer: null,
+                intervalTimer: null,
                 quizLength: 0,
                 round: 0,
                 quiz: [],

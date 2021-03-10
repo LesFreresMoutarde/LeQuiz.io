@@ -90,12 +90,32 @@ class ClientSocket {
             roomComponent.askQuestion();
 
             // A déporter côté server
-            roomComponent.handleTimeLeft('question');
-
-            roomComponent.timeoutId = window.setTimeout(() => {
-                roomComponent.submitAnswer()
-            }, GameUtil.ROUND_TIME)
+            // roomComponent.handleTimeLeft('question');
+            //
+            // roomComponent.timeoutId = window.setTimeout(() => {
+            //     roomComponent.submitAnswer()
+            // }, GameUtil.ROUND_TIME)
         });
+
+        this.socket.on('timer', time => {
+            console.log("le timer", time)
+
+            roomComponent.setState({
+                timeLeft: time,
+            })
+        })
+
+        this.socket.on('timeout', time => {
+            console.log("le timerOUT", time)
+
+            //envoié la réponse ave
+            roomComponent.submitAnswer()
+
+            // A voir
+            roomComponent.setState({
+                timeLeft: 0,
+            })
+        })
 
         this.socket.on('display-scores', (roomData) => {
             clearInterval(roomComponent.intervalId);
