@@ -82,7 +82,7 @@ module.exports = (server) => {
 
                 socket.emit('ask-question');
 
-                if (socket.id === room.host.socketId) handleRoomTimers(room, 'question');
+               if (socket.id === room.host.socketId) sendTimeSignal(room, 'question');
             }
 
         });
@@ -95,7 +95,7 @@ module.exports = (server) => {
 
                 socket.emit('ask-question');
 
-                if (socket.id === room.host.socketId) handleRoomTimers(room, 'question');
+                if (socket.id === room.host.socketId) sendTimeSignal(room, 'question');
             }
 
         });
@@ -110,7 +110,7 @@ module.exports = (server) => {
                 if (receivedAllAnswers) {
                     const context = getContext(room);
 
-                    handleRoomTimers(room, context);
+                    sendTimeSignal(room, 'question');
                 }
             }
         });
@@ -140,108 +140,18 @@ module.exports = (server) => {
 
     });
 
-    const handleRoomTimers = (room, context) => {
-        console.log("le contexte", context);
-        clearTimeout(room.game.timeoutTimer);
-        clearInterval(room.game.intervalTimer);
+    const sendTimeSignal = (room, context) => {
 
-        let time;
-        // let time = GameUtil.SCORES_TIME
+        let time = GameUtil.ROUND_TIME;
 
-        switch (context) {
-            case 'question':
-                time = GameUtil.ROUND_TIME;
+        if (context !== "question") time = GameUtil.SCORES_TIME
 
-                break;
+        io.to(room.id).emit('start-time', time)
 
-            case 'scores':
-                time = GameUtil.SCORES_TIME;
-                io.to(room.id).emit('display-scores', room);
-                break
-
-            case 'end':
-                time = GameUtil.SCORES_TIME;
-                io.to(room.id).emit('end-game', room)
-                break
-
-            default:
-                return;
-        }
-
-        let timeToMinus = time
-        io.to(room.id).emit("timer", timeToMinus / 1000);
-
-        room.game.intervalTimer = setInterval(() => {
-            console.log("inSetInterval")
-            timeToMinus -= 1000;
-            console.log(timeToMinus / 1000+" secondes");
-            io.to(room.id).emit("timer", timeToMinus / 1000);
-        }, 1000)
-
-        room.game.timeoutTimer = setTimeout(() => {
-            console.log("Fin du chrono");
-            clearInterval(room.game.intervalTimer);
-            clearTimeout(room.game.timeoutTimer);
-            // io.to(room.id).emit("timeout")
-
-            if (context === 'scores') {
-                io.to(room.id).emit('next-question-ready');
-                // OU back-to-lobby
-            } else if (context === 'end') {
-                io.to(room.id).emit('back-to-lobby')
-            } else {
-                io.to(room.id).emit("timeout", timeToMinus / 1000)
-            }
+        room.game.timer = setTimeout(() => {
+            io.to(room.id).emit('end-time')
         }, time)
-
-
-        // if (context === "question") {
-        //     time = GameUtil.ROUND_TIME;
-        // }
-
-        // On repasse dans ce bloc quand on veut jouer la question suivante
-        // if (context === 'scores') {
-        //     console.log("context scores");
-        //     io.to(room.id).emit('display-scores', room);
-        //     time = GameUtil.SCORES_TIME
-        // }
-
-        // console.log(time / 1000+" secondes");
-        //
-        // // let timeToMinus = time
-        // io.to(room.id).emit("timer", timeToMinus / 1000);
-
-        // room.game.intervalTimer = setInterval(() => {
-        //    console.log("inSetInterval")
-        //     timeToMinus -= 1000;
-        //     console.log(timeToMinus / 1000+" secondes");
-        //     io.to(room.id).emit("timer", timeToMinus / 1000);
-        // }, 1000)
-
-        // room.game.timeoutTimer = setTimeout(() => {
-        //     console.log("Fin du chrono");
-        //     clearInterval(room.game.intervalTimer);
-        //     clearTimeout(room.game.timeoutTimer);
-        //     // io.to(room.id).emit("timeout")
-        //
-        //     if (context === 'scores') {
-        //         io.to(room.id).emit('next-question-ready');
-        //     } else {
-        //         io.to(room.id).emit("timeout", timeToMinus / 1000)
-        //     }
-        //
-        //     // SI ON EST dans le cas du score on veut envoyer l'event ask-question
-        //
-        //     // Faut envoyer un timeout-question ou un timeout-scores pour qu'il affiche la question, ou les scores
-        //
-        //
-        // }, time)
-    }
-
-    const killTimers = (room) => {
-        clearTimeout(room.game.timeoutTimer);
-        clearInterval(room.game.intervalTimer);
-    }
+    };
 
     const reinitRoomGame = (room) => {
         room.state = 'lobby';
@@ -343,8 +253,7 @@ module.exports = (server) => {
             state: 'lobby',
             players: [host],
             game: {
-                timeoutTimer: null,
-                intervalTimer: null,
+                timer: null,
                 quizLength: 0,
                 round: 0,
                 quiz: [],
