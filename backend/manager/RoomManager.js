@@ -79,9 +79,9 @@ module.exports = (server) => {
 
             if (room) {
                 room.state = 'question';
+
                 socket.emit('ask-question');
-                // clone(room, 'question');
-                console.log("roomId Question", room.id)
+
                 if (socket.id === room.host.socketId) handleRoomTimers(room, 'question');
             }
 
@@ -92,9 +92,9 @@ module.exports = (server) => {
             console.log(room);
             if (room) {
                 room.state = 'question';
+
                 socket.emit('ask-question');
-                // clone(room, 'question');
-                console.log("roomId Question", room.id)
+
                 if (socket.id === room.host.socketId) handleRoomTimers(room, 'question');
             }
 
@@ -108,19 +108,9 @@ module.exports = (server) => {
                 room.state = 'answer';
 
                 if (receivedAllAnswers) {
-                    // Kill les timers
-                    // killTimers(room)
-
-                    // Envoyé les timers de scores
-                    console.log('roomId player result',room.id)
-
-                    // clone(room, 'scores');
-                    console.log('toto');
-                    // const eventToEmit = getEventToEmit(room);
                     const context = getContext(room);
-                    // io.to(room.id).emit(eventToEmit, room); // CAUSE LE BUG !!!!
 
-                    if (socket.id === room.host.socketId) handleRoomTimers(room, context);
+                    handleRoomTimers(room, context);
                 }
             }
         });
@@ -139,8 +129,11 @@ module.exports = (server) => {
             if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
 
             if (hasScoresToBeDisplayed) {
-                const eventToEmit = getEventToEmit(room);
-                io.to(room.id).emit(eventToEmit, room);
+                // const eventToEmit = getEventToEmit(room);
+                // const context = getContext(room);
+
+                // handleRoomTimers(room, context);
+                // io.to(room.id).emit(eventToEmit, room);
             }
 
         })
@@ -414,6 +407,7 @@ module.exports = (server) => {
         } else {
 
             const hostHasToBeTransferred = checkIfHostHasToBeTransferred(player, room);
+
             if (hostHasToBeTransferred) room = changeRoomHost(room);
 
             if (checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true
@@ -451,7 +445,11 @@ module.exports = (server) => {
         let index = -1;
 
         rooms.forEach((activeRoom, i) => {
-            if (activeRoom.id === room.id) index = i;
+            if (activeRoom.id === room.id) {
+                index = i;
+                clearInterval(room.game.intervalTimer);
+                clearTimeout(room.game.timeoutTimer);
+            }
         });
 
         rooms.splice(index, 1);
