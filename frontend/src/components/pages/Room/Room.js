@@ -133,11 +133,11 @@ class Room extends React.Component {
     };
 
     submitAnswer = (answer = null) => {
-
+        console.log("TRIGGER submitAnswer()");
         let isGoodAnswer = false;
         if (answer) {
             this.setState({questionInputDisabled: true});
-            window.clearTimeout(this.timeoutId);
+            // window.clearTimeout(this.timeoutId);
             const { currentQuestion } = this.state;
             isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
         }

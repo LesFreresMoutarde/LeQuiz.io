@@ -88,7 +88,7 @@ class ClientSocket {
 
         this.socket.on('ask-question', () => {
             roomComponent.askQuestion();
-
+            console.log('event ask-question');
             // A déporter côté server
             // roomComponent.handleTimeLeft('question');
             //
@@ -108,17 +108,17 @@ class ClientSocket {
         this.socket.on('timeout', time => {
             console.log("le timerOUT", time)
 
-            //envoié la réponse ave
+            //envoyer la réponse ave
             roomComponent.submitAnswer()
 
             // A voir
             roomComponent.setState({
-                timeLeft: 0,
+                timeLeft: time,
             })
         })
 
         this.socket.on('display-scores', (roomData) => {
-            clearInterval(roomComponent.intervalId);
+            // clearInterval(roomComponent.intervalId);
 
             roomComponent.setState(
                 {
@@ -133,13 +133,17 @@ class ClientSocket {
                 }
             );
 
-            roomComponent.handleTimeLeft('scores');
-
-            setTimeout(() => {
-                clearInterval(roomComponent.intervalId);
-                this.socket.emit('next-question', roomComponent.roomId);
-            }, GameUtil.SCORES_TIME);
+            // roomComponent.handleTimeLeft('scores');
+            //
+            // setTimeout(() => {
+            //     clearInterval(roomComponent.intervalId);
+            //     this.socket.emit('next-question', roomComponent.roomId);
+            // }, GameUtil.SCORES_TIME);
         });
+
+        this.socket.on('next-question-ready', () => {
+            this.socket.emit('next-question', roomComponent.roomId);
+        })
 
         this.socket.on('end-game', (roomData) => {
             clearInterval(roomComponent.intervalId);
@@ -154,21 +158,21 @@ class ClientSocket {
                 roomData,
                 questionInputDisabled: false
             });
+        })
 
-            roomComponent.handleTimeLeft('scores');
+        this.socket.on('back-to-lobby', () => {
 
-            setTimeout(() => {
-                this.socket.emit('game-reinit', roomComponent.roomId);
-                clearInterval(roomComponent.intervalId);
-                roomComponent.setState({
-                    display: {
-                        lobby: true,
-                        question: false,
-                        answer: false,
-                        gameOptions: false,
-                    }
-                })
-            }, GameUtil.SCORES_TIME);
+                // SI c'est l'host ! (peut etre cote serv)
+            this.socket.emit('game-reinit', roomComponent.roomId);
+            roomComponent.setState({
+                display: {
+                    lobby: true,
+                    question: false,
+                    answer: false,
+                    gameOptions: false,
+                }
+            })
+
         })
 
 

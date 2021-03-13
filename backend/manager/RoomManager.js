@@ -9,6 +9,10 @@ module.exports = (server) => {
     const rooms = [];
 
     const players = [];
+    //
+    // let timeoutTimer = null;
+    //
+    // let intervalTimer = null
 
     const io = socketEngine(server, {
         cors: {
@@ -76,7 +80,9 @@ module.exports = (server) => {
             if (room) {
                 room.state = 'question';
                 socket.emit('ask-question');
-                handleRoomTimers(room);
+                // clone(room, 'question');
+                console.log("roomId Question", room.id)
+                if (socket.id === room.host.socketId) handleRoomTimers(room, 'question');
             }
 
         });
@@ -87,7 +93,9 @@ module.exports = (server) => {
             if (room) {
                 room.state = 'question';
                 socket.emit('ask-question');
-                handleRoomTimers(room);
+                // clone(room, 'question');
+                console.log("roomId Question", room.id)
+                if (socket.id === room.host.socketId) handleRoomTimers(room, 'question');
             }
 
         });
@@ -101,8 +109,18 @@ module.exports = (server) => {
 
                 if (receivedAllAnswers) {
                     // Kill les timers
-                    const eventToEmit = getEventToEmit(room);
-                    io.to(room.id).emit(eventToEmit, room);
+                    // killTimers(room)
+
+                    // Envoyé les timers de scores
+                    console.log('roomId player result',room.id)
+
+                    // clone(room, 'scores');
+                    console.log('toto');
+                    // const eventToEmit = getEventToEmit(room);
+                    const context = getContext(room);
+                    // io.to(room.id).emit(eventToEmit, room); // CAUSE LE BUG !!!!
+
+                    if (socket.id === room.host.socketId) handleRoomTimers(room, context);
                 }
             }
         });
@@ -129,25 +147,107 @@ module.exports = (server) => {
 
     });
 
-    const handleRoomTimers = (room) => {
-        console.log(GameUtil.ROUND_TIME / 1000+" secondes");
+    const handleRoomTimers = (room, context) => {
+        console.log("le contexte", context);
         clearTimeout(room.game.timeoutTimer);
+        clearInterval(room.game.intervalTimer);
 
-        let roundToMinus = GameUtil.ROUND_TIME
-        io.to(room.id).emit("timer", roundToMinus / 1000);
+        let time;
+        // let time = GameUtil.SCORES_TIME
+
+        switch (context) {
+            case 'question':
+                time = GameUtil.ROUND_TIME;
+
+                break;
+
+            case 'scores':
+                time = GameUtil.SCORES_TIME;
+                io.to(room.id).emit('display-scores', room);
+                break
+
+            case 'end':
+                time = GameUtil.SCORES_TIME;
+                io.to(room.id).emit('end-game', room)
+                break
+
+            default:
+                return;
+        }
+
+        let timeToMinus = time
+        io.to(room.id).emit("timer", timeToMinus / 1000);
 
         room.game.intervalTimer = setInterval(() => {
-            roundToMinus -= 1000;
-            console.log(roundToMinus / 1000+" secondes");
-            io.to(room.id).emit("timer", roundToMinus / 1000);// room.emit()
+            console.log("inSetInterval")
+            timeToMinus -= 1000;
+            console.log(timeToMinus / 1000+" secondes");
+            io.to(room.id).emit("timer", timeToMinus / 1000);
         }, 1000)
 
         room.game.timeoutTimer = setTimeout(() => {
             console.log("Fin du chrono");
-            io.to(room.id).emit("timeout", roundToMinus / 1000)
             clearInterval(room.game.intervalTimer);
-            // clearTimeout(room.game.timeoutTimer);
-        },GameUtil.ROUND_TIME)
+            clearTimeout(room.game.timeoutTimer);
+            // io.to(room.id).emit("timeout")
+
+            if (context === 'scores') {
+                io.to(room.id).emit('next-question-ready');
+                // OU back-to-lobby
+            } else if (context === 'end') {
+                io.to(room.id).emit('back-to-lobby')
+            } else {
+                io.to(room.id).emit("timeout", timeToMinus / 1000)
+            }
+        }, time)
+
+
+        // if (context === "question") {
+        //     time = GameUtil.ROUND_TIME;
+        // }
+
+        // On repasse dans ce bloc quand on veut jouer la question suivante
+        // if (context === 'scores') {
+        //     console.log("context scores");
+        //     io.to(room.id).emit('display-scores', room);
+        //     time = GameUtil.SCORES_TIME
+        // }
+
+        // console.log(time / 1000+" secondes");
+        //
+        // // let timeToMinus = time
+        // io.to(room.id).emit("timer", timeToMinus / 1000);
+
+        // room.game.intervalTimer = setInterval(() => {
+        //    console.log("inSetInterval")
+        //     timeToMinus -= 1000;
+        //     console.log(timeToMinus / 1000+" secondes");
+        //     io.to(room.id).emit("timer", timeToMinus / 1000);
+        // }, 1000)
+
+        // room.game.timeoutTimer = setTimeout(() => {
+        //     console.log("Fin du chrono");
+        //     clearInterval(room.game.intervalTimer);
+        //     clearTimeout(room.game.timeoutTimer);
+        //     // io.to(room.id).emit("timeout")
+        //
+        //     if (context === 'scores') {
+        //         io.to(room.id).emit('next-question-ready');
+        //     } else {
+        //         io.to(room.id).emit("timeout", timeToMinus / 1000)
+        //     }
+        //
+        //     // SI ON EST dans le cas du score on veut envoyer l'event ask-question
+        //
+        //     // Faut envoyer un timeout-question ou un timeout-scores pour qu'il affiche la question, ou les scores
+        //
+        //
+        // }, time)
+    }
+
+    const killTimers = (room) => {
+        clearTimeout(room.game.timeoutTimer);
+        clearInterval(room.game.intervalTimer);
     }
 
     const reinitRoomGame = (room) => {
@@ -162,6 +262,15 @@ module.exports = (server) => {
             scoreLine.lastAnswer = null;
         })
     };
+
+    const getContext = (room) => {
+
+        if (room.game.quiz.length > 0) {
+            return 'scores';
+        }
+        return 'end'
+    };
+
 
     const getEventToEmit = (room) => {
 
