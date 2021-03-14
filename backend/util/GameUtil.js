@@ -1,12 +1,8 @@
 
 class GameUtil {
 
-    // Backend Timers Implement
     static ROUND_TIME = 12*1000;
-
     static SCORES_TIME = 5*1000;
-    //END
-
 
     static ROOMS_ID = [];
     static GUEST_IDS = [];
