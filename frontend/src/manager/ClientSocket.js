@@ -89,92 +89,34 @@ class ClientSocket {
         this.socket.on('ask-question', () => {
             roomComponent.askQuestion();
             console.log('event ask-question');
-            // A déporter côté server
-            // roomComponent.handleTimeLeft('question');
-            //
-            // roomComponent.timeoutId = window.setTimeout(() => {
-            //     roomComponent.submitAnswer()
-            // }, GameUtil.ROUND_TIME)
         });
 
-        this.socket.on('timer', time => {
-            console.log("le timer", time)
+        this.socket.on('start-time', ({time, event, room}) => {
 
-            roomComponent.setState({
-                timeLeft: time,
-            })
-        })
+            if (event === "ask-question")
+                roomComponent.askQuestion();
+            else
+                roomComponent.displayScores(room)
 
-        this.socket.on('timeout', time => {
-            console.log("le timerOUT", time)
+            roomComponent.handleTimeLeft(time);
 
-            //envoyer la réponse ave
-            roomComponent.submitAnswer()
-
-            // A voir
-            roomComponent.setState({
-                timeLeft: time,
-            })
-        })
-
-        this.socket.on('display-scores', (roomData) => {
-            // clearInterval(roomComponent.intervalId);
-
-            roomComponent.setState(
-                {
-                    display: {
-                        lobby: false,
-                        question: false,
-                        answer: true,
-                        gameOptions: false,
-                    },
-                    roomData,
-                    questionInputDisabled: false,
-                }
-            );
-
-            // roomComponent.handleTimeLeft('scores');
-            //
-            // setTimeout(() => {
-            //     clearInterval(roomComponent.intervalId);
-            //     this.socket.emit('next-question', roomComponent.roomId);
-            // }, GameUtil.SCORES_TIME);
         });
 
-        this.socket.on('next-question-ready', () => {
-            this.socket.emit('next-question', roomComponent.roomId);
+        this.socket.on('no-answer', () => {
+            roomComponent.submitAnswer();
         })
 
-        this.socket.on('end-game', (roomData) => {
-            clearInterval(roomComponent.intervalId);
-
-            roomComponent.setState({
-                display: {
-                    lobby: false,
-                    question: false,
-                    answer: true,
-                    gameOptions: false,
-                },
-                roomData,
-                questionInputDisabled: false
-            });
+        this.socket.on('end-time', ({event, room}) => {
+            if (event === 'display-scores') {
+                // roomComponent.askQuestion();
+                console.log("emit next question");
+                this.socket.emit('next-question', roomComponent.roomId)
+            }
+            else {
+                console.log("endGame")
+                roomComponent.endGame(room)
+            }
         })
-
-        this.socket.on('back-to-lobby', () => {
-
-                // SI c'est l'host ! (peut etre cote serv)
-            this.socket.emit('game-reinit', roomComponent.roomId);
-            roomComponent.setState({
-                display: {
-                    lobby: true,
-                    question: false,
-                    answer: false,
-                    gameOptions: false,
-                }
-            })
-
-        })
-
 
         //TODO Handle socket.on('error')
     };

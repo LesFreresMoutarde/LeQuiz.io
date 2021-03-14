@@ -9,10 +9,6 @@ module.exports = (server) => {
     const rooms = [];
 
     const players = [];
-    //
-    // let timeoutTimer = null;
-    //
-    // let intervalTimer = null
 
     const io = socketEngine(server, {
         cors: {
@@ -80,9 +76,9 @@ module.exports = (server) => {
             if (room) {
                 room.state = 'question';
 
-                socket.emit('ask-question');
+                // socket.emit('ask-question');
 
-               if (socket.id === room.host.socketId) sendTimeSignal(room, 'question');
+               if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
             }
 
         });
@@ -93,9 +89,9 @@ module.exports = (server) => {
             if (room) {
                 room.state = 'question';
 
-                socket.emit('ask-question');
+                // socket.emit('ask-question');
 
-                if (socket.id === room.host.socketId) sendTimeSignal(room, 'question');
+                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
             }
 
         });
@@ -108,9 +104,12 @@ module.exports = (server) => {
                 room.state = 'answer';
 
                 if (receivedAllAnswers) {
-                    const context = getContext(room);
 
-                    sendTimeSignal(room, 'question');
+                    const eventToEmit = getEventToEmit(room);
+                    // io.to(room.id).emit(eventToEmit, room);
+                    // const context = getContext(room);
+
+                    emitEventAndTimeSignal(room, eventToEmit);
                 }
             }
         });
@@ -129,27 +128,39 @@ module.exports = (server) => {
             if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
 
             if (hasScoresToBeDisplayed) {
-                // const eventToEmit = getEventToEmit(room);
-                // const context = getContext(room);
-
-                // handleRoomTimers(room, context);
+                const eventToEmit = getEventToEmit(room);
                 // io.to(room.id).emit(eventToEmit, room);
+                emitEventAndTimeSignal(room, eventToEmit);
             }
 
         })
 
     });
 
-    const sendTimeSignal = (room, context) => {
+    const emitEventAndTimeSignal = (room, event) => {
+
+        clearTimeout(room.game.timer);
 
         let time = GameUtil.ROUND_TIME;
 
-        if (context !== "question") time = GameUtil.SCORES_TIME
+        console.log("event", event)
 
-        io.to(room.id).emit('start-time', time)
+        if (event !== "ask-question") time = GameUtil.SCORES_TIME
+
+        io.to(room.id).emit('start-time', {time, event, room});
 
         room.game.timer = setTimeout(() => {
-            io.to(room.id).emit('end-time')
+
+            const noAnswerPlayers = getNoAnswerPlayers(room);
+
+            if (event === "ask-question") {
+                noAnswerPlayers.forEach((socketId) => {
+                    io.to(socketId).emit('no-answer')
+                })
+            } else {
+                io.to(room.id).emit("end-time", {event, room});
+            }
+
         }, time)
     };
 
@@ -166,14 +177,16 @@ module.exports = (server) => {
         })
     };
 
-    const getContext = (room) => {
+    const getNoAnswerPlayers = (room) => {
 
-        if (room.game.quiz.length > 0) {
-            return 'scores';
-        }
-        return 'end'
-    };
+        const socketIds = [];
 
+        room.players.forEach((player) => {
+            if (!room.game.hasAnswered.includes(player.socketId)) socketIds.push(player.socketId);
+        });
+
+        return socketIds;
+    }
 
     const getEventToEmit = (room) => {
 
@@ -356,8 +369,7 @@ module.exports = (server) => {
         rooms.forEach((activeRoom, i) => {
             if (activeRoom.id === room.id) {
                 index = i;
-                clearInterval(room.game.intervalTimer);
-                clearTimeout(room.game.timeoutTimer);
+                clearTimeout(room.game.timer);
             }
         });
 

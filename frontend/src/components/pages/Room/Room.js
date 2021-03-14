@@ -15,8 +15,9 @@ class Room extends React.Component {
 
     socket;
     roomId;
-    timeoutId;
-    intervalId;
+    timeoutId; //TODO Remove
+    intervalId; //TODO Remove
+    timer;
     gameOptionsToLoad;
 
     constructor(props) {
@@ -145,19 +146,54 @@ class Room extends React.Component {
         this.socket.sendResult({result: isGoodAnswer, roomId: this.roomId})
     };
 
-    handleTimeLeft = (type) => {
-
-        let timeLeft = GameUtil.ROUND_TIME / 1000;
-
-        if (type === 'scores') timeLeft = GameUtil.SCORES_TIME / 1000;
-
-        this.setState({timeLeft});
-        timeLeft --;
-        this.intervalId = window.setInterval(() => {
-            this.setState({timeLeft});
-            timeLeft --
-        }, 1000) ;
+    displayScores = (roomData) => {
+        this.setState(
+            {
+                display: {
+                    lobby: false,
+                    question: false,
+                    answer: true,
+                    gameOptions: false,
+                },
+                roomData,
+                questionInputDisabled: false,
+            }
+        );
     };
+
+    endGame = (roomData) => {
+        this.setState({
+            display: {
+                lobby: true,
+                question: false,
+                answer: false,
+                gameOptions: false,
+            },
+            roomData,
+            questionInputDisabled: false
+        });
+    }
+
+    handleTimeLeft = (time) => {
+
+        clearInterval(this.timer);
+
+        let timeToDisplay = time / 1000;
+
+        this.setState({timeLeft: timeToDisplay})
+
+        this.timer = setInterval(() => {
+
+            //TODO Gerer time < 0
+            time -= 1000;
+
+            time >= 0 ? timeToDisplay = time / 1000 : timeToDisplay = 1
+
+            this.setState({timeLeft: timeToDisplay});
+
+        }, 1000);
+
+    }
 
     changeOptions = (page) => {
         this.gameOptionsToLoad = page;
@@ -193,8 +229,7 @@ class Room extends React.Component {
 
         if(this.state.socketOpen) {
             this.socket.destructor();
-            clearTimeout(this.timeoutId);
-            clearInterval(this.intervalId);
+            clearInterval(this.timer);
         }
 
     }
