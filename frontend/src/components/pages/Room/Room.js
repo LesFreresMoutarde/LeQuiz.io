@@ -15,8 +15,6 @@ class Room extends React.Component {
 
     clientSocket;
     roomId;
-    timeoutId; //TODO Remove
-    intervalId; //TODO Remove
     timer;
     gameOptionsToLoad;
 
@@ -138,7 +136,6 @@ class Room extends React.Component {
         let isGoodAnswer = false;
         if (answer) {
             this.setState({questionInputDisabled: true});
-            // window.clearTimeout(this.timeoutId);
             const { currentQuestion } = this.state;
             isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
         }
@@ -182,13 +179,11 @@ class Room extends React.Component {
 
         let timeToDisplay = time / 1000;
 
-        // console.log("TIME TO DISPLAY", timeToDisplay);
 
         this.setState({timeLeft: timeToDisplay})
 
         this.timer = setInterval(() => {
 
-            //TODO Gerer time < 0
             time -= 1000;
 
             time > 0 ? timeToDisplay = time / 1000 : timeToDisplay = 1
@@ -199,12 +194,14 @@ class Room extends React.Component {
 
     }
 
-    handlePlayerDisconnect = (host, players) => {
+    handlePlayerDisconnect = (host, players, scores) => {
         const { roomData } = this.state;
 
         let { isHost } = this.state;
 
         const mixedRoomData = {...roomData, ...{host, players}};
+
+        mixedRoomData.game.scores = scores;
 
         if (this.clientSocket.socket.id === mixedRoomData.host.socketId) isHost = true;
 

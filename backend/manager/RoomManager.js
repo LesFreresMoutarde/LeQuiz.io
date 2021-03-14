@@ -76,8 +76,6 @@ module.exports = (server) => {
             if (room) {
                 room.state = 'question';
 
-                // socket.emit('ask-question');
-
                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
             }
 
@@ -88,8 +86,6 @@ module.exports = (server) => {
             console.log(room);
             if (room) {
                 room.state = 'question';
-
-                // socket.emit('ask-question');
 
                 if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
             }
@@ -104,10 +100,7 @@ module.exports = (server) => {
                 room.state = 'answer';
 
                 if (receivedAllAnswers) {
-
                     const eventToEmit = getEventToEmit(room);
-                    // io.to(room.id).emit(eventToEmit, room);
-                    // const context = getContext(room);
 
                     emitEventAndTimeSignal(room, eventToEmit);
                 }
@@ -121,14 +114,17 @@ module.exports = (server) => {
         })
 
         socket.on('disconnect', () => {
-            console.log('deconnexion');
 
             const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
-            console.log('la room a update', room);
-            if (hasRoomToBeUpdated)  io.to(room.id).emit('player-disconnect', {host:room.host, players:room.players}); // cause le bug parce que ROOM est trop volumineux
+
+            if (hasRoomToBeUpdated)
+                io.to(room.id).emit('player-disconnect', {
+                    host:room.host,
+                    players:room.players,
+                    scores: room.game.scores
+                });
 
             if (hasScoresToBeDisplayed) {
-                console.log("HAS SCORES TO BE DISPLAYED");
                 const eventToEmit = getEventToEmit(room);
 
                 emitEventAndTimeSignal(room, eventToEmit);
@@ -143,8 +139,6 @@ module.exports = (server) => {
         clearTimeout(room.game.timer);
 
         let time = GameUtil.ROUND_TIME;
-
-        console.log("event", event)
 
         if (event !== "ask-question") time = GameUtil.SCORES_TIME
 

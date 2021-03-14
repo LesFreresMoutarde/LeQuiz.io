@@ -47,13 +47,9 @@ class ClientSocket {
         });
 
         this.socket.on('room-updated', (roomData) => {
-            let isHost = roomComponent.state.isHost;
-            //
-            // if (!isHost) {
-            //     if (this.socket.id === roomData.host.socketId) isHost = true;
-            // }
+            console.log('ROOM UPDATED')
 
-            roomComponent.setState({roomData, isHost})
+            roomComponent.setState({roomData})
         });
 
         this.socket.on('game-config-asked', (socketId) => {
@@ -116,8 +112,8 @@ class ClientSocket {
             }
         })
 
-        this.socket.on('player-disconnect', ({host, players}) => {
-            roomComponent.handlePlayerDisconnect(host, players)
+        this.socket.on('player-disconnect', ({host, players, scores}) => {
+            roomComponent.handlePlayerDisconnect(host, players, scores)
         })
 
         //TODO Handle socket.on('error')
