@@ -47,7 +47,6 @@ class ClientSocket {
         });
 
         this.socket.on('room-updated', (roomData) => {
-            console.log('ROOM UPDATED')
 
             roomComponent.setState({roomData})
         });
@@ -84,7 +83,6 @@ class ClientSocket {
 
         this.socket.on('ask-question', () => {
             roomComponent.askQuestion();
-            console.log('event ask-question');
         });
 
         this.socket.on('start-time', ({time, event, room}) => {

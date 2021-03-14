@@ -76,14 +76,14 @@ module.exports = (server) => {
             if (room) {
                 room.state = 'question';
 
-               if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
+                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
             }
 
         });
 
         socket.on('next-question', (roomId) => {
             const room = findRoom(roomId)[0];
-            console.log(room);
+
             if (room) {
                 room.state = 'question';
 

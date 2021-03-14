@@ -132,8 +132,8 @@ class Room extends React.Component {
     };
 
     submitAnswer = (answer = null) => {
-        console.log("TRIGGER submitAnswer()");
         let isGoodAnswer = false;
+
         if (answer) {
             this.setState({questionInputDisabled: true});
             const { currentQuestion } = this.state;
