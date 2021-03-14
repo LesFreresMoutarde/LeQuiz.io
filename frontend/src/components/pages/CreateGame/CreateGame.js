@@ -44,10 +44,10 @@ export default class CreateGame extends React.Component {
 
     createGameConfiguration = () => {
         return {
-            gameMode: '',
+            gameMode: {},
             categories: [],
             questionTypes: [],
-            winCriterion: '',
+            winCriterion: null,
             difficulty: null,
             roomCode: false,
         }
