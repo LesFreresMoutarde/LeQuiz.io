@@ -13,10 +13,9 @@ const toastr = new Toastr();
 
 class Room extends React.Component {
 
-    socket;
+    clientSocket;
     roomId;
-    timeoutId;
-    intervalId;
+    timer;
     gameOptionsToLoad;
 
     constructor(props) {
@@ -74,7 +73,7 @@ class Room extends React.Component {
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
                 this.roomId = roomId;
-                this.socket = new ClientSocket();
+                this.clientSocket = new ClientSocket();
 
                 const user = Util.getJwtPayloadContent(Util.accessToken).user;
 
@@ -91,8 +90,8 @@ class Room extends React.Component {
                     username = `Guest#${guestId}`;
 
                 }
-                this.socket.connectToRoom(roomId, username, isHost);
-                this.socket.handleSocketCommunication(this);
+                this.clientSocket.connectToRoom(roomId, username, isHost);
+                this.clientSocket.handleSocketCommunication(this);
                 this.setState({socketOpen: true});
             } catch (error) {
                 toastr.error('Impossible de rejoindre cette room');
@@ -105,7 +104,7 @@ class Room extends React.Component {
 
     startQuiz = () => {
         //TODO V2 verifier que le Host a les droits pour le mode de jeu !!
-        this.socket.generateQuiz(this.roomId)
+        this.clientSocket.generateQuiz(this.roomId)
 
     };
 
@@ -133,31 +132,81 @@ class Room extends React.Component {
     };
 
     submitAnswer = (answer = null) => {
-
         let isGoodAnswer = false;
+
         if (answer) {
             this.setState({questionInputDisabled: true});
-            window.clearTimeout(this.timeoutId);
             const { currentQuestion } = this.state;
             isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
         }
 
-        this.socket.sendResult({result: isGoodAnswer, roomId: this.roomId})
+        this.clientSocket.sendResult({result: isGoodAnswer, roomId: this.roomId})
     };
 
-    handleTimeLeft = (type) => {
-
-        let timeLeft = GameUtil.ROUND_TIME / 1000;
-
-        if (type === 'scores') timeLeft = GameUtil.SCORES_TIME / 1000;
-
-        this.setState({timeLeft});
-        timeLeft --;
-        this.intervalId = window.setInterval(() => {
-            this.setState({timeLeft});
-            timeLeft --
-        }, 1000) ;
+    displayScores = (roomData) => {
+        this.setState(
+            {
+                display: {
+                    lobby: false,
+                    question: false,
+                    answer: true,
+                    gameOptions: false,
+                },
+                roomData,
+                questionInputDisabled: false,
+            }
+        );
     };
+
+    endGame = (roomData) => {
+        clearInterval(this.timer);
+
+        this.setState({
+            display: {
+                lobby: true,
+                question: false,
+                answer: false,
+                gameOptions: false,
+            },
+            roomData,
+            questionInputDisabled: false
+        });
+    }
+
+    handleTimeLeft = (time) => {
+
+        clearInterval(this.timer);
+
+        let timeToDisplay = time / 1000;
+
+
+        this.setState({timeLeft: timeToDisplay})
+
+        this.timer = setInterval(() => {
+
+            time -= 1000;
+
+            time > 0 ? timeToDisplay = time / 1000 : timeToDisplay = 1
+
+            this.setState({timeLeft: timeToDisplay});
+
+        }, 1000);
+
+    }
+
+    handlePlayerDisconnect = (host, players, scores) => {
+        const { roomData } = this.state;
+
+        let { isHost } = this.state;
+
+        const mixedRoomData = {...roomData, ...{host, players}};
+
+        mixedRoomData.game.scores = scores;
+
+        if (this.clientSocket.socket.id === mixedRoomData.host.socketId) isHost = true;
+
+        this.setState({roomData: mixedRoomData, isHost});
+    }
 
     changeOptions = (page) => {
         this.gameOptionsToLoad = page;
@@ -192,9 +241,8 @@ class Room extends React.Component {
         Util.clearSessionStorage();
 
         if(this.state.socketOpen) {
-            this.socket.destructor();
-            clearTimeout(this.timeoutId);
-            clearInterval(this.intervalId);
+            this.clientSocket.destructor();
+            clearInterval(this.timer);
         }
 
     }

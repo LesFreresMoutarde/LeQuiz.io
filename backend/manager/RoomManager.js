@@ -69,12 +69,14 @@ module.exports = (server) => {
 
         });
 
+        //TODO Verifier que tous les joueurs aient reçus
         socket.on('quiz-received', (roomId) => {
             const room = findRoom(roomId)[0];
 
             if (room) {
                 room.state = 'question';
-                socket.emit('ask-question');
+
+                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
             }
 
         });
@@ -84,7 +86,8 @@ module.exports = (server) => {
 
             if (room) {
                 room.state = 'question';
-                socket.emit('ask-question')
+
+                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
             }
 
         });
@@ -98,7 +101,8 @@ module.exports = (server) => {
 
                 if (receivedAllAnswers) {
                     const eventToEmit = getEventToEmit(room);
-                    io.to(room.id).emit(eventToEmit, room);
+
+                    emitEventAndTimeSignal(room, eventToEmit);
                 }
             }
         });
@@ -110,22 +114,53 @@ module.exports = (server) => {
         })
 
         socket.on('disconnect', () => {
-            console.log('deconnexion');
 
             const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
 
-            if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
+            if (hasRoomToBeUpdated)
+                io.to(room.id).emit('player-disconnect', {
+                    host:room.host,
+                    players:room.players,
+                    scores: room.game.scores
+                });
 
             if (hasScoresToBeDisplayed) {
                 const eventToEmit = getEventToEmit(room);
-                io.to(room.id).emit(eventToEmit, room);
+
+                emitEventAndTimeSignal(room, eventToEmit);
             }
 
         })
 
     });
 
+    const emitEventAndTimeSignal = (room, event) => {
+
+        clearTimeout(room.game.timer);
+
+        let time = GameUtil.ROUND_TIME;
+
+        if (event !== "ask-question") time = GameUtil.SCORES_TIME
+
+        io.to(room.id).emit('start-time', {time, event, room});
+
+        room.game.timer = setTimeout(() => {
+
+            const noAnswerPlayers = getNoAnswerPlayers(room);
+
+            if (event === "ask-question") {
+                noAnswerPlayers.forEach((socketId) => {
+                    io.to(socketId).emit('no-answer')
+                })
+            } else {
+                io.to(room.id).emit("end-time", {event, room});
+            }
+
+        }, time)
+    };
+
     const reinitRoomGame = (room) => {
+        clearTimeout(room.game.timer);
         room.state = 'lobby';
         room.game.quizLength = 0;
         room.game.round = 0;
@@ -137,6 +172,17 @@ module.exports = (server) => {
             scoreLine.lastAnswer = null;
         })
     };
+
+    const getNoAnswerPlayers = (room) => {
+
+        const socketIds = [];
+
+        room.players.forEach((player) => {
+            if (!room.game.hasAnswered.includes(player.socketId)) socketIds.push(player.socketId);
+        });
+
+        return socketIds;
+    }
 
     const getEventToEmit = (room) => {
 
@@ -216,6 +262,7 @@ module.exports = (server) => {
             state: 'lobby',
             players: [host],
             game: {
+                timer: null,
                 quizLength: 0,
                 round: 0,
                 quiz: [],
@@ -278,6 +325,7 @@ module.exports = (server) => {
         } else {
 
             const hostHasToBeTransferred = checkIfHostHasToBeTransferred(player, room);
+
             if (hostHasToBeTransferred) room = changeRoomHost(room);
 
             if (checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true
@@ -315,7 +363,10 @@ module.exports = (server) => {
         let index = -1;
 
         rooms.forEach((activeRoom, i) => {
-            if (activeRoom.id === room.id) index = i;
+            if (activeRoom.id === room.id) {
+                index = i;
+                clearTimeout(room.game.timer);
+            }
         });
 
         rooms.splice(index, 1);
