@@ -13,7 +13,7 @@ const toastr = new Toastr();
 
 class Room extends React.Component {
 
-    socket;
+    clientSocket;
     roomId;
     timeoutId; //TODO Remove
     intervalId; //TODO Remove
@@ -75,7 +75,7 @@ class Room extends React.Component {
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
                 this.roomId = roomId;
-                this.socket = new ClientSocket();
+                this.clientSocket = new ClientSocket();
 
                 const user = Util.getJwtPayloadContent(Util.accessToken).user;
 
@@ -92,8 +92,8 @@ class Room extends React.Component {
                     username = `Guest#${guestId}`;
 
                 }
-                this.socket.connectToRoom(roomId, username, isHost);
-                this.socket.handleSocketCommunication(this);
+                this.clientSocket.connectToRoom(roomId, username, isHost);
+                this.clientSocket.handleSocketCommunication(this);
                 this.setState({socketOpen: true});
             } catch (error) {
                 toastr.error('Impossible de rejoindre cette room');
@@ -106,7 +106,7 @@ class Room extends React.Component {
 
     startQuiz = () => {
         //TODO V2 verifier que le Host a les droits pour le mode de jeu !!
-        this.socket.generateQuiz(this.roomId)
+        this.clientSocket.generateQuiz(this.roomId)
 
     };
 
@@ -143,7 +143,7 @@ class Room extends React.Component {
             isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
         }
 
-        this.socket.sendResult({result: isGoodAnswer, roomId: this.roomId})
+        this.clientSocket.sendResult({result: isGoodAnswer, roomId: this.roomId})
     };
 
     displayScores = (roomData) => {
@@ -162,6 +162,8 @@ class Room extends React.Component {
     };
 
     endGame = (roomData) => {
+        clearInterval(this.timer);
+
         this.setState({
             display: {
                 lobby: true,
@@ -180,6 +182,8 @@ class Room extends React.Component {
 
         let timeToDisplay = time / 1000;
 
+        // console.log("TIME TO DISPLAY", timeToDisplay);
+
         this.setState({timeLeft: timeToDisplay})
 
         this.timer = setInterval(() => {
@@ -187,12 +191,24 @@ class Room extends React.Component {
             //TODO Gerer time < 0
             time -= 1000;
 
-            time >= 0 ? timeToDisplay = time / 1000 : timeToDisplay = 1
+            time > 0 ? timeToDisplay = time / 1000 : timeToDisplay = 1
 
             this.setState({timeLeft: timeToDisplay});
 
         }, 1000);
 
+    }
+
+    handlePlayerDisconnect = (host, players) => {
+        const { roomData } = this.state;
+
+        let { isHost } = this.state;
+
+        const mixedRoomData = {...roomData, ...{host, players}};
+
+        if (this.clientSocket.socket.id === mixedRoomData.host.socketId) isHost = true;
+
+        this.setState({roomData: mixedRoomData, isHost});
     }
 
     changeOptions = (page) => {
@@ -228,7 +244,7 @@ class Room extends React.Component {
         Util.clearSessionStorage();
 
         if(this.state.socketOpen) {
-            this.socket.destructor();
+            this.clientSocket.destructor();
             clearInterval(this.timer);
         }
 

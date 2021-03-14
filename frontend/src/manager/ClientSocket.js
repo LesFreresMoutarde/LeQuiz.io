@@ -48,10 +48,10 @@ class ClientSocket {
 
         this.socket.on('room-updated', (roomData) => {
             let isHost = roomComponent.state.isHost;
-
-            if (!isHost) {
-                if (this.socket.id === roomData.host.socketId) isHost = true;
-            }
+            //
+            // if (!isHost) {
+            //     if (this.socket.id === roomData.host.socketId) isHost = true;
+            // }
 
             roomComponent.setState({roomData, isHost})
         });
@@ -108,14 +108,16 @@ class ClientSocket {
 
         this.socket.on('end-time', ({event, room}) => {
             if (event === 'display-scores') {
-                // roomComponent.askQuestion();
-                console.log("emit next question");
                 this.socket.emit('next-question', roomComponent.roomId)
             }
             else {
-                console.log("endGame")
+                this.socket.emit('game-reinit', roomComponent.roomId);
                 roomComponent.endGame(room)
             }
+        })
+
+        this.socket.on('player-disconnect', ({host, players}) => {
+            roomComponent.handlePlayerDisconnect(host, players)
         })
 
         //TODO Handle socket.on('error')

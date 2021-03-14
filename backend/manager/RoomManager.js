@@ -124,12 +124,13 @@ module.exports = (server) => {
             console.log('deconnexion');
 
             const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
-
-            if (hasRoomToBeUpdated) io.to(room.id).emit('room-updated', room);
+            console.log('la room a update', room);
+            if (hasRoomToBeUpdated)  io.to(room.id).emit('player-disconnect', {host:room.host, players:room.players}); // cause le bug parce que ROOM est trop volumineux
 
             if (hasScoresToBeDisplayed) {
+                console.log("HAS SCORES TO BE DISPLAYED");
                 const eventToEmit = getEventToEmit(room);
-                // io.to(room.id).emit(eventToEmit, room);
+
                 emitEventAndTimeSignal(room, eventToEmit);
             }
 
@@ -165,6 +166,7 @@ module.exports = (server) => {
     };
 
     const reinitRoomGame = (room) => {
+        clearTimeout(room.game.timer);
         room.state = 'lobby';
         room.game.quizLength = 0;
         room.game.round = 0;
