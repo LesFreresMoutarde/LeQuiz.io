@@ -7,7 +7,7 @@ const port = 3000;
 const env = require('./config/env');
 
 const AuthController = require('./controllers/AuthController');
-require('./manager/RoomManager')(server);
+require('./manager/SocketEngine')(server);
 
 const mainRouter = require('./routes/mainRouter');
 
