@@ -1,165 +1,12 @@
 const GameUtil = require("../util/GameUtil");
 
-const socketEngine = require('socket.io');
+class RoomManager {
+    
+   static rooms = [];
+    
+    static players = [];
 
-const env = require('../config/env');
-
-module.exports = (server) => {
-
-    const rooms = [];
-
-    const players = [];
-
-    const io = socketEngine(server, {
-        cors: {
-            origin: env.frontUrl,
-        }
-    });
-
-    io.on('connection', (socket) => {
-
-        socket.on('join', ({roomId, username, isHost}) => {
-            console.log('roomId', roomId);
-            console.log('pseudo', username);
-            console.log('isHost ?', isHost);
-            const player = handleNewPlayer(username, socket.id);
-
-            const {room, joined} = handleRoomJoining(roomId, isHost, player);
-
-            if (!joined) {
-
-                socket.emit('connection-failure')
-
-            } else {
-                socket.join(room.id);
-                socket.emit('connection-success', {room, player});
-
-                // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
-                io.to(room.id).emit('room-updated', room);
-
-                if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
-            }
-
-        });
-
-        socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
-            io.to(socketId).emit('game-config-host', gameConfiguration);
-        });
-
-
-        socket.on('game-config-update', ({gameConfiguration, roomId}) => {
-            //TODO V2 broadcast
-            io.to(roomId).emit('game-config-updated-sent', gameConfiguration);
-        })
-
-
-        socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
-
-            const room = findRoom(roomId)[0];
-
-            if (room) {
-
-                const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
-                const quiz = await GameUtil.executeQuizQuery(quizQuery);
-
-                room.game.quiz = quiz;
-                room.game.quizLength = quiz.length;
-                io.to(room.id).emit('quiz-sent', quiz);
-            }
-
-        });
-
-        //TODO Verifier que tous les joueurs aient reçus
-        socket.on('quiz-received', (roomId) => {
-            const room = findRoom(roomId)[0];
-
-            if (room) {
-                room.state = 'question';
-
-                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
-            }
-
-        });
-
-        socket.on('next-question', (roomId) => {
-            const room = findRoom(roomId)[0];
-
-            if (room) {
-                room.state = 'question';
-
-                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
-            }
-
-        });
-
-        socket.on('player-result', ({result}) => {
-            console.log("player-result event catch");
-            const {receivedAllAnswers, room} = handlePlayerResult(socket.id, result);
-
-            if (room) {
-                room.state = 'answer';
-
-                if (receivedAllAnswers) {
-                    const eventToEmit = getEventToEmit(room);
-
-                    emitEventAndTimeSignal(room, eventToEmit);
-                }
-            }
-        });
-
-        socket.on('game-reinit', (roomId) => {
-            const room = findRoom(roomId)[0];
-
-            if (room) reinitRoomGame(room)
-        })
-
-        socket.on('disconnect', () => {
-
-            const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = handlePlayerDisconnect(socket.id);
-
-            if (hasRoomToBeUpdated)
-                io.to(room.id).emit('player-disconnect', {
-                    host:room.host,
-                    players:room.players,
-                    scores: room.game.scores
-                });
-
-            if (hasScoresToBeDisplayed) {
-                const eventToEmit = getEventToEmit(room);
-
-                emitEventAndTimeSignal(room, eventToEmit);
-            }
-
-        })
-
-    });
-
-    const emitEventAndTimeSignal = (room, event) => {
-
-        clearTimeout(room.game.timer);
-
-        let time = GameUtil.ROUND_TIME;
-
-        if (event !== "ask-question") time = GameUtil.SCORES_TIME
-
-        io.to(room.id).emit('start-time', {time, event, room});
-
-        room.game.timer = setTimeout(() => {
-
-            const noAnswerPlayers = getNoAnswerPlayers(room);
-
-            if (event === "ask-question") {
-                noAnswerPlayers.forEach((socketId) => {
-                    io.to(socketId).emit('no-answer')
-                })
-            } else {
-                io.to(room.id).emit("end-time", {event, room});
-            }
-
-        }, time)
-    };
-
-    const reinitRoomGame = (room) => {
+    static reinitRoomGame = (room) => {
         clearTimeout(room.game.timer);
         room.state = 'lobby';
         room.game.quizLength = 0;
@@ -173,7 +20,7 @@ module.exports = (server) => {
         })
     };
 
-    const getNoAnswerPlayers = (room) => {
+    static getNoAnswerPlayers = (room) => {
 
         const socketIds = [];
 
@@ -184,54 +31,46 @@ module.exports = (server) => {
         return socketIds;
     }
 
-    const getEventToEmit = (room) => {
+    static handleNewPlayer = (username, socketId) => {
+        let player = RoomManager.findPlayer(socketId);
 
-        if (room.game.quiz.length > 0) {
-            return 'display-scores';
-        }
-
-        return 'end-game'
-    };
-
-    const handleNewPlayer = (username, socketId) => {
-        let player = findPlayer(socketId);
-
-        if (player.length === 0) player = createPlayer(username, socketId)
+        if (player.length === 0) player = RoomManager.createPlayer(username, socketId)
 
         else player = player[0];
 
         return player;
     };
 
-    const findPlayer = (socketId) => {
-        return players.filter(player => player.socketId === socketId)
+    static findPlayer = (socketId) => {
+
+        return RoomManager.players.filter(player => player.socketId === socketId)
     };
 
-    const createPlayer = (username, socketId) => {
+    static createPlayer = (username, socketId) => {
         const player = {
             username,
             socketId
         };
 
-        players.push(player);
+        RoomManager.players.push(player);
         return player;
     };
 
 
-    const handleRoomJoining = (roomId, isHost, player) => {
+    static handleRoomJoining = (roomId, isHost, player) => {
         let joined = false;
-        let room = findRoom(roomId);
+        let room = RoomManager.findRoom(roomId);
 
         if (room.length > 0) {
             room = room[0]
-            joined = playerJoinRoom(player, room);
+            joined = RoomManager.playerJoinRoom(player, room);
 
         } else {
 
             room = null;
 
             if (isHost) {
-                room = createRoom(roomId, player);
+                room = RoomManager.createRoom(roomId, player);
                 joined = true
             }
         }
@@ -239,14 +78,14 @@ module.exports = (server) => {
         return {room, joined};
     };
 
-    const findRoom = (roomId) => {
-        return rooms.filter(room => room.id === roomId)
+    static findRoom = (roomId) => {
+        return RoomManager.rooms.filter(room => room.id === roomId)
     };
 
-    const findRoomByPlayer = (player) => {
+    static findRoomByPlayer = (player) => {
         let room = null;
 
-        rooms.forEach((activeRoom) => {
+        RoomManager.rooms.forEach((activeRoom) => {
             activeRoom.players.forEach((playerInRoom) => {
                 if (playerInRoom.socketId === player.socketId) room = activeRoom;
             })
@@ -255,7 +94,7 @@ module.exports = (server) => {
         return room;
     };
 
-    const createRoom = (roomId, host) => {
+    static createRoom = (roomId, host) => {
         const room = {
             id: roomId,
             host,
@@ -278,12 +117,12 @@ module.exports = (server) => {
             }
         };
 
-        rooms.push(room);
+        RoomManager.rooms.push(room);
 
         return room;
     };
 
-    const playerJoinRoom = (player, room) => {
+    static playerJoinRoom = (player, room) => {
         //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
         if (room.players.length >= 8 || room.state !== 'lobby') {
             return false
@@ -302,42 +141,42 @@ module.exports = (server) => {
     };
 
 
-    const handlePlayerDisconnect = (socketId) => {
+    static handlePlayerDisconnect = (socketId) => {
 
-        const player = findPlayer(socketId)[0];
+        const player = RoomManager.findPlayer(socketId)[0];
 
         if (!player) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
-        let room = findRoomByPlayer(player);
+        let room = RoomManager.findRoomByPlayer(player);
 
         if (!room) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
         let hasRoomToBeUpdated = true;
-        playerLeaveRoom(player, room);
+        RoomManager.playerLeaveRoom(player, room);
 
-        const isRoomDeletable = checkIfRoomIsDeletable(room);
+        const isRoomDeletable = RoomManager.checkIfRoomIsDeletable(room);
 
         let hasScoresToBeDisplayed = false;
 
         if (isRoomDeletable) {
-            deleteRoom(room);
+            RoomManager.deleteRoom(room);
             hasRoomToBeUpdated = false;
         } else {
 
-            const hostHasToBeTransferred = checkIfHostHasToBeTransferred(player, room);
+            const hostHasToBeTransferred = RoomManager.checkIfHostHasToBeTransferred(player, room);
 
-            if (hostHasToBeTransferred) room = changeRoomHost(room);
+            if (hostHasToBeTransferred) room = RoomManager.changeRoomHost(room);
 
-            if (checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true
+            if (RoomManager.checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true
         }
 
-        deletePlayer(player);
+        RoomManager.deletePlayer(player);
 
         return {hasRoomToBeUpdated, hasScoresToBeDisplayed, room};
     };
 
 
-    const playerLeaveRoom = (player, room) => {
+    static playerLeaveRoom = (player, room) => {
         let playerIndex = -1;
         let scoreIndex = -1;
 
@@ -355,42 +194,42 @@ module.exports = (server) => {
         room.players.splice(playerIndex, 1);
     };
 
-    const checkIfRoomIsDeletable = (room) => {
+    static checkIfRoomIsDeletable = (room) => {
         return room.players.length === 0;
     };
 
-    const deleteRoom = (room) => {
+    static deleteRoom = (room) => {
         let index = -1;
 
-        rooms.forEach((activeRoom, i) => {
+        RoomManager.rooms.forEach((activeRoom, i) => {
             if (activeRoom.id === room.id) {
                 index = i;
                 clearTimeout(room.game.timer);
             }
         });
 
-        rooms.splice(index, 1);
+        RoomManager.rooms.splice(index, 1);
 
         index = GameUtil.ROOMS_ID.indexOf(room.id);
         GameUtil.ROOMS_ID.splice(index, 1);
     };
 
-    const checkIfHostHasToBeTransferred = (player, room) => {
+    static checkIfHostHasToBeTransferred = (player, room) => {
         return room.host.socketId === player.socketId;
     };
 
-    const changeRoomHost = (room) => {
+    static changeRoomHost = (room) => {
         room.host = room.players[0];
         return room;
     };
 
-    const deletePlayer = (player) => {
+    static deletePlayer = (player) => {
         let index = -1;
-        players.forEach((activePlayer, i) => {
+        RoomManager.players.forEach((activePlayer, i) => {
             if (activePlayer.socketId === player.socketId) index = i;
         });
 
-        players.splice(index, 1);
+        RoomManager.players.splice(index, 1);
 
         if (player.username.startsWith('Guest#')) {
             const guestId = player.username.split('#')[1];
@@ -399,13 +238,13 @@ module.exports = (server) => {
         }
     };
 
-    const handlePlayerResult = (socketId, result) => {
-        const player = findPlayer(socketId)[0];
+    static handlePlayerResult = (socketId, result) => {
+        const player = RoomManager.findPlayer(socketId)[0];
 
 
         if (player) {
 
-            const room = findRoomByPlayer(player);
+            const room = RoomManager.findRoomByPlayer(player);
 
             room.game.scores.forEach((scoreLine) => {
                 if (scoreLine.player.socketId === player.socketId) {
@@ -414,11 +253,11 @@ module.exports = (server) => {
                 }
             });
 
-            room.game.scores = sortScoresRank(room.game.scores);
+            room.game.scores = RoomManager.sortScoresRank(room.game.scores);
 
             room.game.hasAnswered.push(player.socketId);
 
-            const receivedAllAnswers = checkIfAllAnswersReceived(room);
+            const receivedAllAnswers = RoomManager.checkIfAllAnswersReceived(room);
 
             if (receivedAllAnswers) {
                 room.game.quiz.shift();
@@ -433,7 +272,7 @@ module.exports = (server) => {
         }
     };
 
-    const checkIfAllAnswersReceived = (room) => {
+    static checkIfAllAnswersReceived = (room) => {
         let receivedAllAnswers = true;
 
         room.players.forEach((player) => {
@@ -443,7 +282,7 @@ module.exports = (server) => {
         return receivedAllAnswers;
     };
 
-    const sortScoresRank = (scores) => {
+    static sortScoresRank = (scores) => {
 
         scores.sort((a, b) => {
             return b.value - a.value
@@ -459,8 +298,7 @@ module.exports = (server) => {
 
         return scores;
     }
+    
+}
 
-    //TODO Handle socket.on('error')
-
-
-};
+module.exports = RoomManager;
