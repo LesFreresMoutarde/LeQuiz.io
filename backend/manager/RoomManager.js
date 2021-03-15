@@ -31,15 +31,6 @@ class RoomManager {
         return socketIds;
     }
 
-    // static getEventToEmit = (room) => {
-    //
-    //     if (room.game.quiz.length > 0) {
-    //         return 'display-scores';
-    //     }
-    //
-    //     return 'end-game'
-    // };
-
     static handleNewPlayer = (username, socketId) => {
         let player = RoomManager.findPlayer(socketId);
 
