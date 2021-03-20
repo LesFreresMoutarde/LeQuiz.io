@@ -58,28 +58,24 @@ class RoomManager {
 
 
     static handleRoomJoining = (roomId, isHost, player) => {
+
         let joined = false;
-        let room = RoomManager.findRoom(roomId);
 
-        if (room.length > 0) {
-            room = room[0]
-            joined = RoomManager.playerJoinRoom(player, room);
+        const room = RoomManager.findRoom(roomId);
 
+        if (room.state === 'initialized' && isHost) {
+            RoomManager.completeRoom(room, player)
+            joined = true;
         } else {
-
-            room = null;
-
-            if (isHost) {
-                room = RoomManager.createRoom(roomId, player);
-                joined = true
-            }
+            joined = RoomManager.playerJoinRoom(player, room);
         }
 
-        return {room, joined};
+        return { room, joined };
     };
 
     static findRoom = (roomId) => {
-        return RoomManager.rooms.filter(room => room.id === roomId)
+
+        return RoomManager.rooms.filter(room => room.id === roomId)[0];
     };
 
     static findRoomByPlayer = (player) => {
@@ -95,11 +91,39 @@ class RoomManager {
     };
 
     static createRoom = (roomId) => {
+        //TODO REMOVE
+        const date = new Date();
+        date.setDate(date.getDate() - 2);
+
         const room = {
             id: roomId,
+            createdAt: date,
             state: 'initialized'
         }
+
+        RoomManager.rooms.push(room);
     };
+
+    static completeRoom = (room, host) => {
+        room.host = host;
+        room.state = 'lobby';
+        room.players = [host];
+        room.game = {
+            timer: null,
+            quizLength: 0,
+            round: 0,
+            quiz: [],
+            scores: [
+                {
+                    player: host,
+                    value: 0,
+                    rank: 0,
+                    lastAnswer: null,
+                }
+            ],
+            hasAnswered: []
+        }
+    }
 
     static getRoomsId = () => {
         return RoomManager.rooms.map(room => room.id);

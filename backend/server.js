@@ -5,11 +5,14 @@ const app = express();
 const server = require('http').createServer(app);
 const port = 3000;
 const env = require('./config/env');
-
+const CronManager = require('./manager/CronManager');
 const AuthController = require('./controllers/AuthController');
 require('./manager/SocketEngine')(server);
 
+CronManager.removeDirtyRooms();
+
 const mainRouter = require('./routes/mainRouter');
+
 
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);

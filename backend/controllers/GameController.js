@@ -36,7 +36,11 @@ class GameController extends MainController {
 
         const roomsId = RoomManager.getRoomsId();
 
-        response.roomCode = this.generateRoomId(roomsId)
+        const roomId = this.generateRoomId(roomsId)
+
+        RoomManager.createRoom(roomId);
+
+        response.roomCode = roomId;
 
         this.response = response;
     }
@@ -79,12 +83,13 @@ class GameController extends MainController {
         }
     };
 
-    //TODO REMOVE
-    actionVerifyRoom = (roomIdentifier) => {
+    actionVerifyRoom = (roomId) => {
         const response = {};
 
-        response.isRoomValid = GameUtil.ROOMS_ID.includes(roomIdentifier);
+        const roomsId = RoomManager.getRoomsId();
 
+        response.isRoomValid = roomsId.includes(roomId);
+        console.log(response)
         this.response = response;
     };
 

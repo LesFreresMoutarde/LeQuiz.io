@@ -68,7 +68,7 @@ class Room extends React.Component {
 
                 if (!roomIdResponse.ok) throw new Error('Cannot join this room');
 
-                const {isRoomValid} = await roomIdResponse.json();
+                const { isRoomValid } = await roomIdResponse.json();
 
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
