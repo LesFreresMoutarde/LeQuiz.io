@@ -4,8 +4,8 @@ class GameUtil {
     static ROUND_TIME = 12*1000;
     static SCORES_TIME = 5*1000;
 
-    static ROOMS_ID = [];
-    static GUEST_IDS = [];
+    static ROOMS_ID = []; //TODO REMOVE
+    static GUEST_IDS = []; //TODO REMOVE
 
     static generateQuizQuery = (gameConfiguration) => {
         let query = ''

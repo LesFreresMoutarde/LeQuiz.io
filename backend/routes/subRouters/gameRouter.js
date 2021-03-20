@@ -43,13 +43,12 @@ gameRouter.route('/rooms')
 
 gameRouter.get('/rooms/create', (req, res) => {
 
-    // const gameController = new GameController();
-    //
-    // gameController.actionGenerateRoomCode();
-    //
-    // res.status(gameController.statusCode);
-    // res.json(gameController.response);
-    res.json({toto:"create rosom"});
+    const gameController = new GameController();
+
+    gameController.actionCreateRoom();
+
+    res.status(gameController.statusCode);
+    res.json(gameController.response);
 
 });
 

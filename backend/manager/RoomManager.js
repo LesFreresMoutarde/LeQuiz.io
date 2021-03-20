@@ -94,33 +94,45 @@ class RoomManager {
         return room;
     };
 
-    static createRoom = (roomId, host) => {
+    static createRoom = (roomId) => {
         const room = {
             id: roomId,
-            host,
-            state: 'lobby',
-            players: [host],
-            game: {
-                timer: null,
-                quizLength: 0,
-                round: 0,
-                quiz: [],
-                scores: [
-                    {
-                        player: host,
-                        value: 0,
-                        rank: 0,
-                        lastAnswer: null,
-                    }
-                ],
-                hasAnswered: []
-            }
-        };
-
-        RoomManager.rooms.push(room);
-
-        return room;
+            state: 'initialized'
+        }
     };
+
+    static getRoomsId = () => {
+        return RoomManager.rooms.map(room => room.id);
+    }
+
+
+    // static createRoom = (roomId, host) => {
+    //     const room = {
+    //         id: roomId,
+    //         host,
+    //         state: 'lobby',
+    //         players: [host],
+    //         game: {
+    //             timer: null,
+    //             quizLength: 0,
+    //             round: 0,
+    //             quiz: [],
+    //             scores: [
+    //                 {
+    //                     player: host,
+    //                     value: 0,
+    //                     rank: 0,
+    //                     lastAnswer: null,
+    //                 }
+    //             ],
+    //             hasAnswered: []
+    //         }
+    //     };
+    //
+    //     RoomManager.rooms.push(room);
+    //
+    //     return room;
+    // };
 
     static playerJoinRoom = (player, room) => {
         //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE

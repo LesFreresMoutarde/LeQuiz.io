@@ -1,5 +1,5 @@
 const GameUtil = require("../util/GameUtil");
-
+const RoomManager = require("../manager/RoomManager");
 const MainController = require('./mainController/MainController');
 const Serie = require("../models/gameModes/Serie");
 const Ascension = require("../models/gameModes/Ascension");
@@ -31,13 +31,24 @@ class GameController extends MainController {
         }
     };
 
-    actionGenerateRoomCode = () => {
-        const response = {};
+    actionCreateRoom = () => {
+        const response = {}
 
-        response.roomCode = this.generateRoomIdentifier();
+        const roomsId = RoomManager.getRoomsId();
+
+        response.roomCode = this.generateRoomId(roomsId)
 
         this.response = response;
-    };
+    }
+
+    // TODO REMOVE
+    // actionGenerateRoomCode = () => {
+    //     const response = {};
+    //
+    //     response.roomCode = this.generateRoomId();
+    //
+    //     this.response = response;
+    // };
 
     actionModes = (plan) => {
         const response = {};
@@ -68,6 +79,7 @@ class GameController extends MainController {
         }
     };
 
+    //TODO REMOVE
     actionVerifyRoom = (roomIdentifier) => {
         const response = {};
 
@@ -76,23 +88,20 @@ class GameController extends MainController {
         this.response = response;
     };
 
-    generateRoomIdentifier = () => {
-        let roomIdentifier = '';
+    generateRoomId = (roomsId) => {
+        let roomId = '';
         const possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
 
+        while (roomsId.includes(roomId) || roomId === '') {
 
-        while (GameUtil.ROOMS_ID.includes(roomIdentifier) || roomIdentifier === '') {
-
-            roomIdentifier = "";
+            roomId = "";
 
             for (let i = 0; i < 6; i++) {
-                roomIdentifier += possibilities.charAt(Math.floor(Math.random() * possibilities.length));
+                roomId += possibilities.charAt(Math.floor(Math.random() * possibilities.length));
             }
         }
 
-        GameUtil.ROOMS_ID.push(roomIdentifier);
-
-        return roomIdentifier
+        return roomId
     };
 
 
