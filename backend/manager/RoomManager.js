@@ -91,13 +91,10 @@ class RoomManager {
     };
 
     static createRoom = (roomId) => {
-        //TODO REMOVE
-        const date = new Date();
-        date.setDate(date.getDate() - 2);
 
         const room = {
             id: roomId,
-            createdAt: date,
+            createdAt: new Date(),
             state: 'initialized'
         }
 
@@ -245,9 +242,6 @@ class RoomManager {
         });
 
         RoomManager.rooms.splice(index, 1);
-
-        index = GameUtil.ROOMS_ID.indexOf(room.id);
-        GameUtil.ROOMS_ID.splice(index, 1);
     };
 
     static checkIfHostHasToBeTransferred = (player, room) => {

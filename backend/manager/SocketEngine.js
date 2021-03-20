@@ -50,7 +50,7 @@ module.exports = (server) => {
 
         socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
 
-            const room = RoomManager.findRoom(roomId)[0];
+            const room = RoomManager.findRoom(roomId);
 
             if (room) {
 
@@ -66,7 +66,7 @@ module.exports = (server) => {
 
         //TODO Verifier que tous les joueurs aient reçus
         socket.on('quiz-received', (roomId) => {
-            const room = RoomManager.findRoom(roomId)[0];
+            const room = RoomManager.findRoom(roomId);
 
             if (room) {
                 room.state = 'question';
@@ -77,7 +77,7 @@ module.exports = (server) => {
         });
 
         socket.on('next-question', (roomId) => {
-            const room = RoomManager.findRoom(roomId)[0];
+            const room = RoomManager.findRoom(roomId);
 
             if (room) {
                 room.state = 'question';
@@ -103,7 +103,7 @@ module.exports = (server) => {
         });
 
         socket.on('game-reinit', (roomId) => {
-            const room = RoomManager.findRoom(roomId)[0];
+            const room = RoomManager.findRoom(roomId);
 
             if (room) RoomManager.reinitRoomGame(room)
         })

@@ -17,8 +17,6 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
-
-
     actionCategories = async () => {
         const response = {};
         try {
@@ -44,15 +42,6 @@ class GameController extends MainController {
 
         this.response = response;
     }
-
-    // TODO REMOVE
-    // actionGenerateRoomCode = () => {
-    //     const response = {};
-    //
-    //     response.roomCode = this.generateRoomId();
-    //
-    //     this.response = response;
-    // };
 
     actionModes = (plan) => {
         const response = {};
