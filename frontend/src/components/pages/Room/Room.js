@@ -48,7 +48,7 @@ class Room extends React.Component {
             try {
                 const roomId  = this.props.match.params.id;
                 let isHost = false;
-                let username = '';
+                let username = null;
 
                 if (Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key)) {
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
@@ -79,17 +79,18 @@ class Room extends React.Component {
 
                 if (user) {
                     username = user.username
-                } else {
-
-                    const guestIdResponse = await Util.performAPIRequest('users/guest-id');
-
-                    if (!guestIdResponse.ok) throw new Error('Cannot join this room');
-
-                    const { guestId } = await guestIdResponse.json();
-
-                    username = `Guest#${guestId}`;
-
                 }
+                // } else {
+                //
+                //     const guestIdResponse = await Util.performAPIRequest('users/guest-id');
+                //
+                //     if (!guestIdResponse.ok) throw new Error('Cannot join this room');
+                //
+                //     const { guestId } = await guestIdResponse.json();
+                //
+                //     username = `Guest#${guestId}`;
+                //
+                // }
                 this.clientSocket.connectToRoom(roomId, username, isHost);
                 this.clientSocket.handleSocketCommunication(this);
                 this.setState({socketOpen: true});
@@ -241,7 +242,7 @@ class Room extends React.Component {
         Util.clearSessionStorage();
 
         if(this.state.socketOpen) {
-            this.clientSocket.destructor();
+            this.clientSocket.destructor(this.roomId);
             clearInterval(this.timer);
         }
 

@@ -17,7 +17,7 @@ module.exports = (server) => {
             console.log('roomId', roomId);
             console.log('pseudo', username);
             console.log('isHost ?', isHost);
-            const player = RoomManager.handleNewPlayer(username, socket.id);
+            const player = RoomManager.handleNewPlayer(username, socket.id, roomId);
 
             const {room, joined} = RoomManager.handleRoomJoining(roomId, isHost, player);
 
@@ -109,7 +109,7 @@ module.exports = (server) => {
         })
 
         socket.on('disconnect', () => {
-
+            console.log("disconnect")
             const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = RoomManager.handlePlayerDisconnect(socket.id);
 
             if (hasRoomToBeUpdated)

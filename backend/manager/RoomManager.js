@@ -31,12 +31,20 @@ class RoomManager {
         return socketIds;
     }
 
-    static handleNewPlayer = (username, socketId) => {
-        let player = RoomManager.findPlayer(socketId);
+    //TODO Permettre plus tard à l'user de choisir son pseudo (plutot de le modifier une fois dans la room)
+    static handleNewPlayer = (username, socketId, roomId) => {
+        // let player = RoomManager.findPlayer(socketId);
 
-        if (player.length === 0) player = RoomManager.createPlayer(username, socketId)
+        if (!username) {
+            console.log('pseudo to generate');
+            username = RoomManager.generateGuestUsername('Guest');
+        }
 
-        else player = player[0];
+        // if (player.length === 0)
+
+        const player = RoomManager.createPlayer(username, socketId)
+
+        // else player = player[0];
 
         return player;
     };
@@ -49,7 +57,8 @@ class RoomManager {
     static createPlayer = (username, socketId) => {
         const player = {
             username,
-            socketId
+            socketId,
+            createdAt: new Date()
         };
 
         RoomManager.players.push(player);
@@ -126,34 +135,48 @@ class RoomManager {
         return RoomManager.rooms.map(room => room.id);
     }
 
+    static generateRoomId = () => {
+        let roomId = '';
+        const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-    // static createRoom = (roomId, host) => {
-    //     const room = {
-    //         id: roomId,
-    //         host,
-    //         state: 'lobby',
-    //         players: [host],
-    //         game: {
-    //             timer: null,
-    //             quizLength: 0,
-    //             round: 0,
-    //             quiz: [],
-    //             scores: [
-    //                 {
-    //                     player: host,
-    //                     value: 0,
-    //                     rank: 0,
-    //                     lastAnswer: null,
-    //                 }
-    //             ],
-    //             hasAnswered: []
-    //         }
-    //     };
-    //
-    //     RoomManager.rooms.push(room);
-    //
-    //     return room;
-    // };
+        while (RoomManager.getRoomsId().includes(roomId) || roomId === '') {
+
+            roomId = '';
+
+            for (let i = 0; i < 6; i++) {
+                roomId += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+        }
+
+        return roomId
+    };
+
+    static getGuestsUsername = () => {
+        const guestsUsername = [];
+
+        RoomManager.players.forEach(player => {
+            if (player.username.includes('#')) guestsUsername.push(player.username);
+        })
+
+        return guestsUsername;
+    }
+
+    static generateGuestUsername = (basename) => {
+        let guestId = '';
+        const possible = "0123456789";
+
+        const guestsUsername = RoomManager.getGuestsUsername()
+
+        while (guestsUsername.includes(`${basename}#${guestId}`) || guestId === '') {
+            guestId = '';
+
+            for (let i = 0; i < 6; i++) {
+                guestId += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+        }
+
+        return `${basename}#${guestId}`;
+    }
 
     static playerJoinRoom = (player, room) => {
         //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE

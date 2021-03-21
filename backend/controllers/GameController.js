@@ -32,9 +32,7 @@ class GameController extends MainController {
     actionCreateRoom = () => {
         const response = {}
 
-        const roomsId = RoomManager.getRoomsId();
-
-        const roomId = this.generateRoomId(roomsId)
+        const roomId = RoomManager.generateRoomId();
 
         RoomManager.createRoom(roomId);
 
@@ -81,24 +79,6 @@ class GameController extends MainController {
         console.log(response)
         this.response = response;
     };
-
-    generateRoomId = (roomsId) => {
-        let roomId = '';
-        const possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
-
-        while (roomsId.includes(roomId) || roomId === '') {
-
-            roomId = "";
-
-            for (let i = 0; i < 6; i++) {
-                roomId += possibilities.charAt(Math.floor(Math.random() * possibilities.length));
-            }
-        }
-
-        return roomId
-    };
-
-
 
     getAllowedGameModes = (plan) => {
 
