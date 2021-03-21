@@ -72,27 +72,18 @@ class Room extends React.Component {
 
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
-                this.roomId = roomId;
-                this.clientSocket = new ClientSocket();
-
                 const user = Util.getJwtPayloadContent(Util.accessToken).user;
 
-                if (user) {
-                    username = user.username
-                }
-                // } else {
-                //
-                //     const guestIdResponse = await Util.performAPIRequest('users/guest-id');
-                //
-                //     if (!guestIdResponse.ok) throw new Error('Cannot join this room');
-                //
-                //     const { guestId } = await guestIdResponse.json();
-                //
-                //     username = `Guest#${guestId}`;
-                //
-                // }
+                if (user) username = user.username
+
+                this.roomId = roomId;
+
+                this.clientSocket = new ClientSocket();
+
                 this.clientSocket.connectToRoom(roomId, username, isHost);
+
                 this.clientSocket.handleSocketCommunication(this);
+
                 this.setState({socketOpen: true});
             } catch (error) {
                 toastr.error('Impossible de rejoindre cette room');

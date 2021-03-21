@@ -33,38 +33,31 @@ class RoomManager {
 
     //TODO Permettre plus tard à l'user de choisir son pseudo (plutot de le modifier une fois dans la room)
     static handleNewPlayer = (username, socketId, roomId) => {
-        // let player = RoomManager.findPlayer(socketId);
 
-        if (!username) {
-            console.log('pseudo to generate');
-            username = RoomManager.generateGuestUsername('Guest');
-        }
+        if (!username) username = RoomManager.generateGuestUsername('Guest');
 
-        // if (player.length === 0)
 
-        const player = RoomManager.createPlayer(username, socketId)
+        return RoomManager.createPlayer(username, socketId, roomId)
 
-        // else player = player[0];
-
-        return player;
     };
 
     static findPlayer = (socketId) => {
 
-        return RoomManager.players.filter(player => player.socketId === socketId)
+        return RoomManager.players.filter(player => player.socketId === socketId)[0]
     };
 
-    static createPlayer = (username, socketId) => {
+    static createPlayer = (username, socketId, roomId) => {
         const player = {
             username,
             socketId,
+            roomId,
             createdAt: new Date()
         };
 
         RoomManager.players.push(player);
+
         return player;
     };
-
 
     static handleRoomJoining = (roomId, isHost, player) => {
 
@@ -85,18 +78,6 @@ class RoomManager {
     static findRoom = (roomId) => {
 
         return RoomManager.rooms.filter(room => room.id === roomId)[0];
-    };
-
-    static findRoomByPlayer = (player) => {
-        let room = null;
-
-        RoomManager.rooms.forEach((activeRoom) => {
-            activeRoom.players.forEach((playerInRoom) => {
-                if (playerInRoom.socketId === player.socketId) room = activeRoom;
-            })
-        });
-
-        return room;
     };
 
     static createRoom = (roomId) => {
@@ -199,15 +180,16 @@ class RoomManager {
 
     static handlePlayerDisconnect = (socketId) => {
 
-        const player = RoomManager.findPlayer(socketId)[0];
+        const player = RoomManager.findPlayer(socketId);
 
         if (!player) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
-        let room = RoomManager.findRoomByPlayer(player);
+        let room = RoomManager.findRoom(player.roomId);
 
         if (!room) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
 
         let hasRoomToBeUpdated = true;
+
         RoomManager.playerLeaveRoom(player, room);
 
         const isRoomDeletable = RoomManager.checkIfRoomIsDeletable(room);
@@ -225,7 +207,7 @@ class RoomManager {
 
             if (RoomManager.checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true
         }
-
+        // A REFACTO DANS LA DECO DE LA ROOM
         RoomManager.deletePlayer(player);
 
         return {hasRoomToBeUpdated, hasScoresToBeDisplayed, room};
@@ -284,20 +266,20 @@ class RoomManager {
 
         RoomManager.players.splice(index, 1);
 
-        if (player.username.startsWith('Guest#')) {
-            const guestId = player.username.split('#')[1];
-            const index = GameUtil.GUEST_IDS.indexOf(guestId);
-            GameUtil.GUEST_IDS.splice(index, 1);
-        }
+        // if (player.username.startsWith('Guest#')) {
+        //     const guestId = player.username.split('#')[1];
+        //     const index = GameUtil.GUEST_IDS.indexOf(guestId);
+        //     GameUtil.GUEST_IDS.splice(index, 1);
+        // }
     };
 
     static handlePlayerResult = (socketId, result) => {
-        const player = RoomManager.findPlayer(socketId)[0];
+        const player = RoomManager.findPlayer(socketId);
 
 
         if (player) {
 
-            const room = RoomManager.findRoomByPlayer(player);
+            const room = RoomManager.findRoom(player.roomId);
 
             room.game.scores.forEach((scoreLine) => {
                 if (scoreLine.player.socketId === player.socketId) {
