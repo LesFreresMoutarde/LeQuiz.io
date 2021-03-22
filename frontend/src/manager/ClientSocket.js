@@ -41,7 +41,6 @@ class ClientSocket {
 
         this.socket.on('connection-failure', () => {
             toastr.error('Impossible de rejoindre cette room');
-            Util.clearSessionStorage();
             roomComponent.props.history.replace('/');
             this.destructor()
         });
@@ -110,11 +109,22 @@ class ClientSocket {
             }
         })
 
-        this.socket.on('player-disconnect', ({host, players, scores}) => {
+        this.socket.on('forced-disconnect', () => {
+            toastr.error('Vous avez été déconnecté');
+            roomComponent.props.history.replace('/');
+            this.destructor()
+        })
+
+        this.socket.on('error', () => {
+            toastr.error('Vous avez été déconnecté');
+            roomComponent.props.history.replace('/');
+            this.destructor()
+        })
+
+        this.socket.on('player-disconnected', ({host, players, scores}) => {
             roomComponent.handlePlayerDisconnect(host, players, scores)
         })
 
-        //TODO Handle socket.on('error')
     };
 
 

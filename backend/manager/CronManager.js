@@ -5,7 +5,7 @@ class CronManager {
 
     static executeCronTasks = () => {
         CronManager.removeDirtyRooms();
-        C
+        CronManager.removeDirtyPlayers();
     }
 
 

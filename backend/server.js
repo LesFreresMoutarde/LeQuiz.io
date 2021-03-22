@@ -9,7 +9,7 @@ const CronManager = require('./manager/CronManager');
 const AuthController = require('./controllers/AuthController');
 require('./manager/SocketEngine')(server);
 
-CronManager.removeDirtyRooms();
+CronManager.executeCronTasks();
 
 const mainRouter = require('./routes/mainRouter');
 

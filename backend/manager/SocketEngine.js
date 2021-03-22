@@ -61,7 +61,7 @@ module.exports = (server) => {
                 io.to(room.id).emit('quiz-sent', quiz);
 
             } catch (error) {
-                //TODO Socket Emit Problem
+                socket.emit('forced-disconnect');
             }
         });
 
@@ -75,7 +75,7 @@ module.exports = (server) => {
                 if (socket.id === room.host.socketId)
                     emitEventAndTimeSignal(room, 'ask-question');
             } catch (error) {
-                //TODO Socket Emit Problem
+                socket.emit('forced-disconnect');
             }
         });
 
@@ -88,7 +88,7 @@ module.exports = (server) => {
                 if (socket.id === room.host.socketId)
                     emitEventAndTimeSignal(room, 'ask-question');
             } catch (error) {
-                //TODO Socket Emit Problem
+                socket.emit('forced-disconnect');
             }
         });
 
@@ -106,7 +106,7 @@ module.exports = (server) => {
                     emitEventAndTimeSignal(room, eventToEmit);
                 }
             } catch (error) {
-                //TODO Socket Emit Problem
+                socket.emit('forced-disconnect');
             }
         });
 
@@ -115,7 +115,7 @@ module.exports = (server) => {
                 const room = RoomManager.findRoom(roomId);
                 RoomManager.reinitRoomGame(room)
             } catch (error) {
-                //TODO Socket Emit Problem
+                socket.emit('forced-disconnect');
             }
         })
 
@@ -129,7 +129,7 @@ module.exports = (server) => {
                 } = RoomManager.handlePlayerDisconnect(socket.id);
 
                 if (hasRoomToBeUpdated)
-                    io.to(room.id).emit('player-disconnect', {
+                    io.to(room.id).emit('player-disconnected', {
                         host:room.host,
                         players:room.players,
                         scores: room.game.scores
@@ -142,7 +142,7 @@ module.exports = (server) => {
                 }
 
             } catch (error) {
-                //TODO Socket Emit Problem
+                socket.emit('forced-disconnect');
             }
 
         })
