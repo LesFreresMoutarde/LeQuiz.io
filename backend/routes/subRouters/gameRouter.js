@@ -41,18 +41,19 @@ gameRouter.route('/rooms')
         res.json({endpoint: 'POST /game/rooms'})
     });
 
-gameRouter.get('/rooms/:id(\\w+)', (req, res) => {
-    res.json({endpoint: `GET /game/rooms/${req.params.id}`})
-});
-
-gameRouter.get('/generate/code', (req, res) => {
+gameRouter.get('/rooms/create', (req, res) => {
 
     const gameController = new GameController();
 
-    gameController.actionGenerateRoomCode();
+    gameController.actionCreateRoom();
 
     res.status(gameController.statusCode);
     res.json(gameController.response);
+
+});
+
+gameRouter.get('/rooms/:id(\\w+)', (req, res) => {
+    res.json({endpoint: `GET /game/rooms/${req.params.id}`})
 });
 
 gameRouter.get('/rooms/verify/:id(\\w+)', (req, res) => {

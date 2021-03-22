@@ -1,5 +1,5 @@
 const GameUtil = require("../util/GameUtil");
-
+const RoomManager = require("../manager/RoomManager");
 const MainController = require('./mainController/MainController');
 const Serie = require("../models/gameModes/Serie");
 const Ascension = require("../models/gameModes/Ascension");
@@ -17,8 +17,6 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
-
-
     actionCategories = async () => {
         const response = {};
         try {
@@ -31,13 +29,17 @@ class GameController extends MainController {
         }
     };
 
-    actionGenerateRoomCode = () => {
-        const response = {};
+    actionCreateRoom = () => {
+        const response = {}
 
-        response.roomCode = this.generateRoomIdentifier();
+        const roomId = RoomManager.generateRoomId();
+
+        RoomManager.createRoom(roomId);
+
+        response.roomCode = roomId;
 
         this.response = response;
-    };
+    }
 
     actionModes = (plan) => {
         const response = {};
@@ -68,40 +70,22 @@ class GameController extends MainController {
         }
     };
 
-    actionVerifyRoom = (roomIdentifier) => {
+    actionVerifyRoom = (roomId) => {
         const response = {};
 
-        response.isRoomValid = GameUtil.ROOMS_ID.includes(roomIdentifier);
+        const roomIds = RoomManager.getRoomIds();
+
+        response.isRoomValid = roomIds.includes(roomId);
 
         this.response = response;
     };
-
-    generateRoomIdentifier = () => {
-        let roomIdentifier = '';
-        const possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
-
-
-        while (GameUtil.ROOMS_ID.includes(roomIdentifier) || roomIdentifier === '') {
-
-            roomIdentifier = "";
-
-            for (let i = 0; i < 6; i++) {
-                roomIdentifier += possibilities.charAt(Math.floor(Math.random() * possibilities.length));
-            }
-        }
-
-        GameUtil.ROOMS_ID.push(roomIdentifier);
-
-        return roomIdentifier
-    };
-
-
 
     getAllowedGameModes = (plan) => {
 
         if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
 
         const allowedGameModes = [];
+
         for (const gameMode of GameController.GAME_MODES) {
 
             let isGameModeAllowed = false;

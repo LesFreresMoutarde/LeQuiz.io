@@ -38,9 +38,6 @@ class Room extends React.Component {
             currentQuestion: false,
             questionInputDisabled: false
         }
-
-
-
     }
 
     componentDidMount() {
@@ -48,7 +45,7 @@ class Room extends React.Component {
             try {
                 const roomId  = this.props.match.params.id;
                 let isHost = false;
-                let username = '';
+                let username = null;
 
                 if (Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key)) {
                     const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
@@ -68,30 +65,22 @@ class Room extends React.Component {
 
                 if (!roomIdResponse.ok) throw new Error('Cannot join this room');
 
-                const {isRoomValid} = await roomIdResponse.json();
+                const { isRoomValid } = await roomIdResponse.json();
 
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
-                this.roomId = roomId;
-                this.clientSocket = new ClientSocket();
-
                 const user = Util.getJwtPayloadContent(Util.accessToken).user;
 
-                if (user) {
-                    username = user.username
-                } else {
+                if (user) username = user.username
 
-                    const guestIdResponse = await Util.performAPIRequest('users/guest-id');
+                this.roomId = roomId;
 
-                    if (!guestIdResponse.ok) throw new Error('Cannot join this room');
+                this.clientSocket = new ClientSocket();
 
-                    const { guestId } = await guestIdResponse.json();
-
-                    username = `Guest#${guestId}`;
-
-                }
                 this.clientSocket.connectToRoom(roomId, username, isHost);
+
                 this.clientSocket.handleSocketCommunication(this);
+
                 this.setState({socketOpen: true});
             } catch (error) {
                 toastr.error('Impossible de rejoindre cette room');
@@ -237,11 +226,10 @@ class Room extends React.Component {
 
 
     componentWillUnmount() {
-
         Util.clearSessionStorage();
 
         if(this.state.socketOpen) {
-            this.clientSocket.destructor();
+            this.clientSocket.destructor(this.roomId);
             clearInterval(this.timer);
         }
 

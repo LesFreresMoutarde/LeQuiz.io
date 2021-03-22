@@ -259,7 +259,7 @@ class AuthController extends MainController {
         if (existingUserWithUsername !== null) {
             errors.username = "Ce nom d'utilisateur est déjà utilisé";
         } else if (!requestBody.username.match("^[a-zA-Z0-9_]*$")) {
-            errors.username = "Votre nom d'utilisateur ne peut contenir que des caractères alphanumériques et des tirets bas";
+            errors.username = "Votre nom d'utilisateur ne peut contenir que des caractères alphanumériques et des underscores '_'";
         } else if (requestBody.username.length > 30) {
             errors.username = "Votre nom d'utilisateur doit faire maximum 30 caractères";
         }

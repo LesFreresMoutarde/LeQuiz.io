@@ -117,7 +117,7 @@ export default class CreateGame extends React.Component {
         try {
             if (!this.props.fromRoom) {
 
-                const response = await Util.performAPIRequest('game/generate/code');
+                const response = await Util.performAPIRequest('game/rooms/create');
 
                 if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
 
