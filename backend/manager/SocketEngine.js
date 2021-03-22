@@ -17,24 +17,24 @@ module.exports = (server) => {
             console.log('roomId', roomId);
             console.log('pseudo', username);
             console.log('isHost ?', isHost);
-            const player = RoomManager.handleNewPlayer(username, socket.id, roomId);
+            try {
 
-            const {room, joined} = RoomManager.handleRoomJoining(roomId, isHost, player);
+                const player = RoomManager.handleNewPlayer(username, socket.id, roomId);
 
-            if (!joined) {
+                const room = RoomManager.handleRoomJoining(roomId, isHost, player);
 
-                socket.emit('connection-failure')
-
-            } else {
                 socket.join(room.id);
+
                 socket.emit('connection-success', {room, player});
 
                 // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
                 io.to(room.id).emit('room-updated', room);
 
                 if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
-            }
 
+            } catch (error) {
+                socket.emit('connection-failure')
+            }
         });
 
         socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
@@ -50,9 +50,8 @@ module.exports = (server) => {
 
         socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
 
-            const room = RoomManager.findRoom(roomId);
-
-            if (room) {
+            try {
+                const room = RoomManager.findRoom(roomId);
 
                 const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
                 const quiz = await GameUtil.executeQuizQuery(quizQuery);
@@ -60,73 +59,93 @@ module.exports = (server) => {
                 room.game.quiz = quiz;
                 room.game.quizLength = quiz.length;
                 io.to(room.id).emit('quiz-sent', quiz);
-            }
 
+            } catch (error) {
+                //TODO Socket Emit Problem
+            }
         });
 
         //TODO Verifier que tous les joueurs aient reçus
         socket.on('quiz-received', (roomId) => {
-            const room = RoomManager.findRoom(roomId);
+            try {
+                const room = RoomManager.findRoom(roomId);
 
-            if (room) {
                 room.state = 'question';
 
-                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
+                if (socket.id === room.host.socketId)
+                    emitEventAndTimeSignal(room, 'ask-question');
+            } catch (error) {
+                //TODO Socket Emit Problem
             }
-
         });
 
         socket.on('next-question', (roomId) => {
-            const room = RoomManager.findRoom(roomId);
+            try {
+                const room = RoomManager.findRoom(roomId);
 
-            if (room) {
                 room.state = 'question';
 
-                if (socket.id === room.host.socketId) emitEventAndTimeSignal(room, 'ask-question');
+                if (socket.id === room.host.socketId)
+                    emitEventAndTimeSignal(room, 'ask-question');
+            } catch (error) {
+                //TODO Socket Emit Problem
             }
-
         });
 
         socket.on('player-result', ({result}) => {
             console.log("player-result event catch");
-            const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, result);
 
-            if (room) {
-                room.state = 'answer';
+            try {
+                const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, result);
 
                 if (receivedAllAnswers) {
+                    room.state = 'answer';
+
                     const eventToEmit = getEventToEmit(room);
 
                     emitEventAndTimeSignal(room, eventToEmit);
                 }
+            } catch (error) {
+                //TODO Socket Emit Problem
             }
         });
 
         socket.on('game-reinit', (roomId) => {
-            const room = RoomManager.findRoom(roomId);
-
-            if (room) RoomManager.reinitRoomGame(room)
+            try {
+                const room = RoomManager.findRoom(roomId);
+                RoomManager.reinitRoomGame(room)
+            } catch (error) {
+                //TODO Socket Emit Problem
+            }
         })
 
         socket.on('disconnect', () => {
             console.log("disconnect")
-            const {hasRoomToBeUpdated, hasScoresToBeDisplayed, room} = RoomManager.handlePlayerDisconnect(socket.id);
+            try {
+                const {
+                    hasRoomToBeUpdated,
+                    hasScoresToBeDisplayed,
+                    room
+                } = RoomManager.handlePlayerDisconnect(socket.id);
 
-            if (hasRoomToBeUpdated)
-                io.to(room.id).emit('player-disconnect', {
-                    host:room.host,
-                    players:room.players,
-                    scores: room.game.scores
-                });
+                if (hasRoomToBeUpdated)
+                    io.to(room.id).emit('player-disconnect', {
+                        host:room.host,
+                        players:room.players,
+                        scores: room.game.scores
+                    });
 
-            if (hasScoresToBeDisplayed) {
-                const eventToEmit = getEventToEmit(room);
+                if (hasScoresToBeDisplayed) {
+                    const eventToEmit = getEventToEmit(room);
 
-                emitEventAndTimeSignal(room, eventToEmit);
+                    emitEventAndTimeSignal(room, eventToEmit);
+                }
+
+            } catch (error) {
+                //TODO Socket Emit Problem
             }
 
         })
-
     });
 
     const emitEventAndTimeSignal = (room, event) => {

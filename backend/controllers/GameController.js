@@ -76,7 +76,7 @@ class GameController extends MainController {
         const roomsId = RoomManager.getRoomsId();
 
         response.isRoomValid = roomsId.includes(roomId);
-        console.log(response)
+
         this.response = response;
     };
 
@@ -85,6 +85,7 @@ class GameController extends MainController {
         if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
 
         const allowedGameModes = [];
+
         for (const gameMode of GameController.GAME_MODES) {
 
             let isGameModeAllowed = false;

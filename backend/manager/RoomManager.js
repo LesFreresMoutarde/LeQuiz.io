@@ -7,7 +7,9 @@ class RoomManager {
     static players = [];
 
     static reinitRoomGame = (room) => {
+
         clearTimeout(room.game.timer);
+
         room.state = 'lobby';
         room.game.quizLength = 0;
         room.game.round = 0;
@@ -43,7 +45,11 @@ class RoomManager {
 
     static findPlayer = (socketId) => {
 
-        return RoomManager.players.filter(player => player.socketId === socketId)[0]
+        const player = RoomManager.players.filter(player => player.socketId === socketId)[0];
+
+        if (player) return player;
+
+        throw new Error();
     };
 
     static createPlayer = (username, socketId, roomId) => {
@@ -61,23 +67,27 @@ class RoomManager {
 
     static handleRoomJoining = (roomId, isHost, player) => {
 
-        let joined = false;
-
         const room = RoomManager.findRoom(roomId);
 
         if (room.state === 'initialized' && isHost) {
             RoomManager.completeRoom(room, player)
-            joined = true;
+
         } else {
-            joined = RoomManager.playerJoinRoom(player, room);
+            RoomManager.playerJoinRoom(player, room);
         }
 
-        return { room, joined };
+        return room;
+
     };
 
     static findRoom = (roomId) => {
 
-        return RoomManager.rooms.filter(room => room.id === roomId)[0];
+        const room = RoomManager.rooms.filter(room => room.id === roomId)[0];
+
+        if (room) return room;
+
+        throw new Error();
+
     };
 
     static createRoom = (roomId) => {
@@ -161,20 +171,22 @@ class RoomManager {
 
     static playerJoinRoom = (player, room) => {
         //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
-        if (room.players.length >= 8 || room.state !== 'lobby') {
-            return false
+
+        if (room.players.length < 8 && room.state === 'lobby') {
+            console.log('toto')
+            room.players.push(player);
+
+            room.game.scores.push({
+                player: player,
+                value: 0,
+                rank: 0,
+                lastAnswer: null,
+            });
+
+            return;
         }
 
-        room.players.push(player);
-
-        room.game.scores.push({
-            player: player,
-            value: 0,
-            rank: 0,
-            lastAnswer: null,
-        });
-
-        return true;
+        throw new Error();
     };
 
 
@@ -182,32 +194,24 @@ class RoomManager {
 
         const player = RoomManager.findPlayer(socketId);
 
-        if (!player) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
+        const room = RoomManager.findRoom(player.roomId);
 
-        let room = RoomManager.findRoom(player.roomId);
-
-        if (!room) return {hasRoomToBeUpdated: false, hasScoresToBeDisplayed: false, room: null};
+        let hasScoresToBeDisplayed = false;
 
         let hasRoomToBeUpdated = true;
 
         RoomManager.playerLeaveRoom(player, room);
 
-        const isRoomDeletable = RoomManager.checkIfRoomIsDeletable(room);
-
-        let hasScoresToBeDisplayed = false;
-
-        if (isRoomDeletable) {
+        if (RoomManager.checkIfRoomIsDeletable(room)) {
             RoomManager.deleteRoom(room);
             hasRoomToBeUpdated = false;
         } else {
 
-            const hostHasToBeTransferred = RoomManager.checkIfHostHasToBeTransferred(player, room);
+            if (RoomManager.checkIfHostHasToBeTransferred(player, room)) RoomManager.changeRoomHost(room);
 
-            if (hostHasToBeTransferred) room = RoomManager.changeRoomHost(room);
-
-            if (RoomManager.checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true
+            if (RoomManager.checkIfAllAnswersReceived(room)) hasScoresToBeDisplayed = true;
         }
-        // A REFACTO DANS LA DECO DE LA ROOM
+
         RoomManager.deletePlayer(player);
 
         return {hasRoomToBeUpdated, hasScoresToBeDisplayed, room};
@@ -217,7 +221,6 @@ class RoomManager {
     static playerLeaveRoom = (player, room) => {
         let playerIndex = -1;
         let scoreIndex = -1;
-
 
         room.game.scores.forEach((lineScore, index) => {
             if (lineScore.player.socketId === player.socketId) scoreIndex = index
@@ -255,31 +258,23 @@ class RoomManager {
 
     static changeRoomHost = (room) => {
         room.host = room.players[0];
-        return room;
+        // return room;
     };
 
     static deletePlayer = (player) => {
-        let index = -1;
-        RoomManager.players.forEach((activePlayer, i) => {
-            if (activePlayer.socketId === player.socketId) index = i;
+        let indexToDelete = -1;
+
+        RoomManager.players.forEach((activePlayer, index) => {
+            if (activePlayer.socketId === player.socketId) indexToDelete = index;
         });
 
-        RoomManager.players.splice(index, 1);
-
-        // if (player.username.startsWith('Guest#')) {
-        //     const guestId = player.username.split('#')[1];
-        //     const index = GameUtil.GUEST_IDS.indexOf(guestId);
-        //     GameUtil.GUEST_IDS.splice(index, 1);
-        // }
+        if (indexToDelete !== -1) RoomManager.players.splice(indexToDelete, 1);
     };
 
     static handlePlayerResult = (socketId, result) => {
         const player = RoomManager.findPlayer(socketId);
 
-
-        if (player) {
-
-            const room = RoomManager.findRoom(player.roomId);
+        const room = RoomManager.findRoom(player.roomId);
 
             room.game.scores.forEach((scoreLine) => {
                 if (scoreLine.player.socketId === player.socketId) {
@@ -301,10 +296,6 @@ class RoomManager {
             }
 
             return {receivedAllAnswers, room};
-
-        } else {
-            return {receivedAllAnswers: false, room: null};
-        }
     };
 
     static checkIfAllAnswersReceived = (room) => {
