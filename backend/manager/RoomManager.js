@@ -173,7 +173,6 @@ class RoomManager {
         //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
 
         if (room.players.length < 8 && room.state === 'lobby') {
-            console.log('toto')
             room.players.push(player);
 
             room.game.scores.push({

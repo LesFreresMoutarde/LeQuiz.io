@@ -226,7 +226,6 @@ class Room extends React.Component {
 
 
     componentWillUnmount() {
-        console.log("TRIGGERED")
         Util.clearSessionStorage();
 
         if(this.state.socketOpen) {

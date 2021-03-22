@@ -1,15 +1,4 @@
 const usersRouter = require('express').Router();
-const UserController = require('../../controllers/UserController');
-
-
-usersRouter.get('/guest-id', (req, res) => {
-    const userController = new UserController();
-
-    userController.actionGuestId();
-
-    res.json(userController.response);
-    res.status(userController.response)
-});
 
 usersRouter.route('/:id([\\w\\-]+)')
     .get((req, res) => {
