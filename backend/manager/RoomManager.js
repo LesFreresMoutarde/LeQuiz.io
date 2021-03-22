@@ -122,7 +122,7 @@ class RoomManager {
         }
     }
 
-    static getRoomsId = () => {
+    static getRoomIds = () => {
         return RoomManager.rooms.map(room => room.id);
     }
 
@@ -130,7 +130,7 @@ class RoomManager {
         let roomId = '';
         const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-        while (RoomManager.getRoomsId().includes(roomId) || roomId === '') {
+        while (RoomManager.getRoomIds().includes(roomId) || roomId === '') {
 
             roomId = '';
 
@@ -142,23 +142,23 @@ class RoomManager {
         return roomId
     };
 
-    static getGuestsUsername = () => {
-        const guestsUsername = [];
+    static getGuestUsernames = () => {
+        const guestUsernames = [];
 
         RoomManager.players.forEach(player => {
-            if (player.username.includes('#')) guestsUsername.push(player.username);
+            if (player.username.includes('#')) guestUsernames.push(player.username);
         })
 
-        return guestsUsername;
+        return guestUsernames;
     }
 
     static generateGuestUsername = (basename) => {
         let guestId = '';
         const possible = "0123456789";
 
-        const guestsUsername = RoomManager.getGuestsUsername()
+        const guestUsernames = RoomManager.getGuestUsernames()
 
-        while (guestsUsername.includes(`${basename}#${guestId}`) || guestId === '') {
+        while (guestUsernames.includes(`${basename}#${guestId}`) || guestId === '') {
             guestId = '';
 
             for (let i = 0; i < 6; i++) {

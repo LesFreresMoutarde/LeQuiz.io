@@ -73,9 +73,9 @@ class GameController extends MainController {
     actionVerifyRoom = (roomId) => {
         const response = {};
 
-        const roomsId = RoomManager.getRoomsId();
+        const roomIds = RoomManager.getRoomIds();
 
-        response.isRoomValid = roomsId.includes(roomId);
+        response.isRoomValid = roomIds.includes(roomId);
 
         this.response = response;
     };
