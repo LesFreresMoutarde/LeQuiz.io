@@ -52,8 +52,6 @@ services:
     - ./back-office:/app
     environment:
       WEB_DOCUMENT_ROOT: /app/public
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
 
   dependancies-bo:
     build: ./back-office/Dockerfile
