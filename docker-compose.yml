@@ -52,7 +52,16 @@ services:
     - ./back-office:/app
     environment:
       WEB_DOCUMENT_ROOT: /app/public
-    command: sh -c "npm install --verbose && npm run watch"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+
+  dependancies-bo:
+    build: ./back-office/Dockerfile
+    container_name: lequiz.io-dependancies-bo
+    restart: always
+    volumes:
+      - ./back-office:/app
+    command: sh -c "composer install && npm install --verbose && npm run watch"
 
   mailhog:
     image: mailhog/mailhog
