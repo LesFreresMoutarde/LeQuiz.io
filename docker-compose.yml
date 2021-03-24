@@ -53,7 +53,7 @@ services:
     environment:
       WEB_DOCUMENT_ROOT: /app/public
 
-  dependancies-bo:
+  back-office-dependencies:
     build: ./back-office/Dockerfile
     container_name: lequiz.io-dependancies-bo
     restart: always
