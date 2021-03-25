@@ -55,7 +55,7 @@ services:
 
   back-office-dependencies:
     build: ./back-office/Dockerfile
-    container_name: lequiz.io-dependancies-bo
+    container_name: lequiz.io-back-office-dependencies
     restart: always
     volumes:
       - ./back-office:/app
