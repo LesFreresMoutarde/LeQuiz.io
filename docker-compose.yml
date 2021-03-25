@@ -53,6 +53,14 @@ services:
     environment:
       WEB_DOCUMENT_ROOT: /app/public
 
+  back-office-dependencies:
+    build: ./back-office/Dockerfile
+    container_name: lequiz.io-back-office-dependencies
+    restart: always
+    volumes:
+      - ./back-office:/app
+    command: sh -c "composer install && npm install --verbose && npm run watch"
+
   mailhog:
     image: mailhog/mailhog
     ports:
