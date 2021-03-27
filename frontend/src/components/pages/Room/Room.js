@@ -261,6 +261,7 @@ class Room extends React.Component {
                     <Lobby isHost={isHost}
                            currentPlayer={currentPlayer}
                            roomData={roomData}
+                           roomId={this.roomId}
                            gameConfiguration={gameConfiguration}
                            startQuiz={this.startQuiz}
                            leaveRoom={this.leaveRoom}

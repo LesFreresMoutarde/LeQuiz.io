@@ -41,7 +41,8 @@ class Lobby extends React.Component {
     }
 
     render() {
-        const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz, changeOptions, leaveRoom } = this.props;
+        const { roomData, gameConfiguration, currentPlayer,
+            isHost, startQuiz, changeOptions, leaveRoom, roomId } = this.props;
 
             let displayClass = 'hidden';
             if (isHost) displayClass = 'visible';
@@ -81,7 +82,7 @@ class Lobby extends React.Component {
                     <p className="lobby-room-code">
                         <span id="lobby-hover-to-show-code" onMouseEnter={this.onRoomCodeMouseEnter} onMouseLeave={this.onRoomCodeMouseLeave}>
                             <span id="lobby-hidden-code-message" className="visible">Survolez pour afficher le code du salon</span>
-                            <span id="lobby-room-code">{roomData.id}</span>
+                            <span id="lobby-room-code">{roomId}</span>
                         </span>
                     </p>
                 </div>
