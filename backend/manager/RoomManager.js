@@ -75,7 +75,7 @@ class RoomManager {
         const room = RoomManager.findRoom(roomId);
 
         if (room.state === RoomManager.INITIALIZED_ROOM_STATE && isHost) {
-            RoomManager.completeRoom(room, player)
+            RoomManager.completeRoom(room, player);
 
         } else {
             RoomManager.playerJoinRoom(player, room);

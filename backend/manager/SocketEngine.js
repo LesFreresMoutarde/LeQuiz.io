@@ -25,29 +25,29 @@ module.exports = (server) => {
 
                 socket.join(room.id);
 
-                socket.emit('connection-success', {room, player});
-
-                // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
-                io.to(room.id).emit('room-updated', room);
-
                 switch (room.state) {
-                    case RoomManager.INITIALIZED_ROOM_STATE:
-                       // ??
-                       break;
 
                     case RoomManager.LOBBY_ROOM_STATE:
-                        // Envoyer Room Updated AUX AUTRES JOUEURS
-                        // Demander la config du joueur à l'host
+                        socket.emit('join-room', {room, player})
+
+                        if (!isHost) {
+                            socket.to(room.id).emit('room-updated', room);
+                            io.to(room.host.socketId).emit('ask-game-config', socket.id);
+                        }
+
                         break;
 
                     case RoomManager.QUESTION_ROOM_STATE:
                     case RoomManager.ANSWER_ROOM_STATE:
+
+                        socket.to(room.id).emit('room-updated', room);
+                        // io.to(room.host.socketId).emit('ask-game-config', socket.id)
                         // Envoyer Room Updated AUX AUTRES JOUEURS
                         // Demander config, quiz et chrono à l'host
 
                 }
 
-                if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
+                // if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
 
             } catch (error) {
                 socket.emit('connection-failure')

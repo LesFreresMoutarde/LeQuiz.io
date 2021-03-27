@@ -19,18 +19,16 @@ class ClientSocket {
 
     handleSocketCommunication = (roomComponent) => {
 
-        this.socket.on('connection-success', ({room, player}) => {
+        this.socket.on('join-room', ({room, player}) => {
 
             let isLoading = true;
 
             if (room.host.socketId === this.socket.id) isLoading = false;
 
-            // SI c'est l'host envoyer un event pour repasser la room coté server en state lobby
-
             roomComponent.setState({
                 isLoading,
                 display: {
-                    lobby: true,
+                    lobby: !isLoading,
                     question: false,
                     answer: false,
                     gameOptions: false,
@@ -40,6 +38,7 @@ class ClientSocket {
             })
 
         });
+
 
         this.socket.on('connection-failure', () => {
             toastr.error('Impossible de rejoindre cette room');
@@ -52,7 +51,7 @@ class ClientSocket {
             roomComponent.setState({roomData})
         });
 
-        this.socket.on('game-config-asked', (socketId) => {
+        this.socket.on('ask-game-config', (socketId) => {
 
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
@@ -72,6 +71,12 @@ class ClientSocket {
 
             roomComponent.setState({
                 gameConfiguration,
+                display: {
+                    lobby: true,
+                    question: false,
+                    answer: false,
+                    gameOptions: false,
+                },
                 isLoading: false
             });
         });
