@@ -78,7 +78,7 @@ export default class CreateGame extends React.Component {
                 gameConfiguration
             });
 
-            this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
         }
 
 
@@ -108,7 +108,7 @@ export default class CreateGame extends React.Component {
                 gameConfiguration
             });
 
-            this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
         }
     };
 
@@ -151,7 +151,7 @@ export default class CreateGame extends React.Component {
                     gameConfiguration
                 });
 
-                this.props.roomInstance.socket.updateGameConfiguration(this.props.roomInstance.roomId)
+                this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
             }
         } catch (e) {
             toastr.error('Impossible de créer un salon, réessayez ultérieurement')

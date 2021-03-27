@@ -11,7 +11,7 @@ class RoomManager {
     static QUESTION_ROOM_STATE = 'question';
     static ANSWER_ROOM_STATE = 'answer';
 
-    static reinitRoomGame = (room) => {
+    static resetRoomGame = (room) => {
 
         clearTimeout(room.game.timer);
 

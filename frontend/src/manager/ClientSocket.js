@@ -19,7 +19,7 @@ class ClientSocket {
 
     handleSocketCommunication = (roomComponent) => {
 
-        this.socket.on('join-room', ({room, player}) => {
+        this.socket.on('enter-lobby', ({room, player}) => {
 
             let isLoading = true;
 
@@ -46,26 +46,24 @@ class ClientSocket {
             this.destructor()
         });
 
-        this.socket.on('room-updated', (roomData) => {
+        this.socket.on('receive-new-player', ({players, scores}) => {
+            const { roomData } = roomComponent.state;
+            roomData.players = players;
+            roomData.game.scores = scores;
 
-            roomComponent.setState({roomData})
-        });
+            roomComponent.setState({
+                roomData
+            })
+        })
 
-        this.socket.on('ask-game-config', (socketId) => {
+        this.socket.on('require-game-config-from-host', (socketId) => {
 
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
-            this.socket.emit('game-config-sent', {gameConfiguration,socketId});
+            this.socket.emit('send-game-config-to-server', {gameConfiguration,socketId});
         })
 
-        this.socket.on('game-config-updated-sent', (gameConfiguration) => {
-
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
-
-            roomComponent.setState({gameConfiguration});
-        });
-
-        this.socket.on('game-config-host', (gameConfiguration) => {
+        this.socket.on('receive-game-config', (gameConfiguration) => {
 
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
@@ -81,15 +79,19 @@ class ClientSocket {
             });
         });
 
-        this.socket.on('quiz-sent', (quiz) => {
+        this.socket.on('receive-new-game-config', (gameConfiguration) => {
+
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+            roomComponent.setState({gameConfiguration});
+        });
+
+        this.socket.on('receive-quiz', (quiz) => {
             Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
 
-            this.socket.emit('quiz-received', roomComponent.roomId)
+            this.socket.emit('receive-quiz-confirmation', roomComponent.roomId)
         });
-
-        this.socket.on('ask-question', () => {
-            roomComponent.askQuestion();
-        });
+        
 
         this.socket.on('start-time', ({time, event, room}) => {
 
@@ -102,7 +104,7 @@ class ClientSocket {
 
         });
 
-        this.socket.on('no-answer', () => {
+        this.socket.on('force-answer', () => {
             roomComponent.submitAnswer();
         })
 
@@ -111,12 +113,12 @@ class ClientSocket {
                 this.socket.emit('next-question', roomComponent.roomId)
             }
             else {
-                this.socket.emit('game-reinit', roomComponent.roomId);
+                this.socket.emit('reset-game', roomComponent.roomId);
                 roomComponent.endGame(room)
             }
         })
 
-        this.socket.on('forced-disconnect', () => {
+        this.socket.on('force-disconnection', () => {
             toastr.error('Vous avez été déconnecté');
             roomComponent.props.history.replace('/');
             this.destructor()
@@ -137,16 +139,16 @@ class ClientSocket {
 
     generateQuiz = (roomId) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        this.socket.emit('quiz-generation-asked', {gameConfiguration, roomId})
+        this.socket.emit('generate-quiz', {gameConfiguration, roomId})
     };
 
     sendResult = ({result, roomId}) => {
-        this.socket.emit('player-result', {result, roomId});
+        this.socket.emit('send-player-result', {result, roomId});
     };
 
     updateGameConfiguration = (roomId) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        this.socket.emit('game-config-update', {gameConfiguration, roomId})
+        this.socket.emit('update-game-config', {gameConfiguration, roomId})
     }
 
 
