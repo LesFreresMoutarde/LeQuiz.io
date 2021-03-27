@@ -19,7 +19,7 @@ class RoomManager {
         room.game.quizLength = 0;
         room.game.round = 0;
         room.game.quiz = [];
-        room.hasAnswered = [];
+        room.game.hasAnswered = [];
         room.game.scores.forEach((scoreLine) => {
             scoreLine.value = 0;
             scoreLine.rank = 0
@@ -328,6 +328,16 @@ class RoomManager {
         }
 
         return scores;
+    }
+
+    static formatRoomForEmit = (room) => {
+        return {
+            host: room.host,
+            players: room.players,
+            quizLength: room.game.quizLength,
+            round: room.game.round,
+            scores: room.game.scores
+        };
     }
     
 }

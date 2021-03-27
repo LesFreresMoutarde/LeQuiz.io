@@ -46,10 +46,7 @@ class ClientSocket {
             this.destructor()
         });
 
-        this.socket.on('receive-new-player', ({players, scores}) => {
-            const { roomData } = roomComponent.state;
-            roomData.players = players;
-            roomData.game.scores = scores;
+        this.socket.on('receive-new-player', (roomData) => {
 
             roomComponent.setState({
                 roomData
@@ -130,8 +127,8 @@ class ClientSocket {
             this.destructor()
         })
 
-        this.socket.on('player-disconnected', ({host, players, scores}) => {
-            roomComponent.handlePlayerDisconnect(host, players, scores)
+        this.socket.on('player-disconnected', (roomData) => {
+            roomComponent.handlePlayerDisconnect(roomData)
         })
 
     };

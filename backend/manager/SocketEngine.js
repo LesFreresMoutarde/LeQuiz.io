@@ -23,14 +23,16 @@ module.exports = (server) => {
 
                 const room = RoomManager.handleRoomJoining(roomId, isHost, player);
 
+                const clientRoom = RoomManager.formatRoomForEmit(room);
+
                 socket.join(room.id);
 
                 switch (room.state) {
 
                     case RoomManager.LOBBY_ROOM_STATE:
-                        socket.emit('enter-lobby', {room, player})
+                        socket.emit('enter-lobby', {room: clientRoom, player})
                         if (!isHost) {
-                            socket.to(room.id).emit('receive-new-player', {players: room.players, scores: room.game.scores});
+                            socket.to(room.id).emit('receive-new-player', clientRoom);
                             io.to(room.host.socketId).emit('require-game-config-from-host', socket.id);
                         }
 
@@ -141,12 +143,11 @@ module.exports = (server) => {
                     room
                 } = RoomManager.handlePlayerDisconnect(socket.id);
 
-                if (hasRoomToBeUpdated)
-                    io.to(room.id).emit('player-disconnected', {
-                        host:room.host,
-                        players:room.players,
-                        scores: room.game.scores
-                    });
+                if (hasRoomToBeUpdated) {
+                    const clientRoom = RoomManager.formatRoomForEmit(room);
+
+                    io.to(room.id).emit('player-disconnected', clientRoom);
+                }
 
                 if (hasScoresToBeDisplayed) {
                     const eventToEmit = getEventToEmit(room);
@@ -169,7 +170,9 @@ module.exports = (server) => {
 
         if (event !== "ask-question") time = GameUtil.SCORES_TIME
 
-        io.to(room.id).emit('start-time', {time, event, room});
+        const clientRoom = RoomManager.formatRoomForEmit(room);
+
+        io.to(room.id).emit('start-time', {time, event, room: clientRoom});
 
         room.game.timer = setTimeout(() => {
 
@@ -180,7 +183,7 @@ module.exports = (server) => {
                     io.to(socketId).emit('force-answer')
                 })
             } else {
-                io.to(room.id).emit("end-time", {event, room});
+                io.to(room.id).emit("end-time", {event, room: clientRoom});
             }
 
         }, time)

@@ -44,7 +44,7 @@ class Lobby extends React.Component {
         const { roomData, gameConfiguration, currentPlayer, isHost, startQuiz, changeOptions, leaveRoom } = this.props;
 
             let displayClass = 'hidden';
-            if(isHost) displayClass = 'visible';
+            if (isHost) displayClass = 'visible';
 
         return (
             <div className="lobby-container">
