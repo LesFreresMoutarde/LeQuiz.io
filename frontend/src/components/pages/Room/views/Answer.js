@@ -10,8 +10,8 @@ class Answer extends React.Component {
     }
 
     render() {
-        const { currentQuestion, currentPlayer, game, timeLeft, leaveRoom } = this.props;
-        const { scores, round, quizLength} = game;
+        const { currentQuestion, currentPlayer, roomData, timeLeft, leaveRoom } = this.props;
+        const { scores, round, quizLength} = roomData;
 
         let goodAnswer = null;
 

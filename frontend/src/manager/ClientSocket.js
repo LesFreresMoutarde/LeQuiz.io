@@ -19,7 +19,16 @@ class ClientSocket {
 
     handleSocketCommunication = (roomComponent) => {
 
-        this.socket.on('connection-success', ({room, player}) => {
+        this.socket.on('connection-failure', () => {
+
+            toastr.error('Impossible de rejoindre cette room');
+
+            roomComponent.props.history.replace('/');
+
+            this.destructor();
+        });
+
+        this.socket.on('enter-lobby', ({room, player}) => {
 
             let isLoading = true;
 
@@ -28,7 +37,7 @@ class ClientSocket {
             roomComponent.setState({
                 isLoading,
                 display: {
-                    lobby: true,
+                    lobby: !isLoading,
                     question: false,
                     answer: false,
                     gameOptions: false,
@@ -39,50 +48,90 @@ class ClientSocket {
 
         });
 
-        this.socket.on('connection-failure', () => {
-            toastr.error('Impossible de rejoindre cette room');
-            roomComponent.props.history.replace('/');
-            this.destructor()
-        });
+        this.socket.on('enter-in-game', ({room, player}) => {
+            roomComponent.setState({
+                currentPlayer: player,
+                roomData: room,
+            })
+        })
 
-        this.socket.on('room-updated', (roomData) => {
+        this.socket.on('receive-new-player', (roomData) => {
 
-            roomComponent.setState({roomData})
-        });
+            roomComponent.setState({
+                roomData
+            })
+        })
 
-        this.socket.on('game-config-asked', (socketId) => {
+        this.socket.on('require-game-config-from-host', (socketId) => {
 
             const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
 
-            this.socket.emit('game-config-sent', {gameConfiguration,socketId});
+            this.socket.emit('send-game-config-to-server', {gameConfiguration,socketId});
         })
 
-        this.socket.on('game-config-updated-sent', (gameConfiguration) => {
+        this.socket.on('receive-game-config', (gameConfiguration) => {
+
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+            roomComponent.setState({
+                gameConfiguration,
+                display: {
+                    lobby: true,
+                    question: false,
+                    answer: false,
+                    gameOptions: false,
+                },
+                isLoading: false
+            });
+        });
+
+        this.socket.on('receive-new-game-config', (gameConfiguration) => {
 
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
             roomComponent.setState({gameConfiguration});
         });
 
-        this.socket.on('game-config-host', (gameConfiguration) => {
+        this.socket.on('receive-quiz', (quiz) => {
+            Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
+
+            this.socket.emit('receive-quiz-confirmation', roomComponent.roomId)
+        });
+
+        this.socket.on('require-game-info-from-host', (socketId) => {
+            const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+
+            const quiz = Util.getObjectFromSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY);
+
+            this.socket.emit('send-game-info-to-server', {
+                gameConfiguration,
+                quiz,
+                socketId,
+                roomId:roomComponent.roomId,
+                currentQuestion: roomComponent.state.currentQuestion
+            });
+
+        });
+
+        this.socket.on('receive-game-info', ({gameConfiguration, quiz, time, state, currentQuestion}) => {
+
+            const display = { lobby: false, question: false, answer: false, gameOptions: false}
+
+            display[state] = true;
+
+            roomComponent.handleTimeLeft(time);
 
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+            Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
 
             roomComponent.setState({
                 gameConfiguration,
-                isLoading: false
-            });
-        });
+                isLoading: false,
+                display,
+                currentQuestion
+            })
 
-        this.socket.on('quiz-sent', (quiz) => {
-            Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
-
-            this.socket.emit('quiz-received', roomComponent.roomId)
-        });
-
-        this.socket.on('ask-question', () => {
-            roomComponent.askQuestion();
-        });
+        })
 
         this.socket.on('start-time', ({time, event, room}) => {
 
@@ -95,7 +144,7 @@ class ClientSocket {
 
         });
 
-        this.socket.on('no-answer', () => {
+        this.socket.on('force-answer', () => {
             roomComponent.submitAnswer();
         })
 
@@ -104,12 +153,12 @@ class ClientSocket {
                 this.socket.emit('next-question', roomComponent.roomId)
             }
             else {
-                this.socket.emit('game-reinit', roomComponent.roomId);
+                this.socket.emit('reset-game', roomComponent.roomId);
                 roomComponent.endGame(room)
             }
         })
 
-        this.socket.on('forced-disconnect', () => {
+        this.socket.on('force-disconnection', () => {
             toastr.error('Vous avez été déconnecté');
             roomComponent.props.history.replace('/');
             this.destructor()
@@ -121,8 +170,8 @@ class ClientSocket {
             this.destructor()
         })
 
-        this.socket.on('player-disconnected', ({host, players, scores}) => {
-            roomComponent.handlePlayerDisconnect(host, players, scores)
+        this.socket.on('player-disconnected', (roomData) => {
+            roomComponent.handlePlayerDisconnect(roomData)
         })
 
     };
@@ -130,16 +179,16 @@ class ClientSocket {
 
     generateQuiz = (roomId) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        this.socket.emit('quiz-generation-asked', {gameConfiguration, roomId})
+        this.socket.emit('generate-quiz', {gameConfiguration, roomId})
     };
 
     sendResult = ({result, roomId}) => {
-        this.socket.emit('player-result', {result, roomId});
+        this.socket.emit('send-player-result', {result, roomId});
     };
 
     updateGameConfiguration = (roomId) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        this.socket.emit('game-config-update', {gameConfiguration, roomId})
+        this.socket.emit('update-game-config', {gameConfiguration, roomId})
     }
 
 

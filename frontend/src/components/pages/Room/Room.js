@@ -168,7 +168,6 @@ class Room extends React.Component {
 
         let timeToDisplay = time / 1000;
 
-
         this.setState({timeLeft: timeToDisplay})
 
         this.timer = setInterval(() => {
@@ -183,18 +182,13 @@ class Room extends React.Component {
 
     }
 
-    handlePlayerDisconnect = (host, players, scores) => {
-        const { roomData } = this.state;
+    handlePlayerDisconnect = (roomData) => {
 
         let { isHost } = this.state;
 
-        const mixedRoomData = {...roomData, ...{host, players}};
+        if (this.clientSocket.socket.id === roomData.host.socketId) isHost = true;
 
-        mixedRoomData.game.scores = scores;
-
-        if (this.clientSocket.socket.id === mixedRoomData.host.socketId) isHost = true;
-
-        this.setState({roomData: mixedRoomData, isHost});
+        this.setState({roomData, isHost});
     }
 
     changeOptions = (page) => {
@@ -292,7 +286,7 @@ class Room extends React.Component {
 
             return (
                 <>
-                    <Answer game={roomData.game}
+                    <Answer roomData={roomData}
                             currentQuestion={currentQuestion}
                             currentPlayer={currentPlayer}
                             timeLeft={timeLeft}

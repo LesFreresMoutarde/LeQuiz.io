@@ -1,20 +1,24 @@
-const GameUtil = require("../util/GameUtil");
 
 class RoomManager {
     
-   static rooms = [];
+    static rooms = [];
     
     static players = [];
 
-    static reinitRoomGame = (room) => {
+    static INITIALIZED_ROOM_STATE = 'initialized';
+    static LOBBY_ROOM_STATE = 'lobby';
+    static QUESTION_ROOM_STATE = 'question';
+    static ANSWER_ROOM_STATE = 'answer';
+
+    static resetRoomGame = (room) => {
 
         clearTimeout(room.game.timer);
 
-        room.state = 'lobby';
+        room.state = RoomManager.LOBBY_ROOM_STATE;
         room.game.quizLength = 0;
         room.game.round = 0;
         room.game.quiz = [];
-        room.hasAnswered = [];
+        room.game.hasAnswered = [];
         room.game.scores.forEach((scoreLine) => {
             scoreLine.value = 0;
             scoreLine.rank = 0
@@ -69,8 +73,8 @@ class RoomManager {
 
         const room = RoomManager.findRoom(roomId);
 
-        if (room.state === 'initialized' && isHost) {
-            RoomManager.completeRoom(room, player)
+        if (room.state === RoomManager.INITIALIZED_ROOM_STATE && isHost) {
+            RoomManager.completeRoom(room, player);
 
         } else {
             RoomManager.playerJoinRoom(player, room);
@@ -95,7 +99,7 @@ class RoomManager {
         const room = {
             id: roomId,
             createdAt: new Date(),
-            state: 'initialized'
+            state: RoomManager.INITIALIZED_ROOM_STATE
         }
 
         RoomManager.rooms.push(room);
@@ -103,7 +107,7 @@ class RoomManager {
 
     static completeRoom = (room, host) => {
         room.host = host;
-        room.state = 'lobby';
+        room.state = RoomManager.LOBBY_ROOM_STATE;
         room.players = [host];
         room.game = {
             timer: null,
@@ -170,24 +174,19 @@ class RoomManager {
     }
 
     static playerJoinRoom = (player, room) => {
-        //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
 
-        if (room.players.length < 8 && room.state === 'lobby') {
-            room.players.push(player);
+        if (room.players.length >= 8)
+            throw new Error();
 
-            room.game.scores.push({
-                player: player,
-                value: 0,
-                rank: 0,
-                lastAnswer: null,
-            });
+        room.players.push(player);
 
-            return;
-        }
-
-        throw new Error();
+        room.game.scores.push({
+            player: player,
+            value: 0,
+            rank: 0,
+            lastAnswer: null,
+        });
     };
-
 
     static handlePlayerDisconnect = (socketId) => {
 
@@ -225,13 +224,13 @@ class RoomManager {
             if (lineScore.player.socketId === player.socketId) scoreIndex = index
         });
 
-        room.game.scores.splice(scoreIndex, 1);
+        if (scoreIndex !== -1) room.game.scores.splice(scoreIndex, 1);
 
         room.players.forEach((playerInRoom, index) => {
             if (playerInRoom.socketId === player.socketId) playerIndex = index;
         });
 
-        room.players.splice(playerIndex, 1);
+        if (playerIndex !== -1)room.players.splice(playerIndex, 1);
     };
 
     static checkIfRoomIsDeletable = (room) => {
@@ -257,7 +256,6 @@ class RoomManager {
 
     static changeRoomHost = (room) => {
         room.host = room.players[0];
-        // return room;
     };
 
     static deletePlayer = (player) => {
@@ -322,6 +320,20 @@ class RoomManager {
         }
 
         return scores;
+    }
+
+    static formatRoomForEmit = (room) => {
+        return {
+            host: room.host,
+            players: room.players,
+            quizLength: room.game.quizLength,
+            round: room.game.round,
+            scores: room.game.scores
+        };
+    }
+
+    static getTimeLeft = (room) => {
+        return Math.ceil((room.game.timer._idleStart + room.game.timer._idleTimeout)/1000 - process.uptime());
     }
     
 }

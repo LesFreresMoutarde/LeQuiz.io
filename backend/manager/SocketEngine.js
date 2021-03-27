@@ -14,41 +14,65 @@ module.exports = (server) => {
     io.on('connection', (socket) => {
 
         socket.on('join', ({roomId, username, isHost}) => {
-            console.log('roomId', roomId);
-            console.log('pseudo', username);
-            console.log('isHost ?', isHost);
+
             try {
 
                 const player = RoomManager.handleNewPlayer(username, socket.id, roomId);
 
                 const room = RoomManager.handleRoomJoining(roomId, isHost, player);
 
+                const clientRoom = RoomManager.formatRoomForEmit(room);
+
                 socket.join(room.id);
 
-                socket.emit('connection-success', {room, player});
+                if (room.state === RoomManager.LOBBY_ROOM_STATE) {
+                    socket.emit('enter-lobby', {room: clientRoom, player})
 
-                // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
-                io.to(room.id).emit('room-updated', room);
+                    if (!isHost) {
+                        socket.to(room.id).emit('receive-new-player', clientRoom);
 
-                if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
+                        io.to(room.host.socketId).emit('require-game-config-from-host', socket.id);
+                    }
+
+                } else {
+                    socket.emit('enter-in-game', {room: clientRoom, player});
+
+                    socket.to(room.id).emit('receive-new-player', clientRoom);
+
+                    io.to(room.host.socketId).emit('require-game-info-from-host', socket.id);
+                }
 
             } catch (error) {
                 socket.emit('connection-failure')
             }
         });
 
-        socket.on('game-config-sent', ({gameConfiguration, socketId}) => {
-            io.to(socketId).emit('game-config-host', gameConfiguration);
+        socket.on('send-game-config-to-server', ({gameConfiguration, socketId}) => {
+            io.to(socketId).emit('receive-game-config', gameConfiguration);
         });
 
+        socket.on('send-game-info-to-server', ({gameConfiguration, quiz, socketId, roomId, currentQuestion}) => {
+            try {
+                const room = RoomManager.findRoom(roomId);
 
-        socket.on('game-config-update', ({gameConfiguration, roomId}) => {
-            //TODO V2 broadcast
-            io.to(roomId).emit('game-config-updated-sent', gameConfiguration);
+                const timeLeft = RoomManager.getTimeLeft(room);
+
+                const params = {gameConfiguration, quiz, time: timeLeft*1000, state: room.state, currentQuestion}
+
+                io.to(socketId).emit('receive-game-info', params);
+            } catch (error) {
+                socket.emit('force-disconnection');
+            }
+
         })
 
 
-        socket.on('quiz-generation-asked', async ({gameConfiguration, roomId}) => {
+        socket.on('update-game-config', ({gameConfiguration, roomId}) => {
+            socket.to(roomId).emit('receive-new-game-config', gameConfiguration);
+        })
+
+
+        socket.on('generate-quiz', async ({gameConfiguration, roomId}) => {
 
             try {
                 const room = RoomManager.findRoom(roomId);
@@ -58,24 +82,23 @@ module.exports = (server) => {
 
                 room.game.quiz = quiz;
                 room.game.quizLength = quiz.length;
-                io.to(room.id).emit('quiz-sent', quiz);
+                io.to(room.id).emit('receive-quiz', quiz);
 
             } catch (error) {
-                socket.emit('forced-disconnect');
+                socket.emit('force-disconnection');
             }
         });
 
-        //TODO Verifier que tous les joueurs aient reçus
-        socket.on('quiz-received', (roomId) => {
+        socket.on('receive-quiz-confirmation', (roomId) => {
             try {
                 const room = RoomManager.findRoom(roomId);
 
-                room.state = 'question';
+                room.state = RoomManager.QUESTION_ROOM_STATE;
 
                 if (socket.id === room.host.socketId)
                     emitEventAndTimeSignal(room, 'ask-question');
             } catch (error) {
-                socket.emit('forced-disconnect');
+                socket.emit('force-disconnection');
             }
         });
 
@@ -83,39 +106,38 @@ module.exports = (server) => {
             try {
                 const room = RoomManager.findRoom(roomId);
 
-                room.state = 'question';
+                room.state = RoomManager.QUESTION_ROOM_STATE;
 
                 if (socket.id === room.host.socketId)
                     emitEventAndTimeSignal(room, 'ask-question');
             } catch (error) {
-                socket.emit('forced-disconnect');
+                socket.emit('force-disconnection');
             }
         });
 
-        socket.on('player-result', ({result}) => {
-            console.log("player-result event catch");
+        socket.on('send-player-result', ({result}) => {
 
             try {
                 const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, result);
 
                 if (receivedAllAnswers) {
-                    room.state = 'answer';
+                    room.state = RoomManager.ANSWER_ROOM_STATE;
 
                     const eventToEmit = getEventToEmit(room);
 
                     emitEventAndTimeSignal(room, eventToEmit);
                 }
             } catch (error) {
-                socket.emit('forced-disconnect');
+                socket.emit('force-disconnection');
             }
         });
 
-        socket.on('game-reinit', (roomId) => {
+        socket.on('reset-game', (roomId) => {
             try {
                 const room = RoomManager.findRoom(roomId);
-                RoomManager.reinitRoomGame(room)
+                RoomManager.resetRoomGame(room)
             } catch (error) {
-                socket.emit('forced-disconnect');
+                socket.emit('force-disconnection');
             }
         })
 
@@ -128,12 +150,11 @@ module.exports = (server) => {
                     room
                 } = RoomManager.handlePlayerDisconnect(socket.id);
 
-                if (hasRoomToBeUpdated)
-                    io.to(room.id).emit('player-disconnected', {
-                        host:room.host,
-                        players:room.players,
-                        scores: room.game.scores
-                    });
+                if (hasRoomToBeUpdated) {
+                    const clientRoom = RoomManager.formatRoomForEmit(room);
+
+                    io.to(room.id).emit('player-disconnected', clientRoom);
+                }
 
                 if (hasScoresToBeDisplayed) {
                     const eventToEmit = getEventToEmit(room);
@@ -142,7 +163,7 @@ module.exports = (server) => {
                 }
 
             } catch (error) {
-                socket.emit('forced-disconnect');
+                socket.emit('force-disconnection');
             }
 
         })
@@ -156,18 +177,20 @@ module.exports = (server) => {
 
         if (event !== "ask-question") time = GameUtil.SCORES_TIME
 
-        io.to(room.id).emit('start-time', {time, event, room});
+        const clientRoom = RoomManager.formatRoomForEmit(room);
+
+        io.to(room.id).emit('start-time', {time, event, room: clientRoom});
 
         room.game.timer = setTimeout(() => {
 
-            const noAnswerPlayers = RoomManager.getNoAnswerPlayers(room);
-
             if (event === "ask-question") {
+                const noAnswerPlayers = RoomManager.getNoAnswerPlayers(room);
+
                 noAnswerPlayers.forEach((socketId) => {
-                    io.to(socketId).emit('no-answer')
+                    io.to(socketId).emit('force-answer')
                 })
             } else {
-                io.to(room.id).emit("end-time", {event, room});
+                io.to(room.id).emit("end-time", {event, room: clientRoom});
             }
 
         }, time)
