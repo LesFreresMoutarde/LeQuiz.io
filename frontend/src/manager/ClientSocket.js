@@ -25,7 +25,7 @@ class ClientSocket {
 
             roomComponent.props.history.replace('/');
 
-            this.destructor()
+            this.destructor();
         });
 
         this.socket.on('enter-lobby', ({room, player}) => {

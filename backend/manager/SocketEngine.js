@@ -14,9 +14,7 @@ module.exports = (server) => {
     io.on('connection', (socket) => {
 
         socket.on('join', ({roomId, username, isHost}) => {
-            console.log('roomId', roomId);
-            console.log('pseudo', username);
-            console.log('isHost ?', isHost);
+
             try {
 
                 const player = RoomManager.handleNewPlayer(username, socket.id, roomId);
@@ -27,24 +25,22 @@ module.exports = (server) => {
 
                 socket.join(room.id);
 
-                switch (room.state) {
+                if (room.state === RoomManager.LOBBY_ROOM_STATE) {
+                    socket.emit('enter-lobby', {room: clientRoom, player})
 
-                    case RoomManager.LOBBY_ROOM_STATE:
-
-                        socket.emit('enter-lobby', {room: clientRoom, player})
-                        if (!isHost) {
-                            socket.to(room.id).emit('receive-new-player', clientRoom);
-                            io.to(room.host.socketId).emit('require-game-config-from-host', socket.id);
-                        }
-                        break;
-                    case RoomManager.QUESTION_ROOM_STATE:
-                    case RoomManager.ANSWER_ROOM_STATE:
-                        socket.emit('enter-in-game', {room: clientRoom, player});
+                    if (!isHost) {
                         socket.to(room.id).emit('receive-new-player', clientRoom);
-                        io.to(room.host.socketId).emit('require-game-info-from-host', socket.id)
-                        break;
-                }
 
+                        io.to(room.host.socketId).emit('require-game-config-from-host', socket.id);
+                    }
+
+                } else {
+                    socket.emit('enter-in-game', {room: clientRoom, player});
+
+                    socket.to(room.id).emit('receive-new-player', clientRoom);
+
+                    io.to(room.host.socketId).emit('require-game-info-from-host', socket.id);
+                }
 
             } catch (error) {
                 socket.emit('connection-failure')
@@ -60,8 +56,6 @@ module.exports = (server) => {
                 const room = RoomManager.findRoom(roomId);
 
                 const timeLeft = RoomManager.getTimeLeft(room);
-
-                console.log("timeLeft*1000", timeLeft*1000);
 
                 const params = {gameConfiguration, quiz, time: timeLeft*1000, state: room.state, currentQuestion}
 
@@ -95,7 +89,6 @@ module.exports = (server) => {
             }
         });
 
-        //TODO Verifier que tous les joueurs aient reçus ou conditionner l'execution qu'a un seul joueur
         socket.on('receive-quiz-confirmation', (roomId) => {
             try {
                 const room = RoomManager.findRoom(roomId);
@@ -123,7 +116,6 @@ module.exports = (server) => {
         });
 
         socket.on('send-player-result', ({result}) => {
-            console.log("send-player-result event catch");
 
             try {
                 const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, result);

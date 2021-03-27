@@ -1,8 +1,7 @@
-const GameUtil = require("../util/GameUtil");
 
 class RoomManager {
     
-   static rooms = [];
+    static rooms = [];
     
     static players = [];
 
@@ -175,25 +174,19 @@ class RoomManager {
     }
 
     static playerJoinRoom = (player, room) => {
-        //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
 
-        // if (room.players.length < 8 && room.state === 'lobby') {
-        if (room.players.length < 8) {
-            room.players.push(player);
+        if (room.players.length >= 8)
+            throw new Error();
 
-            room.game.scores.push({
-                player: player,
-                value: 0,
-                rank: 0,
-                lastAnswer: null,
-            });
+        room.players.push(player);
 
-            return;
-        }
-
-        throw new Error();
+        room.game.scores.push({
+            player: player,
+            value: 0,
+            rank: 0,
+            lastAnswer: null,
+        });
     };
-
 
     static handlePlayerDisconnect = (socketId) => {
 
@@ -231,13 +224,13 @@ class RoomManager {
             if (lineScore.player.socketId === player.socketId) scoreIndex = index
         });
 
-        room.game.scores.splice(scoreIndex, 1);
+        if (scoreIndex !== -1) room.game.scores.splice(scoreIndex, 1);
 
         room.players.forEach((playerInRoom, index) => {
             if (playerInRoom.socketId === player.socketId) playerIndex = index;
         });
 
-        room.players.splice(playerIndex, 1);
+        if (playerIndex !== -1)room.players.splice(playerIndex, 1);
     };
 
     static checkIfRoomIsDeletable = (room) => {
@@ -263,7 +256,6 @@ class RoomManager {
 
     static changeRoomHost = (room) => {
         room.host = room.players[0];
-        // return room;
     };
 
     static deletePlayer = (player) => {
@@ -341,7 +333,7 @@ class RoomManager {
     }
 
     static getTimeLeft = (room) => {
-        return Math.ceil((room.game.timer._idleStart + room.game.timer._idleTimeout)/1000 - process.uptime())
+        return Math.ceil((room.game.timer._idleStart + room.game.timer._idleTimeout)/1000 - process.uptime());
     }
     
 }
