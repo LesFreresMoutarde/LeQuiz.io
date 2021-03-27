@@ -25,6 +25,8 @@ class ClientSocket {
 
             if (room.host.socketId === this.socket.id) isLoading = false;
 
+            // SI c'est l'host envoyer un event pour repasser la room coté server en state lobby
+
             roomComponent.setState({
                 isLoading,
                 display: {

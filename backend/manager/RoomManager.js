@@ -6,11 +6,16 @@ class RoomManager {
     
     static players = [];
 
+    static INITIALIZED_ROOM_STATE = 'initialized';
+    static LOBBY_ROOM_STATE = 'lobby';
+    static QUESTION_ROOM_STATE = 'question';
+    static ANSWER_ROOM_STATE = 'answer';
+
     static reinitRoomGame = (room) => {
 
         clearTimeout(room.game.timer);
 
-        room.state = 'lobby';
+        room.state = RoomManager.LOBBY_ROOM_STATE;
         room.game.quizLength = 0;
         room.game.round = 0;
         room.game.quiz = [];
@@ -69,7 +74,7 @@ class RoomManager {
 
         const room = RoomManager.findRoom(roomId);
 
-        if (room.state === 'initialized' && isHost) {
+        if (room.state === RoomManager.INITIALIZED_ROOM_STATE && isHost) {
             RoomManager.completeRoom(room, player)
 
         } else {
@@ -95,7 +100,7 @@ class RoomManager {
         const room = {
             id: roomId,
             createdAt: new Date(),
-            state: 'initialized'
+            state: RoomManager.INITIALIZED_ROOM_STATE
         }
 
         RoomManager.rooms.push(room);
@@ -103,7 +108,7 @@ class RoomManager {
 
     static completeRoom = (room, host) => {
         room.host = host;
-        room.state = 'lobby';
+        room.state = RoomManager.LOBBY_ROOM_STATE;
         room.players = [host];
         room.game = {
             timer: null,
@@ -172,7 +177,8 @@ class RoomManager {
     static playerJoinRoom = (player, room) => {
         //TODO V2, PERMETTRE DE REJOINDRE EN COURS DE PARTIE
 
-        if (room.players.length < 8 && room.state === 'lobby') {
+        // if (room.players.length < 8 && room.state === 'lobby') {
+        if (room.players.length < 8) {
             room.players.push(player);
 
             room.game.scores.push({

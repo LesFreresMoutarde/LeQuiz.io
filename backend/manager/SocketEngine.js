@@ -30,6 +30,23 @@ module.exports = (server) => {
                 // a remplacer par broadcast pour eviter d'envoyer 2 fois les infos à la room ?
                 io.to(room.id).emit('room-updated', room);
 
+                switch (room.state) {
+                    case RoomManager.INITIALIZED_ROOM_STATE:
+                       // ??
+                       break;
+
+                    case RoomManager.LOBBY_ROOM_STATE:
+                        // Envoyer Room Updated AUX AUTRES JOUEURS
+                        // Demander la config du joueur à l'host
+                        break;
+
+                    case RoomManager.QUESTION_ROOM_STATE:
+                    case RoomManager.ANSWER_ROOM_STATE:
+                        // Envoyer Room Updated AUX AUTRES JOUEURS
+                        // Demander config, quiz et chrono à l'host
+
+                }
+
                 if (!isHost) io.to(room.host.socketId).emit('game-config-asked', socket.id);
 
             } catch (error) {
@@ -70,7 +87,7 @@ module.exports = (server) => {
             try {
                 const room = RoomManager.findRoom(roomId);
 
-                room.state = 'question';
+                room.state = RoomManager.QUESTION_ROOM_STATE;
 
                 if (socket.id === room.host.socketId)
                     emitEventAndTimeSignal(room, 'ask-question');
@@ -83,7 +100,7 @@ module.exports = (server) => {
             try {
                 const room = RoomManager.findRoom(roomId);
 
-                room.state = 'question';
+                room.state = RoomManager.QUESTION_ROOM_STATE;
 
                 if (socket.id === room.host.socketId)
                     emitEventAndTimeSignal(room, 'ask-question');
@@ -99,7 +116,7 @@ module.exports = (server) => {
                 const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, result);
 
                 if (receivedAllAnswers) {
-                    room.state = 'answer';
+                    room.state = RoomManager.ANSWER_ROOM_STATE;
 
                     const eventToEmit = getEventToEmit(room);
 
