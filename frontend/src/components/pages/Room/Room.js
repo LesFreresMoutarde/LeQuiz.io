@@ -168,7 +168,6 @@ class Room extends React.Component {
 
         let timeToDisplay = time / 1000;
 
-
         this.setState({timeLeft: timeToDisplay})
 
         this.timer = setInterval(() => {

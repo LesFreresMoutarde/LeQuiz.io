@@ -339,6 +339,10 @@ class RoomManager {
             scores: room.game.scores
         };
     }
+
+    static getTimeLeft = (room) => {
+        return Math.ceil((room.game.timer._idleStart + room.game.timer._idleTimeout)/1000 - process.uptime())
+    }
     
 }
 

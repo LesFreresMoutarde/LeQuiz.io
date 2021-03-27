@@ -19,6 +19,15 @@ class ClientSocket {
 
     handleSocketCommunication = (roomComponent) => {
 
+        this.socket.on('connection-failure', () => {
+
+            toastr.error('Impossible de rejoindre cette room');
+
+            roomComponent.props.history.replace('/');
+
+            this.destructor()
+        });
+
         this.socket.on('enter-lobby', ({room, player}) => {
 
             let isLoading = true;
@@ -39,12 +48,12 @@ class ClientSocket {
 
         });
 
-
-        this.socket.on('connection-failure', () => {
-            toastr.error('Impossible de rejoindre cette room');
-            roomComponent.props.history.replace('/');
-            this.destructor()
-        });
+        this.socket.on('enter-in-game', ({room, player}) => {
+            roomComponent.setState({
+                currentPlayer: player,
+                roomData: room,
+            })
+        })
 
         this.socket.on('receive-new-player', (roomData) => {
 
@@ -88,7 +97,41 @@ class ClientSocket {
 
             this.socket.emit('receive-quiz-confirmation', roomComponent.roomId)
         });
-        
+
+        this.socket.on('require-game-info-from-host', (socketId) => {
+            const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+
+            const quiz = Util.getObjectFromSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY);
+
+            this.socket.emit('send-game-info-to-server', {
+                gameConfiguration,
+                quiz,
+                socketId,
+                roomId:roomComponent.roomId,
+                currentQuestion: roomComponent.state.currentQuestion
+            });
+
+        });
+
+        this.socket.on('receive-game-info', ({gameConfiguration, quiz, time, state, currentQuestion}) => {
+
+            const display = { lobby: false, question: false, answer: false, gameOptions: false}
+
+            display[state] = true;
+
+            roomComponent.handleTimeLeft(time);
+
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+            Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
+
+            roomComponent.setState({
+                gameConfiguration,
+                isLoading: false,
+                display,
+                currentQuestion
+            })
+
+        })
 
         this.socket.on('start-time', ({time, event, room}) => {
 

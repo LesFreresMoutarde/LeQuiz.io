@@ -30,21 +30,19 @@ module.exports = (server) => {
                 switch (room.state) {
 
                     case RoomManager.LOBBY_ROOM_STATE:
+
                         socket.emit('enter-lobby', {room: clientRoom, player})
                         if (!isHost) {
                             socket.to(room.id).emit('receive-new-player', clientRoom);
                             io.to(room.host.socketId).emit('require-game-config-from-host', socket.id);
                         }
-
                         break;
                     case RoomManager.QUESTION_ROOM_STATE:
                     case RoomManager.ANSWER_ROOM_STATE:
-
-                        // socket.to(room.id).emit('room-updated', room);
-                        // io.to(room.host.socketId).emit('ask-game-config', socket.id)
-                        // Envoyer Room Updated AUX AUTRES JOUEURS
-                        // Demander config, quiz et chrono à l'host
-
+                        socket.emit('enter-in-game', {room: clientRoom, player});
+                        socket.to(room.id).emit('receive-new-player', clientRoom);
+                        io.to(room.host.socketId).emit('require-game-info-from-host', socket.id)
+                        break;
                 }
 
 
@@ -56,6 +54,23 @@ module.exports = (server) => {
         socket.on('send-game-config-to-server', ({gameConfiguration, socketId}) => {
             io.to(socketId).emit('receive-game-config', gameConfiguration);
         });
+
+        socket.on('send-game-info-to-server', ({gameConfiguration, quiz, socketId, roomId, currentQuestion}) => {
+            try {
+                const room = RoomManager.findRoom(roomId);
+
+                const timeLeft = RoomManager.getTimeLeft(room);
+
+                console.log("timeLeft*1000", timeLeft*1000);
+
+                const params = {gameConfiguration, quiz, time: timeLeft*1000, state: room.state, currentQuestion}
+
+                io.to(socketId).emit('receive-game-info', params);
+            } catch (error) {
+                socket.emit('force-disconnection');
+            }
+
+        })
 
 
         socket.on('update-game-config', ({gameConfiguration, roomId}) => {
