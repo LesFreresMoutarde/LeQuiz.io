@@ -153,7 +153,7 @@ class RoomManager {
         while (roomUsernames.includes(`#${guestId}`) || guestId === '') {
             guestId = '';
 
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 3; i++) {
                 guestId += possible.charAt(Math.floor(Math.random() * possible.length));
             }
         }
