@@ -1,9 +1,9 @@
 
 class RoomManager {
     
-    static rooms = [];
+    static rooms = {};
     
-    static players = [];
+    static players = {};
 
     static INITIALIZED_ROOM_STATE = 'initialized';
     static LOBBY_ROOM_STATE = 'lobby';
@@ -40,7 +40,7 @@ class RoomManager {
     //TODO Permettre plus tard à l'user de choisir son pseudo (plutot de le modifier une fois dans la room)
     static handleNewPlayer = (username, socketId, roomId) => {
 
-        if (!username) username = RoomManager.generateGuestUsername('Guest');
+        if (!username) username = RoomManager.generateGuestUsername('Guest', roomId);
 
 
         return RoomManager.createPlayer(username, socketId, roomId)
@@ -49,7 +49,7 @@ class RoomManager {
 
     static findPlayer = (socketId) => {
 
-        const player = RoomManager.players.filter(player => player.socketId === socketId)[0];
+        const player = RoomManager.players[socketId];
 
         if (player) return player;
 
@@ -64,7 +64,7 @@ class RoomManager {
             createdAt: new Date()
         };
 
-        RoomManager.players.push(player);
+        RoomManager.players[socketId] = player;
 
         return player;
     };
@@ -86,7 +86,7 @@ class RoomManager {
 
     static findRoom = (roomId) => {
 
-        const room = RoomManager.rooms.filter(room => room.id === roomId)[0];
+        const room = RoomManager.rooms[roomId];
 
         if (room) return room;
 
@@ -96,13 +96,11 @@ class RoomManager {
 
     static createRoom = (roomId) => {
 
-        const room = {
+        RoomManager.rooms[roomId] = {
             id: roomId,
             createdAt: new Date(),
             state: RoomManager.INITIALIZED_ROOM_STATE
-        }
-
-        RoomManager.rooms.push(room);
+        };
     };
 
     static completeRoom = (room, host) => {
@@ -126,15 +124,11 @@ class RoomManager {
         }
     }
 
-    static getRoomIds = () => {
-        return RoomManager.rooms.map(room => room.id);
-    }
-
     static generateRoomId = () => {
         let roomId = '';
         const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-        while (RoomManager.getRoomIds().includes(roomId) || roomId === '') {
+        while (RoomManager.rooms.hasOwnProperty(roomId) || roomId === '') {
 
             roomId = '';
 
@@ -146,26 +140,20 @@ class RoomManager {
         return roomId
     };
 
-    static getGuestUsernames = () => {
-        const guestUsernames = [];
-
-        RoomManager.players.forEach(player => {
-            if (player.username.includes('#')) guestUsernames.push(player.username);
-        })
-
-        return guestUsernames;
-    }
-
-    static generateGuestUsername = (basename) => {
+    static generateGuestUsername = (basename, roomId) => {
         let guestId = '';
         const possible = "0123456789";
 
-        const guestUsernames = RoomManager.getGuestUsernames()
+        const room = RoomManager.findRoom(roomId);
 
-        while (guestUsernames.includes(`${basename}#${guestId}`) || guestId === '') {
+        let roomUsernames = [];
+
+        if (room.players) roomUsernames = room.players.map(player => player.username);
+
+        while (roomUsernames.includes(`#${guestId}`) || guestId === '') {
             guestId = '';
 
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 3; i++) {
                 guestId += possible.charAt(Math.floor(Math.random() * possible.length));
             }
         }
@@ -215,7 +203,6 @@ class RoomManager {
         return {hasRoomToBeUpdated, hasScoresToBeDisplayed, room};
     };
 
-
     static playerLeaveRoom = (player, room) => {
         let playerIndex = -1;
         let scoreIndex = -1;
@@ -230,7 +217,7 @@ class RoomManager {
             if (playerInRoom.socketId === player.socketId) playerIndex = index;
         });
 
-        if (playerIndex !== -1)room.players.splice(playerIndex, 1);
+        if (playerIndex !== -1) room.players.splice(playerIndex, 1);
     };
 
     static checkIfRoomIsDeletable = (room) => {
@@ -238,16 +225,9 @@ class RoomManager {
     };
 
     static deleteRoom = (room) => {
-        let index = -1;
+        clearTimeout(room.game.timer);
 
-        RoomManager.rooms.forEach((activeRoom, i) => {
-            if (activeRoom.id === room.id) {
-                index = i;
-                clearTimeout(room.game.timer);
-            }
-        });
-
-        RoomManager.rooms.splice(index, 1);
+        delete RoomManager.rooms[room.id];
     };
 
     static checkIfHostHasToBeTransferred = (player, room) => {
@@ -259,13 +239,7 @@ class RoomManager {
     };
 
     static deletePlayer = (player) => {
-        let indexToDelete = -1;
-
-        RoomManager.players.forEach((activePlayer, index) => {
-            if (activePlayer.socketId === player.socketId) indexToDelete = index;
-        });
-
-        if (indexToDelete !== -1) RoomManager.players.splice(indexToDelete, 1);
+        delete RoomManager.players[player.socketId];
     };
 
     static handlePlayerResult = (socketId, result) => {

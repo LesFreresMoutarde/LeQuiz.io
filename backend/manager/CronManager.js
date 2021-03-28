@@ -8,7 +8,6 @@ class CronManager {
         CronManager.removeDirtyPlayers();
     }
 
-
     static removeDirtyRooms = () => {
 
         cron.schedule('0 3 * * *', () => {
@@ -16,16 +15,14 @@ class CronManager {
             const date = new Date();
             date.setDate(date.getDate() - 1);
 
-            const indexesToDelete = [];
+            const roomIds = Object.keys(RoomManager.rooms);
 
-            RoomManager.rooms.forEach((room, index) => {
-                if (room.createdAt <= date && room.players.length === 0) indexesToDelete.push(index);
-            })
-
-            for (let i = indexesToDelete.length - 1; i >= 0; i--) {
-                RoomManager.rooms.splice(indexesToDelete[i], 1)
+            for (let i = 0; i < roomIds.length; i++) {
+                if (RoomManager.rooms[roomIds[i]].createdAt <= date
+                    &&
+                    RoomManager.rooms[roomIds[i]].players.length === 0)
+                        delete RoomManager.rooms[roomIds[i]];
             }
-
         })
     }
 
@@ -35,16 +32,12 @@ class CronManager {
             const date = new Date();
             date.setDate(date.getDate() - 1);
 
-            const indexesToDelete = [];
+            const socketIds = Object.keys(RoomManager.players);
 
-            RoomManager.players.forEach((player, index) => {
-                if (player.createdAt <= date) indexesToDelete.push(index);
-            })
-
-            for (let i = indexesToDelete.length - 1; i >= 0; i--) {
-                RoomManager.players.splice(indexesToDelete[i], 1)
+            for (let i = 0; i < socketIds.length; i++) {
+                if (RoomManager.players[socketIds[i]].createdAt <= date)
+                    delete RoomManager.players[socketIds[i]];
             }
-
         })
     }
 
