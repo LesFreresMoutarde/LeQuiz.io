@@ -186,9 +186,8 @@ module.exports = (server) => {
             if (event === "ask-question") {
                 const noAnswerPlayers = RoomManager.getNoAnswerPlayers(room);
 
-                noAnswerPlayers.forEach((socketId) => {
-                    io.to(socketId).emit('force-answer')
-                })
+                io.to(noAnswerPlayers).emit('force-answer')
+
             } else {
                 io.to(room.id).emit("end-time", {event, room: clientRoom});
             }
