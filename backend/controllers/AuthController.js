@@ -5,7 +5,7 @@ const EmailUtil = require("../util/EmailUtil");
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 const MainController = require('./mainController/MainController');
 const PasswordUtil = require("../util/PasswordUtil");
-const Util = require('../util/Util');
+const RandomUtil = require("../util/RandomUtil");
 const env = require('../config/env');
 
 class AuthController extends MainController {
@@ -393,7 +393,7 @@ class AuthController extends MainController {
         }
 
         user.lastResetPasswordEmailSendDate = now;
-        user.passwordResetToken = Util.Random.getRandomString(Util.Random.RANDOM_ALPHANUMERIC_ALL_CASE, 128);
+        user.passwordResetToken = RandomUtil.getRandomString(RandomUtil.RANDOM_ALPHANUMERIC_ALL_CASE, 128);
         await user.save();
 
         await this.sendResetPasswordEmailToUser(user);
