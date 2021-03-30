@@ -1,6 +1,7 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const { Op, QueryTypes } = require('sequelize');
+const EmailUtil = require("../util/EmailUtil");
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 const MainController = require('./mainController/MainController');
 const PasswordUtil = require("../util/PasswordUtil");
@@ -273,7 +274,7 @@ class AuthController extends MainController {
 
         if (existingUserWithEmail !== null) {
             errors.email = "Cette adresse email est déjà utilisée";
-        } else if(!Util.Email.isEmailAddressValid(requestBody.email)) {
+        } else if(!EmailUtil.isEmailAddressValid(requestBody.email)) {
             errors.email = "Cette adresse email n'est pas valide";
         }
 
@@ -634,7 +635,7 @@ class AuthController extends MainController {
     }
 
     sendResetPasswordEmailToUser = async (user) => {
-        await Util.Email.sendEmailFromNoreply({
+        await EmailUtil.sendEmailFromNoreply({
             to: `"${user.username}" <${user.email}>`,
             subject: 'Réinitialisez votre mot de passe',
             html:
