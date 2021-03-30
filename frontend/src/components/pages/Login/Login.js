@@ -5,6 +5,7 @@ import App from "../../App";
 
 import Toastr from "toastr2";
 import BackArrow from "../../misc/BackArrow";
+import AuthUtil from "../../../util/AuthUtil";
 const toastr = new Toastr();
 
 class Login extends React.Component {
@@ -76,10 +77,10 @@ class Login extends React.Component {
         switch(response.status) {
             case 200:
                 Util.verbose('Login successful');
-                Util.setAccesstoken(responseJson.accessToken);
-                Util.setRefreshToken(responseJson.refreshToken);
+                AuthUtil.setAccesstoken(responseJson.accessToken);
+                AuthUtil.setRefreshToken(responseJson.refreshToken);
 
-                App.GLOBAL.setUser(Util.accessTokenPayload.user);
+                App.GLOBAL.setUser(AuthUtil.accessTokenPayload.user);
 
                 this.setState({
                     redirect: true,

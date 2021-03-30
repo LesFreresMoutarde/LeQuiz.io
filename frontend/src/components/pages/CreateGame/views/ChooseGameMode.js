@@ -5,6 +5,7 @@ import GameMode from "../components/GameMode";
 import Title from "../../../misc/Title";
 import BackArrow from "../../../misc/BackArrow";
 import Toastr from "toastr2";
+import AuthUtil from "../../../../util/AuthUtil";
 const toastr = new Toastr();
 
 export default class ChooseGameMode extends React.Component {
@@ -37,7 +38,7 @@ export default class ChooseGameMode extends React.Component {
 
     getGameModes = async () => {
       
-        let user = Util.getJwtPayloadContent(Util.accessToken).user;
+        let user = AuthUtil.accessTokenPayload.user;
 
         if(!user) {
             user = {plan: 'free'};
