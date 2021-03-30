@@ -19,7 +19,22 @@ class Util {
         FROM_NAME: 'LeQuiz.io',
         FROM_NOREPLY_ADDRESS: 'noreply@lequiz.io',
 
-        transport: nodemailer.createTransport(env.email),
+        transport: null, // Initialized by createTransport function
+
+        createTransport: () => {
+            const transport = nodemailer.createTransport(env.email);
+
+            console.log('Verifying email transport');
+            transport.verify((error, success) => {
+                if (error) {
+                    throw new Error(error);
+                } else {
+                    console.log('Email transport is ready');
+                }
+            });
+
+            return transport;
+        },
 
         /**
          * @param {string} email
@@ -90,6 +105,8 @@ class Util {
         },
     };
 }
+
+Util.Email.transport = Util.Email.createTransport();
 
 Util.Random.RANDOM_LETTERS_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
 Util.Random.RANDOM_LETTERS_UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
