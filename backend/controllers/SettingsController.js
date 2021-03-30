@@ -1,6 +1,6 @@
 const argon2 = require('argon2');
 const MainController = require('./mainController/MainController');
-const Util = require('../util/Util');
+const PasswordUtil = require("../util/PasswordUtil");
 
 class SettingsController extends MainController {
     actionGetEmail = async (accessTokenPayload) => {
@@ -175,17 +175,17 @@ class SettingsController extends MainController {
             };
         }
 
-        if(requestBody.newPassword.length < Util.Password.MIN_LENGTH) {
+        if(requestBody.newPassword.length < PasswordUtil.MIN_LENGTH) {
             this.statusCode = 422;
             this.response = {
                 errors: {
-                    newPassword: `Le nouveau mot de passe doit faire au moins ${Util.Password.MIN_LENGTH} caractères`,
+                    newPassword: `Le nouveau mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`,
                 },
             };
             return;
         }
 
-        user.password = await Util.Password.hashPassword(requestBody.newPassword);
+        user.password = await PasswordUtil.hashPassword(requestBody.newPassword);
         await user.save();
 
         this.statusCode = 204;

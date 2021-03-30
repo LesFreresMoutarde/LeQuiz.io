@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { Op, QueryTypes } = require('sequelize');
 const InvalidTokenTypeError = require('../errors/auth/InvalidTokenTypeError');
 const MainController = require('./mainController/MainController');
+const PasswordUtil = require("../util/PasswordUtil");
 const Util = require('../util/Util');
 const env = require('../config/env');
 
@@ -276,8 +277,8 @@ class AuthController extends MainController {
             errors.email = "Cette adresse email n'est pas valide";
         }
 
-        if (requestBody.password.length < Util.Password.MIN_LENGTH) {
-            errors.password = `Le mot de passe doit faire au moins ${Util.Password.MIN_LENGTH} caractères`;
+        if (requestBody.password.length < PasswordUtil.MIN_LENGTH) {
+            errors.password = `Le mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`;
         }
 
         if (requestBody.password !== requestBody.confirmPassword) {
@@ -295,7 +296,7 @@ class AuthController extends MainController {
         const user = await db.User.create({
             username: requestBody.username,
             email: requestBody.email,
-            password: await Util.Password.hashPassword(requestBody.password),
+            password: await PasswordUtil.hashPassword(requestBody.password),
             plan: 'free',
             role: 'member',
             isTrustyWriter: false,
@@ -476,17 +477,17 @@ class AuthController extends MainController {
             return;
         }
 
-        if(requestBody.newPassword.length < Util.Password.MIN_LENGTH) {
+        if(requestBody.newPassword.length < PasswordUtil.MIN_LENGTH) {
             this.statusCode = 422;
             this.response = {
                 errors: {
-                    newPassword: `Le nouveau mot de passe doit faire au moins ${Util.Password.MIN_LENGTH} caractères`,
+                    newPassword: `Le nouveau mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`,
                 },
             };
             return;
         }
 
-        user.password = await Util.Password.hashPassword(requestBody.newPassword);
+        user.password = await PasswordUtil.hashPassword(requestBody.newPassword);
         user.passwordResetToken = null;
         await user.save();
 
