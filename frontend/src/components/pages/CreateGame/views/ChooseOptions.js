@@ -9,6 +9,7 @@ import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
 import BackArrow from "../../../misc/BackArrow";
 import Toastr from "toastr2";
+import ApiUtil from "../../../../util/ApiUtil";
 const toastr = new Toastr();
 
 export default class ChooseOptions extends React.Component {
@@ -37,7 +38,7 @@ export default class ChooseOptions extends React.Component {
                 const categoriesId = gameConfiguration.categories.map((category) => (category.id));
                 const gameMode = gameConfiguration.gameMode.classname;
 
-                const response = await Util.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
+                const response = await ApiUtil.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
 
                 if (!response.ok) throw new Error(`${response.status} : ${response.statusText}`);
 

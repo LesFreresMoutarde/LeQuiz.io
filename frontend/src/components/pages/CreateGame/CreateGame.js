@@ -6,6 +6,7 @@ import ChooseCategories from "./views/ChooseCategories";
 import ChooseOptions from "./views/ChooseOptions";
 import Loader from "../../misc/Loader";
 import Toastr from "toastr2";
+import ApiUtil from "../../../util/ApiUtil";
 const toastr = new Toastr();
 
 export default class CreateGame extends React.Component {
@@ -117,7 +118,7 @@ export default class CreateGame extends React.Component {
         try {
             if (!this.props.fromRoom) {
 
-                const response = await Util.performAPIRequest('game/rooms/create');
+                const response = await ApiUtil.performAPIRequest('game/rooms/create');
 
                 if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
 

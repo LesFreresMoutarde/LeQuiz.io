@@ -9,6 +9,7 @@ import PickAll from "../../../misc/PickAll";
 import UnpickAll from "../../../misc/UnpickAll";
 import BackArrow from "../../../misc/BackArrow";
 import Toastr from "toastr2";
+import ApiUtil from "../../../../util/ApiUtil";
 const toastr = new Toastr();
 
 export default class ChooseCategories extends React.Component {
@@ -51,7 +52,7 @@ export default class ChooseCategories extends React.Component {
     }
 
     getCategories = async () => {
-        const response = await Util.performAPIRequest('/game/categories');
+        const response = await ApiUtil.performAPIRequest('/game/categories');
 
         if (!response.ok) throw 'error';
 

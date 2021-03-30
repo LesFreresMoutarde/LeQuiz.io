@@ -10,6 +10,7 @@ import Answer from "./views/Answer";
 import CreateGame from "../CreateGame/CreateGame";
 import Toastr from "toastr2";
 import AuthUtil from "../../../util/AuthUtil";
+import ApiUtil from "../../../util/ApiUtil";
 const toastr = new Toastr();
 
 class Room extends React.Component {
@@ -62,7 +63,7 @@ class Room extends React.Component {
 
                 }
 
-                const roomIdResponse = await Util.performAPIRequest(`game/rooms/verify/${roomId}`);
+                const roomIdResponse = await ApiUtil.performAPIRequest(`game/rooms/verify/${roomId}`);
 
                 if (!roomIdResponse.ok) throw new Error('Cannot join this room');
 

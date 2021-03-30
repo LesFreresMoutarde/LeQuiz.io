@@ -1,4 +1,5 @@
 import Util from "./Util";
+import ApiUtil from "./ApiUtil";
 
 class AuthUtil {
     static accessToken = null;
@@ -10,7 +11,7 @@ class AuthUtil {
     static getNewAccessToken = async() => {
         Util.verbose('Getting new access token');
 
-        const response = await fetch(Util.getBackendFullUrl('/auth/access-token'));
+        const response = await fetch(ApiUtil.getBackendFullUrl('/auth/access-token'));
 
         const responseJson = await response.json();
         Util.verbose('New access token generation response', response.status, responseJson);
@@ -52,7 +53,7 @@ class AuthUtil {
     static refreshAccessToken = async() => {
         Util.verbose('Getting new access token from refresh token');
 
-        const response = await fetch(Util.getBackendFullUrl(`/auth/access-token?refreshToken=${AuthUtil.refreshToken}`));
+        const response = await fetch(ApiUtil.getBackendFullUrl(`/auth/access-token?refreshToken=${AuthUtil.refreshToken}`));
 
         const responseJson = await response.json();
         Util.verbose('Refresh access token response', response.status, responseJson);
@@ -84,7 +85,7 @@ class AuthUtil {
      */
     static verifyAccessToken = async () => {
         Util.verbose('Verifying stored access token');
-        const response = await fetch(Util.getBackendFullUrl('/auth/verify-token'), {
+        const response = await fetch(ApiUtil.getBackendFullUrl('/auth/verify-token'), {
             headers: new Headers({
                 'Authorization': AuthUtil.accessToken
             }),

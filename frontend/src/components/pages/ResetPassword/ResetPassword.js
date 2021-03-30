@@ -4,6 +4,7 @@ import Util from "../../../util/Util";
 
 import Toastr from "toastr2";
 import Loader from "../../misc/Loader";
+import ApiUtil from "../../../util/ApiUtil";
 const toastr = new Toastr();
 
 /**
@@ -27,7 +28,7 @@ class ResetPassword extends React.Component {
             (async () => {
                 const resetToken = window.location.pathname.split('/')[2];
 
-                const tokenExistsResponse = await Util.performAPIRequest(`/auth/reset-password?passwordResetToken=${resetToken}`);
+                const tokenExistsResponse = await ApiUtil.performAPIRequest(`/auth/reset-password?passwordResetToken=${resetToken}`);
 
                 if(tokenExistsResponse.ok) {
                     this.setState({
@@ -95,7 +96,7 @@ class ResetPassword extends React.Component {
         const newPassword = document.getElementById('new-password-input').value;
         const confirmNewPassword = document.getElementById('confirm-new-password-input').value;
 
-        const response = await Util.sendJsonToAPI('/auth/reset-password', {
+        const response = await ApiUtil.sendJsonToAPI('/auth/reset-password', {
             newPassword,
             confirmNewPassword,
             passwordResetToken: this.state.resetToken,

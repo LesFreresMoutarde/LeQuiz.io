@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import Util from "../../../util/Util";
 
 import Toastr from "toastr2";
+import ApiUtil from "../../../util/ApiUtil";
 const toastr = new Toastr();
 
 /**
@@ -37,7 +38,7 @@ class ForgotPassword extends React.Component {
 
         const username = document.getElementById('username-input').value;
 
-        const response = await Util.sendJsonToAPI('/auth/forgot-password', {
+        const response = await ApiUtil.sendJsonToAPI('/auth/forgot-password', {
             username,
         });
 

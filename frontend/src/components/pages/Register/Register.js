@@ -6,6 +6,7 @@ import Util from "../../../util/Util";
 import Toastr from "toastr2";
 import BackArrow from "../../misc/BackArrow";
 import AuthUtil from "../../../util/AuthUtil";
+import ApiUtil from "../../../util/ApiUtil";
 const toastr = new Toastr();
 
 class Register extends React.Component {
@@ -75,7 +76,7 @@ class Register extends React.Component {
         const confirmPassword = document.getElementById('confirm-password-input').value;
         const stayLoggedIn =  document.getElementById('stay-logged-in-checkbox').checked;
 
-        const response = await Util.sendJsonToAPI('/auth/register', {
+        const response = await ApiUtil.sendJsonToAPI('/auth/register', {
             username,
             email,
             password,

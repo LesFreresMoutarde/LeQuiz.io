@@ -6,6 +6,7 @@ import App from "../../App";
 import Toastr from "toastr2";
 import BackArrow from "../../misc/BackArrow";
 import AuthUtil from "../../../util/AuthUtil";
+import ApiUtil from "../../../util/ApiUtil";
 const toastr = new Toastr();
 
 class Login extends React.Component {
@@ -66,7 +67,7 @@ class Login extends React.Component {
         const password = document.getElementById('password-input').value;
         const stayLoggedIn =  document.getElementById('stay-logged-in-checkbox').checked;
 
-        const response = await Util.sendJsonToAPI('/auth/login', {
+        const response = await ApiUtil.sendJsonToAPI('/auth/login', {
             username,
             password,
             stayLoggedIn,

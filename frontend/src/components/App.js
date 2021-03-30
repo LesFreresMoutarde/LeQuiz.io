@@ -22,6 +22,7 @@ import NotFound from "./pages/Errors/404/NotFound";
 import Toastr from "toastr2";
 import Room from "./pages/Room/Room";
 import AuthUtil from "../util/AuthUtil";
+import ApiUtil from "../util/ApiUtil";
 const toastr = new Toastr();
 
 
@@ -74,7 +75,7 @@ class App extends React.Component {
             return false;
         }
 
-        const response = await Util.performAPIRequest('/auth/logout', {
+        const response = await ApiUtil.performAPIRequest('/auth/logout', {
             method: 'POST',
         });
 

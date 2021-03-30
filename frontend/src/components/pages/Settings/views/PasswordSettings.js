@@ -2,6 +2,7 @@ import React from "react";
 import Util from "../../../../util/Util";
 
 import Toastr from "toastr2";
+import ApiUtil from "../../../../util/ApiUtil";
 const toastr = new Toastr();
 
 class PasswordSettings extends React.Component {
@@ -38,7 +39,7 @@ class PasswordSettings extends React.Component {
         const newPassword = newPasswordInput.value;
         const confirmNewPassword = confirmNewPasswordInput.value;
 
-        const response = await Util.sendJsonToAPI('/settings/password', {
+        const response = await ApiUtil.sendJsonToAPI('/settings/password', {
             currentPassword,
             newPassword,
             confirmNewPassword,
