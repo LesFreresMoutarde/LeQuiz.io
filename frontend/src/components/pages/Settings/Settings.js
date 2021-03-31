@@ -1,7 +1,6 @@
 import React from "react";
 import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
-import Util from "../../../util/Util";
 import BackArrow from "../../misc/BackArrow";
 import UserAccessUtil from "../../../util/UserAccessUtil";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import Util from "../../../../util/Util";
 import Loader from "../../../misc/Loader";
 import GameMode from "../components/GameMode";
 import Title from "../../../misc/Title";

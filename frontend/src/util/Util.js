@@ -1,7 +1,4 @@
-import App from "../components/App";
-import env from "../config/env";
 import AuthUtil from "./AuthUtil";
-import ApiUtil from "./ApiUtil";
 
 class Util {
     static isVerbose = true; // TODO env

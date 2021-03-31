@@ -1,6 +1,5 @@
 import React from "react";
 import Loader from "../../../misc/Loader";
-import Util from "../../../../util/Util";
 
 import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";

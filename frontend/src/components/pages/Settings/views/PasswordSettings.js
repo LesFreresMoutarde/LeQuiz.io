@@ -1,5 +1,4 @@
 import React from "react";
-import Util from "../../../../util/Util";
 
 import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";
