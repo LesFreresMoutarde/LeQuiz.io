@@ -7,6 +7,7 @@ import Toastr from "toastr2";
 import BackArrow from "../../misc/BackArrow";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
+import UserAccessUtil from "../../../util/UserAccessUtil";
 const toastr = new Toastr();
 
 class Login extends React.Component {
@@ -17,7 +18,7 @@ class Login extends React.Component {
             redirect: false,
         }
 
-        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
+        UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.GUEST_ONLY);
     }
 
     goBack = () => {

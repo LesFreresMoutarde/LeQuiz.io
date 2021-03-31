@@ -3,12 +3,13 @@ import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
 import Util from "../../../util/Util";
 import BackArrow from "../../misc/BackArrow";
+import UserAccessUtil from "../../../util/UserAccessUtil";
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
 
-        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.LOGGED_IN);
+        UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.LOGGED_IN);
 
         this.state = {
             desktopCurrentContent: "email",
@@ -20,7 +21,7 @@ class Settings extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.LOGGED_IN); // TODO find a better/more generic solution ?
+        UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.LOGGED_IN); // TODO find a better/more generic solution ?
 
         return true;
     }

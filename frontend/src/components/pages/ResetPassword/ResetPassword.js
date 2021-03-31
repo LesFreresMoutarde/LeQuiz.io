@@ -5,6 +5,7 @@ import Util from "../../../util/Util";
 import Toastr from "toastr2";
 import Loader from "../../misc/Loader";
 import ApiUtil from "../../../util/ApiUtil";
+import UserAccessUtil from "../../../util/UserAccessUtil";
 const toastr = new Toastr();
 
 /**
@@ -14,7 +15,7 @@ class ResetPassword extends React.Component {
     constructor(props) {
         super(props);
 
-        this.userHasAccess = Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
+        this.userHasAccess = UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.GUEST_ONLY);
 
         this.state = {
             isLoading: true,
