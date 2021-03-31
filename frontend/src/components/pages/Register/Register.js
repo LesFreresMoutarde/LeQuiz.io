@@ -5,6 +5,9 @@ import Util from "../../../util/Util";
 
 import Toastr from "toastr2";
 import BackArrow from "../../misc/BackArrow";
+import AuthUtil from "../../../util/AuthUtil";
+import ApiUtil from "../../../util/ApiUtil";
+import UserAccessUtil from "../../../util/UserAccessUtil";
 const toastr = new Toastr();
 
 class Register extends React.Component {
@@ -16,7 +19,7 @@ class Register extends React.Component {
             formErrors: {},
         }
 
-        Util.UserAccess.componentRequiresRole(Util.UserAccess.ROLES.GUEST_ONLY);
+        UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.GUEST_ONLY);
     }
 
     goBack = () => {
@@ -74,7 +77,7 @@ class Register extends React.Component {
         const confirmPassword = document.getElementById('confirm-password-input').value;
         const stayLoggedIn =  document.getElementById('stay-logged-in-checkbox').checked;
 
-        const response = await Util.sendJsonToAPI('/auth/register', {
+        const response = await ApiUtil.sendJsonToAPI('/auth/register', {
             username,
             email,
             password,
@@ -87,10 +90,10 @@ class Register extends React.Component {
         switch(response.status) {
             case 201:
                 Util.verbose('Register successful');
-                Util.setAccesstoken(responseJson.accessToken);
-                Util.setRefreshToken(responseJson.refreshToken);
+                AuthUtil.setAccesstoken(responseJson.accessToken);
+                AuthUtil.setRefreshToken(responseJson.refreshToken);
 
-                App.GLOBAL.setUser(Util.accessTokenPayload.user);
+                App.GLOBAL.setUser(AuthUtil.accessTokenPayload.user);
 
                 this.setState({
                     redirect: true,

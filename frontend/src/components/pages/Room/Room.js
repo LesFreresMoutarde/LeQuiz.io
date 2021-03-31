@@ -9,6 +9,8 @@ import Question from "./views/Question";
 import Answer from "./views/Answer";
 import CreateGame from "../CreateGame/CreateGame";
 import Toastr from "toastr2";
+import AuthUtil from "../../../util/AuthUtil";
+import ApiUtil from "../../../util/ApiUtil";
 const toastr = new Toastr();
 
 class Room extends React.Component {
@@ -61,7 +63,7 @@ class Room extends React.Component {
 
                 }
 
-                const roomIdResponse = await Util.performAPIRequest(`game/rooms/verify/${roomId}`);
+                const roomIdResponse = await ApiUtil.performAPIRequest(`game/rooms/verify/${roomId}`);
 
                 if (!roomIdResponse.ok) throw new Error('Cannot join this room');
 
@@ -69,7 +71,7 @@ class Room extends React.Component {
 
                 if (!isRoomValid) throw new Error('This room doesn\'t exist' );
 
-                const user = Util.getJwtPayloadContent(Util.accessToken).user;
+                const user = AuthUtil.accessTokenPayload.user;
 
                 if (user) username = user.username
 

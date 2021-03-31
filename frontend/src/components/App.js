@@ -21,6 +21,8 @@ import NotFound from "./pages/Errors/404/NotFound";
 
 import Toastr from "toastr2";
 import Room from "./pages/Room/Room";
+import AuthUtil from "../util/AuthUtil";
+import ApiUtil from "../util/ApiUtil";
 const toastr = new Toastr();
 
 
@@ -47,10 +49,10 @@ class App extends React.Component {
 
         const newState = {
             isLoading: false,
-            user: Util.accessTokenPayload.user ? Util.accessTokenPayload.user : null,
+            user: AuthUtil.accessTokenPayload.user ? AuthUtil.accessTokenPayload.user : null,
         };
 
-        const accessTokenPayload = Util.accessTokenPayload;
+        const accessTokenPayload = AuthUtil.accessTokenPayload;
 
         if(accessTokenPayload.hasOwnProperty('user')) {
             newState.userId = accessTokenPayload.user.id;
@@ -73,7 +75,7 @@ class App extends React.Component {
             return false;
         }
 
-        const response = await Util.performAPIRequest('/auth/logout', {
+        const response = await ApiUtil.performAPIRequest('/auth/logout', {
             method: 'POST',
         });
 
@@ -83,7 +85,7 @@ class App extends React.Component {
         }
 
         try {
-            await Util.getNewAccessToken();
+            await AuthUtil.getNewAccessToken();
         } catch(e) {
             console.error(e);
             toastr.error('Une erreur inconnue est survenue');

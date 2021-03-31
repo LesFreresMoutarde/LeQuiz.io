@@ -1,8 +1,8 @@
 import React from "react";
 import Loader from "../../../misc/Loader";
-import Util from "../../../../util/Util";
 
 import Toastr from "toastr2";
+import ApiUtil from "../../../../util/ApiUtil";
 const toastr = new Toastr();
 
 class EmailSettings extends React.Component {
@@ -18,7 +18,7 @@ class EmailSettings extends React.Component {
     }
 
     componentDidMount = async () => {
-        const response = await Util.performAPIRequest('/settings/email');
+        const response = await ApiUtil.performAPIRequest('/settings/email');
 
         if(!response.ok) {
             const state = this.state;
@@ -57,7 +57,7 @@ class EmailSettings extends React.Component {
         const newEmail = newEmailInput.value;
         const password = passwordInput.value;
 
-        const response = await Util.sendJsonToAPI('/settings/email', {
+        const response = await ApiUtil.sendJsonToAPI('/settings/email', {
             newEmail,
             password,
         }, {

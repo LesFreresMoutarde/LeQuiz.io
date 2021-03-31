@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
-import Util from "./util/Util";
+import AuthUtil from "./util/AuthUtil";
 
-Util.initializeTokensStorage();
+AuthUtil.initializeTokensStorage();
 
 ReactDOM.render(
     // <React.StrictMode> ITS COMMENTED BECAUSE IT RENDERS COMPONENT TWICE WHICH IS FATAL FOR SOCKET HANDLING

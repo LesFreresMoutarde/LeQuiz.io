@@ -1,10 +1,11 @@
 import React from "react";
-import Util from "../../../../util/Util";
 import Loader from "../../../misc/Loader";
 import GameMode from "../components/GameMode";
 import Title from "../../../misc/Title";
 import BackArrow from "../../../misc/BackArrow";
 import Toastr from "toastr2";
+import AuthUtil from "../../../../util/AuthUtil";
+import ApiUtil from "../../../../util/ApiUtil";
 const toastr = new Toastr();
 
 export default class ChooseGameMode extends React.Component {
@@ -37,13 +38,13 @@ export default class ChooseGameMode extends React.Component {
 
     getGameModes = async () => {
       
-        let user = Util.getJwtPayloadContent(Util.accessToken).user;
+        let user = AuthUtil.accessTokenPayload.user;
 
         if(!user) {
             user = {plan: 'free'};
         }
 
-        const response = await Util.sendJsonToAPI('game/modes', {plan: user.plan});
+        const response = await ApiUtil.sendJsonToAPI('game/modes', {plan: user.plan});
 
         if (!response.ok) throw `${response.status} : ${response.statusText}`;
 
