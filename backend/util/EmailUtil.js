@@ -47,18 +47,7 @@ class EmailUtil {
      * @throws {Error} if the email cannot be sent
      */
     static sendEmail = (message = {}) => {
-        return new Promise((resolve, reject) => {
-            EmailUtil.transport.sendMail(message, (error, info) => {
-                if (error) {
-                    reject(error);
-                }
-
-                resolve(info);
-            });
-        })
-            .catch(error => {
-                throw new Error(error);
-            });
+        return EmailUtil.transport.sendMail(message);
     }
 
     /**
