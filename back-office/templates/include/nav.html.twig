@@ -1,0 +1,46 @@
+
+<div class="sidebar" data-color="blue">
+    <!--
+Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+-->
+    <div class="logo">
+
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+            <img src="/media/leQuizlogo.svg" width="150" height="80">
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li id="sidebar-home">
+                <a href="{{ path('home') }}">
+                    <i class="fas fa-home"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li id="sidebar-category">
+                <a href="{{ path('category_index') }}">
+                    <i class="fas fa-tag"></i>
+                    <p>Categories</p>
+                </a>
+            </li>
+            <li id="sidebar-question">
+                <a href="{{ path('question_index') }}">
+                    <i class="fas fa-question"></i>
+                    <p>Questions</p>
+                </a>
+            </li>
+            <li id="sidebar-question-type">
+                <a href="{{ path('question_type_index') }}">
+                    <i class="fas fa-question-circle"></i>
+                    <p>Question Types</p>
+                </a>
+            </li>
+            <li id="sidebar-user">
+                <a href="{{ path('user_index') }}">
+                    <i class="fas fa-user"></i>
+                    <p>Utilisateurs</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
