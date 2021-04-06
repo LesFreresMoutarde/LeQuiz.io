@@ -1,36 +1,45 @@
 const gameRouter = require('express').Router();
 const GameController = require('../../controllers/GameController');
 
-gameRouter.post('/modes', (req, res) => {
-    const gameController = new GameController();
+gameRouter.post('/modes', (req, res, next) => {
+    try {
+        const gameController = new GameController();
 
-    gameController.actionModes(req.body.plan);
+        gameController.actionModes(req.body.plan);
 
-    res.status(gameController.statusCode);
-    res.json(gameController.response);
+        res.status(gameController.statusCode);
+        res.json(gameController.response);
+    } catch (error) {
+        next(error);
+    }
 });
 
-gameRouter.get('/categories', async (req, res) => {
+gameRouter.get('/categories', async (req, res, next) => {
+    try {
+        const gameController = new GameController();
 
-    const gameController = new GameController();
+        await gameController.actionCategories();
 
-    await gameController.actionCategories();
-
-    res.status(gameController.statusCode);
-    res.json(gameController.response);
-
+        res.status(gameController.statusCode);
+        res.json(gameController.response);
+    } catch (error) {
+        next(error);
+    }
 });
 
-gameRouter.post('/options', async (req, res) => {
+gameRouter.post('/options', async (req, res, next) => {
+    try {
+        const { gameMode, categories } = req.body;
 
-    const { gameMode, categories } = req.body;
+        const gameController = new GameController();
 
-    const gameController = new GameController();
+        await gameController.actionOptions(gameMode, categories);
 
-    await gameController.actionOptions(gameMode, categories);
-
-    res.status(gameController.statusCode);
-    res.json(gameController.response);
+        res.status(gameController.statusCode);
+        res.json(gameController.response);
+    } catch (error) {
+        next(error);
+    }
 });
 
 gameRouter.route('/rooms')
@@ -41,30 +50,34 @@ gameRouter.route('/rooms')
         res.json({endpoint: 'POST /game/rooms'})
     });
 
-gameRouter.get('/rooms/create', (req, res) => {
+gameRouter.get('/rooms/create', (req, res, next) => {
+    try {
+        const gameController = new GameController();
 
-    const gameController = new GameController();
+        gameController.actionCreateRoom();
 
-    gameController.actionCreateRoom();
-
-    res.status(gameController.statusCode);
-    res.json(gameController.response);
-
+        res.status(gameController.statusCode);
+        res.json(gameController.response);
+    } catch (error) {
+        next(error);
+    }
 });
 
 gameRouter.get('/rooms/:id(\\w+)', (req, res) => {
     res.json({endpoint: `GET /game/rooms/${req.params.id}`})
 });
 
-gameRouter.get('/rooms/verify/:id(\\w+)', (req, res) => {
+gameRouter.get('/rooms/verify/:id(\\w+)', (req, res, next) => {
+    try {
+        const gameController = new GameController();
 
-    const gameController = new GameController();
+        gameController.actionVerifyRoom(req.params.id);
 
-
-    gameController.actionVerifyRoom(req.params.id);
-
-    res.status(gameController.statusCode);
-    res.json(gameController.response);
+        res.status(gameController.statusCode);
+        res.json(gameController.response);
+    } catch (error) {
+        next(error);
+    }
 });
 
 module.exports = gameRouter;
