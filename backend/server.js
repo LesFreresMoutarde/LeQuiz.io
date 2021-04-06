@@ -76,10 +76,19 @@ app.use((req, res ,next) => {
 
 /** Not-Handled-In-Methods Errors Handler **/
 app.use((error, req, res, next) => {
+    console.error(error);
+
     res.status(error.status || 500);
-    res.json({
-        message: error.message
-    });
+
+    const responseData = {};
+
+    if (process.env.NODE_ENV === 'development') {
+        responseData.message = error.message;
+    } else {
+        responseData.message = 'Internal Error';
+    }
+
+    res.json(responseData);
 });
 
 server.listen(port,() => {
