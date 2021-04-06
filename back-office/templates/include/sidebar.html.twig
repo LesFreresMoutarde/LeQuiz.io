@@ -1,0 +1,53 @@
+
+<div class="sidebar" data-color="blue">
+    <div class="logo">
+        <a href="{{ path('home') }}" class="simple-text logo-normal">
+            <img class="logo-img" src="/media/leQuizlogo.svg">
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <nav class="nav-cont">
+            <ul class="nav">
+                <li id="sidebar-home" class="nav-items">
+                    <a href="{{ path('home') }}">
+                        <i class="fas fa-home"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li id="sidebar-category" class="nav-items">
+                    <a href="{{ path('category_index') }}">
+                        <i class="fas fa-tag"></i>
+                        <p>Categories</p>
+                    </a>
+                </li>
+                <li id="sidebar-question" class="nav-items">
+                    <a href="{{ path('question_index') }}">
+                        <i class="fas fa-question"></i>
+                        <p>Questions</p>
+                    </a>
+                </li>
+                <li id="sidebar-question-type" class="nav-items">
+                    <a href="{{ path('question_type_index') }}">
+                        <i class="fas fa-question-circle"></i>
+                        <p>Question Types</p>
+                    </a>
+                </li>
+                <li id="sidebar-user" class="nav-items">
+                    <a href="{{ path('user_index') }}">
+                        <i class="fas fa-user"></i>
+                        <p>Utilisateurs</p>
+                    </a>
+                </li>
+                <li id="sidebar-logout" class="nav-items">
+                    <a href="{{ path('app_logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>Déconnexion</p>
+                    </a>
+                </li>
+                <li  class="nav-version">
+                    <p>Version 0.1.1</p>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

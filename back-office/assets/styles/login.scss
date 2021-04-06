@@ -1,9 +1,3 @@
-:root {
-  --input-padding-x: 1.5rem;
-  --input-padding-y: .75rem;
-}
-
-
 body {
   background: #007bff;
   background: linear-gradient(to right, #0062E6, #33AEFF);
@@ -52,7 +46,7 @@ body {
 
 .form-label-group>input,
 .form-label-group>label {
-  padding: var(--input-padding-y) var(--input-padding-x);
+  padding: .75rem 1.5rem;
 }
 
 .form-label-group>label {
@@ -91,13 +85,13 @@ body {
 }
 
 .form-label-group input:not(:placeholder-shown) {
-  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
-  padding-bottom: calc(var(--input-padding-y) / 3);
+  padding-top: calc(.75rem + .75rem * (2 / 3));
+  padding-bottom: calc(.75rem / 3);
 }
 
 .form-label-group input:not(:placeholder-shown)~label {
-  padding-top: calc(var(--input-padding-y) / 3);
-  padding-bottom: calc(var(--input-padding-y) / 3);
+  padding-top: calc(.75rem / 3);
+  padding-bottom: calc(.75rem / 3);
   font-size: 12px;
   color: #777;
 }

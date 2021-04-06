@@ -1,36 +1,5 @@
-$btn-round-radius:             30px         !default;
 $white-color:                #FFFFFF !default;
-$font-size-mini:               0.7142em     !default;
-$line-height-nav-link:       1.625rem       !default;
-$opacity-1:                  rgba(255,255,255, .1) !default;
-$opacity-5:                  rgba(255,255,255, .5) !default;
-$padding-base-vertical:        .5rem !default;
-$padding-base-horizontal:      .7rem !default;
-$font-size-large:              1em          !default;
 $info-color:                 #2CA8FF !default;
-$success-color:              #18ce0f !default;
-$orange-color:               #f96332 !default;
-$danger-color:               #FF3636 !default;
-$warning-color:              #FFB236 !default;
-$box-shadow:               0 1px 15px 1px rgba(39, 39, 39, 0.1);
-$font-weight-normal:            400         !default;
-$default-color:              #888 !default;
-
-@mixin transform-translate-x($value){
-  -webkit-transform:  translate3d($value, 0, 0);
-  -moz-transform: translate3d($value, 0, 0);
-  -o-transform: translate3d($value, 0, 0);
-  -ms-transform: translate3d($value, 0, 0);
-  transform: translate3d($value, 0, 0);
-}
-
-@mixin icon-gradient($color, $bottomColor: #000){
-  background: $color;
-  background: -webkit-linear-gradient($color 0%, $bottomColor 80%);
-  background: -o-linear-gradient($color 0%, $bottomColor 80%);
-  background: -moz-linear-gradient($color 0%, $bottomColor 80%);
-  background: linear-gradient($color 0%, $bottomColor 80%);
-}
 
 @mixin sidebar-color($color){
   &:after{
@@ -46,15 +15,37 @@ $default-color:              #888 !default;
   }
 }
 
-.sidebar,
-.off-canvas-sidebar{
+.sidebar{
   position: fixed;
   top: 0;
   height: 100%;
   bottom: 0;
-  width: 260px;
+  width: 100px;
   left: 0;
   z-index: 1030;
+  overflow:hidden;
+  transition:width .3s ease;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &:hover {
+    width:260px;
+    .simple-text{
+      width: 150px !important;
+      height: 80px;
+    }
+
+    #content-body {
+      width: calc(100% - 260px);
+    }
+
+    .nav-version {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 
   .sidebar-wrapper{
     position: relative;
@@ -64,45 +55,26 @@ $default-color:              #888 !default;
     z-index: 4;
     padding-bottom: 100px;
 
-    .dropdown .dropdown-backdrop{
-      display: none !important;
+    .nav-version {
+      position: absolute;
+      bottom: 50px;
     }
 
-    .navbar-form{
-      border: none;
+    li
+    {
+      list-style-type: none;
+      margin-top: 40px;
     }
   }
 
-  .navbar-minimize{
-    position: absolute;
-    right: 20px;
-    top: 2px;
-    opacity: 1;
-  }
-  .logo-tim{
-    border-radius: 50%;
-    border: 1px solid #333;
-    display: block;
-    height: 61px;
-    width: 61px;
-    float: left;
-    overflow: hidden;
 
-    img{
-      width: 60px;
-      height: 60px;
-    }
-  }
 
   .nav{
     margin-top: 20px;
     display: block;
+    padding-left: 0px;
 
-    .caret{
-      top: 14px;
-      position: absolute;
-      right: 10px;
-    }
+
 
     li{
       > a + div .nav li > a{
@@ -111,16 +83,17 @@ $default-color:              #888 !default;
 
       > a{
         margin: 10px 15px 0;
-        border-radius: $btn-round-radius;
+        border-radius: 30px;
         color: $white-color;
         display: block;
         text-decoration: none;
         position: relative;
         text-transform: uppercase;
         cursor: pointer;
-        font-size: $font-size-mini;
+        font-family: cursive;
+        font-size: 0.8em;
         padding: 10px 8px;
-        line-height: $line-height-nav-link;
+        line-height: 1.625rem;
       }
 
       &:first-child > a{
@@ -129,7 +102,7 @@ $default-color:              #888 !default;
 
       &:hover:not(.active) > a,
       &:focus:not(.active) > a{
-        background-color: $opacity-1;
+        background-color: rgba(255,255,255, .1);
 
         i{
           color: $white-color;
@@ -138,7 +111,7 @@ $default-color:              #888 !default;
 
       &.active > a{
         background-color: $white-color;
-        box-shadow: $box-shadow;
+        box-shadow:  0 1px 15px 1px rgba(39, 39, 39, 0.1);
       }
     }
 
@@ -152,64 +125,37 @@ $default-color:              #888 !default;
     }
 
     i{
-      font-size: 20px;
+      font-size: 30px;
       float: left;
-      margin-right: 12px;
+      margin-right: 23px;
       line-height: 30px;
-      width: 34px;
+      width: 55px;
       text-align: center;
-      color: $opacity-5;
+      color: rgba(255,255,255, .5);
       position: relative;
     }
-  }
 
-  .sidebar-background{
-    position: absolute;
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-    display: block;
-    top: 0;
-    left: 0;
-    background-size: cover;
-    background-position: center center;
 
-    &:after{
-      position: absolute;
-      z-index: 3;
-      width: 100%;
-      height: 100%;
-      content: "";
-      display: block;
-      background: #FFFFFF;
-      opacity: 1;
-    }
   }
 
   .logo{
     position: relative;
-    padding: $padding-base-vertical $padding-base-horizontal;
+    padding: .5rem .7rem;
     z-index: 4;
     width: max-content;
     margin: 0 auto;
 
-    a.logo-mini,
-    a.logo-normal{
+    .logo-img{
+      width: 100%;
+      height: 100%;
     }
 
-    a.logo-mini{
-      opacity: 1;
-      float: left;
-      width: 34px;
-      text-align: center;
-      margin-left: 10px;
-      margin-right: 12px;
+    a.logo-normal{
     }
 
     a.logo-normal{
       display: block;
       opacity: 1;
-      @include transform-translate-x(0px);
     }
 
     &:after{
@@ -219,45 +165,24 @@ $default-color:              #888 !default;
       right: 15px;
       height: 1px;
       width: calc(100% - 30px);
-      background-color: $opacity-5;
+      background-color: rgba(255,255,255, .5);
 
-    }
-
-    p{
-      float: left;
-      font-size: 20px;
-      margin: 10px 10px;
-      color: $white-color;
-      line-height: 20px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
     .simple-text{
       text-transform: uppercase;
-      padding: $padding-base-vertical 0;
+      padding: .5rem 0;
       display: block;
       white-space: nowrap;
-      font-size: $font-size-large;
+      font-size:  1em;
       color: $white-color;
       text-decoration: none;
-      font-weight: $font-weight-normal;
+      font-weight: 400;
       line-height: 30px;
       overflow: hidden;
-    }
-  }
-
-  .logo-tim{
-    border-radius: 50%;
-    border: 1px solid #333;
-    display: block;
-    height: 61px;
-    width: 61px;
-    float: left;
-    overflow: hidden;
-
-    img{
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
+      transition: width 0.5s;
     }
   }
 
@@ -273,44 +198,13 @@ $default-color:              #888 !default;
     left: 0;
   }
 
-  &:after{
-    @include icon-gradient($default-color);
-    z-index: 3;
-  }
-
   &[data-color="blue"]{
     @include sidebar-color($info-color);
   }
-  &[data-color="green"]{
-    @include sidebar-color($success-color);
-  }
-  &[data-color="orange"]{
-    @include sidebar-color($orange-color);
-  }
-  &[data-color="red"]{
-    @include sidebar-color($danger-color);
-  }
-  &[data-color="yellow"]{
-    @include sidebar-color($warning-color);
-  }
 }
 
-.visible-on-sidebar-regular{
-  display: inline-block !important;
-}
-.visible-on-sidebar-mini{
-  display: none !important;
-}
-
-.off-canvas-sidebar{
-  .nav {
-    > li > a,
-    > li > a:hover{
-      color: $white-color;
-    }
-
-    > li > a:focus{
-      background: rgba(200, 200, 200, 0.2);
-    }
+@media screen and (max-height: 750px){
+  .nav-version {
+    display: none;
   }
 }
