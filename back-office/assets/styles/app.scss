@@ -5,4 +5,79 @@
 #content-body {
   float: right;
   width: calc(100% - 100px);
+  padding: 30px;
 }
+
+.table-entity {
+  text-align: center;
+
+  thead {
+    background-color: #2CA8FF;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  tbody {
+    tr {
+      height: 60px;
+    }
+  }
+}
+
+.pagination {
+  height: 50px;
+  margin: 0 auto;
+  width: max-content;
+  span {
+    display: block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    color: white;
+    background-color: #2CA8FF;
+    border-radius: 7px;
+    margin: 0 2px;
+    &.first {
+      border-radius: 25% 10%;
+    }
+
+    &.last {
+      border-radius: 10% 25% ;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+
+.title-page {
+  text-transform: uppercase;
+  color: #2CA8FF;
+  margin: 0 auto;
+  width: max-content;
+}
+//QUESION
+
+.answer-cell, .hide-cell {
+  display: none;
+}
+
+.show-cell {
+  cursor: pointer;
+  color: #2CA8FF;
+}
+
+.hide-cell {
+  cursor: pointer;
+  color: red;
+}
+
+.search-input {
+  outline : none;
+}
+
+//QUESTION

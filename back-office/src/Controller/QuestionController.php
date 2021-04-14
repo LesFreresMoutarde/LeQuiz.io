@@ -8,7 +8,9 @@ use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
 use App\Util\Util;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,11 +19,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     #[Route('/', name: 'question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository): Response
+    public function index(QuestionRepository $questionRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $questions = $questionRepository->findBy([],['createdAt' => 'desc']);
+
+        $questions = $paginator->paginate(
+            $questions, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            13 // Nombre de résultats par page
+        );
         return $this->render('question/index.html.twig', [
-            'questions' => $questionRepository->findAll(),
+            'questions' => $questions,
         ]);
+    }
+
+    #[Route('/search', name: 'search_question', methods: ['GET'])]
+    public function searchQuestion(Request $request, QuestionRepository $questionRepository)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $str = $request->get('str');
+        $serializer = $this->container->get('serializer');
+        $entities =  $questionRepository->findByContent($str);
+
+        if(!$entities) {
+            $result['error'] = "Aucun résultat";
+        } else {
+            $res = $serializer->serialize($entities, 'json');
+        }
+        return new JsonResponse($res);
     }
 
     #[Route('/new', name: 'question_new', methods: ['GET', 'POST'])]

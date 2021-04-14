@@ -3,9 +3,9 @@
 {% block title %}QuestionType index{% endblock %}
 
 {% block body %}
-    <h1>QuestionType index</h1>
+    <h1 class="title-page">QuestionType </h1>
 
-    <table class="table">
+    <table class="table table-entity mt-3">
         <thead>
             <tr>
                 <th>Id</th>
@@ -27,8 +27,9 @@
                 <td>{{ question_type.createdAt ? question_type.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>{{ question_type.updatedAt ? question_type.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>
-                    <a href="{{ path('question_type_show', {'id': question_type.id}) }}">show</a>
-                    <a href="{{ path('question_type_edit', {'id': question_type.id}) }}">edit</a>
+                    <a href="{{ path('question_type_show', {'id': question_type.id}) }}"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('question_type_edit', {'id': question_type.id}) }}"><i class="fas fa-edit"></i></a>
+                </td>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +40,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('question_type_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('question_type_new') }}">+ Ajouter</a>
 {% endblock %}
