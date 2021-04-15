@@ -1,18 +1,36 @@
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
 
+$custom-blue:                 #007bff;
+
+body {
+  background-color: lightskyblue;
+}
+
+.div-edit {
+  color: white;
+  font-size: 20px;
+  input {
+    border-radius: 4px;
+    background-color: lightskyblue;
+    border: none;
+    height: 40px;
+  }
+}
+
 
 #content-body {
   float: right;
   width: calc(100% - 100px);
   padding: 30px;
+  height: 100%;
 }
 
 .table-entity {
   text-align: center;
 
   thead {
-    background-color: #2CA8FF;
+    background-color: #007bff;
   }
 
   td {
@@ -36,7 +54,7 @@
     height: 50px;
     text-align: center;
     color: white;
-    background-color: #2CA8FF;
+    background-color: #007bff;
     border-radius: 7px;
     margin: 0 2px;
     &.first {
@@ -56,9 +74,13 @@
 
 .title-page {
   text-transform: uppercase;
-  color: #2CA8FF;
+  color: #007bff;
   margin: 0 auto;
   width: max-content;
+}
+
+.div-edit {
+  background-color: #007bff;
 }
 //QUESION
 
@@ -68,7 +90,7 @@
 
 .show-cell {
   cursor: pointer;
-  color: #2CA8FF;
+  color: #007bff;
 }
 
 .hide-cell {
