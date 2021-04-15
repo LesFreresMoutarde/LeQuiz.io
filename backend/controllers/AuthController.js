@@ -588,8 +588,10 @@ class AuthController extends MainController {
         delete payload.iat;
         delete payload.exp;
         delete payload.type;
+        delete payload.slt;
 
         payload.type = type;
+        payload.slt = RandomUtil.getRandomString(RandomUtil.RANDOM_ALPHANUMERIC_ALL_CASE, 64); // A salt added in token payload to make it unique
 
         return jwt.sign(payload, AuthController.JWT_SECRET, {
             expiresIn,
