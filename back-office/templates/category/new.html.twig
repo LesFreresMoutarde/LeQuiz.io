@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Category{% endblock %}
+{% block title %}Nouvelle catégorie{% endblock %}
 
 {% block body %}
-    <h1>Create new Category</h1>
+    <h1 class="title-page">Ajouter une catégorie</h1>
+    <div class="div-edit col-xl-4 col-md-8 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
+        {{ include('category/_form.html.twig') }}
+    </div>
 
-    {{ include('category/_form.html.twig') }}
-
-    <a href="{{ path('category_index') }}">back to list</a>
 {% endblock %}

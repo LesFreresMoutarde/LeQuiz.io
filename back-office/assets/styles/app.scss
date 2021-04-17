@@ -16,6 +16,9 @@ body {
     border: none;
     height: 40px;
   }
+  textarea{
+    background-color: lightskyblue;
+  }
 }
 
 
@@ -63,7 +66,7 @@ body {
 
     &.last {
       border-radius: 10% 25% ;
-    }
+    }c
 
     a {
       color: white;
@@ -82,24 +85,3 @@ body {
 .div-edit {
   background-color: #007bff;
 }
-//QUESION
-
-.answer-cell, .hide-cell {
-  display: none;
-}
-
-.show-cell {
-  cursor: pointer;
-  color: #007bff;
-}
-
-.hide-cell {
-  cursor: pointer;
-  color: red;
-}
-
-.search-input {
-  outline : none;
-}
-
-//QUESTION

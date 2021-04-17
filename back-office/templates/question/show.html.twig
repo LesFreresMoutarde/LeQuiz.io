@@ -3,10 +3,12 @@
 {% block title %}Question{% endblock %}
 
 {% block body %}
-    <h1>Question</h1>
+    <h1 class="title-page">Question</h1>
+    <a class="btn btn-primary mt-3" href="{{ path('question_index') }}">Retour à la liste</a>
+    <div class="div-edit col-xl-7 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
 
-    <table class="table">
-        <tbody>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ question.id }}</td>
@@ -28,50 +30,50 @@
             </tr>
             <tr>
                 <th>Answer</th>
-{#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
+                {#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
                 <td>
                     <table>
-                    {% for key, field in question.answer %}
-                        {% if key == 'answers' %}
-                            <tr>
-                                <th>answers</th>
-                                <td>
-                                    <table>
-                                    {% for answer in field %}
-                                        <tr>
-                                        {% for key, answerField in answer %}
-                                            <td>
-                                            {% if key == 'content' %}
-                                                {{ answerField }}
-                                            {% elseif key == 'is_good_answer' and answerField %}
-                                                (Bonne réponse)
-                                             {% endif %}
-                                            </td>
-                                        {% endfor %}
-                                        </tr>
-                                    {% endfor %}
-                                    </table>
-                                </td>
-                            </tr>
-                        {% elseif key == 'additional' %}
-                            <tr>
-                                <th>additional</th>
-                                <td>
-                                    <table>
-                                        {% for additional in field %}
-                                            {% for key, additionalField in additional %}
-                                            <tr>
-                                                <td>
-                                                    {{ key }} : {{ additionalField }}
-                                                </td>
-                                            </tr>
+                        {% for key, field in question.answer %}
+                            {% if key == 'answers' %}
+                                <tr>
+                                    <th>answers</th>
+                                    <td>
+                                        <table>
+                                            {% for answer in field %}
+                                                <tr>
+                                                    {% for key, answerField in answer %}
+                                                        <td>
+                                                            {% if key == 'content' %}
+                                                                {{ answerField }}
+                                                            {% elseif key == 'is_good_answer' and answerField %}
+                                                                (Bonne réponse)
+                                                            {% endif %}
+                                                        </td>
+                                                    {% endfor %}
+                                                </tr>
                                             {% endfor %}
-                                        {% endfor %}
-                                    </table>
-                                </td>
-                            </tr>
-                       {% endif %}
-                    {% endfor  %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% elseif key == 'additional' %}
+                                <tr>
+                                    <th>additional</th>
+                                    <td>
+                                        <table>
+                                            {% for additional in field %}
+                                                {% for key, additionalField in additional %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ key }} : {{ additionalField }}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
                     </table>
                 </td>
             </tr>
@@ -81,7 +83,7 @@
             </tr>
             <tr>
                 <th>Media</th>
-{#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
+                {#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
                 <td>
                     <table>
                         {% for key, field in question.media %}
@@ -109,12 +111,12 @@
                     {% endfor %}
                 </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <div class="d-flex">
+            <a class="mt-3 col-7 mx-auto btn btn-success" href="{{ path('question_edit', {'id': question.id}) }}">Modifier</a>
+        </div>
 
-    <a href="{{ path('question_index') }}">back to list</a>
-
-    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
-
-    {{ include('question/_delete_form.html.twig') }}
+        {{ include('question/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

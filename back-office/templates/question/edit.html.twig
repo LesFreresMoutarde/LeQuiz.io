@@ -1,97 +1,111 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Question{% endblock %}
+{% block title %}Modifier une question{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('question') }} {% endblock %}
 
 {% block body %}
-    <h1>Edit Question</h1>
+    <h1 class="title-page">Modifier une question</h1>
+    <a class="btn btn-primary mt-3" href="{{ path('question_index') }}">Retour à la liste</a>
+    <div class="div-edit col-xl-7 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
 
-    <form action='{{ path('question_edit', {id: question.id})}}' method="post">
-        <label for="question-content">Question :</label>
-        <textarea id="question-content" name="question-content" required>{{ question.content }}</textarea>
-        <label for="question-type-select">Type</label>
-            {% for type in questionTypes %}
-                {% if type.name in question.types %}
-                    <input type="checkbox" id="cbx-type-{{ type.name }}"
-                           name="cbx-type-{{ type.name }}" value="{{ type.name }}" checked>
-                {% else %}
-                    <input type="checkbox" id="cbx-type-{{ type.name }}"
-                           name="cbx-type-{{ type.name }}" value="{{ type.name }}">
-                {% endif %}
-                <label for="cbx-type-{{ type.name }}">{{ type }}</label>
-            {% endfor %}
-        <div>
-            {% for category in categories %}
-                {% if category.name in question.categories %}
-                    <input type="checkbox" id="cbx-category-{{ category.name }}" name="cbx-category-{{ category.name }}" value="{{ category.name }}" checked>
-                {% else %}
-                    <input type="checkbox" id="cbx-category-{{ category.name }}" name="cbx-category-{{ category.name }}" value="{{ category.name }}">
-                {% endif %}
-                <label for="cbx-category-{{ category.name }}">{{ category }}</label>
-            {% endfor %}
-        </div>
-        <p>Réponses</p>
-        {% for answer in question.answer['answers'] %}
-            <div>
-                <input type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}"/>
-                {% if answer['is_good_answer'] == true %}
-                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}"
-                           value="1" checked/>
-                    <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
+        <form class="edit-question" action='{{ path('question_edit', {id: question.id}) }}' method="post">
+            <label class="label-fs col-12" for="question-content">Question </label>
+            <textarea class="col-12 col-xl-9 mx-auto rounded mb-3" id="question-content" name="question-content"
+                      required>{{ question.content }}</textarea>
+            <fieldset>
+                <label class="label-fs" for="question-type-select mt-3">Type</label>
+                <div class="col-12">
+                    <ul>
+                        {% for type in questionTypes %}
+                            <li>
+                                <input type="radio" id="cbx-type-{{ type.name }}" name="cbx-type-{{ type.name }}"
+                                       value="{{ type.name }}" {% if type.name in question.types %} {{ 'checked' }}{% endif %}>
+                                <label for="cbx-type-{{ type.name }}">{{ type|capitalize }}</label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </fieldset>
+            <fieldset>
+                <label class="label-fs mt-3">Catégories</label>
+                <div class="col-12">
+                    <ul class="list-cb">
+                        {% for category in categories %}
+                            <li>
+                                <input type="checkbox" id="cbx-category-{{ category.name }}"
+                                       name="cbx-category-{{ category.name }}"
+                                       value="{{ category.name }}" {% if category.name in question.categories %} {{ 'checked' }}{% endif %}>
+                                <label for="cbx-category-{{ category.name }}">{{ category|capitalize }}</label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </fieldset>
+            <fieldset>
+                <label class="label-fs mt-3">Réponses</label>
+                {% for answer in question.answer['answers'] %}
+                    <div class="d-flex flex-wrap justify-content-between mt-2">
+                        <input class="col-12 col-sm-6" type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}"
+                               value="{{ answer['content'] }}"/>
+                        {% if answer['is_good_answer'] == true %}
+                            <input type="radio" id="good-answer-radio-{{ loop.index }}"
+                                   name="answers-is_good_answer-{{ loop.index }}"
+                                   value="1" checked/>
+                            <label for="good-answer-radio-{{ loop.index }}">Bonne</label>
 
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="0"/>
-                    <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
-                {% else %}
-                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="1"/>
-                    <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
+                            <input type="radio" id="bad-answer-radio-{{ loop.index }}"
+                                   name="answers-is_good_answer-{{ loop.index }}" value="0"/>
+                            <label for="bad-answer-radio-{{ loop.index }}">Mauvaise</label>
+                        {% else %}
+                            <input type="radio" id="good-answer-radio-{{ loop.index }}"
+                                   name="answers-is_good_answer-{{ loop.index }}" value="1"/>
+                            <label for="good-answer-radio-{{ loop.index }}">Bonne</label>
 
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="0" checked/>
-                    <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
-               {% endif %}
+                            <input type="radio" id="bad-answer-radio-{{ loop.index }}"
+                                   name="answers-is_good_answer-{{ loop.index }}" value="0" checked/>
+                            <label for="bad-answer-radio-{{ loop.index }}">Mauvaise</label>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <div class="mt-3 mb-3 d-flex flex-wrap">
+                <label class="label-fs col-12" for="additional-response_media-info mt-3">Information supplémentaire</label>
+                <textarea class="col-12 col-xl-9 mx-auto" name="additional-response_media-info"
+                          id="additional-response_media-info"
+                >{{ question.answer['additional']['response_media']['info'] ?? '' }}</textarea>
             </div>
-        {% endfor %}
-        <div>
-            <label for="additional-response_media-info">Information supplémentaire</label>
-            <textarea name="additional-response_media-info"
-                      id="additional-response_media-info"
-            >{{ question.answer['additional']['response_media']['info'] ?? '' }}</textarea>
-        </div>
-{#        <div>#}
-{#        TODO RESPONSE MEDIA FILE INPUT #}
-{#        </div>#}
-        <div>
-            <label for="question-difficulty-select">Difficulté</label>
-            <select name="question-difficulty" id="question-difficulty-select">
-                {% for difficulty in questionDifficulty %}
-                    {% if question.difficulty == difficulty %}
-                        <option value="{{ difficulty }}" selected>{{ difficulty }}</option>>
-                    {% else %}
-                        <option value="{{ difficulty }}">{{ difficulty }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <label for="question-status-select">Statut</label>
-            <select name="question-status" id="question-status-select">
-                {% for status in questionStatuses %}
-                    {% if question.status == status %}
-                        <option value="{{ status }}" selected>{{ status }}</option>>
-                    {% else %}
-                        <option value="{{ status }}">{{ status }}</option>
-                    {% endif %}
-                {% endfor %}
-        </select>
-        </div>
-{#        {% if question.customQuiz %}#}
-{#        TODO handling when changing a question Position. The position of the question below and above should move
-           consequently #}
-{#        {% endif %}#}
-        <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
-        <button type="submit">Envoyer</button>
-    </form>
+            {#        <div>#}
+            {#        TODO RESPONSE MEDIA FILE INPUT #}
+            {#        </div>#}
+            <div class="d-flex flex-wrap">
+                <label class="col-6 label-fs" for="question-difficulty-select">Difficulté</label>
+                <select class="col-6" name="question-difficulty"  id="question-difficulty-select">
+                    {% for difficulty in questionDifficulty %}
+                            <option value="{{ difficulty }}" {% if question.difficulty == difficulty %}'selected'{% endif %}>{{ difficulty|capitalize }}</option>>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="d-flex flex-wrap">
+                <label class="col-6 label-fs " for="question-status-select">Statut</label>
+                <select class="col-6" name="question-status" id="question-status-select">
+                    {% for status in questionStatuses %}
+                            <option value="{{ status }}" {% if question.status == status %} 'selected'{% endif %} >{{ status|capitalize }}</option>>
+                    {% endfor %}
+                </select>
+            </div>
+            {#        {% if question.customQuiz %}#}
+            {#        TODO handling when changing a question Position. The position of the question below and above should move
+                       consequently #}
+            {#        {% endif %}#}
+            <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
+            <div class="d-flex">
+                <button class="mt-3 col-7 mx-auto btn btn-success" type="submit">Enregistrer</button>
+            </div>
+        </form>
+        {{ include('question/_delete_form.html.twig') }}
 
-    <a href="{{ path('question_index') }}">back to list</a>
+    </div>
 
-    {{ include('question/_delete_form.html.twig') }}
 
 {% endblock %}
+{% block javascripts %} {{ parent() }} {{ encore_entry_script_tags('question') }}{% endblock %}

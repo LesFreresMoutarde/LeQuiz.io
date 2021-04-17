@@ -2,7 +2,7 @@
 
 {% block title %}Question index{% endblock %}
 
-{% block stylesheets %} {{ parent() }}{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('question') }}{% endblock %}
 {% block body %}
     <h1 class="title-page">Questions</h1>
     <!--<p class="total-question">Nombre total : {{ questions.getTotalItemCount }}</p>-->
@@ -104,4 +104,4 @@
     <a class="btn btn-primary" href="{{ path('question_new') }}">+ Ajouter</a>
 {% endblock %}
 
-{% block javascripts %} {{ parent() }}{% endblock %}
+{% block javascripts %} {{ parent() }} {{ encore_entry_script_tags('question') }}{% endblock %}
