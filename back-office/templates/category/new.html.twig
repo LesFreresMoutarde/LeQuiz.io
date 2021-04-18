@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1 class="title-page">Ajouter une catégorie</h1>
+    <a class="btn btn-primary" href="{{ path('category_index') }}">back to list</a>
     <div class="div-edit col-xl-4 col-md-8 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
         {{ include('category/_form.html.twig') }}
     </div>

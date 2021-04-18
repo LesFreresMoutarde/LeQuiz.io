@@ -3,10 +3,11 @@
 {% block title %}QuestionType{% endblock %}
 
 {% block body %}
-    <h1>QuestionType</h1>
-
-    <table class="table">
-        <tbody>
+    <h1 class="title-page">QuestionType</h1>
+    <a class="btn btn-primary" href="{{ path('question_type_index') }}">Retour à la liste</a>
+    <div class="div-edit col-xl-4 col-md-8 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ question_type.id }}</td>
@@ -31,12 +32,14 @@
                 <th>UpdatedAt</th>
                 <td>{{ question_type.updatedAt ? question_type.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <div class="d-flex">
+            <a class="mt-3 col-7 mx-auto btn btn-success"
+               href="{{ path('question_type_edit', {'id': question_type.id}) }}">Modifier</a>
+        </div>
+        {{ include('question_type/_delete_form.html.twig') }}
+    </div>
 
-    <a href="{{ path('question_type_index') }}">back to list</a>
 
-    <a href="{{ path('question_type_edit', {'id': question_type.id}) }}">edit</a>
-
-    {{ include('question_type/_delete_form.html.twig') }}
 {% endblock %}

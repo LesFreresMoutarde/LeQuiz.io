@@ -1,4 +1,15 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'd-flex justify-content-center flex-column'}}) }}
+<div class="col-12 d-flex flex-column mx-auto">
+    {{ form_label(form.name, 'Nom') }}
+    {{ form_widget(form.name, {'attr': {'class': 'text-center'}})}}
+</div>
+<div class="col-12 d-flex flex-column mx-auto">
+    {{ form_label(form.label, 'Label', {'label_attr': {'class': 'mt-3'}}) }}
+    {{ form_widget(form.label, {'attr': {'class': 'text-center'}})}}
+</div>
+<div class="col-12">
+    {{ form_label(form.ischild, 'Categorie enfant', {'label_attr': {'class': 'mt-3'}}) }}
+    {{ form_widget(form.ischild )}}
+</div>
+<button class="mt-3 col-7 mx-auto btn btn-success">Enregistrer</button>
 {{ form_end(form) }}

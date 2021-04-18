@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Modifier un utilisateur{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('user') }} {% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+<h1 class="title-page">Modifier un utilisateur</h1>
+<a class="btn btn-primary mt-3" href="{{ path('user_index') }}">Retour à la liste</a>
+<div class="div-edit col-xl-7 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
 
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-    <button>Password reset</button>//TODO
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
+    <div class="d-flex">
+        <button class="mt-3 col-7 mx-auto btn btn-warning">Réinitialiser le mot de passe</button>
+    </div>
     {{ include('user/_delete_form.html.twig') }}
+</div>
 {% endblock %}
+{% block javascripts %} {{ parent() }} {{ encore_entry_script_tags('user') }}{% endblock %}
