@@ -66,7 +66,7 @@ body {
 
     &.last {
       border-radius: 10% 25% ;
-    }c
+    }
 
     a {
       color: white;
@@ -84,4 +84,14 @@ body {
 
 .div-edit {
   background-color: #007bff;
+  th  {
+    border-top: transparent 0px;
+  }
+  td  {
+    border-top: transparent 0px;
+  }
+}
+
+.no-result {
+  font-size: 30px;
 }

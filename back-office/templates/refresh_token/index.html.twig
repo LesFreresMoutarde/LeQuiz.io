@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}RefreshToken index{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('refreshToken') }}{% endblock %}
 
 {% block body %}
-    <h1>RefreshToken index</h1>
-
-    <table class="table">
+    <h1 class="title-page">Token</h1>
+    <table class="table table-entity mt-3">
         <thead>
             <tr>
                 <th>User</th>
@@ -24,15 +24,15 @@
 {#                <td>{{ refresh_token.token|u.truncate(30, '...') }}</td>#}
                 <td>{{ refresh_token.expirationDate ? refresh_token.expirationDate|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>
-                    <a href="{{ path('refresh_token_show', {'token': refresh_token.token}) }}">show</a>
-                    {{ include('refresh_token/_delete_form.html.twig') }}
+                    <a href="{{ path('refresh_token_show', {'token': refresh_token.token}) }}"><i class="fas fa-eye"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="4" class="no-result">Aucun résultat</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 {% endblock %}
+{% block javascripts %} {{ parent() }} {{ encore_entry_script_tags('refreshToken') }}{% endblock %}

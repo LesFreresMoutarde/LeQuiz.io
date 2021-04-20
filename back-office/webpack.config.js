@@ -27,6 +27,7 @@ Encore
     .addEntry('question', './assets/js/question.js')
     .addEntry('questionType', './assets/js/question_type.js')
     .addEntry('user', './assets/js/user.js')
+    .addEntry('refreshToken', './assets/js/refresh_token.js')
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
 
