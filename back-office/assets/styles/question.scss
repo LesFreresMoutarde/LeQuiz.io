@@ -14,9 +14,11 @@
 
 .search-input {
   outline : none;
+  min-width: 210px;
 }
 ul {
   list-style: none;
+  padding: 0;
 }
 
 ul.list-cb li{
@@ -41,7 +43,7 @@ ul.list-cb li label{
 }
 
 ul.list-cb li label {
-  padding: 8px 12px;
+  padding: 8px 10px;
   cursor: pointer;
 }
 

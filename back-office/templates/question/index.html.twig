@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Question index{% endblock %}
+{% block title %}Questions{% endblock %}
 
 {% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('question') }}{% endblock %}
 {% block body %}
     <h1 class="title-page">Questions</h1>
     <!--<p class="total-question">Nombre total : {{ questions.getTotalItemCount }}</p>-->
-    <input type="text" class="search-input rounded col-4" placeholder="Rechercher une question">
+    <input type="text" class="search-input rounded col-6 col-lg-4 mt-5" placeholder="Rechercher une question">
     <table class="table table-entity mt-3">
         <thead>
         <tr>
@@ -101,7 +101,7 @@
     </table>
     {{ knp_pagination_render(questions) }}
 
-    <a class="btn btn-primary" href="{{ path('question_new') }}">+ Ajouter</a>
+    <a class="btn btn-primary mt-4" href="{{ path('question_new') }}">+ Ajouter</a>
 {% endblock %}
 
 {% block javascripts %} {{ parent() }} {{ encore_entry_script_tags('question') }}{% endblock %}

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}QuestionType index{% endblock %}
+{% block title %}Types de question{% endblock %}
 
 {% block body %}
-    <h1 class="title-page">QuestionType </h1>
+    <h1 class="title-page">Types de question</h1>
 
     <table class="table table-entity mt-3">
         <thead>
@@ -40,5 +40,5 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('question_type_new') }}">+ Ajouter</a>
+    <a class="btn btn-primary mt-4" href="{{ path('question_type_new') }}">+ Ajouter</a>
 {% endblock %}

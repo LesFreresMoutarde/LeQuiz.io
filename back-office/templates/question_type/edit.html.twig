@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit QuestionType{% endblock %}
+{% block title %}Modifier un type de question{% endblock %}
 
 {% block body %}
     <h1 class="title-page">Modifier un type de question</h1>
-    <a class="btn btn-primary" href="{{ path('question_type_index') }}">Retour à la liste</a>
+    <a class="btn btn-primary mt-3" href="{{ path('question_type_index') }}">Retour à la liste</a>
     <div class="div-edit col-xl-4 col-md-8 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
         {{ include('question_type/_form.html.twig', {'button_label': 'Update'}) }}
         {{ include('question_type/_delete_form.html.twig') }}

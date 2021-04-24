@@ -1,21 +1,21 @@
-$white-color:                #FFFFFF !default;
-$info-color:                 #007bff ;
+$white-color: #FFFFFF !default;
+$info-color: #007bff;
 
-@mixin sidebar-color($color){
-  &:after{
+@mixin sidebar-color($color) {
+  &:after {
     background: $color;
   }
 
-  .nav li.active > a{
+  .nav li.active > a {
     color: $color;
 
-    i{
+    i {
       color: $color;
     }
   }
 }
 
-.sidebar{
+.sidebar {
   position: fixed;
   top: 0;
   height: 100%;
@@ -23,31 +23,76 @@ $info-color:                 #007bff ;
   width: 100px;
   left: 0;
   z-index: 1030;
-  overflow:hidden;
-  transition:width .3s ease;
+  overflow: hidden;
+  transition: width .3s ease;
+
+
+  .icon-menu {
+    position: absolute;
+    display: none;
+    top: 0px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+    z-index: 1;
+    font-size: 30px;
+  }
+  .small-menu {
+    z-index: 2;
+    position: fixed;
+    background-color: #007bff;
+    right: 0;
+    display: none;
+    top: 49px;
+    width: max-content;
+    border-left: solid 1px lightskyblue;
+    border-bottom: solid 1px lightskyblue;
+
+    ul {
+      list-style: none;
+      padding: 30px;
+      padding-bottom: 0px;
+
+      a {
+        display: flex;
+        color: white;
+        text-decoration: none;
+
+        i {
+          margin-top: 4px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
 
   &::-webkit-scrollbar {
     width: 12px;
   }
 
-  &:hover {
-    width:260px;
-    .simple-text{
-      width: 150px !important;
-      height: 80px;
-    }
+  @media (min-width: 576px) {
+    &:hover {
+      width: 260px;
 
-    #content-body {
-      width: calc(100% - 260px);
-    }
+      .simple-text {
+        width: 150px !important;
+        height: 80px;
+      }
 
-    .nav-version {
-      left: 50%;
-      transform: translateX(-50%);
+      ~ #content-body {
+        width: calc(100% - 260px);
+      }
+
+      .nav-version {
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
   }
 
-  .sidebar-wrapper{
+
+
+  .sidebar-wrapper {
     position: relative;
     height: calc(100vh - 75px);
     overflow: auto;
@@ -60,28 +105,25 @@ $info-color:                 #007bff ;
       bottom: 50px;
     }
 
-    li
-    {
+    li {
       list-style-type: none;
       margin-top: 40px;
     }
   }
 
 
-
-  .nav{
+  .nav {
     margin-top: 20px;
     display: block;
     padding-left: 0px;
 
 
-
-    li{
-      > a + div .nav li > a{
+    li {
+      > a + div .nav li > a {
         margin-top: 7px;
       }
 
-      > a{
+      > a {
         margin: 10px 15px 0;
         border-radius: 30px;
         color: $white-color;
@@ -96,26 +138,26 @@ $info-color:                 #007bff ;
         line-height: 1.625rem;
       }
 
-      &:first-child > a{
+      &:first-child > a {
         margin: 0 15px;
       }
 
       &:hover:not(.active) > a,
-      &:focus:not(.active) > a{
-        background-color: rgba(255,255,255, .1);
+      &:focus:not(.active) > a {
+        background-color: rgba(255, 255, 255, .1);
 
-        i{
+        i {
           color: $white-color;
         }
       }
 
-      &.active > a{
+      &.active > a {
         background-color: $white-color;
-        box-shadow:  0 1px 15px 1px rgba(39, 39, 39, 0.1);
+        box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
       }
     }
 
-    p{
+    p {
       margin: 0;
       line-height: 30px;
       position: relative;
@@ -124,57 +166,57 @@ $info-color:                 #007bff ;
       white-space: nowrap;
     }
 
-    i{
+    i {
       font-size: 30px;
       float: left;
       margin-right: 23px;
       line-height: 30px;
       width: 55px;
       text-align: center;
-      color: rgba(255,255,255, .5);
+      color: rgba(255, 255, 255, .5);
       position: relative;
     }
 
 
   }
 
-  .logo{
+  .logo {
     position: relative;
     padding: .5rem .7rem;
     z-index: 4;
     width: max-content;
     margin: 0 auto;
 
-    .logo-img{
+    .logo-img {
       width: 100%;
       height: 100%;
     }
 
-    a.logo-normal{
+    a.logo-normal {
     }
 
-    a.logo-normal{
+    a.logo-normal {
       display: block;
       opacity: 1;
     }
 
-    &:after{
+    &:after {
       content: '';
       position: absolute;
       bottom: 0;
       right: 15px;
       height: 1px;
       width: calc(100% - 30px);
-      background-color: rgba(255,255,255, .5);
+      background-color: rgba(255, 255, 255, .5);
 
     }
 
-    .simple-text{
+    .simple-text {
       text-transform: uppercase;
       padding: .5rem 0;
       display: block;
       white-space: nowrap;
-      font-size:  1em;
+      font-size: 1em;
       color: $white-color;
       text-decoration: none;
       font-weight: 400;
@@ -187,7 +229,7 @@ $info-color:                 #007bff ;
   }
 
   &:before,
-  &:after{
+  &:after {
     display: block;
     content: "";
     opacity: 1;
@@ -198,13 +240,28 @@ $info-color:                 #007bff ;
     left: 0;
   }
 
-  &[data-color="blue"]{
+  &[data-color="blue"] {
     @include sidebar-color($info-color);
+  }
+  @media (max-width: 576px) {
+    width: 100%;
+    height: 49px;
+
+    .icon-menu {
+      display: block;
+    }
+    .logo {
+      padding: 0;
+    }
+    .simple-text {
+      height: 50px !important;
+    }
   }
 }
 
-@media screen and (max-height: 750px){
+@media screen and (max-height: 750px) {
   .nav-version {
     display: none;
   }
+
 }

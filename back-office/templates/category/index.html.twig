@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Catégories{% endblock %}
 
 {% block body %}
-    <h1 class="title-page">Category</h1>
+    <h1 class="title-page">Catégories</h1>
 
     <table class="table table-entity mt-3">
         <thead>
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a  class="btn btn-primary" href="{{ path('category_new') }}">+ Ajouter</a>
+    <a  class="btn btn-primary mt-4" href="{{ path('category_new') }}">+ Ajouter</a>
 {% endblock %}

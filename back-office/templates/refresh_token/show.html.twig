@@ -1,29 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RefreshToken{% endblock %}
+{% block title %}Visualiser un token{% endblock %}
 
 {% block body %}
-    <h1 class="title-page">Token</h1>
-    <a class="btn btn-primary" href="{{ path('refresh_token_index') }}">retour à la liste</a>
+    <h1 class="title-page">Visualiser un token</h1>
+    <a class="btn btn-primary mt-3" href="{{ path('refresh_token_index') }}">retour à la liste</a>
     <div class="div-edit col-xl-4 col-md-8 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
-        <table class="table">
-            <tbody>
-            <tr>
-                <th>Token</th>
-                <td>{{ refresh_token.token }}</td>
-            </tr>
-            <tr>
-                <th>ExpirationDate</th>
-                <td>{{ refresh_token.expirationDate ? refresh_token.expirationDate|date('Y-m-d H:i:s T') : '' }}</td>
-            </tr>
-            <tr>
-                <th>User</th>
-                <td>
+        <div class="table text-center">
+            <div class="d-flex flex-column mb-3">
+                <div class="font-weight-bolder">Token</div>
+                <div>{{ refresh_token.token }}</div>
+            </div>
+            <div class="d-flex flex-column mb-3">
+                <div class="font-weight-bolder">ExpirationDate</div>
+                <div>{{ refresh_token.expirationDate ? refresh_token.expirationDate|date('Y-m-d H:i:s T') : '' }}</div>
+            </div>
+            <div class="d-flex flex-column mb-3">
+                <div class="font-weight-bolder">User</div>
+                <div>
                     {{ refresh_token.user ? refresh_token.user.username : 'Guest' }}
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
         {{ include('refresh_token/_delete_form.html.twig') }}
     </div>
 {% endblock %}
