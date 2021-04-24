@@ -6,7 +6,7 @@ const InputValue = ({submitAnswer}) => {
     const buttonEl = useRef(null);
 
     const handleKeyPress = (evt) => {
-        if (evt.charCode === 13) buttonEl.current.click();
+        if (evt.charCode === 13 && answer !== '') buttonEl.current.click();
     }
 
     return (
@@ -16,6 +16,7 @@ const InputValue = ({submitAnswer}) => {
                    value={answer}
                    onChange={(e) => setAnswer(e.target.value)}
                    onKeyPress={(e) => handleKeyPress(e)}
+                   autoFocus={true}
             />
             <button type="submit"
                     ref={buttonEl}
