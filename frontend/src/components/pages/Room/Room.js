@@ -123,13 +123,11 @@ class Room extends React.Component {
     };
 
     submitAnswer = (answer = null) => {
-        console.log("answer from submitAnswer", answer);
         let isGoodAnswer = false;
 
         if (answer) {
             this.setState({questionInputDisabled: true});
             const { currentQuestion } = this.state;
-            console.log('currentQuestion', currentQuestion)
             isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion);
         }
 

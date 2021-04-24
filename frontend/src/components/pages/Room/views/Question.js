@@ -62,14 +62,6 @@ class Question extends React.Component {
                             <p className="question-content mb3">{content}</p>
                             <div>
                                 <InputValue submitAnswer={submitAnswer}/>
-                                {/*{answer.answers.map((answer, index) => (*/}
-                                {/*        <QcmAnswer key={index}*/}
-                                {/*                   colorClass={this.qcmAnswersColors[index]}*/}
-                                {/*                   answer={answer}*/}
-                                {/*                   disabled={questionInputDisabled}*/}
-                                {/*                   submitAnswer={submitAnswer}/>*/}
-                                {/*    )*/}
-                                {/*)}*/}
                             </div>
                         </div>
                         <div className="question-screen-right">
