@@ -1,6 +1,6 @@
 import React from "react";
 
-const QcmAnswer = ({answer, submitAnswer, disabled, colorClass}) => {
+const QcmPick = ({answer, submitAnswer, disabled, colorClass}) => {
 
     return (
         <button className={`qcm-box ${colorClass}`} onClick={() => submitAnswer(answer)} disabled={disabled}>
@@ -9,4 +9,4 @@ const QcmAnswer = ({answer, submitAnswer, disabled, colorClass}) => {
     )
 };
 
-export default QcmAnswer;
+export default QcmPick;

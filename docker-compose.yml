@@ -68,7 +68,7 @@ services:
       - 8025:8025
 
   adminer:
-    image: adminer:standalone
+    image: adminer:4.7.7 # replace by standalone when bug on export will be resolved
     container_name: lequiz.io-adminer
     restart: always
     environment:
