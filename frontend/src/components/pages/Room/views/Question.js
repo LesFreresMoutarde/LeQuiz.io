@@ -16,7 +16,7 @@ class Question extends React.Component {
     render() {
         const {content, type, round, category, answer, typeLabel} = this.props.currentQuestion;
         const { submitAnswer, timeLeft, questionInputDisabled, leaveRoom } = this.props;
-        console.log('currentQuestion', this.props.currentQuestion);
+
         switch (type) {
             case 'qcm':
                 return (
