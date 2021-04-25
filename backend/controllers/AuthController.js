@@ -327,6 +327,8 @@ class AuthController extends MainController {
 
         await this.saveRefreshToken(newRefreshToken, refreshTokenExpirationDate, user.id);
 
+        this.sendWelcomeEmailToUser(user); // No await because it doesn't have to be synchronous
+
         this.statusCode = 201;
 
         this.response = {
@@ -634,6 +636,21 @@ class AuthController extends MainController {
                 type: QueryTypes.INSERT,
             },
         );
+    }
+
+    // TODO move send email functions in EmailUtil or in dedicated class
+
+    sendWelcomeEmailToUser = async (user) => {
+        await EmailUtil.sendEmailFromNoreply({
+            to: `"${user.username}" <${user.email}>`,
+            subject: 'Bienvenue sur leQuiz.io !',
+            html:
+`
+<p>Texte à définir</p>
+`,
+            text:
+`Texte à définir`,
+        });
     }
 
     sendResetPasswordEmailToUser = async (user) => {
