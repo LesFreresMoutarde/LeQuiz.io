@@ -194,6 +194,7 @@ class AuthController extends MainController {
             user: {
                 id: user.id,
                 username: user.username,
+                email: user.email,
                 plan: user.plan,
                 role: user.role,
             }
@@ -310,6 +311,7 @@ class AuthController extends MainController {
             user: {
                 id: user.id,
                 username: user.username,
+                email: user.email,
                 plan: user.plan,
                 role: user.role,
             }
