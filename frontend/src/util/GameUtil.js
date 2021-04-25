@@ -1,4 +1,6 @@
 import Util from "./Util";
+import latinize from "latinize";
+import  { distance } from "fastest-levenshtein";
 
 class GameUtil {
 
@@ -79,7 +81,9 @@ class GameUtil {
     }
 
 
-    static verifyAnswer = (answer, type) => {
+    static verifyAnswer = (answer, question) => {
+
+        const { type } = question
 
         let isGoodAnswer = false;
 
@@ -89,10 +93,15 @@ class GameUtil {
                 break;
 
             case 'input':
+                for (let i = 0; i < question.answer.answers.length; i++) {
+
+                    if (distance(latinize(answer.toLowerCase()), latinize(question.answer.answers[i].content.toLowerCase())) < 2)
+                        isGoodAnswer = true;
+                }
                 break;
         }
 
-    return isGoodAnswer;
+        return isGoodAnswer;
 
     }
 

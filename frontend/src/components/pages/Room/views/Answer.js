@@ -13,10 +13,10 @@ class Answer extends React.Component {
         const { currentQuestion, currentPlayer, roomData, timeLeft, leaveRoom } = this.props;
         const { scores, round, quizLength} = roomData;
 
-        let goodAnswer = null;
+        let goodAnswers = [];
 
         currentQuestion.answer.answers.map((answer) => {
-            if (answer['is_good_answer']) goodAnswer = answer.content;
+            if (answer['is_good_answer']) goodAnswers.push(answer.content);
         });
 
         let header = {text: 'Mauvaise réponse', colorClass: 'text-red'};
@@ -47,8 +47,9 @@ class Answer extends React.Component {
                     </div>
 
                     <div className="answer-content-container">
-                        <p className="good-answer">{goodAnswer}</p>
-
+                        {goodAnswers.map((goodAnswer, index) =>
+                            <p key={index} className="good-answer">{goodAnswer}</p>
+                        )}
                         <div className="scores-container">
                             {scores.map((scoreLine, index) => (
                                 <PlayerScore key={index} scoreLine={scoreLine} currentPlayer={currentPlayer}/>

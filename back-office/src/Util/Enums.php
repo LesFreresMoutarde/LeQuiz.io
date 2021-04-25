@@ -38,6 +38,9 @@ class Enums
         self::DISAPPROVED_STATUS
     ];
 
+    public const QCM_QUESTION_TYPE = 'qcm';
+    public const INPUT_QUESTION_TYPE = 'input';
+
     public const ASCENSION_GAME_MODE = [
         'name' => 'Ascension',
         'label' => 'Ascension',

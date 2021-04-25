@@ -128,7 +128,7 @@ class Room extends React.Component {
         if (answer) {
             this.setState({questionInputDisabled: true});
             const { currentQuestion } = this.state;
-            isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion.type);
+            isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion);
         }
 
         this.clientSocket.sendResult({result: isGoodAnswer, roomId: this.roomId})
