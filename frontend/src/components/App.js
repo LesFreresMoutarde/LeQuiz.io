@@ -36,6 +36,7 @@ class App extends React.Component {
             redirect: false,
             isLoading: true,
             user: null,
+            showModal: true,
         };
 
         this.nextRedirect = null;
@@ -109,7 +110,10 @@ class App extends React.Component {
     }
 
     render = () => {
-        if (this.state.redirect) {
+
+        const {redirect, isLoading, user, showModal} = this.state;
+
+        if (redirect) {
             const url = this.nextRedirect;
             this.nextRedirect = null;
             setTimeout(() => { // SetTimeout to update the state of the App component after rendering the <Redirect> component
@@ -122,7 +126,7 @@ class App extends React.Component {
             );
         }
 
-        if(this.state.isLoading) {
+        if(isLoading) {
             return (
                 <div className="app loading">
                     <div className="app-loader">
@@ -134,9 +138,14 @@ class App extends React.Component {
             return (
                 <div className="app">
                     <div className="content-wrapper">
-                        <Header user={this.state.user} />
+                        <Header user={user} />
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
+                            {showModal &&
+                                <div style={{height: 200, width: 200, backgroundColor: 'red'}}>
+                                    MODAL
+                                </div>
+                            }
                             <Switch>
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/login" component={Login} />
