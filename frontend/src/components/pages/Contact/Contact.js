@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import App from "../../App";
 import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
+import AuthUtil from "../../../util/AuthUtil";
 
 const Contact = () => {
 
@@ -21,10 +22,10 @@ const Contact = () => {
 
     const toastr = new Toastr();
 
-    const submitForm = (evt) => {
+    const submitForm = async (evt) => {
         // Valider le form (chaque élément est différent de '') DONE
         // vérifier que c'est un email DONE
-        // Si App.GLOBAL.user == true Vérifier que le username et l'email correspondent à une ligne en DB (faire recherche depuis Id)
+        // Si App.GLOBAL.user == true Vérifier que le username et l'email correspondent  DONE
         // Envoyer le JSON au serv
 
         evt.preventDefault()
@@ -39,11 +40,23 @@ const Contact = () => {
             if (errors.length > 0) throw new Error(errors.join('#'))
 
             if (!email.match(/\S+@\S+\.\S+/))
-                throw new Error(`${formElements.email.value} n'est pas une adresse valide`)
+                errors.push(`${formElements.email.value} n'est pas une adresse valide`);
 
-            if (App.GLOBAL.user) {
-                ApiUtil.sendJsonToAPI('/')
+            if (App.GLOBAL.state.user) {
+                console.log(AuthUtil.accessTokenPayload.user);
+                //TODO Attendre reéponse Emile sur reconnexion après chgt email et password
+                if (username !== AuthUtil.accessTokenPayload.user.username
+                    ||
+                    email !== AuthUtil.accessTokenPayload.user.email)
+                    throw new Error('les données saisies ne correspondent pas à vos informations personnelles');
             }
+
+            const response = await ApiUtil.sendJsonToAPI('/users/contact', {username, email, subject, message});
+
+            if (!response.ok)
+                throw new Error('Impossible d\'envoyer votre message. Réessayez ultérieurement')
+
+            toastr.success('Votre message a été envoyé. Nous vous répondrons dans les plus bref délais');
 
         } catch (error) {
             const errors = error.message.split('#');
