@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import App from "../../App";
 import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
@@ -9,9 +9,26 @@ const Contact = () => {
     const title = 'Contact';
 
     const [username, setUsername] = useState(App.GLOBAL.state.user ? App.GLOBAL.state.user.username : '');
-    const [email, setEmail] = useState(App.GLOBAL.state.user ? App.GLOBAL.state.user.email : '');
+    const [email, setEmail] = useState('');
+    const [fetchedEmail, setFetchedEmail] = useState(false);
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        const fetchEmail = async () => {
+            const response = await ApiUtil.performAPIRequest('/settings/email');
+
+            if (!response.ok) return;
+
+            const data = await response.json()
+
+            setEmail(data.email);
+            setFetchedEmail(data.email);
+        }
+
+        if (App.GLOBAL.state.user) fetchEmail()
+
+    }, [])
 
     const formElements = {
         'username': {label: 'nom d \'utilisateur', value: username},
@@ -38,12 +55,15 @@ const Contact = () => {
                 errors.push(`${formElements.email.value} n'est pas une adresse valide`);
 
             if (App.GLOBAL.state.user) {
-                console.log(AuthUtil.accessTokenPayload.user);
-                //TODO Attendre reéponse Emile sur reconnexion après chgt email et password
-                if (username !== AuthUtil.accessTokenPayload.user.username
-                    ||
-                    email !== AuthUtil.accessTokenPayload.user.email)
+
+                if (fetchedEmail) {
+                    if (username !== AuthUtil.accessTokenPayload.user.username || email !== fetchedEmail)
+                        throw new Error('les données saisies ne correspondent pas à vos informations personnelles');
+                }
+
+                if (username !== AuthUtil.accessTokenPayload.user.username)
                     throw new Error('les données saisies ne correspondent pas à vos informations personnelles');
+
             }
 
             const response = await ApiUtil.sendJsonToAPI('/users/contact', {username, email, subject, message});
@@ -73,7 +93,6 @@ const Contact = () => {
                            onChange={(e) => setUsername(e.target.value)}
                            autoFocus={!App.GLOBAL.state.user}
                            readOnly={App.GLOBAL.state.user}
-                           // required={true}
                     />
                 </div>
                 <div className="mb">
@@ -81,8 +100,7 @@ const Contact = () => {
                            placeholder="adresse email"
                            value={email}
                            onChange={(e) => setEmail(e.target.value)}
-                           readOnly={App.GLOBAL.state.user}
-                           // required={true}
+                           readOnly={fetchedEmail}
                     />
                 </div>
                 <div className="mb">
@@ -90,14 +108,12 @@ const Contact = () => {
                            placeholder="sujet"
                            value={subject}
                            onChange={(e) => setSubject(e.target.value)}
-                           // required={true}
                     />
                 </div>
                 <div className="mb">
                     <textarea cols="100"
                               rows="10"
                               placeholder="message"
-                              // required={true}
                               value={message}
                               onChange={(e) => setMessage(e.target.value)}
                     />
