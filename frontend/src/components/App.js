@@ -23,6 +23,7 @@ import Toastr from "toastr2";
 import Room from "./pages/Room/Room";
 import AuthUtil from "../util/AuthUtil";
 import ApiUtil from "../util/ApiUtil";
+import Contact from "./pages/Contact/Contact";
 const toastr = new Toastr();
 
 
@@ -147,6 +148,7 @@ class App extends React.Component {
                                 <Route path="/create-room/" component={CreateGame}/>
                                 <Route exact path="/join-room" component={JoinRoom}/>
                                 <Route path="/room/:id" component={Room}/>
+                                <Route path="/contact" component={Contact}/>
                                 <Route component={NotFound} />
                             </Switch>
                         </div>
