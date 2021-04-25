@@ -1,5 +1,4 @@
 const UserController = require("../../controllers/UserController");
-const GameController = require("../../controllers/GameController");
 const usersRouter = require('express').Router();
 
 usersRouter.post('/contact', async (req, res, next) => {

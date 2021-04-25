@@ -23,11 +23,6 @@ const Contact = () => {
     const toastr = new Toastr();
 
     const submitForm = async (evt) => {
-        // Valider le form (chaque élément est différent de '') DONE
-        // vérifier que c'est un email DONE
-        // Si App.GLOBAL.user == true Vérifier que le username et l'email correspondent  DONE
-        // Envoyer le JSON au serv
-
         evt.preventDefault()
         const errors = [];
 
@@ -63,7 +58,6 @@ const Contact = () => {
             errors.reverse().forEach(error => {
                 toastr.error(error)
             })
-
         }
     }
 
