@@ -69,6 +69,7 @@ const Contact = () => {
 
     return (
         <>
+            <a href="/">Home</a>
             <h1 className="mb">{title}</h1>
             <form onSubmit={(e) => submitForm(e)}>
                 <div className="mb">
