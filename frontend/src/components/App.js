@@ -23,6 +23,7 @@ import Toastr from "toastr2";
 import Room from "./pages/Room/Room";
 import AuthUtil from "../util/AuthUtil";
 import ApiUtil from "../util/ApiUtil";
+import FeedbackModal from "./pages/FeedbackModal/FeedbackModal";
 const toastr = new Toastr();
 
 
@@ -67,6 +68,10 @@ class App extends React.Component {
         this.setState({
             user,
         });
+    }
+
+    showModal = () => {
+        this.setState({showModal: true});
     }
 
     logoutUser = async () => {
@@ -142,9 +147,7 @@ class App extends React.Component {
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
                             {showModal &&
-                                <div style={{height: 200, width: 200, backgroundColor: 'red'}}>
-                                    MODAL
-                                </div>
+                                <FeedbackModal/>
                             }
                             <Switch>
                                 <Route exact path="/" component={Home}/>
@@ -160,7 +163,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer/>
+                    <Footer showModal={this.showModal}/>
                 </div>
             );
         }
