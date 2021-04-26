@@ -24,6 +24,7 @@ import Room from "./pages/Room/Room";
 import AuthUtil from "../util/AuthUtil";
 import ApiUtil from "../util/ApiUtil";
 import Contact from "./pages/Contact/Contact";
+import LegalNotice from "./pages/LegalNotice/LegalNotice";
 const toastr = new Toastr();
 
 
@@ -149,7 +150,8 @@ class App extends React.Component {
                                 <Route exact path="/join-room" component={JoinRoom}/>
                                 <Route path="/room/:id" component={Room}/>
                                 <Route path="/contact" component={Contact}/>
-                                <Route component={NotFound} />
+                                <Route path="/mentions-legales" component={LegalNotice}/>
+                                <Route component={NotFound}/>
                             </Switch>
                         </div>
                     </div>
