@@ -72,7 +72,7 @@ class App extends React.Component {
         });
     }
 
-    showModal = () => {
+    displayModal = () => {
         this.setState({showModal: true});
     }
 
@@ -147,10 +147,9 @@ class App extends React.Component {
             );
         } else {
             return (
-                // <div className="app" style={showModal ? {backgroundColor: 'rgba(0,0,0,1)'} : {}}>
                 <div className="app">
                     {showModal &&
-                    <FeedbackModal closeModal={this.closeModal} showModal={showModal}/>
+                        <FeedbackModal closeModal={this.closeModal} showModal={showModal}/>
                     }
                     <div className="content-wrapper">
                         <Header user={user} />
@@ -172,7 +171,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer showModal={this.showModal}/>
+                    <Footer displayModal={this.displayModal}/>
                 </div>
             );
         }
