@@ -4,6 +4,7 @@ const env = require('../config/env');
 class EmailUtil {
     static FROM_NAME = 'LeQuiz.io';
     static FROM_NOREPLY_ADDRESS = 'noreply@lequiz.io';
+    static CONTACT_ADDRESS = 'contact@lequiz.io';
 
     static transport = null; // Initialized by createTransport function
 
