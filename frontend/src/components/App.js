@@ -39,7 +39,7 @@ class App extends React.Component {
             redirect: false,
             isLoading: true,
             user: null,
-            showModal: false,
+            showFeedbackModal: false,
         };
 
         this.nextRedirect = null;
@@ -72,12 +72,12 @@ class App extends React.Component {
         });
     }
 
-    displayModal = () => {
-        this.setState({showModal: true});
+    displayFeedbackModal = () => {
+        this.setState({showFeedbackModal: true});
     }
 
-    closeModal = () => {
-        this.setState({showModal: false});
+    closeFeedbackModal = () => {
+        this.setState({showFeedbackModal: false});
     }
 
     logoutUser = async () => {
@@ -122,7 +122,7 @@ class App extends React.Component {
 
     render = () => {
 
-        const {redirect, isLoading, user, showModal} = this.state;
+        const {redirect, isLoading, user, showFeedbackModal} = this.state;
 
         if (redirect) {
             const url = this.nextRedirect;
@@ -148,8 +148,8 @@ class App extends React.Component {
         } else {
             return (
                 <div className="app">
-                    {showModal &&
-                        <FeedbackModal closeModal={this.closeModal} showModal={showModal}/>
+                    {showFeedbackModal &&
+                        <FeedbackModal closeModal={this.closeFeedbackModal}/>
                     }
                     <div className="content-wrapper">
                         <Header user={user} />
@@ -171,7 +171,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer displayModal={this.displayModal}/>
+                    <Footer displayFeedbackModal={this.displayFeedbackModal}/>
                 </div>
             );
         }

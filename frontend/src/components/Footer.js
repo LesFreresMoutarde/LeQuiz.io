@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = ({displayModal}) => {
+const Footer = ({displayFeedbackModal}) => {
 
     return (
         <footer>
@@ -8,7 +8,7 @@ const Footer = ({displayModal}) => {
                 <span className="footer-text-item">© LeQuiz.io {(new Date()).getFullYear()}</span>
 
                 <span className="footer-text-item"><a href="/contact">Contact</a></span>
-                <button className="footer-text-item" onClick={() => displayModal()}>Feedback</button>
+                <button className="footer-text-item" onClick={() => displayFeedbackModal()}>Feedback</button>
                 {/*<span className="footer-text-item"><a href="#" target="_blank">Mentions légales</a></span>*/}
             </div>
         </footer>
