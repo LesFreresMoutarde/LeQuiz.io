@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Toastr from "toastr2";
+import ApiUtil from "../../../util/ApiUtil";
 
 
 const overlayStyle = {
@@ -32,21 +33,30 @@ const FeedbackModal = ({closeModal}) => {
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
 
-    const sendFeedback = () => {
+    const sendFeedback = async () => {
         try {
-            // Verifier que message ne soit pas vide
+            const feedback = {}
+
             if (message === '')
                 throw new Error('message vide');
 
+            if (subject) feedback['subject'] = subject;
 
+            feedback['message'] = message;
+            const response = await ApiUtil.sendJsonToAPI('/users/feedback', feedback);
+
+            if (!response.ok)
+                throw new Error('Impossible d\'envoyer votre message. Réessayez ultérieurement');
+
+            toastr.success('Votre message a été envoyé. Merci de nous aider à améliorer leQuiz.io');
 
         } catch (error) {
             toastr.error(error.message);
         }
     }
 
-    const handleKeyPress = (charCode) => {
-        if (charCode === 13) sendFeedback()
+    const handleKeyPress = async (charCode) => {
+        if (charCode === 13) await sendFeedback()
     }
 
     return (
