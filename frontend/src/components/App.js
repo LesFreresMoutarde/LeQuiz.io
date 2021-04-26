@@ -37,7 +37,7 @@ class App extends React.Component {
             redirect: false,
             isLoading: true,
             user: null,
-            showModal: true,
+            showModal: false,
         };
 
         this.nextRedirect = null;
@@ -72,6 +72,10 @@ class App extends React.Component {
 
     showModal = () => {
         this.setState({showModal: true});
+    }
+
+    closeModal = () => {
+        this.setState({showModal: false});
     }
 
     logoutUser = async () => {
@@ -141,14 +145,16 @@ class App extends React.Component {
             );
         } else {
             return (
+                // <div className="app" style={showModal ? {backgroundColor: 'rgba(0,0,0,1)'} : {}}>
                 <div className="app">
+                    {showModal &&
+                    <FeedbackModal closeModal={this.closeModal} showModal={showModal}/>
+                    }
                     <div className="content-wrapper">
                         <Header user={user} />
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
-                            {showModal &&
-                                <FeedbackModal/>
-                            }
+
                             <Switch>
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/login" component={Login} />
