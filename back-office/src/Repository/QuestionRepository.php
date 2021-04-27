@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Scienta\DoctrineJsonFunctions\Query\AST\Functions\Postgresql\JsonExtractPath;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -32,8 +33,7 @@ class QuestionRepository extends ServiceEntityRepository
         $qb->select('q')
             ->join('q.categories', 'c')
             ->join('q.types', 't')
-            ->andWhere('q.content LIKE :str')
-            ->orWhere('q.answer LIKE :str');
+            ->andWhere('q.content LIKE :str');
 
 
         if ($category != '---') {
