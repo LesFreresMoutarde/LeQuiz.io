@@ -134,3 +134,12 @@ function filterSearch(e) {
 $('.search-input').keyup((e) => filterSearch(e));
 
 $('.filters select').change((e) => filterSearch(e));
+
+$('#reset-filtre').click(function(e){
+    $('#type').prop('selectedIndex',0);
+    $('#difficulty').prop('selectedIndex',0);
+    $('#category').prop('selectedIndex',0);
+    $('#status').prop('selectedIndex',0);
+    $('#search-input').val('');
+    $( "#type" ).trigger( "change" );
+});
