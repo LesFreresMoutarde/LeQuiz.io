@@ -23,6 +23,7 @@ import Toastr from "toastr2";
 import Room from "./pages/Room/Room";
 import AuthUtil from "../util/AuthUtil";
 import ApiUtil from "../util/ApiUtil";
+import FeedbackModal from "./pages/FeedbackModal/FeedbackModal";
 import Contact from "./pages/Contact/Contact";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
 const toastr = new Toastr();
@@ -38,6 +39,7 @@ class App extends React.Component {
             redirect: false,
             isLoading: true,
             user: null,
+            showFeedbackModal: false,
         };
 
         this.nextRedirect = null;
@@ -68,6 +70,14 @@ class App extends React.Component {
         this.setState({
             user,
         });
+    }
+
+    displayFeedbackModal = () => {
+        this.setState({showFeedbackModal: true});
+    }
+
+    closeFeedbackModal = () => {
+        this.setState({showFeedbackModal: false});
     }
 
     logoutUser = async () => {
@@ -111,7 +121,10 @@ class App extends React.Component {
     }
 
     render = () => {
-        if (this.state.redirect) {
+
+        const {redirect, isLoading, user, showFeedbackModal} = this.state;
+
+        if (redirect) {
             const url = this.nextRedirect;
             this.nextRedirect = null;
             setTimeout(() => { // SetTimeout to update the state of the App component after rendering the <Redirect> component
@@ -124,7 +137,7 @@ class App extends React.Component {
             );
         }
 
-        if(this.state.isLoading) {
+        if(isLoading) {
             return (
                 <div className="app loading">
                     <div className="app-loader">
@@ -135,10 +148,14 @@ class App extends React.Component {
         } else {
             return (
                 <div className="app">
+                    {showFeedbackModal &&
+                        <FeedbackModal closeModal={this.closeFeedbackModal}/>
+                    }
                     <div className="content-wrapper">
-                        <Header user={this.state.user} />
+                        <Header user={user} />
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
+
                             <Switch>
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/login" component={Login} />
@@ -155,7 +172,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer/>
+                    <Footer displayFeedbackModal={this.displayFeedbackModal}/>
                 </div>
             );
         }

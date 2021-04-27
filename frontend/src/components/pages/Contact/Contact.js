@@ -69,7 +69,7 @@ const Contact = () => {
             const response = await ApiUtil.sendJsonToAPI('/users/contact', {username, email, subject, message});
 
             if (!response.ok)
-                throw new Error('Impossible d\'envoyer votre message. Réessayez ultérieurement')
+                throw new Error('Impossible d\'envoyer votre message. Réessayez ultérieurement');
 
             toastr.success('Votre message a été envoyé. Nous vous répondrons dans les plus bref délais');
 

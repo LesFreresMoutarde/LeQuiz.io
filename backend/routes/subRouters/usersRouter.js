@@ -15,6 +15,20 @@ usersRouter.post('/contact', async (req, res, next) => {
     }
 })
 
+usersRouter.post('/feedback', async (req, res, next) => {
+    try {
+        const controller = new UserController();
+
+        await controller.actionFeedback(req.body)
+
+        res.status(controller.statusCode);
+
+        res.send(controller.response);
+    } catch (error) {
+        next(error)
+    }
+})
+
 usersRouter.route('/:id([\\w\\-]+)')
     .get((req, res) => {
         res.json({endpoint: `GET /users/${req.params.id}`})
