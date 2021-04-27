@@ -6,7 +6,50 @@
 {% block body %}
     <h1 class="title-page">Questions</h1>
     <!--<p class="total-question">Nombre total : {{ questions.getTotalItemCount }}</p>-->
-    <input type="text" class="search-input rounded col-6 col-lg-4 mt-5" placeholder="Rechercher une question">
+    <input type="text" id="search-input" class="search-input rounded col-6 col-lg-4 mt-5" placeholder="Rechercher une question">
+    <div class="filters mt-3 d-flex flex-wrap">
+        <div class="d-flex flex-column">
+            <label for="type">Type</label>
+            <select id="type" class="mr-2">
+                <option selected="selected">---</option>
+
+                {% for questionType in questionTypes %}
+                    <option data-name="{{ questionType.name }}">{{ questionType.label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex flex-column">
+            <label for="difficulty">Difficulté</label>
+            <select id="difficulty" class="mr-2">
+                <option selected="selected">---</option>
+                <option data-name="easy">Facile</option>
+                <option data-name="medium">Moyen</option>
+                <option data-name="hard">Difficile</option>
+            </select>
+        </div>
+
+        <div class="d-flex flex-column">
+            <label for="category">Category</label>
+            <select id="category" class="mr-2">
+                <option selected="selected">---</option>
+                {% for category in categories %}
+                    <option data-name="{{ category.name }}">{{ category.label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex flex-column">
+            <label for="status">Status</label>
+            <select id="status" class="mr-2">
+                <option selected="selected">---</option>
+                <option data-name="pending">En attente</option>
+                <option data-name="approved">Approuvée</option>
+                <option data-name="disapproved">Désapprouvée</option>
+            </select>
+        </div>
+
+    </div>
     <table class="table table-entity mt-3">
         <thead>
         <tr>

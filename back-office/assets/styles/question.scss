@@ -93,3 +93,7 @@ ul.list-cb li input[type="checkbox"]:focus + label {
   font-size: 25px;
   font-family: initial;
 }
+
+.filters select {
+  min-width: 130px;
+}

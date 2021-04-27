@@ -19,10 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     #[Route('/', name: 'question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(QuestionRepository $questionRepository,QuestionTypeRepository $questionTypeRepository, CategoryRepository $categoryRepository,  PaginatorInterface $paginator, Request $request): Response
     {
         $questions = $questionRepository->findBy([],['createdAt' => 'desc']);
-
+        $questionTypes = $questionTypeRepository->findAll();
+        $categories = $categoryRepository->findAll();
         $questions = $paginator->paginate(
             $questions, // Requête contenant les données à paginer (ici nos articles)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
@@ -30,6 +31,8 @@ class QuestionController extends AbstractController
         );
         return $this->render('question/index.html.twig', [
             'questions' => $questions,
+            'questionTypes' => $questionTypes,
+            'categories' => $categories
         ]);
     }
 
@@ -38,12 +41,11 @@ class QuestionController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $str = $request->get('str');
         $serializer = $this->container->get('serializer');
-        $entities =  $questionRepository->findByContent($str);
+        $entities =  $questionRepository->findByContent($request);
 
         if(!$entities) {
-            $result['error'] = "Aucun résultat";
+            $res = json_encode([]);
         } else {
             $res = $serializer->serialize($entities, 'json');
         }
