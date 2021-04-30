@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Types de question{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('questionType') }}{% endblock %}
 
 {% block body %}
     <h1 class="title-page">Types de question</h1>

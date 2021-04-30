@@ -2,6 +2,7 @@
 
 
 {% block title %}Hello HomeController!{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('home') }}{% endblock %}
 
 {% block body %}
 
@@ -21,4 +22,3 @@
     </ul>
 </div>
 {% endblock %}
-{% block javascripts %} {{ parent() }} {{ encore_entry_script_tags('home') }}{% endblock %}

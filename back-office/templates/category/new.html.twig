@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Nouvelle catégorie{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('category') }} {% endblock %}
 
 {% block body %}
     <h1 class="title-page">Ajouter une catégorie</h1>

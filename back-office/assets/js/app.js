@@ -1,15 +1,19 @@
 import '../styles/nav.scss';
 import '../styles/app.scss';
 
-import $ from 'jquery'
-
-$('.icon-menu').click(function () {
-    $('.small-menu').toggle();
-})
-
-$('body').click(function (event)
-{
-    if(!$(event.target).closest('.sidebar').length && !$(event.target).is('.sidebar')) {
-        $(".small-menu").hide();
+document.querySelector('.icon-menu').addEventListener('click', () => {
+    if(document.querySelector('.small-menu').style.display == 'block') {
+        document.querySelector('.small-menu').style.display = 'none';
+    }
+    else {
+        document.querySelector('.small-menu').style.display = 'block';
     }
 });
+
+document.querySelector('body').addEventListener('click', (e) => {
+    let elem = e.target;
+    if ( !elem.closest('.sidebar') &&  elem.classList.contains('.sidebar') == false) {
+        document.querySelector('.small-menu').style.display = 'none';
+    }
+});
+

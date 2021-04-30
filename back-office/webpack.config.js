@@ -21,13 +21,13 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
-    .addEntry('login', './assets/js/login.js')
-    .addEntry('home', './assets/js/home.js')
-    .addEntry('category', './assets/js/category.js')
+    .addStyleEntry('login', './assets/styles/login.scss')
+    .addStyleEntry('home', './assets/styles/home.scss')
+    .addStyleEntry('category', './assets/styles/category.scss')
     .addEntry('question', './assets/js/question.js')
-    .addEntry('questionType', './assets/js/question_type.js')
-    .addEntry('user', './assets/js/user.js')
-    .addEntry('refreshToken', './assets/js/refresh_token.js')
+    .addStyleEntry('questionType', './assets/styles/question_type.scss')
+    .addStyleEntry('user', './assets/styles/user.scss')
+    .addStyleEntry('refreshToken', './assets/styles/refresh_token.scss')
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
 

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Visualiser un type de question{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('questionType') }}{% endblock %}
 
 {% block body %}
     <h1 class="title-page">Visualiser un type de question</h1>

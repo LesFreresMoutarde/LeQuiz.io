@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}New RefreshToken{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('refreshToken') }}{% endblock %}
 
 {% block body %}
     <h1>Create new RefreshToken</h1>

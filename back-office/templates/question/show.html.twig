@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Visualiser une question{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('question') }}{% endblock %}
 
 {% block body %}
     <h1 class="title-page">Visualiser une question</h1>
@@ -117,3 +118,4 @@
         {{ include('question/_delete_form.html.twig') }}
     </div>
 {% endblock %}
+{% block javascripts %} {{ parent() }} {{ encore_entry_script_tags('question') }}{% endblock %}

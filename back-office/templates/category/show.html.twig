@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Visualiser une catégorie{% endblock %}
+{% block stylesheets %} {{ parent() }} {{ encore_entry_link_tags('category') }} {% endblock %}
 
 {% block body %}
     <h1 class="title-page">Visualiser une catégorie</h1>

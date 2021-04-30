@@ -1,28 +1,43 @@
 import '../styles/question.scss';
 
 import $ from 'jquery'
+
 let timer;
-$(document).on('click', '.show-cell i', function (e) {
-    let element = e.target;
-    $(element).css('display', 'none');
-    $(element).closest('td').find('.hide-cell').css('display', 'block');
-    $(element).closest('td').find('.hide-cell i').css('display', 'block');
-    $(element).closest('td').find('.answer-cell').css('display', 'block');
-})
 
-$(document).on('click', '.hide-cell i', function (e) {
-    let element = e.target;
-    $(element).css('display', 'none');
-    $(element).closest('td').find('.show-cell i').css('display', 'block');
-    $(element).closest('td').find('.answer-cell').css('display', 'none');
-})
+function setColorStatus() {
+    let statusColor = {'pending': 'orange', 'approved': 'green', 'disapproved': 'red'};
+    document.querySelectorAll('.status-cell')
+        .forEach(el => el.style.color = statusColor[el.innerHTML]);
+}
 
-$("td:contains('pending')").css('color', 'orange');
-$("td:contains('approved')").css('color', 'green');
-$("td:contains('disapproved')").css('color', 'red');
-$("td:contains('medium')").css('color', 'blue');
-$("td:contains('hard')").css('color', 'red');
-$("td:contains('easy')").css('color', 'green');
+function showAnswer(e) {
+    let element = e.target.closest('span')
+
+    element.classList.add('hide');
+    element.closest('td').querySelector('.hide-cell').classList.add('show');
+    element.closest('td').querySelector('.answer-cell').classList.add('show');
+}
+
+
+function hideAnswer(e) {
+    let element = e.target.closest('span')
+
+    element.classList.remove('show');
+    element.closest('td').querySelector('.show-cell').classList.remove('hide');
+    element.closest('td').querySelector('.answer-cell').classList.remove('show');
+}
+
+function putEventAnswers() {
+    document.querySelectorAll(".show-cell")
+        .forEach(el => el.addEventListener("click", (e) => {
+            showAnswer(e);
+        }, false));
+
+    document.querySelectorAll(".hide-cell")
+        .forEach(el => el.addEventListener("click", (e) => {
+            hideAnswer(e);
+        }, false));
+}
 
 function filterSearch(e) {
     let element = e.target;
@@ -51,7 +66,7 @@ function filterSearch(e) {
                         // $.each(res.entities, function (index, entity) {
                         let result = JSON.parse(res);
                         if (result.length == 0) {
-                            $('.tbody-question').append('<tr><td colspan="11">'+ 'Pas de resultat' +'</td></tr>');
+                            $('.tbody-question').append('<tr><td colspan="11">' + 'Pas de resultat' + '</td></tr>');
                             return;
                         }
                         $('.total-question').html('Nombre de resultat : ' + result.length);
@@ -92,7 +107,7 @@ function filterSearch(e) {
                             }
                             line += answers;
                             line += '</div></td>';
-                            line += '<td>' + result[index]['status'] + '</td>';
+                            line += '<td class="status-cell">' + result[index]['status'] + '</td>';
 
                             if (result[index]['media'].length) {
                                 for (var media in result[index]['media']) {
@@ -112,12 +127,8 @@ function filterSearch(e) {
                                 '</tr>';
 
                             $('.tbody-question').append(line);
-                            $("td:contains('pending')").css('color', 'orange');
-                            $("td:contains('approved')").css('color', 'green');
-                            $("td:contains('disapproved')").css('color', 'red');
-                            $("td:contains('medium')").css('color', 'blue');
-                            $("td:contains('hard')").css('color', 'red');
-                            $("td:contains('easy')").css('color', 'green');
+                            setColorStatus();
+                            putEventAnswers()
                             if (value.length >= 3) {
                                 $('.pagination').css('display', 'none');
                             } else if (value.length === 0) {
@@ -131,15 +142,26 @@ function filterSearch(e) {
         }
     }, ms)
 }
-$('.search-input').keyup((e) => filterSearch(e));
 
-$('.filters select').change((e) => filterSearch(e));
 
-$('#reset-filtre').click(function(e){
-    $('#type').prop('selectedIndex',0);
-    $('#difficulty').prop('selectedIndex',0);
-    $('#category').prop('selectedIndex',0);
-    $('#status').prop('selectedIndex',0);
-    $('#search-input').val('');
-    $( "#type" ).trigger( "change" );
-});
+
+document.querySelector('#search-input').addEventListener('keyup', (e) => {
+    filterSearch(e)
+}, false);
+
+document.querySelectorAll('.filters select').forEach(el => {
+    el.addEventListener('change', (e) => {
+        filterSearch(e)
+    }, false);
+}, false);
+
+document.querySelector('#reset-filtre').addEventListener('click', () => {
+    document.querySelectorAll('.filters select').forEach(el => el.selectedIndex = "0");
+    document.querySelector('#search-input').value = '';
+    var event = new Event('change');
+    document.querySelector('.filters select').dispatchEvent(event);
+}, false)
+
+
+putEventAnswers();
+setColorStatus();

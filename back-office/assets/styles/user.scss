@@ -1,3 +1,16 @@
 #edit_user_unbanDate_date select, #edit_user_unbanDate_time select{
   margin: 5px 10px;
 }
+@media (min-width: 577px) {
+  #sidebar-user {
+    & > a {
+      color: #007bff;
+      background-color: #FFFFFF;
+      box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+
+      i {
+        color: #007bff;
+      }
+    }
+  }
+}

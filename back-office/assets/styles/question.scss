@@ -13,19 +13,20 @@
 }
 
 .search-input {
-  outline : none;
+  outline: none;
   min-width: 210px;
 }
+
 ul {
   list-style: none;
   padding: 0;
 }
 
-ul.list-cb li{
+ul.list-cb li {
   display: inline;
 }
 
-ul.list-cb li label{
+ul.list-cb li label {
   display: inline-block;
   background-color: rgba(255, 255, 255, .9);
   border: 2px solid rgba(139, 139, 139, .3);
@@ -77,10 +78,12 @@ ul.list-cb li input[type="checkbox"]:checked + label {
 ul.list-cb li input[type="checkbox"] {
   display: absolute;
 }
+
 ul.list-cb li input[type="checkbox"] {
   position: absolute;
   opacity: 0;
 }
+
 ul.list-cb li input[type="checkbox"]:focus + label {
   border: 2px solid #e9a1ff;
 }
@@ -101,3 +104,26 @@ ul.list-cb li input[type="checkbox"]:focus + label {
 .div-reset {
   margin-top: 18px;
 }
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+@media (min-width: 577px) {
+  #sidebar-question {
+    & > a {
+      color: #007bff;
+      background-color: #FFFFFF;
+      box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+
+      i {
+        color: #007bff;
+      }
+    }
+  }
+}
+
