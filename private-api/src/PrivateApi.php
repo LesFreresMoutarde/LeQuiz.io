@@ -5,6 +5,7 @@ namespace PrivateApi;
 
 
 use PrivateApi\Config\Config;
+use PrivateApi\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slim\App;
@@ -17,6 +18,8 @@ class PrivateApi
 
     private Config $config;
 
+    private Router $router;
+
     private App $slim;
 
     public function __construct()
@@ -26,14 +29,20 @@ class PrivateApi
         self::$static = $this;
 
         $this->slim = AppFactory::create();
-        // TODO create a Router class and instanciate it
+        $this->router = new Router($this->slim);
 
         $this->registerErrorMiddleware();
+        $this->router->registerRoutes();
     }
 
     public function getConfig(): Config
     {
         return $this->config;
+    }
+
+    public function getRouter(): Router
+    {
+        return $this->router;
     }
 
     public function run()
