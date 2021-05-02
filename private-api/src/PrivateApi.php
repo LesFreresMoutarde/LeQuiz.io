@@ -4,6 +4,7 @@
 namespace PrivateApi;
 
 
+use PrivateApi\Config\Config;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slim\App;
@@ -14,11 +15,13 @@ class PrivateApi
 {
     public static PrivateApi $static;
 
+    private Config $config;
+
     private App $slim;
 
     public function __construct()
     {
-        // TODO create a Config class and load it
+        $this->config = new Config();
 
         self::$static = $this;
 
@@ -26,6 +29,11 @@ class PrivateApi
         // TODO create a Router class and instanciate it
 
         $this->registerErrorMiddleware();
+    }
+
+    public function getConfig(): Config
+    {
+        return $this->config;
     }
 
     public function run()
@@ -77,7 +85,7 @@ class PrivateApi
     private function registerErrorMiddleware()
     {
         $errorHandler = $this->getErrorHandler();
-        $errorMiddleware = $this->slim->addErrorMiddleware(true /* TODO ONLY IN DEV MODE */, true, true);
+        $errorMiddleware = $this->slim->addErrorMiddleware($this->getConfig()->isDevMode(), true, true);
         $errorMiddleware->setDefaultErrorHandler($errorHandler);
     }
 }
