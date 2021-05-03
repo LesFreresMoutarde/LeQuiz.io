@@ -15,6 +15,11 @@ class Config
     private string $dbPassword;
     private string $dbCharset = 'utf8';
 
+    private string $emailHost;
+    private int $emailPort;
+    private string $emailUsername;
+    private string $emailPassword;
+
     private bool $devMode = false;
 
     public function __construct()
@@ -47,6 +52,26 @@ class Config
         return $this->dbUser;
     }
 
+    public function getEmailHost(): string
+    {
+        return $this->emailHost;
+    }
+
+    public function getEmailPassword(): string
+    {
+        return $this->emailPassword;
+    }
+
+    public function getEmailPort(): string
+    {
+        return $this->emailPort;
+    }
+
+    public function getEmailUsername(): string
+    {
+        return $this->emailUsername;
+    }
+
     public function isDevMode(): bool
     {
         return $this->devMode;
@@ -73,12 +98,26 @@ class Config
     {
         $configArray = $this->getConfigArray();
 
+        $this->loadDatabaseConfigFromArray($configArray);
+        $this->loadEmailConfigFromArray($configArray);
+
+        $devModeParam = 'devMode';
+
+        if (isset($configArray[$devModeParam])) {
+            if (!is_bool($configArray[$devModeParam])) {
+                throw new \RuntimeException("'{$devModeParam}' parameter in configuration file must be a boolean");
+            }
+
+            $this->devMode = $configArray[$devModeParam];
+        }
+    }
+
+    private function loadDatabaseConfigFromArray(array $configArray)
+    {
         $dbHostParam = 'dbHost';
         $dbNameParam = 'dbName';
         $dbUserParam = 'dbUser';
         $dbPasswordParam = 'dbPassword';
-
-        $devModeParam = 'devMode';
 
         if (!isset($configArray[$dbHostParam])) {
             throw new \RuntimeException("Configuration file must contain a '{$dbHostParam}' parameter");
@@ -116,13 +155,61 @@ class Config
         $this->dbName = $configArray[$dbNameParam];
         $this->dbUser = $configArray[$dbUserParam];
         $this->dbPassword = $configArray[$dbPasswordParam];
+    }
 
-        if (isset($configArray[$devModeParam])) {
-            if (!is_bool($configArray[$devModeParam])) {
-                throw new \RuntimeException("'{$devModeParam}' parameter in configuration file must be a boolean");
-            }
+    private function loadEmailConfigFromArray(array $configArray)
+    {
+        $emailParam = 'email';
+        $emailHostParam = 'host';
+        $emailPortParam = 'port';
+        $emailUsernameParam = 'username';
+        $emailPasswordParam = 'password';
 
-            $this->devMode = $configArray[$devModeParam];
+        if (!isset($configArray[$emailParam])) {
+            throw new \RuntimeException("Configuration file must contain a '{$emailParam}' parameter");
         }
+
+        if (!is_array($configArray[$emailParam])) {
+            throw new \RuntimeException("'{$emailParam}' parameter in configuration file must be an array");
+        }
+
+        $emailConfigArray = $configArray[$emailParam];
+
+        if (!isset($emailConfigArray[$emailHostParam])) {
+            throw new \RuntimeException("Configuration file must contain a '{$emailParam}.{$emailHostParam}' parameter");
+        }
+
+        if (!isset($emailConfigArray[$emailPortParam])) {
+            throw new \RuntimeException("Configuration file must contain a '{$emailParam}.{$emailPortParam}' parameter");
+        }
+
+        if (!isset($emailConfigArray[$emailUsernameParam])) {
+            throw new \RuntimeException("Configuration file must contain a '{$emailParam}.{$emailUsernameParam}' parameter");
+        }
+
+        if (!isset($emailConfigArray[$emailPasswordParam])) {
+            throw new \RuntimeException("Configuration file must contain a '{$emailParam}.{$emailPasswordParam}' parameter");
+        }
+
+        if (!is_string($emailConfigArray[$emailHostParam])) {
+            throw new \RuntimeException("'{$emailHostParam}.{$emailHostParam}' parameter in configuration file must be a string");
+        }
+
+        if (!is_int($emailConfigArray[$emailPortParam])) {
+            throw new \RuntimeException("'{$emailHostParam}.{$emailPortParam}' parameter in configuration file must be an integer");
+        }
+
+        if (!is_string($emailConfigArray[$emailUsernameParam])) {
+            throw new \RuntimeException("'{$emailHostParam}.{$emailUsernameParam}' parameter in configuration file must be a string");
+        }
+
+        if (!is_string($emailConfigArray[$emailPasswordParam])) {
+            throw new \RuntimeException("'{$emailHostParam}.{$emailPasswordParam}' parameter in configuration file must be a string");
+        }
+
+        $this->emailHost = $emailConfigArray[$emailHostParam];
+        $this->emailPort = $emailConfigArray[$emailPortParam];
+        $this->emailUsername = $emailConfigArray[$emailUsernameParam];
+        $this->emailPassword = $emailConfigArray[$emailPasswordParam];
     }
 }

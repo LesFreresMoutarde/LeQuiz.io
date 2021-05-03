@@ -7,4 +7,11 @@ return [
     'dbName' => 'lequiz-io',
     'dbUser' => 'admin',
     'dbPassword' => 'admin',
+
+    'email' => [
+        'host' => 'mailhog',
+        'port' => 1025,
+        'username' => '',
+        'password' => '',
+    ]
 ];
