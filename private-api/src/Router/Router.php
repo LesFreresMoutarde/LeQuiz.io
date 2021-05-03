@@ -6,6 +6,7 @@ namespace PrivateApi\Router;
 
 use PrivateApi\Responder\HelloResponder;
 use PrivateApi\Responder\ResponderInterface;
+use PrivateApi\Responder\TestEmailResponder;
 use Slim\App;
 use Slim\Interfaces\RouteInterface;
 
@@ -21,6 +22,7 @@ class Router
     {
         // TODO use a config array for all routes ?
         $this->registerRoute('/hello-world', HelloResponder::class);
+        $this->registerRoute('/test-email', TestEmailResponder::class);
     }
 
     private function registerRoute(string $uri, string $responderClass, array|string $methods = null): RouteInterface
