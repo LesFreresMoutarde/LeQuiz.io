@@ -21,13 +21,13 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    public function findByContent(Request $request){
+    public function findByContent($data){
 
-        $str = $request->get('str');
-        $type = $request->get('type');
-        $difficulty = $request->get('difficulty');
-        $category = $request->get('category');
-        $status = $request->get('status');
+        $str = $data['value'];
+        $type = $data['type'];
+        $difficulty = $data['difficulty'];
+        $category = $data['category'];
+        $status = $data['status'];
 
         $qb = $this->createQueryBuilder('q');
         $qb->select('q')

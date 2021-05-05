@@ -36,20 +36,20 @@ class QuestionController extends AbstractController
         ]);
     }
 
-    #[Route('/search', name: 'search_question', methods: ['GET'])]
+    #[Route('/search', name: 'search_question', methods: ['POST'])]
     public function searchQuestion(Request $request, QuestionRepository $questionRepository)
     {
-        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->getContent(), true);
 
         $serializer = $this->container->get('serializer');
-        $entities =  $questionRepository->findByContent($request);
+        $entities =  $questionRepository->findByContent($data);
 
         if(!$entities) {
             $res = json_encode([]);
         } else {
             $res = $serializer->serialize($entities, 'json');
         }
-        return new JsonResponse($res);
+        return new Response($res);
     }
 
     #[Route('/new', name: 'question_new', methods: ['GET', 'POST'])]
