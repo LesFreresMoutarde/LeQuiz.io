@@ -1,33 +1,33 @@
 import '../styles/question.scss';
 
-import $ from 'jquery'
 
 let timer;
 
-function setColorStatus() {
-    let statusColor = {'pending': 'orange', 'approved': 'green', 'disapproved': 'red'};
+const setColorStatus = () => {
+    const statusColor = {'pending': 'orange', 'approved': 'green', 'disapproved': 'red'};
+
     document.querySelectorAll('.status-cell')
         .forEach(el => el.style.color = statusColor[el.innerHTML]);
-}
+};
 
-function showAnswer(e) {
-    let element = e.target.closest('span')
+const showAnswer = (e) => {
+    const element = e.target.closest('span');
 
     element.classList.add('hide');
     element.closest('td').querySelector('.hide-cell').classList.add('show');
     element.closest('td').querySelector('.answer-cell').classList.add('show');
-}
+};
 
 
-function hideAnswer(e) {
-    let element = e.target.closest('span')
+const hideAnswer = (e) => {
+    const element = e.target.closest('span');
 
     element.classList.remove('show');
     element.closest('td').querySelector('.show-cell').classList.remove('hide');
     element.closest('td').querySelector('.answer-cell').classList.remove('show');
-}
+};
 
-function putEventAnswers() {
+const putEventAnswers = () => {
     document.querySelectorAll(".show-cell")
         .forEach(el => el.addEventListener("click", (e) => {
             showAnswer(e);
@@ -40,39 +40,45 @@ function putEventAnswers() {
 }
 
 const computeField = (data, field) => {
-    let res = ''
+    let res = '';
     if (field === 'types' || field === 'categories') {
         data.forEach(el => {
             let value = document.createElement("p");
             value.innerHTML = el['name'];
             res += value.outerHTML;
         });
-        return res;
-    }
-    else if (field === 'answer') {
+        return '<td>' + res + '</td>';
+    } else if (field === 'answer') {
+        res = '<td class="content-answer-cell">' +
+            '<span class="show-cell"><i class="fas fa-eye"></i></span>' +
+            '<span class="hide-cell"><i class="fas fa-minus-circle"></i></span>' +
+            '<div class="answer-cell">';
         data['answers'].forEach(el => {
             let value = document.createElement("p");
-            value.style.color = (el['is_good_answer']) ? 'forestgreen' : 'red' ;
+            value.style.color = (el['is_good_answer']) ? 'forestgreen' : 'red';
             value.innerHTML = el['content'];
             res += value.outerHTML;
         });
+        res += '</div></td>';
         return res;
+    } else if (field === 'status') {
+        return '<td class="status-cell">' + data + '</td>';
     }
-    else
-        return data;
+    return '<td>' + data + '</td>';
 };
 
 const appendLine = (data) => {
     const fields = ['id', 'types', 'difficulty', 'categories', 'content', 'answer', 'status', 'media', 'createdAt', 'updatedAt']
     const parent = document.querySelector('.tbody-question');
+    parent.innerHTML = '';
     const lines = JSON.parse(data);
     for (let index = 0; index < lines.length; index++) {
         let line = document.createElement("tr");
         fields.forEach(el => {
-            line.innerHTML += '<td>' + computeField(lines[index][el], el) + '</td>';
+            line.innerHTML += computeField(lines[index][el], el);
         });
         line.innerHTML += '<td><a href="/question/' + lines[index]['id'] + '"><i class="fas fa-eye"></i></a>' +
-                          '<a href="/question/' + lines[index]['id'] + '/edit"><i class="fas fa-edit"></i></a></td>';
+            '<a href="/question/' + lines[index]['id'] + '/edit"><i class="fas fa-edit"></i></a></td>';
         parent.append(line);
     }
 
@@ -80,8 +86,10 @@ const appendLine = (data) => {
 };
 
 const promiseAjax = (parameters) => {
-    let myPromise = new Promise(function (myResolve, myReject) {
-        let req = new XMLHttpRequest();
+    const pagination = document.querySelector('.pagination');
+    const parent = document.querySelector('.tbody-question');
+    const myPromise = new Promise(function (myResolve, myReject) {
+        const req = new XMLHttpRequest();
         req.open('POST', "/question/search", true);
         req.onload = () => {
             if (req.status === 200) {
@@ -99,9 +107,9 @@ const promiseAjax = (parameters) => {
             setColorStatus();
             putEventAnswers();
             if (parameters['value'].length >= 3) {
-                $('.pagination').css('display', 'none');
+                pagination.style.display = 'none'
             } else if (parameters['value'].length === 0) {
-                $('.pagination').css('display', 'flex');
+                pagination.style.display = 'flex'
             }
         },
         function (error) {
@@ -113,18 +121,15 @@ const promiseAjax = (parameters) => {
 
 const filterSearch = (e) => {
     const value = document.querySelector('#search-input').value;
-    const type = document.querySelector('#type');
-    const difficulty = document.querySelector('#difficulty');
-    const category = document.querySelector('#category');
-    const status = document.querySelector('#status');
     const delay = 200;
     const parameters = {
         'value': value,
-        'type': type.value === '---' ? '---' : document.querySelector('#type option:selected').attr('data-name'),
-        'difficulty': difficulty.value === '---' ? '---' : document.querySelector('#difficulty option:selected').attr('data-name'),
-        'category': category.value === '---' ? '---' : document.querySelector('#category option:selected').attr('data-name'),
-        'status': status.value === '---' ? '---' : document.querySelector('#status option:selected').attr('data-name')
+        'type': document.querySelector('#type').value,
+        'difficulty': document.querySelector('#difficulty').value,
+        'category': document.querySelector('#category').value,
+        'status': document.querySelector('#status').value
     };
+
     clearTimeout(timer);
     timer = setTimeout(function () {
         if ((e.which <= 90 && e.which >= 48) || e.which === 8 || e.type === "change") {
@@ -133,7 +138,7 @@ const filterSearch = (e) => {
             }
         }
     }, delay);
-}
+};
 
 document.querySelector('#search-input').addEventListener('keyup', (e) => {
     filterSearch(e)

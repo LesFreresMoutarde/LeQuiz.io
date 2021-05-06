@@ -56,6 +56,10 @@ class QuestionRepository extends ServiceEntityRepository
                 ->setParameter('status', $status);
         }
 
+        if ($str === '') {
+            $qb->setMaxResults(13);
+        }
+
 
         return $qb->orderBy('q.createdAt', 'DESC')
             ->setParameter('str', '%'.$str.'%')

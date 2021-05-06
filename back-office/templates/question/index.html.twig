@@ -14,7 +14,7 @@
                 <option selected="selected">---</option>
 
                 {% for questionType in questionTypes %}
-                    <option data-name="{{ questionType.name }}">{{ questionType.label }}</option>
+                    <option value="{{ questionType.name }}">{{ questionType.label }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -23,9 +23,9 @@
             <label for="difficulty">Difficulté</label>
             <select id="difficulty" class="mr-2">
                 <option selected="selected">---</option>
-                <option data-name="easy">Facile</option>
-                <option data-name="medium">Moyen</option>
-                <option data-name="hard">Difficile</option>
+                <option value="easy">Facile</option>
+                <option value="medium">Moyen</option>
+                <option value="hard">Difficile</option>
             </select>
         </div>
 
@@ -34,7 +34,7 @@
             <select id="category" class="mr-2">
                 <option selected="selected">---</option>
                 {% for category in categories %}
-                    <option data-name="{{ category.name }}">{{ category.label }}</option>
+                    <option value="{{ category.name }}">{{ category.label }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -43,9 +43,9 @@
             <label for="status">Status</label>
             <select id="status" class="mr-2">
                 <option selected="selected">---</option>
-                <option data-name="pending">En attente</option>
-                <option data-name="approved">Approuvée</option>
-                <option data-name="disapproved">Désapprouvée</option>
+                <option value="pending">En attente</option>
+                <option value="approved">Approuvée</option>
+                <option value="disapproved">Désapprouvée</option>
             </select>
         </div>
         <div class="div-reset">
@@ -60,7 +60,7 @@
             <th>Difficulty</th>
             <th>Categories</th>
             <th>Content</th>
-            <th>Answer</th>
+            <th class="header-answer">Answer</th>
             <th>Status</th>
             <th>Media</th>
             <th>CreatedAt</th>
