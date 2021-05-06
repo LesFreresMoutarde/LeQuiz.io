@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     #[Route('/', name: 'question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository,QuestionTypeRepository $questionTypeRepository, CategoryRepository $categoryRepository,  PaginatorInterface $paginator, Request $request): Response
+    public function index(QuestionRepository $questionRepository, QuestionTypeRepository $questionTypeRepository, CategoryRepository $categoryRepository,  PaginatorInterface $paginator, Request $request): Response
     {
         $questions = $questionRepository->findBy([],['createdAt' => 'desc']);
         $questionTypes = $questionTypeRepository->findAll();

@@ -1,6 +1,5 @@
 import '../styles/question.scss';
 
-
 let timer;
 
 const setColorStatus = () => {
@@ -17,7 +16,6 @@ const showAnswer = (e) => {
     element.closest('td').querySelector('.hide-cell').classList.add('show');
     element.closest('td').querySelector('.answer-cell').classList.add('show');
 };
-
 
 const hideAnswer = (e) => {
     const element = e.target.closest('span');
@@ -37,7 +35,7 @@ const putEventAnswers = () => {
         .forEach(el => el.addEventListener("click", (e) => {
             hideAnswer(e);
         }, false));
-}
+};
 
 const computeField = (data, field) => {
     let res = '';
@@ -80,8 +78,6 @@ const appendLine = (data) => {
             '<a href="/question/' + lines[index]['id'] + '/edit"><i class="fas fa-edit"></i></a></td>';
         parent.append(line);
     }
-
-
 };
 
 const promiseAjax = (parameters) => {
@@ -114,7 +110,6 @@ const promiseAjax = (parameters) => {
             parent.innerHTML= '<tr><td colspan="11">Pas de resultat</td></tr>';
         }
     );
-
 };
 
 const filterSearch = (e) => {
@@ -159,10 +154,9 @@ document.querySelectorAll('.filters select').forEach(el => {
 document.querySelector('#reset-filtre').addEventListener('click', () => {
     document.querySelectorAll('.filters select').forEach(el => el.selectedIndex = "0");
     document.querySelector('#search-input').value = '';
-    var event = new Event('change');
+    const event = new Event('change');
     document.querySelector('.filters select').dispatchEvent(event);
 }, false)
-
 
 putEventAnswers();
 setColorStatus();
