@@ -6,18 +6,17 @@
 {% block body %}
     <h1 class="title-page">Ajouter une question</h1>
     <a class="btn btn-primary mt-3 mt-3" href="{{ path('question_index') }}">Retour à la liste</a>
-    <div class="div-edit col-xl-7 col-12 rounded mt-5 py-5 p-sm-5 d-flex flex-column justify-content-center">
+    <div class="div-edit col-xl-7 col-12 rounded py-5 p-sm-5 d-flex flex-column justify-content-center">
         <form class="edit-question" action='{{ path('question_new', {id: question.id}) }}' method="post">
             <label class="label-fs" for="question-content">Question</label>
             <textarea class="col-12 col-xl-9 rounded mb-3" id="question-content" name="question-content"
                       required></textarea>
-            <fieldset>
-
-                <label class="label-fs" for="question-type-select">Type</label>
-                <div class="col-12">
+            <fieldset class="d-flex flex-column">
+                <div class="label-fs" for="question-type-select">Types</div>
+                <div class="col-12 cb-types">
                     <ul>
                         {% for type in questionTypes %}
-                            <li>
+                            <li class="mx-3">
                                 <input type="checkbox" id="cbx-type-{{ type.name }}"
                                        name="cbx-type-{{ type.name }}" value="{{ type.name }}">
                                 <label for="cbx-type-{{ type.name }}">{{ type|capitalize }}</label>
