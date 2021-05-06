@@ -6,11 +6,11 @@
 {% block body %}
     <h1 class="title-page">Modifier une question</h1>
     <a class="btn btn-primary mt-3" href="{{ path('question_index') }}">Retour à la liste</a>
-    <div class="div-edit col-xl-7 col-12  mx-auto rounded shadow-lg mt-5 p-sm-5 py-5 d-flex flex-column justify-content-center">
+    <div class="div-edit col-xl-7 col-12 rounded mt-5 p-sm-5 py-5 d-flex flex-column justify-content-center">
 
         <form class="edit-question" action='{{ path('question_edit', {id: question.id}) }}' method="post">
-            <label class="label-fs col-12" for="question-content">Question </label>
-            <textarea class="col-12 col-xl-9 mx-auto rounded mb-3" id="question-content" name="question-content"
+            <label class="label-fs" for="question-content">Question </label>
+            <textarea class="col-12 col-xl-9  rounded mb-3" id="question-content" name="question-content"
                       required>{{ question.content }}</textarea>
             <fieldset>
                 <label class="label-fs" for="question-type-select mt-3">Type</label>
@@ -45,7 +45,8 @@
                 <label class="label-fs mt-3">Réponses</label>
                 {% for answer in question.answer['answers'] %}
                     <div class="d-flex flex-wrap justify-content-between mt-2">
-                        <input class="col-12 col-sm-6" type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}"
+                        <input class="col-12 col-sm-6" type="text" name="answers-content-{{ loop.index }}"
+                               id="answer-{{ loop.index }}"
                                value="{{ answer['content'] }}"/>
                         {% if answer['is_good_answer'] == true %}
                             <input type="radio" id="good-answer-radio-{{ loop.index }}"
@@ -69,8 +70,9 @@
                 {% endfor %}
             </fieldset>
             <div class="mt-3 mb-3 d-flex flex-wrap">
-                <label class="label-fs col-12" for="additional-response_media-info mt-3">Information supplémentaire</label>
-                <textarea class="col-12 col-xl-9 mx-auto" name="additional-response_media-info"
+                <label class="label-fs" for="additional-response_media-info mt-3">Information
+                    supplémentaire</label>
+                <textarea class="col-12 col-xl-9 " name="additional-response_media-info"
                           id="additional-response_media-info"
                 >{{ question.answer['additional']['response_media']['info'] ?? '' }}</textarea>
             </div>
@@ -78,20 +80,22 @@
             {#        TODO RESPONSE MEDIA FILE INPUT #}
             {#        </div>#}
             <div class="d-flex flex-wrap">
-                <label class="col-6 label-fs" for="question-difficulty-select">Difficulté</label>
-                <select class="col-6" name="question-difficulty"  id="question-difficulty-select">
-                    {% for difficulty in questionDifficulty %}
+                <div class="d-flex flex-column col-6">
+                    <label class="label-fs" for="question-difficulty-select">Difficulté</label>
+                    <select name="question-difficulty" id="question-difficulty-select">
+                        {% for difficulty in questionDifficulty %}
                             <option value="{{ difficulty }}" {% if question.difficulty == difficulty %}'selected'{% endif %}>{{ difficulty|capitalize }}</option>>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="d-flex flex-wrap">
-                <label class="col-6 label-fs " for="question-status-select">Statut</label>
-                <select class="col-6" name="question-status" id="question-status-select">
-                    {% for status in questionStatuses %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="d-flex flex-column col-6">
+                    <label class="label-fs " for="question-status-select">Statut</label>
+                    <select name="question-status" id="question-status-select">
+                        {% for status in questionStatuses %}
                             <option value="{{ status }}" {% if question.status == status %} 'selected'{% endif %} >{{ status|capitalize }}</option>>
-                    {% endfor %}
-                </select>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
             {#        {% if question.customQuiz %}#}
             {#        TODO handling when changing a question Position. The position of the question below and above should move
@@ -99,7 +103,7 @@
             {#        {% endif %}#}
             <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
             <div class="d-flex">
-                <button class="mt-3 col-12 col-sm-7 mx-auto btn btn-success" type="submit">Enregistrer</button>
+                <button class="mt-3 col-12 col-sm-7 mx-auto btn btn-primary" type="submit">Enregistrer</button>
             </div>
         </form>
         {{ include('question/_delete_form.html.twig') }}

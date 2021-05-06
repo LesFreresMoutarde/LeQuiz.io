@@ -17,3 +17,8 @@ document.querySelector('body').addEventListener('click', (e) => {
     }
 });
 
+const onResize = () => {
+    document.querySelector('.small-menu').style.display = 'none';
+};
+
+window.addEventListener('resize', onResize, true);

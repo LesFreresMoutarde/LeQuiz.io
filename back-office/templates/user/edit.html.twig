@@ -6,7 +6,7 @@
 {% block body %}
 <h1 class="title-page">Modifier un utilisateur</h1>
 <a class="btn btn-primary mt-3" href="{{ path('user_index') }}">Retour à la liste</a>
-<div class="div-edit col-xl-7 col-12  mx-auto rounded shadow-lg mt-5 p-5 d-flex flex-column justify-content-center">
+<div class="div-edit col-xl-7 col-12 rounded mt-5 p-5 d-flex flex-column justify-content-center">
 
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
     <div class="d-flex">

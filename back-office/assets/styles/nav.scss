@@ -25,6 +25,7 @@ $info-color: #007bff;
   z-index: 1030;
   overflow: hidden;
   transition: width .3s ease;
+  transition-delay: 0.3s;
 
 
   .icon-menu {
@@ -59,7 +60,7 @@ $info-color: #007bff;
         text-decoration: none;
 
         i {
-          margin-top: 4px;
+          margin-top: 20px;
           margin-right: 10px;
         }
       }
@@ -81,6 +82,7 @@ $info-color: #007bff;
 
       ~ #content-body {
         width: calc(100% - 260px);
+
       }
 
       .nav-version {

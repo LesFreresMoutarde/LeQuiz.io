@@ -97,7 +97,7 @@
                             <p style="color: red"> {{ answer.content }}</p>
                         {% endif %}
                     {% endfor %}
-                {% elseif key == 'additional' %}
+             {#  {% elseif key == 'additional' %}
                     <tr>
                         <th>additional</th>
                         <td>
@@ -113,7 +113,7 @@
                                 {% endfor %}
                             </table>
                         </td>
-                    </tr>
+                    </tr> #}
                 {% endif %}
             {% endfor %}
             </div>
@@ -121,7 +121,7 @@
             <td class="status-cell">{{ question.status }}</td>
             {#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
             <td>
-                <table>
+                <table class="table-media">
                     {% for key, field in question.media %}
                         <tr>
                             <th>{{ key }} </th>

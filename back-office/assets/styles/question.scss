@@ -69,8 +69,8 @@ ul.list-cb li input[type="checkbox"]:checked + label::before {
 }
 
 ul.list-cb li input[type="checkbox"]:checked + label {
-  border: 2px solid #1bdbf8;
-  background-color: #12bbd4;
+  border: 2px solid #007bff;
+  background-color: #007bff;
   color: #fff;
   transition: all .2s;
 }
@@ -133,4 +133,10 @@ p {
 
 .header-answer {
   min-width: 200px;
+}
+
+.table-media {
+  td, th{
+    border: none;
+  }
 }

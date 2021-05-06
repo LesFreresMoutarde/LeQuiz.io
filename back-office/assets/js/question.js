@@ -70,7 +70,6 @@ const computeField = (data, field) => {
 const appendLine = (data) => {
     const fields = ['id', 'types', 'difficulty', 'categories', 'content', 'answer', 'status', 'media', 'createdAt', 'updatedAt']
     const parent = document.querySelector('.tbody-question');
-    parent.innerHTML = '';
     const lines = JSON.parse(data);
     for (let index = 0; index < lines.length; index++) {
         let line = document.createElement("tr");
@@ -86,7 +85,6 @@ const appendLine = (data) => {
 };
 
 const promiseAjax = (parameters) => {
-    const pagination = document.querySelector('.pagination');
     const parent = document.querySelector('.tbody-question');
     const myPromise = new Promise(function (myResolve, myReject) {
         const req = new XMLHttpRequest();
@@ -103,17 +101,17 @@ const promiseAjax = (parameters) => {
 
     myPromise.then(
         function (data) {
-            appendLine(data);
-            setColorStatus();
-            putEventAnswers();
-            if (parameters['value'].length >= 3) {
-                pagination.style.display = 'none'
-            } else if (parameters['value'].length === 0) {
-                pagination.style.display = 'flex'
+            if (data.length > 2) {
+                appendLine(data);
+                setColorStatus();
+                putEventAnswers();
+            }
+            else {
+                parent.innerHTML = '<tr><td colspan="11">Pas de resultat</td></tr>';
             }
         },
         function (error) {
-            parent.append('<tr><td colspan="11">' + error + '</td></tr>');
+            parent.innerHTML= '<tr><td colspan="11">Pas de resultat</td></tr>';
         }
     );
 
@@ -121,7 +119,9 @@ const promiseAjax = (parameters) => {
 
 const filterSearch = (e) => {
     const value = document.querySelector('#search-input').value;
+    const pagination = document.querySelector('.pagination');
     const delay = 200;
+    const parent = document.querySelector('.tbody-question');
     const parameters = {
         'value': value,
         'type': document.querySelector('#type').value,
@@ -130,10 +130,16 @@ const filterSearch = (e) => {
         'status': document.querySelector('#status').value
     };
 
+    if (parameters['value'].length >= 3) {
+        pagination.style.display = 'none'
+    } else if (parameters['value'].length === 0) {
+        pagination.style.display = 'flex'
+    }
     clearTimeout(timer);
     timer = setTimeout(function () {
         if ((e.which <= 90 && e.which >= 48) || e.which === 8 || e.type === "change") {
             if (value.length >= 3 || value.length === 0) {
+                parent.innerHTML = '';
                 promiseAjax(parameters)
             }
         }

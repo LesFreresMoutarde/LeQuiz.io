@@ -8,20 +8,30 @@ body {
 }
 
 .div-edit {
-  color: white;
   font-size: 20px;
   input {
     border-radius: 4px;
-    background-color: lightskyblue;
-    border: none;
     height: 40px;
   }
-  textarea{
-    background-color: lightskyblue;
+
+  select {
+    height: 49px;
+    border-radius: 4px;
   }
 
   div {
     word-wrap: break-word;
+  }
+
+  th  {
+    border-top: transparent 0px;
+  }
+  td  {
+    border-top: transparent 0px;
+  }
+  textarea {
+    min-height: 100px;
+    max-width: 740px;
   }
 }
 
@@ -32,6 +42,8 @@ body {
   height: 100%;
   overflow: auto;
   margin-top: 40px;
+  transition: width .3s ease;
+  transition-delay: 0.3s;
 
   @media (max-width: 576px) {
     width: 100%;
@@ -92,19 +104,6 @@ body {
   color: #007bff;
   margin: 0 auto;
   text-align: center;
-}
-
-.div-edit {
-  background-color: #007bff;
-  th  {
-    border-top: transparent 0px;
-  }
-  td  {
-    border-top: transparent 0px;
-  }
-  textarea {
-    min-height: 100px;
-  }
 }
 
 .no-result {
