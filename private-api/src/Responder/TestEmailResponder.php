@@ -5,6 +5,7 @@ namespace PrivateApi\Responder;
 
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PrivateApi\Email\EmailContentBuilder;
 use PrivateApi\PrivateApi;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -14,6 +15,15 @@ class TestEmailResponder implements ResponderInterface
 
     public function respond(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
+        $emailContentBuilder = new EmailContentBuilder();
+
+        $emailContentBuilder
+            ->setTemplate('reset-password')
+            ->setTemplateParams([
+                'username' => 'Mimile38',
+                'resetPasswordUrl' => 'http://example.com/reset-password',
+            ]);
+
         $mail = new PHPMailer(true);
         $mail->isSMTP();
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
@@ -27,12 +37,12 @@ class TestEmailResponder implements ResponderInterface
 
         $mail->isHTML(true);
         $mail->Subject = 'Un email envoyé depuis la private API';
-        $mail->Body = 'Du contenu <b>En HTML</b> âvèc dés àcçënts';
-        $mail->AltBody = 'Du contenu en texte âvèc dés àcçënts';
+        $mail->Body = $emailContentBuilder->getHtmlContent();
+        $mail->AltBody = $emailContentBuilder->getTextContent();
 
         $mail->send();
 
-        $response->getBody()->write("Email sent!");
+        $response->getBody()->write('Email sent');
         return $response;
     }
 }

@@ -12,13 +12,7 @@ class HelloResponder implements ResponderInterface
 {
     public function respond (ServerRequestInterface $request, ResponseInterface $response, $args)
     {
-//        $response->getBody()->write("Hello world!");
-//        return $response;
-
-        $response->getBody()->write(Util::renderTemplate(__DIR__ . '/../Email/Template/reset-password.text-plain.php', [
-            'username' => 'Toto',
-            'resetPasswordUrl' => 'http://example.com/reset',
-        ]));
+        $response->getBody()->write("Hello world!");
         return $response;
     }
 }

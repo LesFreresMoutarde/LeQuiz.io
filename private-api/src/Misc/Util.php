@@ -7,6 +7,15 @@ namespace PrivateApi\Misc;
 class Util
 {
     /**
+     * @return string the Private API root path
+     */
+    public static function getAppBasePath(): string
+    {
+        $path = __DIR__ . '/..';
+        return realpath($path);
+    }
+
+    /**
      * @param string $templatePath the path to the PHP template to render
      * @param array $params the params (variables
      * @return string the rendered template
