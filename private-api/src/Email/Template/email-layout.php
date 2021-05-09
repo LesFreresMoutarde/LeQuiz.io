@@ -8,6 +8,9 @@ use PrivateApi\Email\EmailContentBuilder;
 
 ?>
 
+<?php
+if ($layoutPart === EmailContentBuilder::LAYOUT_PART_BEFORE_CONTENT) {
+?>
 <style>
     .lequiz-button:hover a {
         background-color: red !important;
@@ -15,10 +18,6 @@ use PrivateApi\Email\EmailContentBuilder;
     }
 </style>
 
-
-<?php
-if ($layoutPart === EmailContentBuilder::LAYOUT_PART_BEFORE_CONTENT) {
-?>
 <div style="background-color: #23C5EF; background-image: url('https://i.ibb.co/RQ0qzZ6/lequizio-bg.png'); background-repeat: repeat; margin: 0; padding: 0; width: 100%; color: #ffffff; font-family: Lato, 'helvetica neue', helvetica, arial, sans-serif; font-size: 17px;">
     <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border-spacing: 0px; padding: 0; margin: 0; width: 100%; height: 100%;">
         <tbody>
