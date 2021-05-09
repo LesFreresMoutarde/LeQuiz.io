@@ -31,7 +31,6 @@ class EmailContentBuilder
         echo $this->renderLayoutPart(self::LAYOUT_PART_BEFORE_CONTENT);
         echo Util::renderTemplate($this->getTemplatePath() . '/' . $this->templateName . self::TEMPLATE_NAME_SUFFIX, $this->templateParams);
         echo $this->renderLayoutPart(self::LAYOUT_PART_AFTER_CONTENT);
-        echo 'TODO FOOTER';
         echo $this->renderLayoutPart(self::LAYOUT_PART_AFTER_FOOTER);
 
         return ob_get_clean();
@@ -46,7 +45,7 @@ class EmailContentBuilder
         ob_start();
 
         echo Util::renderTemplate($this->getTemplatePath() . '/' . $this->templateName . self::TEMPLATE_NAME_TEXT_PLAIN_SUFFIX, $this->templateParams);
-        echo 'TODO FOOTER';
+        echo 'Ceci est un email automatique, veuillez ne pas y répondre.';
 
         return ob_get_clean();
     }

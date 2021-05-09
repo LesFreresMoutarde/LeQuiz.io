@@ -5,6 +5,7 @@ namespace PrivateApi\Responder;
 
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PrivateApi\Email\Email;
 use PrivateApi\Email\EmailContentBuilder;
 use PrivateApi\PrivateApi;
 use Psr\Http\Message\ResponseInterface;
@@ -24,23 +25,12 @@ class TestEmailResponder implements ResponderInterface
                 'resetPasswordUrl' => 'http://example.com/reset-password',
             ]);
 
-        $mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->CharSet = PHPMailer::CHARSET_UTF8;
-        $mail->Host = PrivateApi::$static->getConfig()->getEmailHost();
-        $mail->Port = PrivateApi::$static->getConfig()->getEmailPort();
-        $mail->Username = PrivateApi::$static->getConfig()->getEmailUsername();
-        $mail->Password = PrivateApi::$static->getConfig()->getEmailPassword();
-
-        $mail->setFrom('example@lequiz.io', 'leQuiz.io');
-        $mail->addAddress('user1@example.com', 'User1');
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Un email envoyé depuis la private API';
-        $mail->Body = $emailContentBuilder->getHtmlContent();
-        $mail->AltBody = $emailContentBuilder->getTextContent();
-
-        $mail->send();
+        $email = new Email();
+        $email->setSubject('Réinitialisez votre mot de passe leQuiz.io')
+            ->addTo('user1@lequiz.io', 'User1')
+            ->setHtmlContent($emailContentBuilder->getHtmlContent())
+            ->setTextContent($emailContentBuilder->getTextContent())
+            ->send();
 
         $response->getBody()->write('Email sent');
         return $response;
