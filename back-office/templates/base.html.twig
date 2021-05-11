@@ -9,6 +9,10 @@
         {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
     </head>
     <body>
+
+{#    {{ app.request.pathInfo }}#}
+{#    {{ app.request.uri }}#}
+        {{ navbar(app.request.pathInfo) }}
         {% block body %}{% endblock %}
     </body>
 </html>
