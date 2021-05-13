@@ -17,12 +17,13 @@ class TestEmailResponder implements ResponderInterface
         $emailContentBuilder = new EmailContentBuilder();
 
         $emailContentBuilder
-            ->setTemplate('reset-password')
+//            ->setTemplate('reset-password')
+            ->setTemplate('welcome')
             ->setTemplateParams([
                 'username' => 'Mimile38',
-                'resetPasswordUrl' => 'http://example.com/reset-password',
+//                'resetPasswordUrl' => 'http://example.com/reset-password',
             ])
-            ->addFooterSection(EmailContentBuilder::FOOTER_SECTION_DID_NOT_REQUESTED_PASSWORD_RESET)
+//            ->addFooterSection(EmailContentBuilder::FOOTER_SECTION_DID_NOT_REQUESTED_PASSWORD_RESET)
             ->addFooterSection(EmailContentBuilder::FOOTER_SECTION_AUTOMATIC_EMAIL_NO_REPLY);
 
         $email = new Email();
