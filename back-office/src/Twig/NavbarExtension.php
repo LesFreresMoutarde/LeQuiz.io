@@ -4,6 +4,7 @@
 namespace App\Twig;
 
 
+use App\Util\Util;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -19,6 +20,10 @@ class NavbarExtension extends AbstractExtension
 
     public function getNavbar(Environment $environment, string $route)
     {
-        echo $environment->render('navbar.html.twig', ['route' => $route]);
+
+        echo $environment->render('navbar.html.twig', [
+            'navItems' => Util::NAVBAR_ITEMS,
+            'route' => $route
+        ]);
     }
 }

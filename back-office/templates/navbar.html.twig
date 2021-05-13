@@ -1,3 +1,23 @@
 
-<h1>Navbar des familles !!!</h1>
-{{ route }}
+<div id="navbar" class="d-flex flex-column p-3 text-white bg-dark">
+    <a href="/" class="text-decoration-none d-flex justify-content-center">
+        <img id="logo" src="/assets/images/leQuizlogo.svg" alt="Logo" width="70%"/>
+    </a>
+    <hr>
+    {% for navItemKey, navItem in navItems %}
+        {{ navItemKey }}
+        {% if navItem.url is defined %}
+            {{ navItem.url }}
+        {% endif %}
+        {% if navItem.subLinks is defined %}
+            {% for navItemSubLinkKey, navItemSubLink in navItem.subLinks %}
+                {{ navItemSubLinkKey }}
+                {{ navItemSubLink.url }}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <p>Navbar des familles !!!</p>
+    <p>Logout</p>
+{#    {{ route }}#}
+{#    {{ navItems }}#}
+</div>

@@ -5,14 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
-
         {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
     </head>
     <body>
-
-{#    {{ app.request.pathInfo }}#}
-{#    {{ app.request.uri }}#}
-        {{ navbar(app.request.pathInfo) }}
-        {% block body %}{% endblock %}
+        <div id="global-container" class="container-fluid">
+            <div class="row" style="height: 100%">
+                <div class="col-lg-2 col-md-3 col-4">
+                    {#    {{ app.request.pathInfo }}#}
+                    {#    {{ app.request.uri }}#}
+                    {{ navbar(app.request.pathInfo) }}
+                </div>
+                <div class="col-lg-10 col-md-9 col-8 content-wrapper">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <footer>
+            C'est le footer mdr
+        </footer>
     </body>
 </html>
