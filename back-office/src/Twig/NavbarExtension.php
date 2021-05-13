@@ -20,7 +20,6 @@ class NavbarExtension extends AbstractExtension
 
     public function getNavbar(Environment $environment, string $route)
     {
-//        dd($route);
 
         echo $environment->render('navbar.html.twig', [
             'navItems' => Util::NAVBAR_ITEMS,
