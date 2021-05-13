@@ -1,8 +1,14 @@
 #navbar {
   height: 100%;
-  //background-color: blue;
 
-  p {
-    color: red;
+  .nav-link {
+    font-size: 1.1em;
   }
+
+  .hard-active{
+    color: #fff;
+    background-color: #0d6efd;
+  }
+
 }
+

@@ -8,57 +8,27 @@ class Util
 {
     const NAVBAR_ITEMS = [
         'Utilisateurs' => [
-            'url' => '/user',
-            'subLinks' => [
-                'Nouvel utilisateur' => [
-                    'url' => '/user/new'
-                ],
-                'Liste des utilisateurs' => [
-                    'url' => '/user'
-                ]
-            ]
+            'url' => '/users',
+            'label' => 'users',
         ],
         'Questions' => [
             'url' => '/questions',
-            'subLinks' => [
-                'Nouvelle question' => [
-                    'url' => '/questions/new'
-                ],
-                'Liste des questions' => [
-                    'url' => '/questions'
-                ]
-            ]
+            'label' => 'questions',
         ],
         'Catégories' => [
             'url' => '/categories',
-            'subLinks' => [
-                'Nouvelle catégorie' => [
-                    'url' => '/categories/new'
-                ],
-                'Liste des catégories' => [
-                    'url' => '/categories'
-                ]
-            ]
+            'label' => 'categories',
         ],
         'Type de questions' => [
             'url' => '/question-types',
-            'subLinks' => [
-                'Nouveau type' => [
-                    'url' => '/question-types'
-                ],
-                'Liste des types' => [
-                    'url' => '/question-types/new'
-                ]
-            ]
+            'label' => 'question-types',
         ],
-        'Autres' => [
-            'subLinks' => [
-                'Refresh tokens' => [
-                    'url' => '/refresh-tokens'
-                ]
-            ]
+        'Tokens' => [
+            'url' => '/refresh-tokens',
+            'label' => 'refresh-tokens',
         ],
         'Déconnexion' => [
+            'label' => 'logout',
             'url' => '/logout'
         ]
     ];
