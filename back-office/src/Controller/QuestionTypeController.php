@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/question-type')]
+#[Route('/question-types')]
 class QuestionTypeController extends AbstractController
 {
     #[Route('/', name: 'question_type_index', methods: ['GET'])]
