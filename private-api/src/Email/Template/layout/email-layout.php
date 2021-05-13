@@ -50,7 +50,17 @@ if ($layoutPart === EmailContentBuilder::LAYOUT_PART_BEFORE_CONTENT) {
 }
 
 if ($layoutPart === EmailContentBuilder::LAYOUT_PART_AFTER_CONTENT) {
+    ?>
+                                                </td>
+                                            </tr>
+    <?php
+}
+
+if ($layoutPart === EmailContentBuilder::LAYOUT_PART_AFTER_FOOTER) {
 ?>
+                                            <tr style="border-collapse: collapse">
+                                                <td style="margin: 0; padding-top: 25px; padding-left: 0; padding-right: 0; padding-bottom: 0;">
+                                                    <?php // Only to have a bottom margin ?>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -58,13 +68,8 @@ if ($layoutPart === EmailContentBuilder::LAYOUT_PART_AFTER_CONTENT) {
                                         <table style="border-collapse: collapse; border-spacing: 0px; width: 100%" cellspacing="0" cellpadding="0" align="center">
                                             <tbody>
                                             <tr style="border-collapse: collapse">
-                                                <td style="margin: 0; padding-top: 20px; padding-bottom: 20px; padding-left: 0; padding-right: 0;">
-<?php
-}
-
-if ($layoutPart === EmailContentBuilder::LAYOUT_PART_AFTER_FOOTER) {
-?>
-
+                                                <td style="margin: 0; padding-top: 50px; padding-bottom: 0px; padding-left: 0; padding-right: 0;">
+                                                    <?php // Only to have a bottom margin ?>
                                                 </td>
                                             </tr>
                                             </tbody>

@@ -28,17 +28,5 @@
             </span>
         </td>
     </tr>
-<!-- TODO MOVE THIS IN FOOTER SECTIONS    -->
-    <tr style="border-collapse: collapse;">
-        <td style="margin: 0; padding: 0; padding-top: 5px; font-size: 14px; color: #666">
-            Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de passe, veuillez ignorer cet email.
-        </td>
-    </tr>
-    <tr style="border-collapse: collapse;">
-        <td style="margin: 0; padding: 0; padding-top: 5px; font-size: 14px; color: #666">
-            Cet email vous a été envoyé automatiquement, merci de ne pas y répondre. Pour toute demande, vous pouvez nous contacter à <a href="mailto:contact@lequiz.io" style="color: #666 !important; text-decoration: underline;">contact@lequiz.io</a>.
-        </td>
-    </tr>
-<!-- END TODO   -->
     </tbody>
 </table>
