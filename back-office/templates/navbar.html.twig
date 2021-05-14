@@ -1,0 +1,25 @@
+<div id="navbar" class="d-flex flex-column p-3 text-white bg-dark">
+    <a href="/" class="text-decoration-none d-flex justify-content-center">
+        <img id="logo" src="/assets/images/leQuizlogo.svg" alt="Logo" width="70%"/>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto" data-controller="navbar">
+    {% for navItemKey, navItem in navItems %}
+        <li class="nav-item mb-1"
+            data-link-id="{{ navItem.label }}-link"
+            data-subLink-id="{{ navItem.label }}-subLinks"
+            data-action="mouseenter->navbar#showSubLinks mouseleave->navbar#hideSubLinks"
+        >
+            {% if navItem.label == route %}
+                <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-white hard-active" aria-current="page">
+                    {{ navItemKey }}
+                </a>
+            {% else %}
+                <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-white" aria-current="page">
+                    {{ navItemKey }}
+                </a>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,22 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  background-color: red; //TODO CHANGE
+  flex-shrink: 0;
+}
+
+#global-container {
+  flex: 1 0 auto;
+  padding-left: 0;
+}
+
+.content-wrapper {
+  padding: 20px;
+}
