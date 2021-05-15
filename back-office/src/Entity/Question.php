@@ -31,13 +31,6 @@ class Question extends EntityBase
      */
     private $id;
 
-//    /**
-//     * @var string|null
-//     *
-//     * @ORM\Column(name="difficulty", type="string", length=30, nullable=true)
-//     */
-//    private $difficulty;
-
     /**
      * @var bool
      *
@@ -132,18 +125,6 @@ class Question extends EntityBase
 
         return $this;
     }
-
-//    public function getDifficulty(): ?string
-//    {
-//        return $this->difficulty;
-//    }
-
-//    public function setDifficulty(?string $difficulty): self
-//    {
-//        $this->difficulty = $difficulty;
-//
-//        return $this;
-//    }
 
     public function getContent(): ?string
     {
