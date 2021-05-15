@@ -61,8 +61,9 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             defaultValue: DataTypes.UUIDV4
         },
-        difficulty: {
-            type: DataTypes.STRING(30),
+        isHardcore: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         },
         content: {
             type: DataTypes.TEXT,
@@ -87,7 +88,7 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Question',
         tableName: 'question',
         indexes: [{
-            fields: ['difficulty', 'status', 'customQuizId']
+            fields: ['isHardcore', 'status', 'customQuizId']
         }]
     });
     return Question;

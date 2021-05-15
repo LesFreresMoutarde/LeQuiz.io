@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="question",
  *     indexes={
- *         @ORM\Index(name="question_difficulty", columns={"difficulty"}),
+ *         @ORM\Index(name="question_is_hardcore", columns={"isHardcore"}),
  *         @ORM\Index(name="question_custom_quiz_id", columns={"customQuizId"}),
  *         @ORM\Index(name="question_status", columns={"status"})})
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -32,11 +32,11 @@ class Question extends EntityBase
     private $id;
 
     /**
-     * @var string|null
+     * @var bool
      *
-     * @ORM\Column(name="difficulty", type="string", length=30, nullable=true)
+     * @ORM\Column(name="`isHardcore`", type="boolean", nullable=false)
      */
-    private $difficulty;
+    private $isHardcore;
 
     /**
      * @var string
@@ -114,14 +114,14 @@ class Question extends EntityBase
         return $this->id;
     }
 
-    public function getDifficulty(): ?string
+    public function getIsHardcore(): ?bool
     {
-        return $this->difficulty;
+        return $this->isHardcore;
     }
 
-    public function setDifficulty(?string $difficulty): self
+    public function setIsHardcore(bool $isHardcore): self
     {
-        $this->difficulty = $difficulty;
+        $this->isHardcore = $isHardcore;
 
         return $this;
     }

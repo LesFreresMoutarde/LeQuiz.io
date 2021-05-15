@@ -3,7 +3,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Combien fait 1 + 4 ?",
       "status": "approved",
       "customQuizId": null,
@@ -43,7 +43,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "En quelle année, Mao a-t-il lancé sa révolution culturelle ?",
       "status": "approved",
       "customQuizId": null,
@@ -75,7 +75,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "En quelle année les États-Unis ont-ils pris part à la Première Guerre mondiale ?",
       "status": "approved",
       "customQuizId": null,
@@ -107,7 +107,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quels Jeux olympiques ont été supprimés à cause de la Seconde Guerre mondiale ?",
       "status": "approved",
       "customQuizId": null,
@@ -146,7 +146,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans les plaines de quel champ de bataille se dresse la Butte du Lion ?",
       "status": "approved",
       "customQuizId": null,
@@ -178,7 +178,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quelle ligne de défense française fut contournée par les Allemands en 1940 ?",
       "status": "approved",
       "customQuizId": null,
@@ -210,7 +210,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Le général Cambronne, qui commandait la vieille garde, eut une conduite héroïque à...",
       "status": "approved",
       "customQuizId": null,
@@ -242,7 +242,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Où a eu lieu le grand procès des criminels de guerre nazis ?",
       "status": "approved",
       "customQuizId": null,
@@ -285,7 +285,7 @@
           "name": "qcm"
         }
       ],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Qui fut vainqueur de la Guerre de Troie, conflit légendaire de la mythologie grecque ?",
       "status": "approved",
       "customQuizId": null,
@@ -322,7 +322,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "En quelle année la bataille de Waterloo a-t-elle eu lieu, à vingt kilomètres au sud de Bruxelles ?",
       "status": "approved",
       "customQuizId": null,
@@ -355,7 +355,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel basketteur américain a été champion NBA en 1998 pour la sixième fois de sa carrière ?",
       "status": "approved",
       "customQuizId": null,
@@ -388,7 +388,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans quelle pays est né le joueur de basket-ball professionnel Tony Parker ?",
       "status": "approved",
       "customQuizId": null,
@@ -428,7 +428,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Qui a été élu joueur de la décennie 2000 suite à un sondage du site officiel NBA ?",
       "status": "approved",
       "customQuizId": null,
@@ -461,7 +461,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel concours de dunks est organisé par la NBA durant le NBA All-Star Week-end ?",
       "status": "approved",
       "customQuizId": null,
@@ -494,7 +494,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel basketteur américain a réalisé en 2000 un 360 degrés inversé mythique ?",
       "status": "approved",
       "customQuizId": null,
@@ -527,7 +527,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel joueur de NBA se définit lui-même comme un « viking africain » ?",
       "status": "approved",
       "customQuizId": null,
@@ -560,7 +560,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel événement annuel majeur de la NBA est comparable à une bourse de joueurs ?",
       "status": "approved",
       "customQuizId": null,
@@ -593,7 +593,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Combien de titres de champion NBA Michael Jordan a-t-il obtenu ?",
       "status": "approved",
       "customQuizId": null,
@@ -626,7 +626,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Qui est le premier joueur français à avoir été sacré champion NBA ?",
       "status": "approved",
       "customQuizId": null,
@@ -659,7 +659,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Qui a été élu deux fois meilleur joueur de la NBA, en 2005 et 2006 ?",
       "status": "approved",
       "customQuizId": null,
@@ -692,7 +692,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel gagnant de la « Nouvelle Star », diffusée sur M6, est surnommé « La Tortue » ?",
       "status": "approved",
       "customQuizId": null,
@@ -725,7 +725,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "En 1991, quel tube Yannick Noah a-t-il associé à la victoire de la France en coupe Davis ?",
       "status": "approved",
       "customQuizId": null,
@@ -758,7 +758,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel chanteur prénommé Mathieu a émergé du succès remporté par les Linkup ?",
       "status": "approved",
       "customQuizId": null,
@@ -791,7 +791,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel est le style musical de l'album de Rohff, « La fierté des années » ?",
       "status": "approved",
       "customQuizId": null,
@@ -824,7 +824,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel Américano-Libanais est entré dans les charts avec « Life in Cartoon Motion » ?",
       "status": "approved",
       "customQuizId": null,
@@ -857,7 +857,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Qui a chanté au pied de …onnes le 10 juin 2000 ?",
       "status": "approved",
       "customQuizId": null,
@@ -890,7 +890,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Sous quel nom le rappeur et homme d'affaires américain Curtis Jackson fait-il carrière ?",
       "status": "approved",
       "customQuizId": null,
@@ -923,7 +923,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Avec quel chanteur le top model Heidi Klum a-t-elle été mariée durant sept ans ?",
       "status": "approved",
       "customQuizId": null,
@@ -956,7 +956,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel DJ a repris un titre des années 80 pour faire un tube avec « Living On Video » ?",
       "status": "approved",
       "customQuizId": null,
@@ -989,7 +989,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel chanteur a sorti « Musicology » puis « 3121 » deux ans plus tard ?",
       "status": "approved",
       "customQuizId": null,
@@ -1022,7 +1022,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans quel pays se situe le circuit de course automobile du Mans ?",
       "status": "approved",
       "customQuizId": null,
@@ -1055,7 +1055,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "À quel modèle de voiture ressemble le vieux tacot jaune que conduit Gaston Lagaffe ?",
       "status": "approved",
       "customQuizId": null,
@@ -1088,7 +1088,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel sport automobile consiste à accélérer le plus rapidement possible avec son véhicule ?",
       "status": "approved",
       "customQuizId": null,
@@ -1121,7 +1121,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Comment s'appelle le véhicule du personnage de bande dessinée Batman ?",
       "status": "approved",
       "customQuizId": null,
@@ -1154,7 +1154,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "De quand date le Duster, véhicule utilitaire sport vendu par la marque roumaine Dacia ?",
       "status": "approved",
       "customQuizId": null,
@@ -1187,7 +1187,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "En France, refuser une priorité peut vous coûter combien de points sur le permis ?",
       "status": "approved",
       "customQuizId": null,
@@ -1220,7 +1220,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quelle principauté accueille l'un des plus prestigieux Grand Prix de Formule 1 ?",
       "status": "approved",
       "customQuizId": null,
@@ -1253,7 +1253,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans le monde automobile, quel sigle correspond au Grand Tourisme Injection ?",
       "status": "approved",
       "customQuizId": null,
@@ -1286,7 +1286,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quelle société appartenant au groupe Belron « répare et remplace » votre pare-brise ?",
       "status": "approved",
       "customQuizId": null,
@@ -1319,7 +1319,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quelle firme automobile, filiale française de FIAT, a ensuite intégré le groupe Chrysler ?",
       "status": "approved",
       "customQuizId": null,
@@ -1352,7 +1352,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans quel jeu peux on voir des Chocobos ?",
       "status": "approved",
       "customQuizId": null,
@@ -1385,7 +1385,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Salamèche évolue en ",
       "status": "approved",
       "customQuizId": null,
@@ -1418,7 +1418,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Zelda est un jeu du genre",
       "status": "approved",
       "customQuizId": null,
@@ -1451,7 +1451,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Sur quelle plateforme le jeu Tekken est sorti en premier ?",
       "status": "approved",
       "customQuizId": null,
@@ -1484,7 +1484,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans quel jeu le personnage de Mario a-t-il été développé en premier ?",
       "status": "approved",
       "customQuizId": null,
@@ -1517,7 +1517,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "La série Fallout est la suite « spirituelle » de quel jeu ?",
       "status": "approved",
       "customQuizId": null,
@@ -1550,7 +1550,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Que signifie le nom de la serie GTA ?",
       "status": "approved",
       "customQuizId": null,
@@ -1583,7 +1583,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Le jeu Counter Strike dérive de quel autre jeu ?",
       "status": "approved",
       "customQuizId": null,
@@ -1616,7 +1616,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans Pac man qu'est ce qui hante le labyrinthe ?",
       "status": "approved",
       "customQuizId": null,
@@ -1649,7 +1649,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Dans la légende de Zelda, comment s'appelle le héros ?",
       "status": "approved",
       "customQuizId": null,
@@ -1682,7 +1682,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "input"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Qui est le compagnon de Batman ?",
       "status": "pending",
       "customQuizId": null,
@@ -1705,7 +1705,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "input"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel super héros ne se sépare jamais de son marteau forgé par les nains ",
       "status": "pending",
       "customQuizId": null,
@@ -1728,7 +1728,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel super-héros à la force surhumaine ressemble à un être de pierre ?",
       "status": "disapproved",
       "customQuizId": null,
@@ -1761,7 +1761,7 @@
     "model": "Question",
     "data": {
       "types": [{"name": "qcm"}],
-      "difficulty": "medium",
+      "isHardcore": false,
       "content": "Quel super-héros porte un costume inspiré du drapeau américain ?",
       "status": "disapproved",
       "customQuizId": null,
@@ -1787,11 +1787,125 @@
 
       },
       "categories": [{"name": "cinema"}]
-
+    }
+  },
+  {
+    "model": "Question",
+    "data": {
+      "types": [
+        {
+          "name": "input"
+        }
+      ],
+      "isHardcore": false,
+      "content": "Quel poète français est connu pour ses fables ?",
+      "status": "approved",
+      "customQuizId": null,
+      "answer": {
+        "answers": [
+          {
+            "is_good_answer": true,
+            "content": "Jean de La Fontaine"
+          },
+          {
+            "is_good_answer": true,
+            "content": "de La Fontaine"
+          },
+          {
+            "is_good_answer": true,
+            "content": "La Fontaine"
+          }
+        ]
+      },
+      "media": {
+      },
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
+    }
+  },
+  {
+    "model": "Question",
+    "data": {
+      "types": [
+        {
+          "name": "input"
+        }
+      ],
+      "isHardcore": true,
+      "content": "Quel élément chimique porte le numéro atomique 30 ?",
+      "status": "approved",
+      "customQuizId": null,
+      "answer": {
+        "answers": [
+          {
+            "is_good_answer": true,
+            "content": "le Zinc"
+          },
+          {
+            "is_good_answer": true,
+            "content": "Zinc"
+          },
+          {
+            "is_good_answer": true,
+            "content": "Zn"
+          }
+        ]
+      },
+      "media": {
+      },
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
+    }
+  },
+  {
+    "model": "Question",
+    "data": {
+      "types": [
+        {
+          "name": "input"
+        }
+      ],
+      "isHardcore": true,
+      "content": "Quel seigneur Albanais est vu comme un héros national suite à sa résistance aux Ottomans ?",
+      "status": "approved",
+      "customQuizId": null,
+      "answer": {
+        "answers": [
+          {
+            "is_good_answer": true,
+            "content": "Georges Castriote Skanderbeg"
+          },
+          {
+            "is_good_answer": true,
+            "content": "Georges Castriote"
+          },
+          {
+            "is_good_answer": true,
+            "content": "Castriote"
+          },
+          {
+            "is_good_answer": true,
+            "content": "Scanderbeg"
+          },
+          {
+            "is_good_answer": true,
+            "content": "Skanderberg"
+          }
+        ]
+      },
+      "media": {
+      },
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
     }
   }
-
-
-
-
 ]
