@@ -6,10 +6,13 @@ namespace PrivateApi\Responder\Email;
 
 use PrivateApi\Email\Email;
 use PrivateApi\Email\EmailContentBuilder;
+use PrivateApi\ParamsValidator\ParamsValidator;
+use PrivateApi\ParamsValidator\Validator\EmailValidator;
+use PrivateApi\ParamsValidator\Validator\RequiredValidator;
+use PrivateApi\ParamsValidator\Validator\StringValidator;
 use PrivateApi\Responder\ResponderInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Exception\HttpBadRequestException;
 
 class SendWelcomeEmailResponder implements ResponderInterface
 {
@@ -18,21 +21,28 @@ class SendWelcomeEmailResponder implements ResponderInterface
     {
         $post = $request->getParsedBody();
 
-        $requiredParams = [
-            'username',
-            'email',
-        ];
+        $paramsValidator = new ParamsValidator([
+            'username' => [
+                RequiredValidator::class,
+                StringValidator::class,
+            ],
+            'email' => [
+                RequiredValidator::class,
+                StringValidator::class,
+                EmailValidator::class,
+            ]
+        ], $post);
 
-        $missingParams = [];
+        $paramsValidator->validate();
 
-        foreach ($requiredParams as $requiredParam) {
-            if (!isset($post[$requiredParam])) {
-                $missingParams[] = $requiredParam;
-            }
-        }
+        if ($paramsValidator->hasErrors()) {
+            $response->getBody()->write(json_encode([
+                'errors' => $paramsValidator->getErrors()
+            ]));
 
-        if (!empty($missingParams)) {
-            throw new HttpBadRequestException($request, 'Missing parameters: ' . implode(', ', $missingParams));
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
         }
 
         $username = $post['username'];
@@ -52,13 +62,10 @@ class SendWelcomeEmailResponder implements ResponderInterface
             ->setSubject('Bienvenue sur leQuiz.io')
             ->setHtmlContent($emailContentBuilder->getHtmlContent())
             ->setTextContent($emailContentBuilder->getTextContent());
-        try {
-            $email->addTo($emailAddress, $username);
-            $email->send();
-        } catch (\Exception $e) {
-            dd($e); // TODO return a clean error
-        }
 
-        return $response;
+        $email->addTo($emailAddress, $username);
+        $email->send();
+
+        return $response; // TODO return clean response
     }
 }
