@@ -10,7 +10,7 @@ use PrivateApi\PrivateApi;
     <tbody>
     <tr style="border-collapse: collapse;">
         <td style="margin: 0; padding: 0; padding-bottom: 20px;">
-            Bonjour <?= $username ?>,
+            Bonjour <?= htmlentities($username) ?>,
         </td>
     </tr>
     <tr style="border-collapse: collapse;">
