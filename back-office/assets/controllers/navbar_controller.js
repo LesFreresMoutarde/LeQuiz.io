@@ -2,7 +2,7 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
 
-    showSubLinks = (e) => {
+    addActiveClass = (e) => {
         const linkId = e.currentTarget.getAttribute('data-link-id');
 
         if (document.querySelector(`#${linkId}`)) {
@@ -13,7 +13,7 @@ export default class extends Controller {
 
     }
 
-    hideSubLinks = (e) => {
+    removeActiveClass = (e) => {
         const linkId = e.currentTarget.getAttribute('data-link-id');
 
         if (document.querySelector(`#${linkId}`)) {

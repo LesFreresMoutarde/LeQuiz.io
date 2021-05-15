@@ -19,6 +19,7 @@ class QuestionController extends AbstractController
     #[Route('/', name: 'question_index', methods: ['GET'])]
     public function index(QuestionRepository $questionRepository): Response
     {
+//        dd($questionRepository->findAll());
         return $this->render('question/index.html.twig', [
             'questions' => $questionRepository->findAll(),
         ]);

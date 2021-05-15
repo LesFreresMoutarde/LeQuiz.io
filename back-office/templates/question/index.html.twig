@@ -5,16 +5,17 @@
 {% block body %}
     <h1>Question index</h1>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Types</th>
-                <th>Difficulty</th>
-                <th>Categories</th>
+{#                <th>Id</th>#}
                 <th>Content</th>
                 <th>Answer</th>
+                <th>Types</th>
+                <th>Categories</th>
+                <th>Difficulty</th>
                 <th>Status</th>
+
                 <th>Media</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
@@ -24,74 +25,82 @@
         <tbody>
         {% for question in questions %}
             <tr>
-                <td>{{ question.id }}</td>
+{#                <td>{{ question.id }}</td>#}
+                <td>{{ question.content }}</td>
+                <td>
+                    {% for type in question.types %}
+                        {% if type == 'input' %}
+                            {% for key, jsonField in question.answer %}
+                                {% if key == 'answers' %}
+                                    {% for answer in jsonField %}
+                                        {% if loop.first %}
+                                            {{ answer.content }}
+                                        {% else %}
+                                            {{ answer.content }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for additional in jsonField %}
+                                        {{ additional }}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% elseif type == 'qcm' %}
+
+                        {% endif %}
+                    {% endfor %}
+
+
+                    {% for key, field in question.answer %}
+                        {% if key == 'answers' %}
+                            {% for answer in field %}
+                                {% for type in question.types %}
+                                    {% if type == 'input' %}
+                                        {% if loop.first %}
+                                            UNE FOIS
+                                        {% endif %}
+                                    {% elseif type == 'qcm' %}
+                                        {% if answer.is_good_answer %}
+                                            {{ answer.content }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+
+{#                                {% if answer.is_good_answer %}#}
+{#                                    {{ loop.first }}#}
+{#                                    {{ answer.content }}#}
+{#                                {% endif %}#}
+                            {% endfor %}
+                            SEE MORE
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td>{% for type in question.types %}
                         {{ type }}
                     {% endfor %}
                 </td>
-                <td>{{ question.difficulty }}</td>
                 <td>{% for category in question.categories %}
                         {{ category }}
                     {% endfor %}
                 </td>
-                <td>{{ question.content }}</td>
-{#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
-                <td>
-                    <table>
-                        {% for key, field in question.answer %}
-                            {% if key == 'answers' %}
-                                <tr>
-                                    <th>answers</th>
-                                    <td>
-                                        <table>
-                                            {% for answer in field %}
-                                                <tr>
-                                                    {% for key, answerField in answer %}
-                                                        <td>
-                                                            {% if key == 'content' %}
-                                                                {{ answerField }}
-                                                            {% elseif key == 'is_good_answer' and answerField %}
-                                                                (Bonne réponse)
-                                                            {% endif %}
-                                                        </td>
-                                                    {% endfor %}
-                                                </tr>
-                                            {% endfor %}
-                                        </table>
-                                    </td>
-                                </tr>
-                            {% elseif key == 'additional' %}
-                                <tr>
-                                    <th>additional</th>
-                                    <td>
-                                        <table>
-                                            {% for additional in field %}
-                                                {% for key, additionalField in additional %}
-                                                    <tr>
-                                                        <td>
-                                                            {{ key }} : {{ additionalField }}
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                            {% endfor %}
-                                        </table>
-                                    </td>
-                                </tr>
-                            {% endif %}
-                        {% endfor  %}
-                    </table>
-                </td>
+                <td>{{ question.difficulty }}</td>
                 <td>{{ question.status }}</td>
+{#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
+
+
 {#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
-                <td>
-                    <table>
-                        {% for key, field in question.media %}
-                            <tr>
-                                <th>{{ key }} </th>
-                                <td>{{ field }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
+                <td>{% if question.media|length > 0 %}
+                    OUI
+                    {% endif %}
+
+{#                    <table>#}
+{#                        {% for key, field in question.media %}#}
+{#                            <tr>#}
+{#                                <th>{{ key }} </th>#}
+{#                                <td>{{ field }}</td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+{#                    </table>#}
                 </td>
                 <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
