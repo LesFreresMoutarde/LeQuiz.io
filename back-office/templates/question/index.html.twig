@@ -10,7 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Types</th>
-                <th>Difficulty</th>
+                <th>isHardcore</th>
                 <th>Categories</th>
                 <th>Content</th>
                 <th>Answer</th>
@@ -29,7 +29,7 @@
                         {{ type }}
                     {% endfor %}
                 </td>
-                <td>{{ question.difficulty }}</td>
+                <td>{{ question.isHardcore }}</td>
                 <td>{% for category in question.categories %}
                         {{ category }}
                     {% endfor %}

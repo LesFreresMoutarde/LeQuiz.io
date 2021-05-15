@@ -9,8 +9,9 @@ module.exports = {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4
             },
-            difficulty: {
-                type: Sequelize.STRING(30),
+            isHardcore: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
             },
             content: {
                 type: Sequelize.TEXT,
@@ -41,7 +42,7 @@ module.exports = {
                 type: Sequelize.DATE,
             }
         });
-        await queryInterface.addIndex('question', ['difficulty']);
+        await queryInterface.addIndex('question', ['isHardcore']);
         await queryInterface.addIndex('question', ['status']);
         await queryInterface.addIndex('question', ['customQuizId']);
     },
