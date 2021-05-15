@@ -8,6 +8,9 @@ use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
 use App\Util\Util;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +20,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     #[Route('/', name: 'question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository): Response
+    public function index(Request $request, EntityManagerInterface $em, PaginatorInterface $paginator): Response
     {
-//        dd($questionRepository->findAll());
+        $page = null !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
+
+        $query = $em->createQuery('SELECT q FROM App\Entity\Question q');
+        $questions = $paginator->paginate($query, $page, 10);
+
         return $this->render('question/index.html.twig', [
-            'questions' => $questionRepository->findAll(),
+            'questions' => $questions
         ]);
     }
 
@@ -69,7 +76,7 @@ class QuestionController extends AbstractController
 
     }
 
-    #[Route('/{id}', name: 'question_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'question_show', methods: ['GET'])]
     public function show(Question $question): Response
     {
         return $this->render('question/show.html.twig', [
@@ -81,7 +88,7 @@ class QuestionController extends AbstractController
     //       - JSON FOR MEDIA UPLOADING
     //       - Try/Catch Handling when toastr Ready
 
-    #[Route('/{id}/edit', name: 'question_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'question_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,
                          Question $question,
                          CategoryRepository $categoryRepository,

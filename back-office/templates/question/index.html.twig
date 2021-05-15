@@ -23,66 +23,42 @@
         <tbody>
         {% for question in questions %}
             <tr>
-{#                <td>{{ question.id }}</td>#}
-                <td>{{ question.content }}</td>
+                <td>{{ question.getContent() }}</td>
                 <td>
-                    {% for type in question.types %}
-                        {% if type == 'input' %}
-                            {% for key, jsonField in question.answer %}
-                                {% if key == 'answers' %}
-                                    {% for answer in jsonField %}
-                                        {% if loop.first %}
-                                            {{ answer.content }}
-                                        {% else %}
-                                            {{ answer.content }}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    {% for additional in jsonField %}
-                                        {{ additional }}
-                                    {% endfor %}
-                                {% endif %}
+                    {% if 'input' in question.getTypes() %}
+                        {{ question.answer.answers[0].content }}
+                        <div style="background-color: red">
+                            {% for answer in question.answer.answers %}
+                                {{ answer.content }}
                             {% endfor %}
-                        {% elseif type == 'qcm' %}
-
-                        {% endif %}
-                    {% endfor %}
-
-
-                    {% for key, field in question.answer %}
-                        {% if key == 'answers' %}
-                            {% for answer in field %}
-                                {% for type in question.types %}
-                                    {% if type == 'input' %}
-                                        {% if loop.first %}
-                                            UNE FOIS
-                                        {% endif %}
-                                    {% elseif type == 'qcm' %}
-                                        {% if answer.is_good_answer %}
-                                            {{ answer.content }}
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-
-{#                                {% if answer.is_good_answer %}#}
-{#                                    {{ loop.first }}#}
-{#                                    {{ answer.content }}#}
-{#                                {% endif %}#}
+                            {% if answer.additionnal is defined %}
+                                <a href="#">Infos supplémentaires</a>
+                            {% endif %}
+                        </div>
+                    {% elseif 'qcm' in question.getTypes() %}
+                        {% for answer in question.answer.answers %}
+                            {% if answer.is_good_answer %}
+                                {{ answer.content }}
+                            {% endif %}
+                        {% endfor %}
+                        <div style="background-color: red">
+                            {% for answer in question.answer.answers %}
+                                {{ answer.content }} {% if answer.is_good_answer  %} (Bonne réponse) {% endif %}
                             {% endfor %}
-                            SEE MORE
-                        {% endif %}
+                        </div>
+                    {% endif %}
+                    SEE MORE
+                </td>
+                <td>{% for type in question.getTypes() %}
+                        {{ type.getLabel() }}
                     {% endfor %}
                 </td>
-                <td>{% for type in question.types %}
-                        {{ type }}
+                <td>{% for category in question.getCategories() %}
+                        {{ category.getLabel() }}
                     {% endfor %}
                 </td>
-                <td>{% for category in question.categories %}
-                        {{ category }}
-                    {% endfor %}
-                </td>
-                <td>{{ question.isHardcore }}</td>
-                <td>{{ question.status }}</td>
+                <td>{{ question.getIsHardcore() }}</td>
+                <td>{{ question.getStatus() }}</td>
 {#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
 
 
@@ -114,6 +90,8 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="navigation">
+        {{ knp_pagination_render(questions) }}
+    </div>
     <a href="{{ path('question_new') }}">Create new</a>
 {% endblock %}
