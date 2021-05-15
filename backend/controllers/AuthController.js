@@ -679,12 +679,10 @@ L'équipe LeQuiz.io`,
         formData.append('username', user.username);
         formData.append('email', user.email);
 
-        const response = await fetch(url, {
+        await fetch(url, {
             method: 'POST',
             body: formData,
         });
-
-        console.log(await response.json());
     }
 }
 
