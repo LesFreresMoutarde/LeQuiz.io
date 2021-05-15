@@ -5,6 +5,7 @@ namespace PrivateApi;
 
 
 use PrivateApi\Config\Config;
+use PrivateApi\Misc\Util;
 use PrivateApi\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -54,25 +55,26 @@ class PrivateApi
     {
         return function (
             ServerRequestInterface $request,
-            \Throwable $exception,
+            \Throwable $error,
             bool $displayErrorDetails,
             bool $logErrors,
             bool $logErrorDetails,
             ?LoggerInterface $logger = null,
         ) {
-            $isHttpException = $exception instanceof HttpException;
+            $isHttpException = $error instanceof HttpException;
             $defaultStatusCode = 500;
+            $defaultErrorMessage = 'Internal server error.';
 
-            $statusCode = $isHttpException ? $exception->getCode() : $defaultStatusCode;
+            $statusCode = $isHttpException ? $error->getCode() : $defaultStatusCode;
+            $errorMessage = $isHttpException ? $error->getMessage() : $defaultErrorMessage;
 
             $responsePayload = [
                 'status' => $statusCode,
-                // TODO IF RANDOM EXCEPTIONS ARE CAUGHT BY THIS ERROR HANDLER
-                'error' => $exception->getMessage(),
+                'error' => $errorMessage,
             ];
 
             if ($displayErrorDetails) {
-                $responsePayload['stackTrace'] = $exception->getTrace();
+                $responsePayload['details'] = Util::formatThrowableAsArray($error);
             }
 
             $jsonEncodeFlags = JSON_UNESCAPED_UNICODE;

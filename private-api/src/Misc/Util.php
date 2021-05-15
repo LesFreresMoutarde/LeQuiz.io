@@ -6,6 +6,21 @@ namespace PrivateApi\Misc;
 
 class Util
 {
+    public static function formatThrowableAsArray(\Throwable $e): array
+    {
+        $array = [
+            'error' => $e::class,
+            'message' => $e->getMessage(),
+            'stackTrace' => $e->getTrace(),
+        ];
+
+        if (!is_null($e->getPrevious())) {
+            $array['previous'] = Util::formatThrowableAsArray($e->getPrevious());
+        }
+
+        return $array;
+    }
+
     /**
      * @return string the Private API root path
      */
