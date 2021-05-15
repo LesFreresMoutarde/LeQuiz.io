@@ -1,4 +1,6 @@
 const argon2 = require('argon2');
+const fetch = require('node-fetch');
+const FormData = require('form-data');
 const jwt = require('jsonwebtoken');
 const { Op, QueryTypes } = require('sequelize');
 const EmailUtil = require("../util/EmailUtil");
@@ -328,6 +330,8 @@ class AuthController extends MainController {
         await this.saveRefreshToken(newRefreshToken, refreshTokenExpirationDate, user.id);
 
         this.statusCode = 201;
+
+        this.sendWelcomeEmailToUser(user);
 
         this.response = {
             accessToken: newAccessToken,
@@ -666,6 +670,21 @@ Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de pa
 Cordialement,
 L'équipe LeQuiz.io`,
         });
+    }
+
+    sendWelcomeEmailToUser = async (user) => {
+        const url = `${env.privateApiUrl}/email/send-welcome-email`;
+
+        const formData = new FormData();
+        formData.append('username', user.username);
+        formData.append('email', user.email);
+
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+
+        console.log(await response.json());
     }
 }
 
