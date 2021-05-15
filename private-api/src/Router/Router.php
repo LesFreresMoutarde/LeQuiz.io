@@ -4,6 +4,7 @@
 namespace PrivateApi\Router;
 
 
+use PrivateApi\Responder\Email\SendWelcomeEmailResponder;
 use PrivateApi\Responder\HelloResponder;
 use PrivateApi\Responder\ResponderInterface;
 use PrivateApi\Responder\TestEmailResponder;
@@ -23,6 +24,8 @@ class Router
         // TODO use a config array for all routes ?
         $this->registerRoute('/hello-world', HelloResponder::class);
         $this->registerRoute('/test-email', TestEmailResponder::class);
+
+        $this->registerRoute('/email/send-welcome-email', SendWelcomeEmailResponder::class, 'POST');
     }
 
     private function registerRoute(string $uri, string $responderClass, array|string $methods = null): RouteInterface
