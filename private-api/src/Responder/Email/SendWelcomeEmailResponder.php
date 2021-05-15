@@ -6,6 +6,7 @@ namespace PrivateApi\Responder\Email;
 
 use PrivateApi\Email\Email;
 use PrivateApi\Email\EmailContentBuilder;
+use PrivateApi\Misc\Util;
 use PrivateApi\ParamsValidator\ParamsValidator;
 use PrivateApi\ParamsValidator\Validator\EmailValidator;
 use PrivateApi\ParamsValidator\Validator\RequiredValidator;
@@ -36,13 +37,9 @@ class SendWelcomeEmailResponder implements ResponderInterface
         $paramsValidator->validate();
 
         if ($paramsValidator->hasErrors()) {
-            $response->getBody()->write(json_encode([
+            return Util::getJsonResponse($response, [
                 'errors' => $paramsValidator->getErrors()
-            ]));
-
-            return $response
-                ->withHeader('Content-Type', 'application/json')
-                ->withStatus(400);
+            ], 400);
         }
 
         $username = $post['username'];
@@ -66,6 +63,6 @@ class SendWelcomeEmailResponder implements ResponderInterface
         $email->addTo($emailAddress, $username);
         $email->send();
 
-        return $response; // TODO return clean response
+        return Util::getJsonResponse($response);
     }
 }
