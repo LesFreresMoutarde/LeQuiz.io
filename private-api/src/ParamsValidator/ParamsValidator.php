@@ -19,7 +19,7 @@ class ParamsValidator
      * @param array $validators format :
      * [
      *     'someParam' => SomeValidator::class,
-     *     'anotherParam => [
+     *     'anotherParam' => [
      *         FirstValidator::class,
      *         SecondValidator::class,
      *     ],
