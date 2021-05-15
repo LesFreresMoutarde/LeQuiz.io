@@ -3,6 +3,8 @@
 return [
     'devMode' => true, // Must be false in production (default false if not set)
 
+    'frontUrl' => 'http://localhost',
+
     'dbHost' => 'database',
     'dbName' => 'lequiz-io',
     'dbUser' => 'admin',

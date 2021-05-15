@@ -20,6 +20,8 @@ class Config
     private string $emailUsername;
     private string $emailPassword;
 
+    private string $frontUrl;
+
     private bool $devMode = false;
 
     public function __construct()
@@ -72,6 +74,11 @@ class Config
         return $this->emailUsername;
     }
 
+    public function getFrontUrl(): string
+    {
+        return $this->frontUrl;
+    }
+
     public function isDevMode(): bool
     {
         return $this->devMode;
@@ -102,6 +109,7 @@ class Config
         $this->loadEmailConfigFromArray($configArray);
 
         $devModeParam = 'devMode';
+        $frontUrlParam = 'frontUrl';
 
         if (isset($configArray[$devModeParam])) {
             if (!is_bool($configArray[$devModeParam])) {
@@ -109,6 +117,14 @@ class Config
             }
 
             $this->devMode = $configArray[$devModeParam];
+        }
+
+        if (isset($configArray[$frontUrlParam])) {
+            if (!is_string($configArray[$frontUrlParam])) {
+                throw new \RuntimeException("'{$frontUrlParam}' parameter in configuration file must be a string");
+            }
+
+            $this->frontUrl = $configArray[$frontUrlParam];
         }
     }
 
