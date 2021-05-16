@@ -4,10 +4,33 @@
 
 {% block body %}
     <h1>Question index</h1>
-
+    <div data-controller="question">
+        <input type="text" data-question-target="search" data-action="question#onInput" />
+        <select name="" id="" data-question-target="category" data-action="question#onChange">
+                <option value="all">Toutes</option>
+            {% for category in categories %}
+                <option value="{{ category }}">{{ category.getLabel() }}</option>
+            {% endfor %}
+        </select>
+        <select name="" id="" data-question-target="questionType" data-action="question#onChange">
+            <option value="all">Tous</option>
+            {% for type in questionTypes %}
+                <option value="{{ type }}">{{ type.getLabel() }}</option>
+            {% endfor %}
+        </select>
+        <select name="" id="" data-question-target="status" data-action="question#onChange">
+            <option value="all">Tous</option>
+            {% for status in statuses %}
+                <option value="{{ status }}">{{ status }}</option>
+            {% endfor %}
+        </select>
+        <button data-action="question#test">Test</button>
+    </div>
     <table class="table table-hover">
         <thead>
             <tr>
+
+                <th>Uuid</th>
                 <th>Content</th>
                 <th>Answer</th>
                 <th>Types</th>
@@ -21,8 +44,10 @@
             </tr>
         </thead>
         <tbody>
+        {% block questions %}
         {% for question in questions %}
             <tr>
+                <td>{{ question.getId() }}</td>
                 <td>{{ question.getContent() }}</td>
                 <td>
                     {% if 'input' in question.getTypes() %}
@@ -93,5 +118,6 @@
     <div class="navigation">
         {{ knp_pagination_render(questions) }}
     </div>
+    {% endblock %}
     <a href="{{ path('question_new') }}">Create new</a>
 {% endblock %}

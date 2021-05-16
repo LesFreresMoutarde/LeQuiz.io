@@ -27,6 +27,18 @@ class Util {
         return param;
     }
 
+    static hasParam = (url) => {
+        if (url.split('?')[1]) return true;
+
+        return false;
+    }
+
+    static hasGivenParam = (url, paramName) => {
+        if (!Util.hasParam(url)) return false;
+
+        return !!url.split('?')[1].split('&').filter(param => param.includes(`${paramName}=`))[0];
+    }
+
     static getFilteredData = async (route, searchValue) => {
 
         const headers = new Headers();
@@ -36,9 +48,11 @@ class Util {
 
         const response = await fetch(`/${route}?search=${searchValue}`, {headers});
 
-        if (!response.ok) throw new Error();
-
-        return await response.text();
+        // if (!response.ok) throw new Error();
+        console.log("tt")
+        const responseData =  await response.text();
+        console.log('dd')
+        return responseData;
     }
 }
 
