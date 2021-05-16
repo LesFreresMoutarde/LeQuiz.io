@@ -3,32 +3,63 @@
 namespace App\Controller;
 
 use App\Entity\Question;
-use App\Repository\CategoryRepository;
+use App\Manager\CrudManager;
 use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
-use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 #[Route('/questions')]
 class QuestionController extends AbstractController
 {
     #[Route('/', name: 'question_index', methods: ['GET'])]
-    public function index(Request $request, EntityManagerInterface $em, PaginatorInterface $paginator): Response
+    public function index(
+        Request $request,
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        Environment $environment,
+        CrudManager $crudManager
+    ): Response
     {
-        $page = null !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
 
-        $query = $em->createQuery('SELECT q FROM App\Entity\Question q');
-        $questions = $paginator->paginate($query, $page, 10);
+        $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
+
+        $search = $request->query->get('search') !== '' ? $request->query->get('search') : null;
+
+
+        $questions = $this->getFilteredQuestions($page, $search, $em, $paginator);
+
+        $categories = $crudManager->getCategories();
+        $questionTypes = $crudManager->getQuestionTypes();
+
+
+        if ($request->headers->has('X-Requested-With')) {
+
+            $response = new Response();
+
+            $template = $environment->load('question/index.html.twig');
+
+            $response->headers->set('Content-Type', 'text/plain');
+
+            $response->setStatusCode(Response::HTTP_OK);
+
+            $response->setContent($template->renderBlock('questions', ['questions' => $questions]));
+
+            $response->send();
+        }
+
 
         return $this->render('question/index.html.twig', [
-            'questions' => $questions
+            'questions' => $questions,
+            'categories' => $categories,
+            'questionTypes' => $questionTypes,
+            'statuses' => Enums::STATUSES
         ]);
     }
 
@@ -146,6 +177,23 @@ class QuestionController extends AbstractController
         }
 
         return $this->redirectToRoute('question_index');
+    }
+
+    private function getFilteredQuestions(int $page, ?string $searchValue, EntityManagerInterface $em, PaginatorInterface $paginator)
+    {
+        // id, content, answer->>answers answer->>additional,
+        // isHardcore
+        // Faire une concaténation des params
+        if (!is_null($searchValue)) {
+            $queryText = 'SELECT q from App\Entity\Question';
+        } else {
+            $queryText = 'SELECT q from App\Entity\Question WHERE u.id LIKE :searchValue';
+        }
+
+//        $query = $em->createQuery('SELECT q FROM App\Entity\Question q WHERE JSON_GET_TEXT(q.answer, \'answers\') LIKE \'%La Fontaine%\'');
+        $query = $em->createQuery('SELECT q FROM App\Entity\Question q');
+
+        return $paginator->paginate($query, $page, 10);
     }
 
 
@@ -351,8 +399,10 @@ class QuestionController extends AbstractController
 
             if (preg_match('/^additional-/', $formInputName)) {
 
+                //TODO Corriger fistKey par firstKey
                 list($fistKey, $midKey, $lastKey) = $parsedFormInput;
 
+                //TODO Corriger fistKey par firstKey
                 if ($formInput !== '') $answers[$fistKey][$midKey][$lastKey] = $formInput;
             }
         }
