@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import Util from "./util_controller";
 
 export default class extends Controller {
 
@@ -9,11 +10,14 @@ export default class extends Controller {
     connect = () => {
         console.log('connect');
         console.log(window.location.href);
-        this.page = this.getCurrentPage(window.location.href);
+        // this.page = this.getCurrentPage(window.location.href);
+        this.page = Util.getParam(window.location.href, 'page', 1, 'number');
+        //Util.getParam();
     }
 
     test = () => {
         console.log(this.page);
+        // console.log(Util.getParam(window.location.href, 'search', null, 'string'))
     }
 
     onInput = (e) => {
@@ -32,12 +36,9 @@ export default class extends Controller {
     }
 
     getFilteredQuestions = async () => {
-        const headers = new Headers();
-        headers.append('X-Requested-With', 'fetch');
 
-        const response = await fetch(`/questions?search=${this.searchTarget.value}`, {headers});
-        console.log(await response.text());
-
+        const responseData = await Util.getFilteredData('questions', this.searchTarget.value);
+        console.log(responseData);
     }
 
 
