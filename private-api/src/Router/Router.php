@@ -4,6 +4,7 @@
 namespace PrivateApi\Router;
 
 
+use PrivateApi\Responder\Email\SendResetPasswordEmailResponder;
 use PrivateApi\Responder\Email\SendWelcomeEmailResponder;
 use PrivateApi\Responder\HelloResponder;
 use PrivateApi\Responder\ResponderInterface;
@@ -26,6 +27,7 @@ class Router
         $this->registerRoute('/test-email', TestEmailResponder::class);
 
         $this->registerRoute('/email/send-welcome-email', SendWelcomeEmailResponder::class, 'POST');
+        $this->registerRoute('/email/send-reset-password-email', SendResetPasswordEmailResponder::class, 'POST');
     }
 
     private function registerRoute(string $uri, string $responderClass, array|string $methods = null): RouteInterface
