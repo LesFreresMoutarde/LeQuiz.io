@@ -38,19 +38,59 @@ export default class extends Controller {
 
             window.history.pushState({}, "", newUrl);
 
+            // Se servir des valeurs targets pour envoyer les infos de search, catégories, types et statut selectionnés.
             const filteredData = await Util.getFilteredData('questions', this.searchTarget.value);
 
             console.log(filteredData)
 
             clearTimeout(this.timer);
             this.timer = null;
-        },100)
+        },150)
+    }
+
+    onChange = (e) => {
+        const field = e.target.getAttribute('data-question-target')
+        let keyValueField;
+        let newUrl;
+        switch (field) {
+            case 'category':
+                keyValueField = {[field]: this.categoryTarget.value};
+                newUrl = this.categoryTarget.value !== 'all'
+                    ?
+                    this.addParam(window.location.href, field, this.categoryTarget.value)
+                    :
+                    this.removeParam(window.location.href, field);
+                window.history.pushState({}, "", newUrl);
+                break;
+            case 'questionType':
+                keyValueField = {[field]: this.questionTypeTarget.value};
+                newUrl = this.questionTypeTarget.value !== 'all'
+                    ?
+                    this.addParam(window.location.href, field, this.questionTypeTarget.value)
+                    :
+                    this.removeParam(window.location.href, field);
+                window.history.pushState({}, "", newUrl);
+                break;
+            case 'status':
+                keyValueField = {[field]: this.statusTarget.value};
+                newUrl = this.statusTarget.value !== 'all'
+                    ? this.addParam(window.location.href, field, this.statusTarget.value)
+                    :
+                    this.removeParam(window.location.href, field);
+                window.history.pushState({}, "", newUrl);
+                break;
+            default:
+                throw new Error();
+        }
+
+        console.log(keyValueField);
     }
 
     addParam = (url, paramName, value) => {
 
         if (Util.hasParam(url)) {
             if (Util.hasGivenParam(url, paramName)) {
+                // Le virer de l'URL si value == 'all'
                 const baseURL = url.split('?')[0];
 
                 const splitURL = url.split('?')[1].split('&');
@@ -64,34 +104,38 @@ export default class extends Controller {
                         splitURL.splice(index, 1);
                 });
 
+
                 return `${baseURL}?${splitURL.join('&')}`;
             }
-
+            // Ne pas le mettre si value == 'all'
             return `${url}&${paramName}=${value}`;
         }
-
+        // Ne pas le mettre si value == 'all'
         return `${url}?${paramName}=${value}`;
     }
 
-    onChange = (e) => {
-        const field = e.target.getAttribute('data-question-target')
-        let keyValueField;
+    removeParam = (url, paramName) => {
 
-        switch (field) {
-            case 'category':
-                keyValueField = {[field]: this.categoryTarget.value};
-                break;
-            case 'questionType':
-                keyValueField = {[field]: this.questionTypeTarget.value};
-                break;
-            case 'status':
-                keyValueField = {[field]: this.statusTarget.value};
-                break;
-            default:
-                throw new Error();
+        if (Util.hasGivenParam(url, paramName)) {
+            const baseURL = url.split('?')[0];
+
+            const splitURL = url.split('?')[1].split('&');
+
+            const paramInURL = splitURL.filter(param => param.includes(`${paramName}=`))[0];
+
+            splitURL.forEach((param, index) => {
+                if (param === paramInURL)
+                    splitURL.splice(index, 1)
+            })
+
+            console.log('splitUR', splitURL);
+
+            return splitURL.length > 0 ? `${baseURL}?${splitURL.join('&')}` : baseURL;
         }
 
-        console.log(keyValueField);
+        return url;
     }
+
+
 
 }
