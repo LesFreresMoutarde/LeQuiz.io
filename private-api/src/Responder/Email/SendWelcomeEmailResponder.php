@@ -9,6 +9,7 @@ use PrivateApi\Email\EmailContentBuilder;
 use PrivateApi\Misc\Util;
 use PrivateApi\ParamsValidator\ParamsValidator;
 use PrivateApi\ParamsValidator\Validator\EmailValidator;
+use PrivateApi\ParamsValidator\Validator\MaxLengthValidator;
 use PrivateApi\ParamsValidator\Validator\RequiredValidator;
 use PrivateApi\ParamsValidator\Validator\StringValidator;
 use PrivateApi\Responder\ResponderInterface;
@@ -26,6 +27,7 @@ class SendWelcomeEmailResponder implements ResponderInterface
             'username' => [
                 RequiredValidator::class,
                 StringValidator::class,
+                [MaxLengthValidator::class, 30],
             ],
             'email' => [
                 RequiredValidator::class,

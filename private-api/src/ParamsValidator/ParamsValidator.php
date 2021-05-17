@@ -18,10 +18,10 @@ class ParamsValidator
      * ParamsValidator constructor.
      * @param array $validators format :
      * [
-     *     'someParam' => SomeValidator::class,
+     *     'someParam' => [SomeValidator::class],
      *     'anotherParam' => [
      *         FirstValidator::class,
-     *         SecondValidator::class,
+     *         [SecondValidator::class, 'someValidatorParam'],
      *     ],
      * ]
      * @param array|null $params the params to validate
@@ -36,13 +36,11 @@ class ParamsValidator
             }
 
             if (!is_array($paramValidators)) {
-                $paramValidators = [$paramValidators];
+                throw new \InvalidArgumentException('Param validators must be an array');
             }
 
             foreach ($paramValidators as $paramValidator) {
-                $this->ensureValidator($paramValidator);
-
-                $this->validators[$paramName][] = new $paramValidator($paramName, $this->params[$paramName]);
+                $this->registerValidator($paramName, $paramValidator);
             }
         }
     }
@@ -87,5 +85,24 @@ class ParamsValidator
         if (!$reflection->implementsInterface(ValidatorInterface::class)) {
             throw new \InvalidArgumentException('Validator class must implement interface ' . ValidatorInterface::class);
         }
+    }
+
+    /**
+     * Registers a validator for a param
+     * @param string $paramName the param to which the validator should be assigned
+     * @param array|string $paramValidator the validator class or an array containing the validator class and its settings
+     */
+    private function registerValidator(string $paramName, array|string $paramValidator)
+    {
+        if (is_array($paramValidator)) {
+            $validatorSettings = $paramValidator;
+            $paramValidator = array_shift($validatorSettings);
+        } else {
+            $validatorSettings = [];
+        }
+
+        $this->ensureValidator($paramValidator);
+
+        $this->validators[$paramName][] = new $paramValidator($paramName, $this->params[$paramName], ...$validatorSettings);
     }
 }
