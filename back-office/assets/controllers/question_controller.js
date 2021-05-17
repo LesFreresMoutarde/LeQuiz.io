@@ -8,7 +8,6 @@ export default class extends Controller {
     // SORTABLE_FIELDS = ['search', 'category', 'questionType', 'status'];
     page;
     timer;
-
     connect = () => {
         console.log('connect');
         console.log(window.location.href);
@@ -24,6 +23,7 @@ export default class extends Controller {
         console.log("search", Util.hasGivenParam(window.location.href, "search"))
         console.log("page hasParam", Util.hasParam(window.location.href));
         console.log(this.addParam(window.location.href, 'toto', 'momo'))
+        console.log(this.buildParam());
         // console.log(Util.getParam(window.location.href, 'search', null, 'string'))
     }
 
@@ -39,19 +39,22 @@ export default class extends Controller {
             window.history.pushState({}, "", newUrl);
 
             // Se servir des valeurs targets pour envoyer les infos de search, catégories, types et statut selectionnés.
-            const filteredData = await Util.getFilteredData('questions', this.searchTarget.value);
+            const fieldsToSort = this.buildParam();
+            const filteredData = await Util.getFilteredData('questions', fieldsToSort);
 
-            console.log(filteredData)
+            // console.log(filteredData)
 
             clearTimeout(this.timer);
             this.timer = null;
         },150)
     }
 
-    onChange = (e) => {
+    onChange = async (e) => {
         const field = e.target.getAttribute('data-question-target')
         let keyValueField;
         let newUrl;
+        let fieldsToSort;
+        let filteredData;
         switch (field) {
             case 'category':
                 keyValueField = {[field]: this.categoryTarget.value};
@@ -61,6 +64,8 @@ export default class extends Controller {
                     :
                     this.removeParam(window.location.href, field);
                 window.history.pushState({}, "", newUrl);
+                fieldsToSort = this.buildParam();
+                filteredData = await Util.getFilteredData('questions', fieldsToSort);
                 break;
             case 'questionType':
                 keyValueField = {[field]: this.questionTypeTarget.value};
@@ -70,6 +75,8 @@ export default class extends Controller {
                     :
                     this.removeParam(window.location.href, field);
                 window.history.pushState({}, "", newUrl);
+                fieldsToSort = this.buildParam();
+                filteredData = await Util.getFilteredData('questions', fieldsToSort);
                 break;
             case 'status':
                 keyValueField = {[field]: this.statusTarget.value};
@@ -78,6 +85,8 @@ export default class extends Controller {
                     :
                     this.removeParam(window.location.href, field);
                 window.history.pushState({}, "", newUrl);
+                fieldsToSort = this.buildParam();
+                filteredData = await Util.getFilteredData('questions', fieldsToSort);
                 break;
             default:
                 throw new Error();
@@ -136,6 +145,22 @@ export default class extends Controller {
         return url;
     }
 
+    buildParam = () => {
+        let param = {};
 
+        if (this.searchTarget.value !== '')
+            param['search'] = this.searchTarget.value;
+        if (this.categoryTarget.value !== 'all')
+            param['category'] = this.categoryTarget.value;
+        if (this.questionTypeTarget.value !== 'all')
+            param['questionType'] = this.questionTypeTarget.value;
+        if (this.statusTarget.value !== 'all')
+            param['status'] = this.statusTarget.value;
+
+        return !param.hasOwnProperty('search')
+        && !param.hasOwnProperty('category')
+        && !param.hasOwnProperty('questionType')
+        && !param.hasOwnProperty('status') ? null : param
+    }
 
 }

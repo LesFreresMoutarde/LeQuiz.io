@@ -1,3 +1,4 @@
+import * as url from "url";
 
 class Util {
 
@@ -39,19 +40,32 @@ class Util {
         return !!url.split('?')[1].split('&').filter(param => param.includes(`${paramName}=`))[0];
     }
 
-    static getFilteredData = async (route, searchValue) => {
+    static getFilteredData = async (route, param) => {
 
         const headers = new Headers();
         headers.append('X-Requested-With', 'fetch');
 
-        if (!searchValue) return;
+        let urlToFetch = `/${route}`;
+        console.log("param...", param);
 
-        const response = await fetch(`/${route}?search=${searchValue}`, {headers});
+        if (param) {
+            urlToFetch += '?'
 
-        // if (!response.ok) throw new Error();
-        console.log("tt")
+            for (const paramName in param) {
+                if (param.hasOwnProperty(paramName))
+                    urlToFetch += `${paramName}=${param[paramName]}&`;
+            }
+            urlToFetch = urlToFetch.slice(0, urlToFetch.length -1);
+        }
+
+        console.log("final URL To Fetch", urlToFetch);
+
+        const response = await fetch(urlToFetch, {headers});
+        //
+        if (!response.ok) throw new Error();
+        // console.log("tt")
         const responseData =  await response.text();
-        console.log('dd')
+        // console.log('dd')
         return responseData;
     }
 }
