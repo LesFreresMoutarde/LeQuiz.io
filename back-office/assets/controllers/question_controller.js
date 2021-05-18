@@ -42,7 +42,8 @@ export default class extends Controller {
             const fieldsToSort = this.buildParam();
             const filteredData = await Util.getFilteredData('questions', fieldsToSort);
 
-            // console.log(filteredData)
+            console.log("reponse",filteredData);
+            document.querySelector('#questions-block').innerHTML = filteredData;
 
             clearTimeout(this.timer);
             this.timer = null;
@@ -66,6 +67,7 @@ export default class extends Controller {
                 window.history.pushState({}, "", newUrl);
                 fieldsToSort = this.buildParam();
                 filteredData = await Util.getFilteredData('questions', fieldsToSort);
+                document.querySelector('#questions-block').innerHTML = filteredData;
                 break;
             case 'questionType':
                 keyValueField = {[field]: this.questionTypeTarget.value};
@@ -77,6 +79,7 @@ export default class extends Controller {
                 window.history.pushState({}, "", newUrl);
                 fieldsToSort = this.buildParam();
                 filteredData = await Util.getFilteredData('questions', fieldsToSort);
+                document.querySelector('#questions-block').innerHTML = filteredData;
                 break;
             case 'status':
                 keyValueField = {[field]: this.statusTarget.value};
@@ -87,6 +90,7 @@ export default class extends Controller {
                 window.history.pushState({}, "", newUrl);
                 fieldsToSort = this.buildParam();
                 filteredData = await Util.getFilteredData('questions', fieldsToSort);
+                document.querySelector('#questions-block').innerHTML = filteredData;
                 break;
             default:
                 throw new Error();

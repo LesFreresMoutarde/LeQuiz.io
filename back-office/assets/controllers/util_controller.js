@@ -64,9 +64,9 @@ class Util {
         //
         if (!response.ok) throw new Error();
         // console.log("tt")
-        const responseData =  await response.text();
+        return await response.text();
         // console.log('dd')
-        return responseData;
+        // return responseData;
     }
 }
 

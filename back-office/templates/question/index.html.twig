@@ -26,97 +26,98 @@
         </select>
         <button data-action="question#test">Test</button>
     </div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-
-                <th>Uuid</th>
-                <th>Content</th>
-                <th>Answer</th>
-                <th>Types</th>
-                <th>Categories</th>
-                <th>isHardcore</th>
-                <th>Status</th>
-                <th>Media</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% block questions %}
-        {% for question in questions %}
-            <tr>
-                <td>{{ question.getId() }}</td>
-                <td>{{ question.getContent() }}</td>
-                <td>
-                    {% if 'input' in question.getTypes() %}
-                        {{ question.answer.answers[0].content }}
-                        <div style="background-color: red">
+    {% block questions %}
+    <div id="questions-block">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Uuid</th>
+                    <th>Content</th>
+                    <th>Answer</th>
+                    <th>Types</th>
+                    <th>Categories</th>
+                    <th>isHardcore</th>
+                    <th>Status</th>
+                    <th>Media</th>
+                    <th>CreatedAt</th>
+                    <th>UpdatedAt</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.getId() }}</td>
+                    <td>{{ question.getContent() }}</td>
+                    <td>
+                        {% if 'input' in question.getTypes() %}
+                            {{ question.answer.answers[0].content }}
+                            <div style="background-color: red">
+                                {% for answer in question.answer.answers %}
+                                    {{ answer.content }}
+                                {% endfor %}
+                                {% if answer.additionnal is defined %}
+                                    <a href="#">Infos supplémentaires</a>
+                                {% endif %}
+                            </div>
+                        {% elseif 'qcm' in question.getTypes() %}
                             {% for answer in question.answer.answers %}
-                                {{ answer.content }}
+                                {% if answer.is_good_answer %}
+                                    {{ answer.content }}
+                                {% endif %}
                             {% endfor %}
-                            {% if answer.additionnal is defined %}
-                                <a href="#">Infos supplémentaires</a>
-                            {% endif %}
-                        </div>
-                    {% elseif 'qcm' in question.getTypes() %}
-                        {% for answer in question.answer.answers %}
-                            {% if answer.is_good_answer %}
-                                {{ answer.content }}
-                            {% endif %}
+                            <div style="background-color: red">
+                                {% for answer in question.answer.answers %}
+                                    {{ answer.content }} {% if answer.is_good_answer  %} (Bonne réponse) {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        SEE MORE
+                    </td>
+                    <td>{% for type in question.getTypes() %}
+                            {{ type.getLabel() }}
                         {% endfor %}
-                        <div style="background-color: red">
-                            {% for answer in question.answer.answers %}
-                                {{ answer.content }} {% if answer.is_good_answer  %} (Bonne réponse) {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    SEE MORE
-                </td>
-                <td>{% for type in question.getTypes() %}
-                        {{ type.getLabel() }}
-                    {% endfor %}
-                </td>
-                <td>{% for category in question.getCategories() %}
-                        {{ category.getLabel() }}
-                    {% endfor %}
-                </td>
-                <td>{{ question.getIsHardcore() }}</td>
-                <td>{{ question.getStatus() }}</td>
-{#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
+                    </td>
+                    <td>{% for category in question.getCategories() %}
+                            {{ category.getLabel() }}
+                        {% endfor %}
+                    </td>
+                    <td>{{ question.getIsHardcore() }}</td>
+                    <td>{{ question.getStatus() }}</td>
+    {#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
 
 
-{#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
-                <td>{% if question.media|length > 0 %}
-                    OUI
-                    {% endif %}
+    {#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
+                    <td>{% if question.media|length > 0 %}
+                        OUI
+                        {% endif %}
 
-{#                    <table>#}
-{#                        {% for key, field in question.media %}#}
-{#                            <tr>#}
-{#                                <th>{{ key }} </th>#}
-{#                                <td>{{ field }}</td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
-{#                    </table>#}
-                </td>
-                <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>
-                    <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
-                    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="navigation">
-        {{ knp_pagination_render(questions) }}
+    {#                    <table>#}
+    {#                        {% for key, field in question.media %}#}
+    {#                            <tr>#}
+    {#                                <th>{{ key }} </th>#}
+    {#                                <td>{{ field }}</td>#}
+    {#                            </tr>#}
+    {#                        {% endfor %}#}
+    {#                    </table>#}
+                    </td>
+                    <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
+                    <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
+                    <td>
+                        <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
+                        <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(questions) }}
+        </div>
     </div>
     {% endblock %}
     <a href="{{ path('question_new') }}">Create new</a>
