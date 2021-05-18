@@ -44,7 +44,7 @@ class SendResetPasswordEmailResponder implements ResponderInterface
         $paramsValidator->validate();
 
         if ($paramsValidator->hasErrors()) {
-            return Util::getJsonResponse($response, [
+            return Util::writeJsonResponse($response, [
                 'errors' => $paramsValidator->getErrors()
             ], 400);
         }
@@ -73,6 +73,6 @@ class SendResetPasswordEmailResponder implements ResponderInterface
         $email->addTo($emailAddress, $username);
         $email->send();
 
-        return Util::getJsonResponse($response);
+        return Util::writeJsonResponse($response);
     }
 }

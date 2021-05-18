@@ -38,7 +38,7 @@ class Util
      * @param int $status the HTTP status code
      * @return ResponseInterface
      */
-    public static function getJsonResponse(ResponseInterface $response, mixed $responseData = null, int $status = 200): ResponseInterface
+    public static function writeJsonResponse(ResponseInterface $response, mixed $responseData = null, int $status = 200): ResponseInterface
     {
         if (!is_null($responseData)) {
             $response->getBody()->write(json_encode($responseData));
