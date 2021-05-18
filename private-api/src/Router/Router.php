@@ -6,9 +6,7 @@ namespace PrivateApi\Router;
 
 use PrivateApi\Responder\Email\SendResetPasswordEmailResponder;
 use PrivateApi\Responder\Email\SendWelcomeEmailResponder;
-use PrivateApi\Responder\HelloResponder;
 use PrivateApi\Responder\ResponderInterface;
-use PrivateApi\Responder\TestEmailResponder;
 use Slim\App;
 use Slim\Interfaces\RouteInterface;
 
@@ -23,9 +21,6 @@ class Router
     public function registerRoutes()
     {
         // TODO use a config array for all routes ?
-        $this->registerRoute('/hello-world', HelloResponder::class);
-        $this->registerRoute('/test-email', TestEmailResponder::class);
-
         $this->registerRoute('/email/send-welcome-email', SendWelcomeEmailResponder::class, 'POST');
         $this->registerRoute('/email/send-reset-password-email', SendResetPasswordEmailResponder::class, 'POST');
     }
