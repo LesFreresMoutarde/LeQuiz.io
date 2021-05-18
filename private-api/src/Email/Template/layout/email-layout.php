@@ -13,8 +13,8 @@ if ($layoutPart === EmailContentBuilder::LAYOUT_PART_BEFORE_CONTENT) {
 ?>
 <style>
     .lequiz-button:hover a {
-        background-color: red !important;
-        border-color: red !important;
+        background-color: #75e3ff !important;
+        border-color: #75e3ff !important;
     }
 </style>
 
