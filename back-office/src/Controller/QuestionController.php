@@ -187,49 +187,49 @@ class QuestionController extends AbstractController
 //        dd(empty($params));
         $queryString = 'SELECT q from App\Entity\Question q';
         $whereParts = [];
+        $joinParts = [];
         $paramsReplacements = [];
+
         if (!empty($params)) {
             foreach ($params as $paramName => $value) {
                dump($paramName);
                 switch ($paramName) {
                     case 'search':
-                        dump('yy');
                         $whereParts[] = 'LOWER(q.content) LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'answers\'))'.
                         ' LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'additional\')) LIKE LOWER(:search)';
                         $paramsReplacements['search'] = '%'.$value.'%';
                         break;
                     case 'category':
-                        dump('tt');
-                        $whereParts[] = '(LOWER(q.categories) LIKE LOWER(:category))';
+//                        $whereParts[] = '(LOWER(q.categories) LIKE LOWER(:category))';
+                        $joinParts[] = 'JOIN q.categories c WITH c.name LIKE LOWER(:category)';
                         $paramsReplacements['category'] = '%'.$value.'%';
                         break;
                     case 'questionType':
-                        $whereParts[] = '(LOWER(q.questionTypes) LIKE LOWER(:questionType))';
-                        $paramsReplacements['questionTypes'] = '%'.$value.'%';
+//                        $whereParts[] = '(LOWER(q.questionTypes) LIKE LOWER(:questionType))';
+                        $joinParts[] = 'JOIN q.types t WITH t.name LIKE LOWER(:questionType)';
+                        $paramsReplacements['questionType'] = '%'.$value.'%';
                         break;
                     case 'status':
-                        dump('hh');
                         $whereParts[] = 'LOWER(q.status) LIKE LOWER(:status)';
                         $paramsReplacements['status'] = '%'.$value.'%';
                         break;
                 }
             }
 
-//            dd($whereParts);
-//            dd($paramsReplacements);
             $whereString = implode(' AND ', $whereParts);
-            $queryString .= ' WHERE '.$whereString;
-//            dd($queryString);
-        }
-//        dd('toto');
-//        $query = $em->createQuery('SELECT q FROM App\Entity\Question q WHERE q.status LIKE \'%approved%\'');
-        $query = $em->createQuery($queryString);
+            $joinString = implode(' ', $joinParts);
 
-//        $query->setParameter('pending', '$français$');
-//        dd($paramsReplacements);
+            $queryString .= !empty($whereString) > 0
+                ? ' '.$joinString.' WHERE '.$whereString
+                : ' '.$joinString;
+
+        }
+
+        $query = $em->createQuery($queryString);
         $query->setParameters($paramsReplacements);
-        dd($query->getResult());
-        dd($paginator->paginate($query, $page, 10));
+
+//        dd($query->getResult());
+//        dd($paginator->paginate($query, $page, 10));
         return $paginator->paginate($query, $page, 10);
     }
 
