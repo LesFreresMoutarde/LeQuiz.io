@@ -61,6 +61,17 @@ services:
       - ./back-office:/app
     command: sh -c "composer install && npm install --verbose && npm run watch"
 
+  private-api:
+    image: webdevops/php-nginx:8.0
+    working_dir: /app
+    restart: always
+    environment:
+      WEB_DOCUMENT_ROOT: /app/www
+    volumes:
+      - ./private-api:/app
+    ports:
+      - 9000:80
+
   mailhog:
     image: mailhog/mailhog
     ports:

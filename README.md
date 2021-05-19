@@ -44,6 +44,10 @@ Some values are dependent on the execution environment of the application, like 
 
 You have to create those `env.js` files from the `env.default.js` templates in each directory described above, and fill in the values.
 
+### Install dependencies
+
+TODO
+
 ### Run project
 
 ```bash
@@ -59,6 +63,7 @@ You should access to:
 
 - Application frontend: [http://127.0.0.1](http://127.0.0.1)
 - Application backend (API): [http://127.0.0.1:3000](http://127.0.0.1:3000)
+- Common internal API: [http://127.0.0.1:9000](http://127.0.0.1:9000)
 - Mailhog: [http://127.0.0.1:8025](http://127.0.0.1:8025)
 - adminer: [http://127.0.0.1:8080](http://127.0.0.1:8080)
   - system: PostgreSQL

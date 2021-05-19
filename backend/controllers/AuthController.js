@@ -1,4 +1,6 @@
 const argon2 = require('argon2');
+const fetch = require('node-fetch');
+const FormData = require('form-data');
 const jwt = require('jsonwebtoken');
 const { Op, QueryTypes } = require('sequelize');
 const EmailUtil = require("../util/EmailUtil");
@@ -329,6 +331,8 @@ class AuthController extends MainController {
 
         this.statusCode = 201;
 
+        this.sendWelcomeEmailToUser(user);
+
         this.response = {
             accessToken: newAccessToken,
             refreshToken: newRefreshToken,
@@ -637,34 +641,29 @@ class AuthController extends MainController {
     }
 
     sendResetPasswordEmailToUser = async (user) => {
-        await EmailUtil.sendEmailFromNoreply({
-            to: `"${user.username}" <${user.email}>`,
-            subject: 'Réinitialisez votre mot de passe',
-            html:
-`<p>
-    Bonjour ${user.username},<br>
-    Vous avez demandé la réinitialisation du mot de passe de votre compte LeQuiz.io.
-    Pour définir un nouveau mot de passe, veuillez
-    <strong><a href="${env.frontUrl}/reset-password/${user.passwordResetToken}" target="_blank">cliquer ici</a></strong>.
-</p>
-<p>
-    Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de passe, veuillez ignorer ce message.
-</p>
-<p>
-    Cordialement,<br>
-    L'équipe LeQuiz.io
-</p>`,
-            text:
-`Bonjour ${user.username},
-Vous avez demandé la réinitialisation du mot de passe de votre compte LeQuiz.io.
-Pour définir un nouveau mot de passe, veuillez suivre le lien ci-dessous :
+        const url = `${env.privateApiUrl}/email/send-reset-password-email`;
 
-${env.frontUrl}/reset-password/${user.passwordResetToken}
+        const formData = new FormData();
+        formData.append('username', user.username);
+        formData.append('email', user.email);
+        formData.append('resetPasswordUrl', `${env.frontUrl}/reset-password/${user.passwordResetToken}`);
 
-Si vous n'êtes pas à l'origine de la demande de réinitialisation de mot de passe, veuillez ignorer ce message.
+        await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+    }
 
-Cordialement,
-L'équipe LeQuiz.io`,
+    sendWelcomeEmailToUser = async (user) => {
+        const url = `${env.privateApiUrl}/email/send-welcome-email`;
+
+        const formData = new FormData();
+        formData.append('username', user.username);
+        formData.append('email', user.email);
+
+        await fetch(url, {
+            method: 'POST',
+            body: formData,
         });
     }
 }
