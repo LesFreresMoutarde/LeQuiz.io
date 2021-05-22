@@ -1,5 +1,7 @@
 import { Controller } from "stimulus";
 import Util from "./util_controller";
+import TomSelect from 'tom-select'
+import 'tom-select/dist/css/tom-select.bootstrap5.css'
 
 export default class extends Controller {
 
@@ -8,22 +10,101 @@ export default class extends Controller {
     // SORTABLE_FIELDS = ['search', 'category', 'questionType', 'status'];
     page;
     timer;
+
+    categorySelect;
+    categories = [];
+    questionTypes = [];
     connect = () => {
         console.log('connect');
         console.log(window.location.href);
         // this.page = this.getCurrentPage(window.location.href);
         this.page = Util.getParam(window.location.href, 'page', 1, 'number');
         //Util.getParam();
+
+        //TODO L'HYDRATER SI URL DONNE INFO ?
+        this.categorySelect = new TomSelect('#category', {
+            plugins: {
+                remove_button: {},
+                clear_button: {},
+                no_active_items:{},
+            },
+            persist: false
+        });
+
+        this.categorySelect.on("item_add", (value, item) => {
+            console.log("new item", value, item); // value qui nous intéresse
+           this.onChange2(value, 'category', 'add')
+        })
+
+        this.categorySelect.on('', () => {
+            console.log("change triggered");
+        })
+
+    }
+
+    onChange2 = (value, field, action) => {
+        switch (action) {
+            case 'add':
+                if (value === 'all') this.clearField(field);
+                this.addCategory(value)
+                break;
+            case 'remove':
+                break;
+            case 'clear':
+                break;
+            default:
+                throw new Error();
+        }
+
+        // switch (field) {
+        //     case 'category':
+        //         action === 'add' ? this.addCategory(value)
+        //         break;
+        //     case 'questionType':
+        //         break;
+        //     case 'status':
+        //         break;
+        //     default:
+        //         throw new Error();
+        // }
+    }
+
+    addCategory = (category) => {
+        const allValueIndex = this.categories.indexOf('all');
+
+        if (allValueIndex !== -1)
+            this.categories.splice(allValueIndex, 1);
+
+        this.categories.push(category);
+    }
+
+    clearField = (field) => {
+        switch (field) {
+                case 'category':
+                    this.categories = [];
+                    break;
+                case 'questionType':
+                    break;
+                case 'status':
+                    break;
+                default:
+                    throw new Error();
+        }
+    }
+
+    toto = () => {
+        console.log('C est toto !')
     }
 
     test = () => {
-        console.log(this.page);
-        console.log("toto", Util.hasGivenParam(window.location.href, "toto"))
-        console.log("page", Util.hasGivenParam(window.location.href, "page"))
-        console.log("search", Util.hasGivenParam(window.location.href, "search"))
-        console.log("page hasParam", Util.hasParam(window.location.href));
-        console.log(this.addParam(window.location.href, 'toto', 'momo'))
-        console.log(this.buildParam());
+        console.log("categories", this.categories);
+        // console.log(this.page);
+        // console.log("toto", Util.hasGivenParam(window.location.href, "toto"))
+        // console.log("page", Util.hasGivenParam(window.location.href, "page"))
+        // console.log("search", Util.hasGivenParam(window.location.href, "search"))
+        // console.log("page hasParam", Util.hasParam(window.location.href));
+        // console.log(this.addParam(window.location.href, 'toto', 'momo'))
+        // console.log(this.buildParam());
         // console.log(Util.getParam(window.location.href, 'search', null, 'string'))
     }
 
@@ -58,18 +139,21 @@ export default class extends Controller {
         let filteredData;
         switch (field) {
             case 'category':
-                keyValueField = {[field]: this.categoryTarget.value};
-                newUrl = this.categoryTarget.value !== 'all'
-                    ?
-                    this.addParam(window.location.href, field, this.categoryTarget.value)
-                    :
-                    this.removeParam(window.location.href, field);
-                window.history.pushState({}, "", newUrl);
-                fieldsToSort = this.buildParam();
-                filteredData = await Util.getFilteredData('questions', fieldsToSort);
-                document.querySelector('#questions-block').innerHTML = filteredData;
+                console.log("categoryTarget", this.categoryTarget.value);
+                // keyValueField = {[field]: this.categoryTarget.value};
+                // newUrl = this.categoryTarget.value !== 'all'
+                //     ?
+                //     this.addParam(window.location.href, field, this.categoryTarget.value)
+                //     :
+                //     this.removeParam(window.location.href, field);
+                // window.history.pushState({}, "", newUrl);
+                // fieldsToSort = this.buildParam();
+                // filteredData = await Util.getFilteredData('questions', fieldsToSort);
+                // document.querySelector('#questions-block').innerHTML = filteredData;
                 break;
-            case 'questionType':
+
+
+                case 'questionType':
                 keyValueField = {[field]: this.questionTypeTarget.value};
                 newUrl = this.questionTypeTarget.value !== 'all'
                     ?

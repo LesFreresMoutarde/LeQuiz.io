@@ -4,21 +4,34 @@
 
 {% block body %}
     <h1>Question index</h1>
-    <div data-controller="question">
-        <input type="text" data-question-target="search" data-action="question#onInput" />
-        <select name="" id="" data-question-target="category" data-action="question#onChange">
-                <option value="all">Toutes</option>
-            {% for category in categories %}
-                <option value="{{ category }}">{{ category.getLabel() }}</option>
-            {% endfor %}
-        </select>
-        <select name="" id="" data-question-target="questionType" data-action="question#onChange">
+    <div data-controller="question" >
+        <div class="row">
+            <div class="col-3">
+                <input type="text" placeholder="uuid" class="form-control"/>
+            </div>
+            <div class="col-3">
+                <input type="text" data-question-target="search" data-action="question#onInput" placeholder="question ou réponse" class="form-control"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <select name="select-arrow" id="category" data-question-target="category" data-action="question#onChange" multiple>
+                    <option value="all" selected>Toutes</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category.getLabel() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <select name="" id="" data-question-target="questionType" data-action="question#onChange" class="form-select">
             <option value="all">Tous</option>
             {% for type in questionTypes %}
                 <option value="{{ type }}">{{ type.getLabel() }}</option>
             {% endfor %}
         </select>
-        <select name="" id="" data-question-target="status" data-action="question#onChange">
+        <select name="" id="" data-question-target="status" data-action="question#onChange" class="form-select">
             <option value="all">Tous</option>
             {% for status in statuses %}
                 <option value="{{ status }}">{{ status }}</option>
