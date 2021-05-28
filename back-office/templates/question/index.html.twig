@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Question index</h1>
-    <div data-controller="question" >
+    <div data-controller="question">
         <div class="row">
             <div class="col-3">
                 <input type="text" placeholder="uuid" class="form-control"/>
@@ -15,17 +15,46 @@
         </div>
         <div class="row">
             <div class="col-3">
-                <select name="select-arrow" id="category" data-question-target="category" data-action="question#onChange" multiple>
-                    <option value="all" selected>Toutes</option>
+                <div class="form-select d-flex justify-content-start"
+                     data-action="click->question#showCheckboxes" data-checkboxes-for="categories">
+                    <span class="placeholder">Catégories</span>
+                </div>
+                <div id="categories" class="checkboxes-div d-none">
+                    <div class="mb-2">
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->question#pickAll"
+                                data-checkboxes-for="categories"
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->question#unpickAll"
+                                data-checkboxes-for="categories"
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between">
                     {% for category in categories %}
-                        <option value="{{ category }}">{{ category.getLabel() }}</option>
+                        <label class="form-check-label mb-1">
+                            <input type="checkbox" data-checkboxes="categories" class="form-check-input" value="{{ category.getName() }}">
+                            {{ category.getLabel() }}
+                        </label>
                     {% endfor %}
-                </select>
+                    </div>
+                </div>
+
+{#                <select class="form-select"  size="3" name="select-arrow" id="categories" data-question-target="category" data-action="question#onChange" multiple>#}
+{#                    <option value="all" selected>Toutes</option>#}
+{#                    {% for category in categories %}#}
+{#                        <option value="{{ category }}">{{ category.getLabel() }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
             </div>
 
         </div>
 
-        <select name="" id="" data-question-target="questionType" data-action="question#onChange" class="form-select">
+        <select name="" id="" data-question-target="questionTypes" data-action="question#onChange" class="form-select">
             <option value="all">Tous</option>
             {% for type in questionTypes %}
                 <option value="{{ type }}">{{ type.getLabel() }}</option>

@@ -11,89 +11,14 @@ export default class extends Controller {
     page;
     timer;
 
-    categorySelect;
-    categories = [];
+    categoriesSelect;
+    categories = ['all']; //TODO Handling in connect();
     questionTypes = [];
     connect = () => {
         console.log('connect');
         console.log(window.location.href);
         // this.page = this.getCurrentPage(window.location.href);
         this.page = Util.getParam(window.location.href, 'page', 1, 'number');
-        //Util.getParam();
-
-        //TODO L'HYDRATER SI URL DONNE INFO ?
-        this.categorySelect = new TomSelect('#category', {
-            plugins: {
-                remove_button: {},
-                clear_button: {},
-                no_active_items:{},
-            },
-            persist: false
-        });
-
-        this.categorySelect.on("item_add", (value, item) => {
-            console.log("new item", value, item); // value qui nous intéresse
-           this.onChange2(value, 'category', 'add')
-        })
-
-        this.categorySelect.on('', () => {
-            console.log("change triggered");
-        })
-
-    }
-
-    onChange2 = (value, field, action) => {
-        switch (action) {
-            case 'add':
-                if (value === 'all') this.clearField(field);
-                this.addCategory(value)
-                break;
-            case 'remove':
-                break;
-            case 'clear':
-                break;
-            default:
-                throw new Error();
-        }
-
-        // switch (field) {
-        //     case 'category':
-        //         action === 'add' ? this.addCategory(value)
-        //         break;
-        //     case 'questionType':
-        //         break;
-        //     case 'status':
-        //         break;
-        //     default:
-        //         throw new Error();
-        // }
-    }
-
-    addCategory = (category) => {
-        const allValueIndex = this.categories.indexOf('all');
-
-        if (allValueIndex !== -1)
-            this.categories.splice(allValueIndex, 1);
-
-        this.categories.push(category);
-    }
-
-    clearField = (field) => {
-        switch (field) {
-                case 'category':
-                    this.categories = [];
-                    break;
-                case 'questionType':
-                    break;
-                case 'status':
-                    break;
-                default:
-                    throw new Error();
-        }
-    }
-
-    toto = () => {
-        console.log('C est toto !')
     }
 
     test = () => {
@@ -106,6 +31,61 @@ export default class extends Controller {
         // console.log(this.addParam(window.location.href, 'toto', 'momo'))
         // console.log(this.buildParam());
         // console.log(Util.getParam(window.location.href, 'search', null, 'string'))
+    }
+
+    showCheckboxes = (e) => {
+        const checkboxesFor = e.target.getAttribute('data-checkboxes-for');
+
+        const checkboxesDivElt = document.querySelector(`#${checkboxesFor}`)
+
+        if (checkboxesDivElt.classList.contains('d-none')) {
+            checkboxesDivElt.classList.remove('d-none');
+            return;
+        }
+
+        checkboxesDivElt.classList.add('d-none');
+    }
+
+
+    pickAll = (e) => {
+        const checkboxesFor = e.target.getAttribute('data-checkboxes-for');
+
+        const checkboxesElt = document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
+
+        let checkboxesChangedCounter = 0;
+
+        checkboxesElt.forEach((checkboxElt) => {
+            if (!checkboxElt.checked) {
+                checkboxElt.checked = true;
+                checkboxesChangedCounter++
+            }
+        });
+
+        if (checkboxesChangedCounter === 0) return;
+
+        // Trigger Fetch BDD
+        console.log("fetch bdd");
+    }
+
+    unpickAll = (e) => {
+        const checkboxesFor = e.target.getAttribute('data-checkboxes-for');
+
+        const checkboxesElt = document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
+
+        let checkboxesChangedCounter = 0;
+
+        checkboxesElt.forEach((checkboxElt) => {
+            if (checkboxElt.checked) {
+                checkboxElt.checked = false;
+                checkboxesChangedCounter++
+            }
+
+        });
+
+        if (checkboxesChangedCounter === 0) return;
+
+        // Trigger Fetch BDD
+        console.log("fetch bdd");
     }
 
     onInput = (e) => {
@@ -129,58 +109,6 @@ export default class extends Controller {
             clearTimeout(this.timer);
             this.timer = null;
         },150)
-    }
-
-    onChange = async (e) => {
-        const field = e.target.getAttribute('data-question-target')
-        let keyValueField;
-        let newUrl;
-        let fieldsToSort;
-        let filteredData;
-        switch (field) {
-            case 'category':
-                console.log("categoryTarget", this.categoryTarget.value);
-                // keyValueField = {[field]: this.categoryTarget.value};
-                // newUrl = this.categoryTarget.value !== 'all'
-                //     ?
-                //     this.addParam(window.location.href, field, this.categoryTarget.value)
-                //     :
-                //     this.removeParam(window.location.href, field);
-                // window.history.pushState({}, "", newUrl);
-                // fieldsToSort = this.buildParam();
-                // filteredData = await Util.getFilteredData('questions', fieldsToSort);
-                // document.querySelector('#questions-block').innerHTML = filteredData;
-                break;
-
-
-                case 'questionType':
-                keyValueField = {[field]: this.questionTypeTarget.value};
-                newUrl = this.questionTypeTarget.value !== 'all'
-                    ?
-                    this.addParam(window.location.href, field, this.questionTypeTarget.value)
-                    :
-                    this.removeParam(window.location.href, field);
-                window.history.pushState({}, "", newUrl);
-                fieldsToSort = this.buildParam();
-                filteredData = await Util.getFilteredData('questions', fieldsToSort);
-                document.querySelector('#questions-block').innerHTML = filteredData;
-                break;
-            case 'status':
-                keyValueField = {[field]: this.statusTarget.value};
-                newUrl = this.statusTarget.value !== 'all'
-                    ? this.addParam(window.location.href, field, this.statusTarget.value)
-                    :
-                    this.removeParam(window.location.href, field);
-                window.history.pushState({}, "", newUrl);
-                fieldsToSort = this.buildParam();
-                filteredData = await Util.getFilteredData('questions', fieldsToSort);
-                document.querySelector('#questions-block').innerHTML = filteredData;
-                break;
-            default:
-                throw new Error();
-        }
-
-        console.log(keyValueField);
     }
 
     addParam = (url, paramName, value) => {
