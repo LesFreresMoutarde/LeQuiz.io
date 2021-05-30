@@ -21,20 +21,19 @@ export default class extends Controller {
         console.log(window.location.href);
         this.page = parseInt(Util.getParam('page', 1, 'number'));
         console.log("this page", this.page);
-        Util.addParam("toto", 'delavega');
+        // const newUrl = Util.addParam("toto", 'delavega');
     }
 
     test = () => {
         console.log("categories", this.categories);
-        Util.addParam("toto", 'jolo');
-        // console.log(this.page);
-        // console.log("toto", Util.hasGivenParam(window.location.href, "toto"))
-        // console.log("page", Util.hasGivenParam(window.location.href, "page"))
-        // console.log("search", Util.hasGivenParam(window.location.href, "search"))
-        // console.log("page hasParam", Util.hasParam(window.location.href));
-        // console.log(this.addParam(window.location.href, 'toto', 'momo'))
-        // console.log(this.buildParam());
-        // console.log(Util.getParam(window.location.href, 'search', null, 'string'))
+        let newUrl = Util.addParam("toto", 'jolo');
+        window.history.pushState({}, "", newUrl);
+        newUrl = Util.addParam("lourd", 'frero');
+        window.history.pushState({}, "", newUrl);
+        newUrl = Util.deleteParam('fake');
+        window.history.pushState({}, "", newUrl);
+        newUrl = Util.deleteParam('toto');
+        window.history.pushState({}, "", newUrl);
     }
 
     showCheckboxes = (e) => {
@@ -142,7 +141,8 @@ export default class extends Controller {
         this.timer = setTimeout(async () => {
             console.log(this.searchTarget.value);
 
-            const newUrl = this.addParam(window.location.href, 'search', this.searchTarget.value);
+            // const newUrl = this.addParam(window.location.href, 'search', this.searchTarget.value);
+            const newUrl = Util.addParam('search', this.searchTarget.value);
 
             window.history.pushState({}, "", newUrl);
 
@@ -158,55 +158,6 @@ export default class extends Controller {
         },150)
     }
 
-    addParam = (url, paramName, value) => {
-
-        if (Util.hasParam(url)) {
-            if (Util.hasGivenParam(url, paramName)) {
-                // Le virer de l'URL si value == 'all'
-                const baseURL = url.split('?')[0];
-
-                const splitURL = url.split('?')[1].split('&');
-
-                const paramInURL = splitURL.filter(param => param.includes(`${paramName}=`))[0];
-
-                splitURL.forEach((param, index) => {
-                    if (param === paramInURL && value !== '')
-                        splitURL[index] = `${paramName}=${value}`;
-                    else if (param === paramInURL && value === '')
-                        splitURL.splice(index, 1);
-                });
-
-
-                return `${baseURL}?${splitURL.join('&')}`;
-            }
-            // Ne pas le mettre si value == 'all'
-            return `${url}&${paramName}=${value}`;
-        }
-        // Ne pas le mettre si value == 'all'
-        return `${url}?${paramName}=${value}`;
-    }
-
-    removeParam = (url, paramName) => {
-
-        if (Util.hasGivenParam(url, paramName)) {
-            const baseURL = url.split('?')[0];
-
-            const splitURL = url.split('?')[1].split('&');
-
-            const paramInURL = splitURL.filter(param => param.includes(`${paramName}=`))[0];
-
-            splitURL.forEach((param, index) => {
-                if (param === paramInURL)
-                    splitURL.splice(index, 1)
-            })
-
-            console.log('splitUR', splitURL);
-
-            return splitURL.length > 0 ? `${baseURL}?${splitURL.join('&')}` : baseURL;
-        }
-
-        return url;
-    }
 
     buildParam = () => {
         let param = {};

@@ -19,20 +19,29 @@ class Util {
         return param;
     }
 
-    static hasParam = (url) => {
-        if (url.split('?')[1]) return true;
-
-        return false;
-    }
-
     static addParam = (paramName, paramValue) => {
+
         const queryString = window.location.search;
 
         const searchParams = new URLSearchParams(queryString);
 
         searchParams.set(paramName, paramValue);
 
-        return searchParams.toString();
+        return `${window.location.href.split('?')[0]}?${searchParams.toString()}`;
+    }
+
+    static deleteParam = (paramName) => {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        searchParams.delete(paramName);
+
+        return `${window.location.href.split('?')[0]}?${searchParams.toString()}`;
+    }
+
+    static hasParam = (url) => {
+        if (url.split('?')[1]) return true;
+
+        return false;
     }
 
     static hasGivenParam = (url, paramName) => {
