@@ -34,7 +34,7 @@ export default class extends Controller {
     }
 
     showCheckboxes = (e) => {
-        // console.log("CURRENT TARGET",e.currentTarget);
+
         const checkboxesFor = e.currentTarget.getAttribute('data-checkboxes-for');
 
         // console.log("checkboxeFor", checkboxesFor);
@@ -51,14 +51,10 @@ export default class extends Controller {
     }
 
     hideCheckboxes = (e) => {
-        console.log(e.target)
-        console.log(e.target.classList);
 
-        if (e.target.hasAttribute('data-checkboxes-for') || e.target.hasAttribute('data-click-not-hiding')) {
-            console.log("DANS LE BLOC")
+        if (e.target.hasAttribute('data-filter-select')
+            || e.target.hasAttribute('data-click-not-hiding'))
             return;
-        }
-
 
         const checkboxesDivsElt = document.querySelectorAll('.checkboxes-div');
 
@@ -71,9 +67,7 @@ export default class extends Controller {
 
 
     pickAll = (e) => {
-        const checkboxesFor = e.target.getAttribute('data-checkboxes-for');
-
-        const checkboxesElt = document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
+        const checkboxesElt = this.getFilterCheckboxesElement(e, 'data-checkboxes-for');
 
         let checkboxesChangedCounter = 0;
 
@@ -86,14 +80,14 @@ export default class extends Controller {
 
         if (checkboxesChangedCounter === 0) return;
 
+        this.categories = ['all'];
+
         // Trigger Fetch BDD // Changement URL
         console.log("fetch bdd");
     }
 
     unpickAll = (e) => {
-        const checkboxesFor = e.target.getAttribute('data-checkboxes-for');
-
-        const checkboxesElt = document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
+        const checkboxesElt = this.getFilterCheckboxesElement(e, 'data-checkboxes-for');
 
         let checkboxesChangedCounter = 0;
 
@@ -109,11 +103,37 @@ export default class extends Controller {
 
         // Trigger Fetch BDD Changement Param URL
         console.log("fetch bdd");
+
+        this.categories = ['all'];
+
     }
 
     onChangeCheckbox = (e) => {
-        console.log(e);
+        const checkboxesElt = this.getFilterCheckboxesElement(e, 'data-checkboxes');
+
+        const checkboxesChecked = Array.from(checkboxesElt)
+            .filter(checkbox => checkbox.checked)
+            .map((checkbox) => checkbox.value);
+
+        if (checkboxesChecked.length === 0 || checkboxesChecked.length === checkboxesElt.length) {
+            this.categories = ['all']
+            // Build Param + Fetch URL
+            console.log("CATEGORIES === ALL");
+            return;
+        }
+
+        this.categories = checkboxesChecked;
+
+        // Build Param + Fetch URL
+
     };
+
+
+    getFilterCheckboxesElement = (evt, attribute) => {
+        const checkboxesFor = evt.target.getAttribute(attribute);
+
+        return document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
+    }
 
     onInput = (e) => {
 
