@@ -3,7 +3,7 @@ import * as url from "url";
 class Util {
 
 
-    static getParam = (url, paramName, defaultValue, type) => {
+    static getParam = (paramName, defaultValue, type) => {
         const queryString = window.location.search;
 
         if (!queryString) return defaultValue
@@ -23,6 +23,16 @@ class Util {
         if (url.split('?')[1]) return true;
 
         return false;
+    }
+
+    static addParam = (paramName, paramValue) => {
+        const queryString = window.location.search;
+
+        const searchParams = new URLSearchParams(queryString);
+
+        searchParams.set(paramName, paramValue);
+
+        return searchParams.toString();
     }
 
     static hasGivenParam = (url, paramName) => {

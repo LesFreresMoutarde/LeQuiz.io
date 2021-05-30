@@ -2,6 +2,7 @@ import { Controller } from "stimulus";
 import Util from "./util_controller";
 import TomSelect from 'tom-select'
 import 'tom-select/dist/css/tom-select.bootstrap5.css'
+import util_controller from "./util_controller";
 
 export default class extends Controller {
 
@@ -14,17 +15,18 @@ export default class extends Controller {
     categoriesSelect;
     categories = ['all']; //TODO Handling in connect();
     questionTypes = [];
+
     connect = () => {
         console.log('connect');
         console.log(window.location.href);
-        // this.page = this.getCurrentPage(window.location.href);
-        this.page = parseInt(Util.getParam2(window.location.href, 'toto', 1, 'number'));
+        this.page = parseInt(Util.getParam('page', 1, 'number'));
         console.log("this page", this.page);
-        // this.page = Util.getParam(window.location.href, 'page', 1, 'number');
+        Util.addParam("toto", 'delavega');
     }
 
     test = () => {
         console.log("categories", this.categories);
+        Util.addParam("toto", 'jolo');
         // console.log(this.page);
         // console.log("toto", Util.hasGivenParam(window.location.href, "toto"))
         // console.log("page", Util.hasGivenParam(window.location.href, "page"))
@@ -36,13 +38,9 @@ export default class extends Controller {
     }
 
     showCheckboxes = (e) => {
-
         const checkboxesFor = e.currentTarget.getAttribute('data-checkboxes-for');
 
-        // console.log("checkboxeFor", checkboxesFor);
         const checkboxesDivElt = document.querySelector(`#${checkboxesFor}`)
-
-        // console.log("showChecbowes", checkboxesDivElt);
 
         if (checkboxesDivElt.classList.contains('d-none')) {
             checkboxesDivElt.classList.remove('d-none');
@@ -54,8 +52,8 @@ export default class extends Controller {
 
     hideCheckboxes = (e) => {
 
-        if (e.target.hasAttribute('data-filter-select')
-            || e.target.hasAttribute('data-click-not-hiding'))
+        if (e.target.hasAttribute('data-filter-select') ||
+            e.target.hasAttribute('data-click-not-hiding'))
             return;
 
         const checkboxesDivsElt = document.querySelectorAll('.checkboxes-div');
