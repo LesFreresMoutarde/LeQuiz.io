@@ -20,14 +20,13 @@ class Util {
     }
 
     static addParam = (paramName, paramValue) => {
-
         const queryString = window.location.search;
 
         const searchParams = new URLSearchParams(queryString);
 
         searchParams.set(paramName, paramValue);
 
-        return `${window.location.href.split('?')[0]}?${searchParams.toString()}`;
+        return `${window.location.href.split('?')[0]}?${decodeURIComponent(searchParams.toString())}`;
     }
 
     static deleteParam = (paramName) => {
@@ -35,19 +34,11 @@ class Util {
 
         searchParams.delete(paramName);
 
-        return `${window.location.href.split('?')[0]}?${searchParams.toString()}`;
-    }
+        let separator = '?'
 
-    static hasParam = (url) => {
-        if (url.split('?')[1]) return true;
+        if (searchParams.toString() === '') separator = ''
 
-        return false;
-    }
-
-    static hasGivenParam = (url, paramName) => {
-        if (!Util.hasParam(url)) return false;
-
-        return !!url.split('?')[1].split('&').filter(param => param.includes(`${paramName}=`))[0];
+        return `${window.location.href.split('?')[0]}${separator}${searchParams.toString()}`;
     }
 
     static getFilteredData = async (route, param) => {

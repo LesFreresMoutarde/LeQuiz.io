@@ -30,10 +30,10 @@ export default class extends Controller {
         window.history.pushState({}, "", newUrl);
         newUrl = Util.addParam("lourd", 'frero');
         window.history.pushState({}, "", newUrl);
-        newUrl = Util.deleteParam('fake');
-        window.history.pushState({}, "", newUrl);
-        newUrl = Util.deleteParam('toto');
-        window.history.pushState({}, "", newUrl);
+        // newUrl = Util.deleteParam('fake');
+        // window.history.pushState({}, "", newUrl);
+        // newUrl = Util.deleteParam('toto');
+        // window.history.pushState({}, "", newUrl);
     }
 
     showCheckboxes = (e) => {
@@ -66,11 +66,11 @@ export default class extends Controller {
 
 
     pickAll = (e) => {
-        const checkboxesElt = this.getFilterCheckboxesElement(e, 'data-checkboxes-for');
+        const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes-for');
 
         let checkboxesChangedCounter = 0;
 
-        checkboxesElt.forEach((checkboxElt) => {
+        checkboxElts.forEach((checkboxElt) => {
             if (!checkboxElt.checked) {
                 checkboxElt.checked = true;
                 checkboxesChangedCounter++
@@ -79,18 +79,33 @@ export default class extends Controller {
 
         if (checkboxesChangedCounter === 0) return;
 
-        this.categories = ['all'];
+        let newUrl;
 
-        // Trigger Fetch BDD // Changement URL
+        switch (checkboxElts[0].getAttribute('data-checkboxes')) {
+            case 'categories':
+                console.log("chgt categories");
+                this.categories = ['all'];
+                newUrl = Util.deleteParam('categories');
+                break;
+            case 'questionTypes':
+                console.log('chgt questiontypes')
+                break;
+            default:
+                throw new Error();
+        }
+
+        window.history.pushState({}, "", newUrl);
+
+        // Trigger Fetch BDD
         console.log("fetch bdd");
     }
 
     unpickAll = (e) => {
-        const checkboxesElt = this.getFilterCheckboxesElement(e, 'data-checkboxes-for');
+        const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes-for');
 
         let checkboxesChangedCounter = 0;
 
-        checkboxesElt.forEach((checkboxElt) => {
+        checkboxElts.forEach((checkboxElt) => {
             if (checkboxElt.checked) {
                 checkboxElt.checked = false;
                 checkboxesChangedCounter++
@@ -108,27 +123,44 @@ export default class extends Controller {
     }
 
     onChangeCheckbox = (e) => {
-        const checkboxesElt = this.getFilterCheckboxesElement(e, 'data-checkboxes');
+        const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes');
 
-        const checkboxesChecked = Array.from(checkboxesElt)
+        const checkboxesChecked = Array.from(checkboxElts)
             .filter(checkbox => checkbox.checked)
             .map((checkbox) => checkbox.value);
 
-        if (checkboxesChecked.length === 0 || checkboxesChecked.length === checkboxesElt.length) {
-            this.categories = ['all']
-            // Build Param + Fetch URL
-            console.log("CATEGORIES === ALL");
-            return;
+        switch (checkboxElts[0].getAttribute('data-checkboxes')) {
+            case 'categories':
+                this.categories = this.handleCheckboxChange('categories', checkboxElts, checkboxesChecked)
+                break;
+            case 'questionTypes':
+                break;
+            default:
+                throw new Error();
         }
 
-        this.categories = checkboxesChecked;
-
         // Build Param + Fetch URL
-
     };
 
 
-    getFilterCheckboxesElement = (evt, attribute) => {
+    handleCheckboxChange = (filterName, checkboxes, checkboxesChecked) => {
+        let filterValues;
+        let newUrl
+
+        if (checkboxesChecked.length === 0 || checkboxesChecked.length === checkboxes.length) {
+            filterValues = ['all']
+            newUrl = Util.deleteParam(filterName)
+        } else {
+            filterValues = checkboxesChecked;
+            newUrl = Util.addParam(filterName, filterValues.join(','));
+        }
+
+        window.history.pushState({}, "", newUrl);
+
+        return filterValues;
+    }
+
+    getFilterCheckboxElements = (evt, attribute) => {
         const checkboxesFor = evt.target.getAttribute(attribute);
 
         return document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
@@ -139,19 +171,23 @@ export default class extends Controller {
         if (Number(this.timer)) return;
 
         this.timer = setTimeout(async () => {
-            console.log(this.searchTarget.value);
 
-            // const newUrl = this.addParam(window.location.href, 'search', this.searchTarget.value);
-            const newUrl = Util.addParam('search', this.searchTarget.value);
+            let newUrl;
+
+            this.searchTarget.value !== ''
+                ?
+                newUrl = Util.addParam('search', this.searchTarget.value)
+                :
+                newUrl = Util.deleteParam('search')
 
             window.history.pushState({}, "", newUrl);
 
             // Se servir des valeurs targets pour envoyer les infos de search, catégories, types et statut selectionnés.
-            const fieldsToSort = this.buildParam();
-            const filteredData = await Util.getFilteredData('questions', fieldsToSort);
-
-            console.log("reponse",filteredData);
-            document.querySelector('#questions-block').innerHTML = filteredData;
+            // const fieldsToSort = this.buildParam();
+            // const filteredData = await Util.getFilteredData('questions', fieldsToSort);
+            //
+            // console.log("reponse",filteredData);
+            // document.querySelector('#questions-block').innerHTML = filteredData;
 
             clearTimeout(this.timer);
             this.timer = null;
