@@ -18,7 +18,9 @@ export default class extends Controller {
         console.log('connect');
         console.log(window.location.href);
         // this.page = this.getCurrentPage(window.location.href);
-        this.page = Util.getParam(window.location.href, 'page', 1, 'number');
+        this.page = parseInt(Util.getParam2(window.location.href, 'toto', 1, 'number'));
+        console.log("this page", this.page);
+        // this.page = Util.getParam(window.location.href, 'page', 1, 'number');
     }
 
     test = () => {

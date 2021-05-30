@@ -4,26 +4,17 @@ class Util {
 
 
     static getParam = (url, paramName, defaultValue, type) => {
+        const queryString = window.location.search;
 
-        if (type === 'number') {
-           const param = url.includes(`${paramName}=`)
-               ?
-               parseInt(url.split('?')[1].split('&').filter(param => param.includes(`${paramName}=`))[0].split('=')[1])
-               :
-               Number(defaultValue);
+        if (!queryString) return defaultValue
 
-           if (isNaN(param)) return 1;
+        const searchParams = new URLSearchParams(queryString)
 
-           return param
-        }
+        const param = searchParams.get(paramName);
 
-        const param = url.includes(`${paramName}=`)
-           ?
-           url.split('?')[1].split('&').filter(param => param.includes(`${paramName}=`))[0].split('=')[1]
-           :
-           defaultValue;
+        if (!param) return defaultValue
 
-        if (typeof param !== type) return defaultValue;
+        if (type === 'number' && isNaN(parseInt(param))) return defaultValue;
 
         return param;
     }
