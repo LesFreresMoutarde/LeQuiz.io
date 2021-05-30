@@ -34,9 +34,13 @@ export default class extends Controller {
     }
 
     showCheckboxes = (e) => {
-        const checkboxesFor = e.target.getAttribute('data-checkboxes-for');
+        // console.log("CURRENT TARGET",e.currentTarget);
+        const checkboxesFor = e.currentTarget.getAttribute('data-checkboxes-for');
 
+        // console.log("checkboxeFor", checkboxesFor);
         const checkboxesDivElt = document.querySelector(`#${checkboxesFor}`)
+
+        // console.log("showChecbowes", checkboxesDivElt);
 
         if (checkboxesDivElt.classList.contains('d-none')) {
             checkboxesDivElt.classList.remove('d-none');
@@ -44,6 +48,25 @@ export default class extends Controller {
         }
 
         checkboxesDivElt.classList.add('d-none');
+    }
+
+    hideCheckboxes = (e) => {
+        console.log(e.target)
+        console.log(e.target.classList);
+
+        if (e.target.hasAttribute('data-checkboxes-for') || e.target.hasAttribute('data-click-not-hiding')) {
+            console.log("DANS LE BLOC")
+            return;
+        }
+
+
+        const checkboxesDivsElt = document.querySelectorAll('.checkboxes-div');
+
+        checkboxesDivsElt.forEach(checkboxesDivElt => {
+            if (!checkboxesDivElt.classList.contains('d-none'))
+                checkboxesDivElt.classList.add('d-none');
+
+        })
     }
 
 
@@ -63,7 +86,7 @@ export default class extends Controller {
 
         if (checkboxesChangedCounter === 0) return;
 
-        // Trigger Fetch BDD
+        // Trigger Fetch BDD // Changement URL
         console.log("fetch bdd");
     }
 
@@ -84,9 +107,13 @@ export default class extends Controller {
 
         if (checkboxesChangedCounter === 0) return;
 
-        // Trigger Fetch BDD
+        // Trigger Fetch BDD Changement Param URL
         console.log("fetch bdd");
     }
+
+    onChangeCheckbox = (e) => {
+        console.log(e);
+    };
 
     onInput = (e) => {
 

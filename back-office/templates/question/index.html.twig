@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Question index</h1>
-    <div data-controller="question">
+    <div data-controller="question" data-action="click->question#hideCheckboxes">
         <div class="row">
             <div class="col-3">
                 <input type="text" placeholder="uuid" class="form-control"/>
@@ -19,25 +19,33 @@
                      data-action="click->question#showCheckboxes" data-checkboxes-for="categories">
                     <span class="placeholder">Catégories</span>
                 </div>
-                <div id="categories" class="checkboxes-div d-none">
-                    <div class="mb-2">
+                <div id="categories" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
                         <button class="btn btn-primary btn-sm"
                                 data-action="click->question#pickAll"
                                 data-checkboxes-for="categories"
+                                data-click-not-hiding
                         >
                             Toutes
                         </button>
                         <button class="btn btn-danger btn-sm"
                                 data-action="click->question#unpickAll"
                                 data-checkboxes-for="categories"
+                                data-click-not-hiding
                         >
                             Vider
                         </button>
                     </div>
-                    <div class="d-flex flex-wrap justify-content-between">
+                    <div class="d-flex flex-wrap justify-content-between" data-click-not-hiding>
                     {% for category in categories %}
-                        <label class="form-check-label mb-1">
-                            <input type="checkbox" data-checkboxes="categories" class="form-check-input" value="{{ category.getName() }}">
+                        <label class="form-check-label mb-1" data-click-not-hiding>
+                            <input type="checkbox"
+                                   data-checkboxes="categories"
+                                   class="form-check-input"
+                                   value="{{ category.getName() }}"
+                                   data-action="change->question#onChangeCheckbox"
+                                   data-click-not-hiding
+                            >
                             {{ category.getLabel() }}
                         </label>
                     {% endfor %}
