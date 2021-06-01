@@ -6,7 +6,7 @@ import util_controller from "./util_controller";
 
 export default class extends Controller {
 
-    static targets = ['search', 'category', 'questionType', 'status'];
+    static targets = ['search', 'category', 'questionTypes', 'status'];
 
     // SORTABLE_FIELDS = ['search', 'category', 'questionType', 'status'];
     page;
@@ -64,8 +64,7 @@ export default class extends Controller {
         })
     }
 
-
-    pickAll = (e) => {
+    pickAll = async (e) => {
         const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes-for');
 
         let checkboxesChangedCounter = 0;
@@ -79,28 +78,26 @@ export default class extends Controller {
 
         if (checkboxesChangedCounter === 0) return;
 
-        let newUrl;
-
         switch (checkboxElts[0].getAttribute('data-checkboxes')) {
             case 'categories':
-                console.log("chgt categories");
-                this.categories = ['all'];
-                newUrl = Util.deleteParam('categories');
+                this.categories = this.addAllToFilter('categories');
                 break;
             case 'questionTypes':
-                console.log('chgt questiontypes')
+                //TODO
                 break;
             default:
                 throw new Error();
         }
 
-        window.history.pushState({}, "", newUrl);
+        const fieldsParam = this.buildParam();
 
-        // Trigger Fetch BDD
-        console.log("fetch bdd");
+        const filteredData = await Util.getFilteredData('questions', fieldsParam);
+        console.log("filteredData", filteredData);
+
+        document.querySelector('#questions-block').innerHTML = filteredData;
     }
 
-    unpickAll = (e) => {
+    unpickAll = async (e) => {
         const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes-for');
 
         let checkboxesChangedCounter = 0;
@@ -110,19 +107,32 @@ export default class extends Controller {
                 checkboxElt.checked = false;
                 checkboxesChangedCounter++
             }
-
         });
 
         if (checkboxesChangedCounter === 0) return;
 
-        // Trigger Fetch BDD Changement Param URL
-        console.log("fetch bdd");
+        switch (checkboxElts[0].getAttribute('data-checkboxes')) {
+            case 'categories':
+                this.categories = this.addAllToFilter('categories');
+                break;
+            case 'questionTypes':
+                //TODO
+                break;
+            default:
+                throw new Error();
+        }
 
-        this.categories = ['all'];
+        const fieldsParam = this.buildParam();
+
+        const filteredData = await Util.getFilteredData('questions', fieldsParam);
+        console.log("filteredData", filteredData);
+        Util.deleteParam('page');
+
+        document.querySelector('#questions-block').innerHTML = filteredData;
 
     }
 
-    onChangeCheckbox = (e) => {
+    onChangeCheckbox = async (e) => {
         const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes');
 
         const checkboxesChecked = Array.from(checkboxElts)
@@ -139,25 +149,39 @@ export default class extends Controller {
                 throw new Error();
         }
 
-        // Build Param + Fetch URL
+        const fieldsParam = this.buildParam();
+
+        const filteredData = await Util.getFilteredData('questions', fieldsParam);
+
+        // Util.deleteParam('page');
+
+        document.querySelector('#questions-block').innerHTML = filteredData;
+
+       //Fetch URL
     };
 
 
-    handleCheckboxChange = (filterName, checkboxes, checkboxesChecked) => {
-        let filterValues;
-        let newUrl
-
-        if (checkboxesChecked.length === 0 || checkboxesChecked.length === checkboxes.length) {
-            filterValues = ['all']
-            newUrl = Util.deleteParam(filterName)
-        } else {
-            filterValues = checkboxesChecked;
-            newUrl = Util.addParam(filterName, filterValues.join(','));
-        }
+    addAllToFilter = (filterName) => {
+        const newUrl = Util.deleteParam(filterName);
 
         window.history.pushState({}, "", newUrl);
 
-        return filterValues;
+        return ['all'];
+    }
+
+    handleCheckboxChange = (filterName, checkboxes, checkboxesChecked) => {
+
+        if (checkboxesChecked.length === 0 || checkboxesChecked.length === checkboxes.length) {
+            return this.addAllToFilter(filterName)
+        }
+
+        let newUrl = Util.addParam(filterName, checkboxesChecked.join(','))
+        window.history.pushState({}, "", newUrl);
+        newUrl = Util.deleteParam('page');
+
+        window.history.pushState({}, "", newUrl);
+
+        return checkboxesChecked;
     }
 
     getFilterCheckboxElements = (evt, attribute) => {
@@ -166,9 +190,10 @@ export default class extends Controller {
         return document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
     }
 
+    // TODO CHange timeout
     onInput = (e) => {
 
-        if (Number(this.timer)) return;
+        clearTimeout(this.timer)
 
         this.timer = setTimeout(async () => {
 
@@ -183,15 +208,18 @@ export default class extends Controller {
             window.history.pushState({}, "", newUrl);
 
             // Se servir des valeurs targets pour envoyer les infos de search, catégories, types et statut selectionnés.
-            // const fieldsToSort = this.buildParam();
-            // const filteredData = await Util.getFilteredData('questions', fieldsToSort);
+            const fieldsToSort = this.buildParam();
+            console.log("fieldsToSort", fieldsToSort);
+            const filteredData = await Util.getFilteredData('questions', fieldsToSort);
             //
             // console.log("reponse",filteredData);
-            // document.querySelector('#questions-block').innerHTML = filteredData;
+            document.querySelector('#questions-block').innerHTML = filteredData;
+
+            Util.deleteParam('page');
 
             clearTimeout(this.timer);
-            this.timer = null;
-        },150)
+
+        },500) // 500
     }
 
 
@@ -200,17 +228,19 @@ export default class extends Controller {
 
         if (this.searchTarget.value !== '')
             param['search'] = this.searchTarget.value;
-        if (this.categoryTarget.value !== 'all')
-            param['category'] = this.categoryTarget.value;
-        if (this.questionTypeTarget.value !== 'all')
-            param['questionType'] = this.questionTypeTarget.value;
+
+        if (this.categories.length > 0 && this.categories[0] !== 'all')
+            param['categories'] = this.categories.join(',');
+
+        if (this.questionTypesTarget.value !== 'all')
+            param['questionTypes'] = this.questionTypesTarget.value;
+
         if (this.statusTarget.value !== 'all')
             param['status'] = this.statusTarget.value;
 
-        return !param.hasOwnProperty('search')
-        && !param.hasOwnProperty('category')
-        && !param.hasOwnProperty('questionType')
-        && !param.hasOwnProperty('status') ? null : param
+
+        console.log("finalParam",param);
+        return param
     }
 
 }

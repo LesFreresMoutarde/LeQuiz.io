@@ -7,6 +7,7 @@ use App\Manager\CrudManager;
 use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
+use ContainerL1zqxd7\getConsole_ErrorListenerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -192,19 +193,34 @@ class QuestionController extends AbstractController
 
         if (!empty($params)) {
             foreach ($params as $paramName => $value) {
-               dump($paramName);
+
                 switch ($paramName) {
                     case 'search':
                         $whereParts[] = 'LOWER(q.content) LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'answers\'))'.
                         ' LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'additional\')) LIKE LOWER(:search)';
                         $paramsReplacements['search'] = '%'.$value.'%';
                         break;
-                    case 'category':
+                    case 'categories':
+
+                        $value = explode(',', $value);
+//                        dd($value);
 //                        $whereParts[] = '(LOWER(q.categories) LIKE LOWER(:category))';
-                        $joinParts[] = 'JOIN q.categories c WITH c.name LIKE LOWER(:category)';
-                        $paramsReplacements['category'] = '%'.$value.'%';
+//                        $joinParts[] = 'JOIN q.categories c WITH c.name LIKE LOWER(:category)';
+//                        $paramsReplacements['category'] = '%'.$value.'%';
+                        $joinParts[] = 'JOIN q.categories c WITH';
+//                        $joinParts[] = ' c.name LIKE LOWER(:category-0)';
+//                        $paramsReplacements['categories'][] = '%'.$value.'%';
+                        for ($i = 0; $i < count($value); $i++) {
+                            if ($i + 1 !== count($value))
+                                $joinParts[] = "c.name LIKE LOWER(:category$i) OR";
+                            else
+                                $joinParts[] =  "c.name LIKE LOWER(:category$i)";
+
+                            $paramsReplacements["category$i"] = '%'.$value[$i].'%';
+                        }
+
                         break;
-                    case 'questionType':
+                    case 'questionTypes':
 //                        $whereParts[] = '(LOWER(q.questionTypes) LIKE LOWER(:questionType))';
                         $joinParts[] = 'JOIN q.types t WITH t.name LIKE LOWER(:questionType)';
                         $paramsReplacements['questionType'] = '%'.$value.'%';
@@ -225,6 +241,8 @@ class QuestionController extends AbstractController
 
         }
 
+//        dump($queryString);
+//        dd($paramsReplacements);
         $query = $em->createQuery($queryString);
         $query->setParameters($paramsReplacements);
 
@@ -235,7 +253,7 @@ class QuestionController extends AbstractController
 
     private function getParamFromUrl(Request $request): array
     {
-        $possibleFields = ['search', 'category', 'questionType', 'status'];
+        $possibleFields = ['search', 'categories', 'questionTypes', 'status'];
         $params = [];
 
         for ($i = 0; $i < count($possibleFields); $i++) {

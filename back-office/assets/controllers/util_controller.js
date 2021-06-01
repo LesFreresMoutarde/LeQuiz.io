@@ -31,14 +31,16 @@ class Util {
 
     static deleteParam = (paramName) => {
         const searchParams = new URLSearchParams(window.location.search);
-
+        searchParams.forEach((s) => console.log(s))
         searchParams.delete(paramName);
 
         let separator = '?'
 
         if (searchParams.toString() === '') separator = ''
 
-        return `${window.location.href.split('?')[0]}${separator}${searchParams.toString()}`;
+        console.log(searchParams.toString())
+
+        return `${window.location.href.split('?')[0]}${separator}${decodeURIComponent(searchParams.toString())}`;
     }
 
     static getFilteredData = async (route, param) => {
@@ -46,6 +48,7 @@ class Util {
         const headers = new Headers();
         headers.append('X-Requested-With', 'fetch');
 
+        // if !startsWith '/'
         let urlToFetch = `/${route}`;
         console.log("param...", param);
 
@@ -62,12 +65,11 @@ class Util {
         console.log("final URL To Fetch", urlToFetch);
 
         const response = await fetch(urlToFetch, {headers});
-        //
+
         if (!response.ok) throw new Error();
-        // console.log("tt")
+
         return await response.text();
-        // console.log('dd')
-        // return responseData;
+
     }
 }
 
