@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Question index</h1>
     <div data-controller="question" data-action="click->question#hideCheckboxes">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-3">
                 <input type="text" placeholder="uuid" class="form-control"/>
             </div>
@@ -22,14 +22,16 @@
                 <div id="categories" class="checkboxes-div d-none" data-click-not-hiding>
                     <div class="mb-2" data-click-not-hiding>
                         <button class="btn btn-primary btn-sm"
-                                data-action="click->question#pickAll"
+                                data-action="click->question#onPick"
+                                data-pick="full"
                                 data-checkboxes-for="categories"
                                 data-click-not-hiding
                         >
                             Toutes
                         </button>
                         <button class="btn btn-danger btn-sm"
-                                data-action="click->question#unpickAll"
+                                data-action="click->question#onPick"
+                                data-pick="empty"
                                 data-checkboxes-for="categories"
                                 data-click-not-hiding
                         >
@@ -51,23 +53,52 @@
                     {% endfor %}
                     </div>
                 </div>
-
-{#                <select class="form-select"  size="3" name="select-arrow" id="categories" data-question-target="category" data-action="question#onChange" multiple>#}
-{#                    <option value="all" selected>Toutes</option>#}
-{#                    {% for category in categories %}#}
-{#                        <option value="{{ category }}">{{ category.getLabel() }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
             </div>
-
+            <div class="col-3">
+                <div class="form-select d-flex justify-content-start"
+                     data-action="click->question#showCheckboxes" data-checkboxes-for="questionTypes" data-filter-select>
+                    <span class="placeholder" data-click-not-hiding>Types de questions</span>
+                </div>
+                <div id="questionTypes" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->question#onPick"
+                                data-pick="full"
+                                data-checkboxes-for="questionTypes"
+                                data-click-not-hiding
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->question#onPick"
+                                data-pick="empty"
+                                data-checkboxes-for="questionTypes"
+                                data-click-not-hiding
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    {% for type in questionTypes %}
+                        <label class="form-check-label mb-1 me-1" data-click-not-hiding>
+                            <input type="checkbox"
+                                   data-checkboxes="questionTypes"
+                                   class="form-check-input"
+                                   value="{{ type.getName() }}"
+                                   data-action="change->question#onChangeCheckbox"
+                                   data-click-not-hiding
+                            >
+                            {{ type.getLabel() }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-
-        <select name="" id="" data-question-target="questionTypes" data-action="question#onChange" class="form-select">
-            <option value="all">Tous</option>
-            {% for type in questionTypes %}
-                <option value="{{ type }}">{{ type.getLabel() }}</option>
-            {% endfor %}
-        </select>
+{#        <select name="" id="" data-question-target="questionTypes" data-action="question#onChange" class="form-select">#}
+{#            <option value="all">Tous</option>#}
+{#            {% for type in questionTypes %}#}
+{#                <option value="{{ type }}">{{ type.getLabel() }}</option>#}
+{#            {% endfor %}#}
+{#        </select>#}
         <select name="" id="" data-question-target="status" data-action="question#onChange" class="form-select">
             <option value="all">Tous</option>
             {% for status in statuses %}

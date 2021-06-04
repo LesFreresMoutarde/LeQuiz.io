@@ -4,6 +4,7 @@ class Util {
 
 
     static getParam = (paramName, defaultValue, type) => {
+
         const queryString = window.location.search;
 
         if (!queryString) return defaultValue
@@ -20,6 +21,7 @@ class Util {
     }
 
     static addParam = (paramName, paramValue) => {
+
         const queryString = window.location.search;
 
         const searchParams = new URLSearchParams(queryString);
@@ -30,15 +32,16 @@ class Util {
     }
 
     static deleteParam = (paramName) => {
+
+        if (typeof paramName === 'string') paramName = [paramName];
+
         const searchParams = new URLSearchParams(window.location.search);
-        searchParams.forEach((s) => console.log(s))
-        searchParams.delete(paramName);
 
-        let separator = '?'
+        paramName.forEach(param => {
+            searchParams.delete(param);
+        })
 
-        if (searchParams.toString() === '') separator = ''
-
-        console.log(searchParams.toString())
+        const separator = searchParams.toString() === '' ? '' : '?';
 
         return `${window.location.href.split('?')[0]}${separator}${decodeURIComponent(searchParams.toString())}`;
     }
@@ -48,7 +51,7 @@ class Util {
         const headers = new Headers();
         headers.append('X-Requested-With', 'fetch');
 
-        // if !startsWith '/'
+        // if (!route.startsWith('/'))
         let urlToFetch = `/${route}`;
         console.log("param...", param);
 

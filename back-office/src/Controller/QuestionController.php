@@ -201,16 +201,11 @@ class QuestionController extends AbstractController
                         $paramsReplacements['search'] = '%'.$value.'%';
                         break;
                     case 'categories':
-
                         $value = explode(',', $value);
-//                        dd($value);
-//                        $whereParts[] = '(LOWER(q.categories) LIKE LOWER(:category))';
-//                        $joinParts[] = 'JOIN q.categories c WITH c.name LIKE LOWER(:category)';
-//                        $paramsReplacements['category'] = '%'.$value.'%';
+
                         $joinParts[] = 'JOIN q.categories c WITH';
-//                        $joinParts[] = ' c.name LIKE LOWER(:category-0)';
-//                        $paramsReplacements['categories'][] = '%'.$value.'%';
                         for ($i = 0; $i < count($value); $i++) {
+
                             if ($i + 1 !== count($value))
                                 $joinParts[] = "c.name LIKE LOWER(:category$i) OR";
                             else
@@ -221,9 +216,20 @@ class QuestionController extends AbstractController
 
                         break;
                     case 'questionTypes':
+                        $value = explode(',', $value);
 //                        $whereParts[] = '(LOWER(q.questionTypes) LIKE LOWER(:questionType))';
-                        $joinParts[] = 'JOIN q.types t WITH t.name LIKE LOWER(:questionType)';
-                        $paramsReplacements['questionType'] = '%'.$value.'%';
+//                        $joinParts[] = 'JOIN q.types t WITH t.name LIKE LOWER(:questionType)';
+                        $joinParts[] = 'JOIN q.types t WITH';
+                        for ($i = 0; $i < count($value); $i++) {
+
+                            if ($i + 1 !== count($value))
+                                $joinParts[] = "t.name LIKE LOWER(:type$i) OR";
+                            else
+                                $joinParts[] =  "t.name LIKE LOWER(:type$i)";
+
+                            $paramsReplacements["type$i"] = '%'.$value[$i].'%';
+                        }
+//                        $paramsReplacements['questionType'] = '%'.$value.'%';
                         break;
                     case 'status':
                         $whereParts[] = 'LOWER(q.status) LIKE LOWER(:status)';
