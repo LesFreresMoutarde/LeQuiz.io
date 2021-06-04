@@ -57,7 +57,7 @@
             <div class="col-3">
                 <div class="form-select d-flex justify-content-start"
                      data-action="click->question#showCheckboxes" data-checkboxes-for="questionTypes" data-filter-select>
-                    <span class="placeholder" data-click-not-hiding>Types de questions</span>
+                    <span class="placeholder" data-click-not-hiding>Types</span>
                 </div>
                 <div id="questionTypes" class="checkboxes-div d-none" data-click-not-hiding>
                     <div class="mb-2" data-click-not-hiding>
@@ -92,19 +92,51 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class="col-3">
+                <div class="form-select d-flex justify-content-start"
+                     data-action="click->question#showCheckboxes" data-checkboxes-for="statuses" data-filter-select>
+                    <span class="placeholder" data-click-not-hiding>Statuts</span>
+                </div>
+                <div id="statuses" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->question#onPick"
+                                data-pick="full"
+                                data-checkboxes-for="statuses"
+                                data-click-not-hiding
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->question#onPick"
+                                data-pick="empty"
+                                data-checkboxes-for="statuses"
+                                data-click-not-hiding
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    {% for status in statuses %}
+                        <label class="form-check-label mb-1 me-1" data-click-not-hiding>
+                            <input type="checkbox"
+                                   data-checkboxes="statuses"
+                                   class="form-check-input"
+                                   value="{{ status }}"
+                                   data-action="change->question#onChangeCheckbox"
+                                   data-click-not-hiding
+                            >
+                            {{ status }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-{#        <select name="" id="" data-question-target="questionTypes" data-action="question#onChange" class="form-select">#}
+{#        <select name="" id="" data-question-target="status" data-action="question#onChange" class="form-select">#}
 {#            <option value="all">Tous</option>#}
-{#            {% for type in questionTypes %}#}
-{#                <option value="{{ type }}">{{ type.getLabel() }}</option>#}
+{#            {% for status in statuses %}#}
+{#                <option value="{{ status }}">{{ status }}</option>#}
 {#            {% endfor %}#}
 {#        </select>#}
-        <select name="" id="" data-question-target="status" data-action="question#onChange" class="form-select">
-            <option value="all">Tous</option>
-            {% for status in statuses %}
-                <option value="{{ status }}">{{ status }}</option>
-            {% endfor %}
-        </select>
         <button data-action="question#test">Test</button>
     </div>
     {% block questions %}

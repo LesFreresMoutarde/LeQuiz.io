@@ -193,7 +193,6 @@ class QuestionController extends AbstractController
 
         if (!empty($params)) {
             foreach ($params as $paramName => $value) {
-
                 switch ($paramName) {
                     case 'search':
                         $whereParts[] = 'LOWER(q.content) LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'answers\'))'.
@@ -213,12 +212,9 @@ class QuestionController extends AbstractController
 
                             $paramsReplacements["category$i"] = '%'.$value[$i].'%';
                         }
-
                         break;
                     case 'questionTypes':
                         $value = explode(',', $value);
-//                        $whereParts[] = '(LOWER(q.questionTypes) LIKE LOWER(:questionType))';
-//                        $joinParts[] = 'JOIN q.types t WITH t.name LIKE LOWER(:questionType)';
                         $joinParts[] = 'JOIN q.types t WITH';
                         for ($i = 0; $i < count($value); $i++) {
 
@@ -229,11 +225,10 @@ class QuestionController extends AbstractController
 
                             $paramsReplacements["type$i"] = '%'.$value[$i].'%';
                         }
-//                        $paramsReplacements['questionType'] = '%'.$value.'%';
                         break;
-                    case 'status':
-                        $whereParts[] = 'LOWER(q.status) LIKE LOWER(:status)';
-                        $paramsReplacements['status'] = '%'.$value.'%';
+                    case 'statuses':
+                        $whereParts[] = 'LOWER(q.status) IN (:statuses)';
+                        $paramsReplacements['statuses'] = explode(',', $value);
                         break;
                 }
             }
@@ -259,7 +254,7 @@ class QuestionController extends AbstractController
 
     private function getParamFromUrl(Request $request): array
     {
-        $possibleFields = ['search', 'categories', 'questionTypes', 'status'];
+        $possibleFields = ['search', 'categories', 'questionTypes', 'statuses'];
         $params = [];
 
         for ($i = 0; $i < count($possibleFields); $i++) {

@@ -6,7 +6,7 @@ import util_controller from "./util_controller";
 
 export default class extends Controller {
 
-    static targets = ['search', 'status'];
+    static targets = ['search', 'uuid'];
 
     page;
     timer;
@@ -14,13 +14,13 @@ export default class extends Controller {
     categoriesSelect;
     categories = ['all']; //TODO Handling in connect();
     questionTypes = ['all'];
+    statuses = ['all'];
 
     connect = () => {
         console.log('connect');
         console.log(window.location.href);
         this.page = parseInt(Util.getParam('page', 1, 'number'));
         console.log("this page", this.page);
-        // const newUrl = Util.addParam("toto", 'delavega');
     }
 
     test = () => {
@@ -86,7 +86,10 @@ export default class extends Controller {
                 this.categories = this.addAllToFilter('categories');
                 break;
             case 'questionTypes':
-                this.questionTypes = this.addAllToFilter('questionTypes')
+                this.questionTypes = this.addAllToFilter('questionTypes');
+                break;
+            case 'statuses':
+                this.statuses = this.addAllToFilter('statuses');
                 break;
             default:
                 throw new Error();
@@ -109,10 +112,13 @@ export default class extends Controller {
 
         switch (checkboxElts[0].getAttribute('data-checkboxes')) {
             case 'categories':
-                this.categories = this.handleCheckboxChange('categories', checkboxElts, checkboxesChecked)
+                this.categories = this.handleCheckboxChange('categories', checkboxElts, checkboxesChecked);
                 break;
             case 'questionTypes':
-                this.questionTypes = this.handleCheckboxChange('questionTypes', checkboxElts, checkboxesChecked)
+                this.questionTypes = this.handleCheckboxChange('questionTypes', checkboxElts, checkboxesChecked);
+                break;
+            case 'statuses':
+                this.statuses = this.handleCheckboxChange('statuses', checkboxElts, checkboxesChecked);
                 break;
             default:
                 throw new Error();
@@ -204,8 +210,8 @@ export default class extends Controller {
         if (this.questionTypes.length > 0 && this.questionTypes[0] !== 'all')
             param['questionTypes'] = this.questionTypes.join(',');
 
-        if (this.statusTarget.value !== 'all')
-            param['status'] = this.statusTarget.value;
+        if (this.statuses.length > 0 && this.statuses[0] !== 'all')
+            param['statuses'] = this.statuses.join(',');
 
         console.log("finalParam",param);
         return param
