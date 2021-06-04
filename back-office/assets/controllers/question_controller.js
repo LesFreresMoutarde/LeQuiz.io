@@ -15,6 +15,8 @@ export default class extends Controller {
     categories = ['all']; //TODO Handling in connect();
     questionTypes = ['all'];
     statuses = ['all'];
+    isHardcore;
+    hasMedia;
 
     connect = () => {
         console.log('connect');
@@ -103,7 +105,7 @@ export default class extends Controller {
         document.querySelector('#questions-block').innerHTML = filteredData;
     }
 
-    onChangeCheckbox = async (e) => {
+    onMultiCheckboxesChange = async (e) => {
         const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes');
 
         const checkboxesChecked = Array.from(checkboxElts)
@@ -133,7 +135,6 @@ export default class extends Controller {
         document.querySelector('#questions-block').innerHTML = filteredData;
     };
 
-
     addAllToFilter = (filterName) => {
         const newUrl = Util.deleteParam(filterName);
 
@@ -148,7 +149,7 @@ export default class extends Controller {
             return this.addAllToFilter(filterName)
         }
 
-        let newUrl = Util.addParam(filterName, checkboxesChecked.join(','))
+        const newUrl = Util.addParam(filterName, checkboxesChecked.join(','))
         window.history.pushState({}, "", newUrl);
 
         return checkboxesChecked;
@@ -160,18 +161,32 @@ export default class extends Controller {
         return document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
     }
 
-    // TODO CHange timeout
     onInput = (e) => {
 
         clearTimeout(this.timer)
 
+        const filter = e.target.getAttribute('data-input');
+
         let newUrl;
 
-        this.searchTarget.value !== ''
-            ?
-            newUrl = Util.addParam('search', this.searchTarget.value)
-            :
-            newUrl = Util.deleteParam(['search', 'page'])
+        switch (filter) {
+            case 'search':
+                this.searchTarget.value !== ''
+                    ?
+                    newUrl = Util.addParam('search', this.searchTarget.value)
+                    :
+                    newUrl = Util.deleteParam(['search', 'page'])
+                break;
+            case 'uuid':
+                this.uuidTarget.value !== ''
+                    ?
+                    newUrl =  Util.addParam('uuid', this.uuidTarget.value)
+                    :
+                    newUrl = Util.deleteParam(['uuid', 'page'])
+                break;
+            default:
+                throw new Error();
+        }
 
         window.history.pushState({}, "", newUrl);
 
@@ -189,7 +204,41 @@ export default class extends Controller {
 
             clearTimeout(this.timer);
 
-        },200) // 500
+        },200)
+    }
+
+    onSingleCheckboxChange = async (e) => {
+        const filter = e.target.getAttribute('data-checkbox');
+
+        const value = e.target.checked;
+
+        switch (filter) {
+            case 'isHardcore':
+                this.isHardcore = value;
+                break;
+            case 'hasMedia':
+                this.hasMedia = value;
+                break;
+            default:
+                throw new Error();
+
+        }
+
+        let newUrl;
+
+        value
+            ? newUrl = Util.addParam(filter, value)
+            : newUrl = Util.deleteParam(filter);
+
+        window.history.pushState({}, "", newUrl);
+
+        const fieldToSort = this.buildParam();
+
+        const filteredData = await Util.getFilteredData('questions', fieldToSort);
+
+        document.querySelector('#questions-block').innerHTML = filteredData;
+
+        this.deletePageParam();
     }
 
     deletePageParam = () => {
@@ -199,19 +248,45 @@ export default class extends Controller {
     }
 
     buildParam = () => {
+        const values = {
+            text: {
+                search: this.searchTarget.value,
+                uuid: this.searchTarget.uuid
+            },
+            array: {
+                categories: this.categories,
+                questionTypes: this.questionTypes,
+                statuses: this.statuses
+            },
+            bool: {
+                isHardcore: this.isHardcore,
+                hasMedia: this.hasMedia
+            }
+        }
+
         let param = {};
 
-        if (this.searchTarget.value !== '')
-            param['search'] = this.searchTarget.value;
-
-        if (this.categories.length > 0 && this.categories[0] !== 'all')
-            param['categories'] = this.categories.join(',');
-
-        if (this.questionTypes.length > 0 && this.questionTypes[0] !== 'all')
-            param['questionTypes'] = this.questionTypes.join(',');
-
-        if (this.statuses.length > 0 && this.statuses[0] !== 'all')
-            param['statuses'] = this.statuses.join(',');
+        //REVIEW values[valueType] = paramName - values[valueType][paramName] = paramValue
+        for (const valueType in values) {
+            for (const paramName in values[valueType]) {
+                switch (valueType) {
+                    case 'text':
+                        if (values[valueType][paramName])
+                            param[paramName] = values[valueType][paramName];
+                        break;
+                    case 'array':
+                        if (values[valueType][paramName].length > 0 && values[valueType][paramName][0] !== 'all')
+                            param[paramName] = values[valueType][paramName].join(',');
+                        break;
+                    case 'bool':
+                        if (values[valueType][paramName])
+                            param[paramName] = values[valueType][paramName]
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         console.log("finalParam",param);
         return param

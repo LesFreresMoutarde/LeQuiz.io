@@ -199,6 +199,10 @@ class QuestionController extends AbstractController
                         ' LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'additional\')) LIKE LOWER(:search)';
                         $paramsReplacements['search'] = '%'.$value.'%';
                         break;
+                    case 'uuid':
+                        $whereParts[] = 'q.id = :uuid';
+                        $paramsReplacements['uuid'] = $value;
+                        break;
                     case 'categories':
                         $value = explode(',', $value);
 
@@ -230,6 +234,12 @@ class QuestionController extends AbstractController
                         $whereParts[] = 'LOWER(q.status) IN (:statuses)';
                         $paramsReplacements['statuses'] = explode(',', $value);
                         break;
+                    case 'isHardcore':
+                        $whereParts[] = 'q.isHardcore = true';
+                        break;
+                    case 'hasMedia':
+                        $whereParts[] = 'JSON_GET_TEXT(q.media, \'url\') != \'\'';
+                        break;
                 }
             }
 
@@ -254,7 +264,7 @@ class QuestionController extends AbstractController
 
     private function getParamFromUrl(Request $request): array
     {
-        $possibleFields = ['search', 'categories', 'questionTypes', 'statuses'];
+        $possibleFields = ['search', 'uuid', 'categories', 'questionTypes', 'statuses', 'isHardcore', 'hasMedia'];
         $params = [];
 
         for ($i = 0; $i < count($possibleFields); $i++) {
