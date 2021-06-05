@@ -292,4 +292,46 @@ export default class extends Controller {
         return param
     }
 
+    onFullAnswer = (e) => {
+        const buttonElt = e.target;
+
+        const index = buttonElt.getAttribute('data-full-answer-button');
+
+        const answerDivElt = document.querySelector(`div[data-full-answer="${index}"]`);
+
+        buttonElt.classList.toggle('bi-plus-square-fill');
+        buttonElt.classList.toggle('bi-dash-square-fill');
+        buttonElt.classList.toggle('text-primary');
+        buttonElt.classList.toggle('text-danger')
+
+        answerDivElt.classList.toggle('d-none');
+    }
+
+    onFullAnswerMouseEvent= (e) => {
+        const buttonElt = e.target;
+
+        switch (e.type) {
+            case 'mouseenter':
+                if (buttonElt.classList.contains('bi-plus-square')) {
+                    buttonElt.classList.remove('bi-plus-square');
+                    buttonElt.classList.add('bi-plus-square-fill');
+                    return;
+                }
+                buttonElt.classList.remove('bi-dash-square');
+                buttonElt.classList.add('bi-dash-square-fill');
+                break;
+            case 'mouseleave':
+                if (buttonElt.classList.contains('bi-plus-square-fill')) {
+                    buttonElt.classList.remove('bi-plus-square-fill');
+                    buttonElt.classList.add('bi-plus-square');
+                    return;
+                }
+                buttonElt.classList.remove('bi-dash-square-fill');
+                buttonElt.classList.add('bi-dash-square');
+                break;
+            default:
+                throw new Error();
+        }
+    }
+
 }

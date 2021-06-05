@@ -134,7 +134,8 @@
         <div class="row mb-3">
             <div class="col-2">
                 <label class="me-1 form-check-label">
-                    <input type="checkbox" class="form-check-input" data-checkbox="isHardcore" data-action="change->question#onSingleCheckboxChange"/>
+                    <input type="checkbox" class="form-check-input"
+                           data-checkbox="isHardcore" data-action="change->question#onSingleCheckboxChange"/>
                     <span>Hardcore</span>
                 </label>
 
@@ -147,7 +148,7 @@
         <button data-action="question#test">Test</button>
     </div>
     {% block questions %}
-    <div id="questions-block">
+    <div id="questions-block" data-controller="question">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -169,10 +170,15 @@
                 <tr>
                     <td>{{ question.getId() }}</td>
                     <td>{{ question.getContent() }}</td>
-                    <td>
+                    <td style="max-width: 200px">
                         {% if 'input' in question.getTypes() %}
                             {{ question.answer.answers[0].content }}
-                            <div style="background-color: red">
+                            <i class="bi bi-plus-square pointer-cursor text-primary"
+                               data-full-answer-button="{{ loop.index }}"
+                               data-action="click->question#onFullAnswer
+                                   mouseenter->question#onFullAnswerMouseEvent
+                                   mouseleave->question#onFullAnswerMouseEvent"></i>
+                            <div data-full-answer="{{ loop.index }}" style="background-color: red" class="d-none">
                                 {% for answer in question.answer.answers %}
                                     {{ answer.content }}
                                 {% endfor %}
@@ -181,18 +187,24 @@
                                 {% endif %}
                             </div>
                         {% elseif 'qcm' in question.getTypes() %}
+                            <div style="white-space: nowrap">
                             {% for answer in question.answer.answers %}
                                 {% if answer.is_good_answer %}
                                     {{ answer.content }}
                                 {% endif %}
                             {% endfor %}
-                            <div style="background-color: red">
+                                <i class="bi bi-plus-square pointer-cursor text-primary"
+                                   data-full-answer-button="{{ loop.index }}"
+                                   data-action="click->question#onFullAnswer
+                                   mouseenter->question#onFullAnswerMouseEvent
+                                   mouseleave->question#onFullAnswerMouseEvent"style=""></i>
+                            </div>
+                            <div data-full-answer="{{ loop.index }}" style="background-color: red" class="d-none">
                                 {% for answer in question.answer.answers %}
                                     {{ answer.content }} {% if answer.is_good_answer  %} (Bonne réponse) {% endif %}
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        SEE MORE
                     </td>
                     <td>{% for type in question.getTypes() %}
                             {{ type.getLabel() }}
