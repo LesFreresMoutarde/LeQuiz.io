@@ -170,39 +170,58 @@
                 <tr>
                     <td>{{ question.getId() }}</td>
                     <td>{{ question.getContent() }}</td>
-                    <td style="max-width: 200px">
+                    <td>
                         {% if 'input' in question.getTypes() %}
-                            {{ question.answer.answers[0].content }}
-                            <i class="bi bi-plus-square pointer-cursor text-primary"
-                               data-full-answer-button="{{ loop.index }}"
-                               data-action="click->question#onFullAnswer
-                                   mouseenter->question#onFullAnswerMouseEvent
-                                   mouseleave->question#onFullAnswerMouseEvent"></i>
-                            <div data-full-answer="{{ loop.index }}" style="background-color: red" class="d-none">
-                                {% for answer in question.answer.answers %}
-                                    {{ answer.content }}
-                                {% endfor %}
-                                {% if answer.additionnal is defined %}
-                                    <a href="#">Infos supplémentaires</a>
-                                {% endif %}
+                            <div style="white-space: nowrap; display: flex" class="mb-2">
+                                <i class="bi bi-plus-square pointer-cursor text-primary me-2"
+                                   data-full-answer-button="{{ loop.index }}"
+                                   data-action="click->question#onFullAnswer
+                                       mouseenter->question#onFullAnswerMouseEvent
+                                       mouseleave->question#onFullAnswerMouseEvent"></i>
+                                <span style="white-space: normal;">{{ question.answer.answers[0].content }}</span>
+                            </div>
+                            <div data-full-answer="{{ loop.index }}" class="d-none card">
+                                <div class="card-body">
+                                    {% for answer in question.answer.answers %}
+                                        <span style="display: block">{{ answer.content }}</span>
+                                        <div style="height: 1px; width: 100%; background-color: #c2cad2"
+                                             class="my-1"></div>
+                                    {% endfor %}
+                                    {% if answer.additionnal is defined %}
+                                        <a href="#">Infos supplémentaires</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         {% elseif 'qcm' in question.getTypes() %}
-                            <div style="white-space: nowrap">
-                            {% for answer in question.answer.answers %}
-                                {% if answer.is_good_answer %}
-                                    {{ answer.content }}
-                                {% endif %}
-                            {% endfor %}
-                                <i class="bi bi-plus-square pointer-cursor text-primary"
+                            <div style="white-space: nowrap; display: flex" class="mb-2">
+                                <i class="bi bi-plus-square pointer-cursor text-primary me-2"
                                    data-full-answer-button="{{ loop.index }}"
                                    data-action="click->question#onFullAnswer
                                    mouseenter->question#onFullAnswerMouseEvent
-                                   mouseleave->question#onFullAnswerMouseEvent"style=""></i>
-                            </div>
-                            <div data-full-answer="{{ loop.index }}" style="background-color: red" class="d-none">
+                                   mouseleave->question#onFullAnswerMouseEvent"style="">
+                                </i>
                                 {% for answer in question.answer.answers %}
-                                    {{ answer.content }} {% if answer.is_good_answer  %} (Bonne réponse) {% endif %}
+                                    {% if answer.is_good_answer %}
+                                        <span style="white-space: normal;">{{ answer.content }}</span>
+                                    {% endif %}
                                 {% endfor %}
+                            </div>
+                            <div data-full-answer="{{ loop.index }}" class="d-none card bg-light">
+                                <div class="card-body">
+                                    {% for answer in question.answer.answers %}
+                                        <span style="display: block">
+                                            {{ answer.content }}
+                                            {% if answer.is_good_answer  %}
+                                                <span class="text-success">(Bonne réponse)</span>
+                                            {% endif %}
+                                        </span>
+                                        <div style="height: 1px; width: 100%; background-color: #c2cad2"
+                                             class="my-1"></div>
+                                    {% endfor %}
+                                    {% if answer.additionnal is defined %}
+                                        <a href="#">Infos supplémentaires</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         {% endif %}
                     </td>
