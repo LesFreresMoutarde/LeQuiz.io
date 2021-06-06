@@ -12,80 +12,117 @@ export default class extends Controller {
     timer;
 
     categoriesSelect;
+    search;
+    uuid;
     categories = ['all']; //TODO Handling in connect();
     questionTypes = ['all'];
     statuses = ['all'];
     isHardcore;
     hasMedia;
 
+    filters = {
+        search: '',
+        uuid: '',
+        categories: ['all'],
+        questionTypes: ['all'],
+        statuses: ['all'],
+        isHardcore: false,
+        hasMedia: false,
+    }
+
+    initialize = () => {
+        console.log('init');
+
+        this.page = parseInt(Util.getParam('page', 1, 'number'));
+        const paramsInUrl = Util.getParams();
+
+        // delete paramsInUrl['page'];
+
+        this.fill(paramsInUrl);
+    }
+
     connect = () => {
         console.log('connect');
         console.log(window.location.href);
         this.page = parseInt(Util.getParam('page', 1, 'number'));
         console.log("this page", this.page);
-        const paramsInUrl = Util.getParams();
-
-
-        if (paramsInUrl && paramsInUrl['page'])
-            delete paramsInUrl['page'];
-        console.log(paramsInUrl);
-        // Récupérer param
-
     }
 
-    fillInputValues = (params) => {
-        const arrayProperties = ['categories', 'questionTypes', 'statuses'];
-        const values = this.getValuesMapping();
 
-        for (const valueType in values) {
-            for (const paramName in values[valueType]) {
-                switch (valueType) {
-                    case 'text':
-                        if (params[paramName])
-                        values[valueType][paramName] = params[paramName];
-                        break;
-                    case 'array':
-                        if (values[valueType][paramName].length > 0 && values[valueType][paramName][0] !== 'all')
-                            param[paramName] = values[valueType][paramName].join(',');
-                        break;
-                    case 'bool':
-                        if (values[valueType][paramName])
-                            param[paramName] = values[valueType][paramName]
-                        break;
-                }
+    // Cannot use
+    fill = (params) => {
+
+        if (!params) return;
+
+        delete params['page'];
+
+        let inputElt;
+
+        for (const param in params) {
+            switch (typeof this.filters[param]) {
+                case "string":
+                case "boolean":
+                    this.filters[param] = params[param];
+                    inputElt = document.querySelector(`#${param}-input`);
+                    inputElt.type === 'checkbox'
+                        ? inputElt.checked = !!this.filters[param]
+                        : inputElt.value = this.filters[param];
+                    break;
+                case "object":
+                    this.filters[param] = params[param].split(',');
+                    const checkboxes = document.querySelectorAll(`input[data-checkboxes="${param}"]`);
+                    checkboxes.forEach(checkbox => {
+                        if (this.filters[param].includes(checkbox.value))
+                            checkbox.checked = true;
+                    })
+                    break;
+                default:
+                    throw new Error();
             }
         }
 
-    }
+        // for (const paramName in params) {
+        //     console.log(params[paramName])
+        //     let inputElt;
+        //     switch (paramName) {
+        //         case 'search':
+        //             this.search = params[paramName];
+        //             inputElt = document.querySelector('#search-input');
+        //             inputElt.value = params[paramName];
+        //             break;
+        //         case 'uuid':
+        //             this.uuid = params[paramName];
+        //             inputElt = document.querySelector('#search-input');
+        //             inputElt.value = params[paramName];
+        //             break;
+        //         case 'categories':
+        //             this.categories = params[paramName].split(',');
+        //             const categoriesCheckboxes = document.querySelectorAll('input[data-checkboxes="categories"]');
+        //             categoriesCheckboxes.forEach(checkbox => {
+        //                 console.log
+        //             })
+        //             break;
+        //         case 'questionTypes':
+        //             this.questionTypes = params[paramName].split(',');
+        //             break;
+        //         case 'statuses':
+        //             this.statuses = params[paramName].split(',');
+        //             break;
+        //         case 'isHardcore':
+        //             this.isHardcore = !!params[paramName];
+        //             break;
+        //         case 'hasMedia':
+        //             this.hasMedia = !!params[paramName];
+        //             break;
+        //         default:
+        //             throw new Error();
+        //     }
+        // }
 
-    getValuesMapping = () => {
-        return {
-            text: {
-                search: this.searchTarget.value,
-                uuid: this.uuidTarget.value
-            },
-            array: {
-                categories: this.categories,
-                questionTypes: this.questionTypes,
-                statuses: this.statuses
-            },
-            bool: {
-                isHardcore: this.isHardcore,
-                hasMedia: this.hasMedia
-            }
-        }
     }
 
     test = () => {
-        console.log("categories", this.categories);
-        let newUrl = Util.addParam("toto", 'jolo');
-        window.history.pushState({}, "", newUrl);
-        newUrl = Util.addParam("lourd", 'frero');
-        window.history.pushState({}, "", newUrl);
-        // newUrl = Util.deleteParam('fake');
-        // window.history.pushState({}, "", newUrl);
-        // newUrl = Util.deleteParam('toto');
-        // window.history.pushState({}, "", newUrl);
+        this.buildParam();
     }
 
     showCheckboxes = (e) => {
@@ -134,19 +171,9 @@ export default class extends Controller {
 
         if (checkboxesChangedCounter === 0) return;
 
-        switch (checkboxElts[0].getAttribute('data-checkboxes')) {
-            case 'categories':
-                this.categories = this.addAllToFilter('categories');
-                break;
-            case 'questionTypes':
-                this.questionTypes = this.addAllToFilter('questionTypes');
-                break;
-            case 'statuses':
-                this.statuses = this.addAllToFilter('statuses');
-                break;
-            default:
-                throw new Error();
-        }
+        const filter = checkboxElts[0].getAttribute('data-checkboxes')
+
+        this.filters[filter] = this.addAllToFilter(filter);
 
         const fieldsParam = this.buildParam();
 
@@ -163,19 +190,9 @@ export default class extends Controller {
             .filter(checkbox => checkbox.checked)
             .map((checkbox) => checkbox.value);
 
-        switch (checkboxElts[0].getAttribute('data-checkboxes')) {
-            case 'categories':
-                this.categories = this.handleCheckboxChange('categories', checkboxElts, checkboxesChecked);
-                break;
-            case 'questionTypes':
-                this.questionTypes = this.handleCheckboxChange('questionTypes', checkboxElts, checkboxesChecked);
-                break;
-            case 'statuses':
-                this.statuses = this.handleCheckboxChange('statuses', checkboxElts, checkboxesChecked);
-                break;
-            default:
-                throw new Error();
-        }
+        const filter = checkboxElts[0].getAttribute('data-checkboxes')
+
+        this.filters[filter] = this.handleCheckboxChange(filter, checkboxElts, checkboxesChecked);
 
         const fieldsParam = this.buildParam();
 
@@ -216,35 +233,25 @@ export default class extends Controller {
 
         clearTimeout(this.timer)
 
+        const value = e.target.value;
+        console.log("value", value);
+
         const filter = e.target.getAttribute('data-input');
 
         let newUrl;
 
-        switch (filter) {
-            case 'search':
-                this.searchTarget.value !== ''
-                    ?
-                    newUrl = Util.addParam('search', this.searchTarget.value)
-                    :
-                    newUrl = Util.deleteParam(['search', 'page'])
-                break;
-            case 'uuid':
-                this.uuidTarget.value !== ''
-                    ?
-                    newUrl =  Util.addParam('uuid', this.uuidTarget.value)
-                    :
-                    newUrl = Util.deleteParam(['uuid', 'page'])
-                break;
-            default:
-                throw new Error();
-        }
+        this.filters[filter] = e.target.value;
+        this.filters[filter]
+            ? newUrl = Util.addParam(filter, this.filters[filter])
+            : newUrl = Util.deleteParam([filter, 'page']);
 
         window.history.pushState({}, "", newUrl);
 
         this.timer = setTimeout(async () => {
 
             // Database is waiting for a valid uuid, otherwise it crashes.
-            if (filter === 'uuid' && !Util.isUuidValid(this.uuidTarget.value) && this.uuidTarget.value !== '') {
+            console.log('uuid', this.uuid)
+            if (filter === 'uuid' && !Util.isUuidValid(this.filters.uuid) && this.filters.uuid !== '') {
                 console.log('INVALID UUID');
                 //TODO Toastr
                 clearTimeout(this.timer);
@@ -271,17 +278,7 @@ export default class extends Controller {
 
         const value = e.target.checked;
 
-        switch (filter) {
-            case 'isHardcore':
-                this.isHardcore = value;
-                break;
-            case 'hasMedia':
-                this.hasMedia = value;
-                break;
-            default:
-                throw new Error();
-
-        }
+        this.filters[filter] = value;
 
         let newUrl;
 
@@ -307,30 +304,21 @@ export default class extends Controller {
     }
 
     buildParam = () => {
-        const values = this.getValuesMapping();
-
         let param = {};
 
-        // values[valueType] = paramName - values[valueType][paramName] = paramValue
-        for (const valueType in values) {
-            for (const paramName in values[valueType]) {
-                switch (valueType) {
-                    case 'text':
-                    case 'bool':
-                        if (values[valueType][paramName])
-                            param[paramName] = values[valueType][paramName];
-                        break;
-                    case 'array':
-                        if (values[valueType][paramName].length > 0 && values[valueType][paramName][0] !== 'all')
-                            param[paramName] = values[valueType][paramName].join(',');
-                        break;
-                    // case 'bool':
-                    //     if (values[valueType][paramName])
-                    //         param[paramName] = values[valueType][paramName]
-                    //     break;
-                    default:
-                        break;
-                }
+        for (const filter in this.filters) {
+            switch (typeof this.filters[filter]) {
+                case "string":
+                case "boolean":
+                    if (this.filters[filter])
+                        param[filter] = this.filters[filter];
+                    break;
+                case "object":
+                    if (this.filters[filter].length > 0 && this.filters[filter][0] !== 'all')
+                        param[filter] = this.filters[filter].join(',')
+                    break;
+                default:
+                    throw new Error();
             }
         }
 

@@ -7,6 +7,7 @@ use App\Manager\CrudManager;
 use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
+use App\Util\Util;
 use ContainerL1zqxd7\getConsole_ErrorListenerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -200,8 +201,10 @@ class QuestionController extends AbstractController
                         $paramsReplacements['search'] = '%'.$value.'%';
                         break;
                     case 'uuid':
-                        $whereParts[] = 'q.id = :uuid';
-                        $paramsReplacements['uuid'] = $value;
+                        if (Util::isUuidValid($value)) {
+                            $whereParts[] = 'q.id = :uuid';
+                            $paramsReplacements['uuid'] = $value;
+                        }
                         break;
                     case 'categories':
                         $value = explode(',', $value);

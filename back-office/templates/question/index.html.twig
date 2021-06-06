@@ -7,16 +7,16 @@
     <div data-controller="question" data-action="click->question#hideCheckboxes">
         <div class="row mb-3">
             <div class="col-3">
-                <input type="text" data-input="uuid" data-question-target="uuid" data-action="question#onInput" placeholder="uuid" class="form-control"/>
+                <input type="text" data-input="uuid" id="uuid-input" data-question-target="uuid" data-action="question#onInput" placeholder="uuid" class="form-control"/>
             </div>
             <div class="col-3">
-                <input type="text" data-input="search" data-question-target="search" data-action="question#onInput" placeholder="question ou réponse" class="form-control"/>
+                <input type="text" data-input="search" id="search-input" data-action="question#onInput" placeholder="question ou réponse" class="form-control"/>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-3">
                 <div class="form-select d-flex justify-content-start"
-                     data-action="click->question#showCheckboxes" data-checkboxes-for="categories" data-filter-select>
+                     data-action="click->question#showCheckboxes" id="categories-input" data-checkboxes-for="categories" data-filter-select>
                     <span class="placeholder" data-click-not-hiding>Catégories</span>
                 </div>
                 <div id="categories" class="checkboxes-div d-none" data-click-not-hiding>
@@ -56,7 +56,7 @@
             </div>
             <div class="col-3">
                 <div class="form-select d-flex justify-content-start"
-                     data-action="click->question#showCheckboxes" data-checkboxes-for="questionTypes" data-filter-select>
+                     data-action="click->question#showCheckboxes" id="questionTypes-input" data-checkboxes-for="questionTypes" data-filter-select>
                     <span class="placeholder" data-click-not-hiding>Types</span>
                 </div>
                 <div id="questionTypes" class="checkboxes-div d-none" data-click-not-hiding>
@@ -94,7 +94,7 @@
             </div>
             <div class="col-3">
                 <div class="form-select d-flex justify-content-start"
-                     data-action="click->question#showCheckboxes" data-checkboxes-for="statuses" data-filter-select>
+                     data-action="click->question#showCheckboxes" id="statuses-input" data-checkboxes-for="statuses" data-filter-select>
                     <span class="placeholder" data-click-not-hiding>Statuts</span>
                 </div>
                 <div id="statuses" class="checkboxes-div d-none" data-click-not-hiding>
@@ -134,13 +134,14 @@
         <div class="row mb-3">
             <div class="col-2">
                 <label class="me-1 form-check-label">
-                    <input type="checkbox" class="form-check-input"
+                    <input type="checkbox" class="form-check-input" id="isHardcore-input"
                            data-checkbox="isHardcore" data-action="change->question#onSingleCheckboxChange"/>
                     <span>Hardcore</span>
                 </label>
 
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" data-checkbox="hasMedia" data-action="change->question#onSingleCheckboxChange"/>
+                    <input type="checkbox" class="form-check-input" id="hasMedia-input"
+                           data-checkbox="hasMedia" data-action="change->question#onSingleCheckboxChange"/>
                     <span>Media</span>
                 </label>
             </div>
