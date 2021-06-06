@@ -3,7 +3,7 @@
 {% block title %}Question index{% endblock %}
 
 {% block body %}
-    <h1>Question index</h1>
+    <h1 class="mb-3">Questions</h1>
     <div data-controller="question" data-action="click->question#hideCheckboxes">
         <div class="row mb-3">
             <div class="col-3">
@@ -148,128 +148,141 @@
         <button data-action="question#test">Test</button>
     </div>
     {% block questions %}
-    <div id="questions-block" data-controller="question">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Uuid</th>
-                    <th>Contenu</th>
-                    <th>Réponse</th>
-                    <th>Types</th>
-                    <th>Catégories</th>
-                    <th>Hardcore</th>
-                    <th>Statuts</th>
-                    <th>Media</th>
-                    <th>CreatedAt</th>
-                    <th>UpdatedAt</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for question in questions %}
-                <tr>
-                    <td>{{ question.getId() }}</td>
-                    <td>{{ question.getContent() }}</td>
-                    <td>
-                        {% if 'input' in question.getTypes() %}
-                            <div style="white-space: nowrap; display: flex" class="mb-2">
-                                <i class="bi bi-plus-square pointer-cursor text-primary me-2"
-                                   data-full-answer-button="{{ loop.index }}"
-                                   data-action="click->question#onFullAnswer
+        <div id="questions-block" data-controller="question" class="mb-3">
+            <div class="count mb-2">
+                <span style="font-size: 1.1em">Total : </span><span class="badge bg-primary" style="font-size: 1em">{{ questions.getTotalItemCount }}</span>
+            </div>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Uuid</th>
+                        <th>Contenu</th>
+                        <th>Réponse</th>
+                        <th>Types</th>
+                        <th>Catégories</th>
+                        <th>Hardcore</th>
+                        <th>Statut</th>
+                        <th>Media</th>
+                        <th>Créé le</th>
+                        <th>Modifié le</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for question in questions %}
+                    <tr>
+                        <td>{{ question.getId() }}</td>
+                        <td>{{ question.getContent() }}</td>
+                        <td>
+                            {% if 'input' in question.getTypes() %}
+                                <div style="white-space: nowrap; display: flex" class="mb-2">
+                                    <i class="bi bi-plus-square pointer-cursor text-primary me-2"
+                                       data-full-answer-button="{{ loop.index }}"
+                                       data-action="click->question#onFullAnswer
+                                           mouseenter->question#onFullAnswerMouseEvent
+                                           mouseleave->question#onFullAnswerMouseEvent">
+                                    </i>
+                                    <span style="white-space: normal;">{{ question.answer.answers[0].content }}</span>
+                                </div>
+                                <div data-full-answer="{{ loop.index }}" class="d-none card">
+                                    <div class="card-body">
+                                        {% for answer in question.answer.answers %}
+                                            <span style="display: block">{{ answer.content }}</span>
+                                            <div style="height: 1px; width: 100%; background-color: #c2cad2"
+                                                 class="my-1"></div>
+                                        {% endfor %}
+    {#                                        TODO QUAND QUESTIONS SHOW SERA REFAIT#}
+                                        {% if question.answer.additional is defined %}
+                                            <a href="#">Infos supplémentaires</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% elseif 'qcm' in question.getTypes() %}
+                                <div style="white-space: nowrap; display: flex" class="mb-2">
+                                    <i class="bi bi-plus-square pointer-cursor text-primary me-2"
+                                       data-full-answer-button="{{ loop.index }}"
+                                       data-action="click->question#onFullAnswer
                                        mouseenter->question#onFullAnswerMouseEvent
-                                       mouseleave->question#onFullAnswerMouseEvent"></i>
-                                <span style="white-space: normal;">{{ question.answer.answers[0].content }}</span>
-                            </div>
-                            <div data-full-answer="{{ loop.index }}" class="d-none card">
-                                <div class="card-body">
+                                       mouseleave->question#onFullAnswerMouseEvent">
+                                    </i>
                                     {% for answer in question.answer.answers %}
-                                        <span style="display: block">{{ answer.content }}</span>
-                                        <div style="height: 1px; width: 100%; background-color: #c2cad2"
-                                             class="my-1"></div>
+                                        {% if answer.is_good_answer %}
+                                            <span style="white-space: normal;">{{ answer.content }}</span>
+                                        {% endif %}
                                     {% endfor %}
-                                    {% if answer.additionnal is defined %}
-                                        <a href="#">Infos supplémentaires</a>
-                                    {% endif %}
                                 </div>
-                            </div>
-                        {% elseif 'qcm' in question.getTypes() %}
-                            <div style="white-space: nowrap; display: flex" class="mb-2">
-                                <i class="bi bi-plus-square pointer-cursor text-primary me-2"
-                                   data-full-answer-button="{{ loop.index }}"
-                                   data-action="click->question#onFullAnswer
-                                   mouseenter->question#onFullAnswerMouseEvent
-                                   mouseleave->question#onFullAnswerMouseEvent"style="">
-                                </i>
-                                {% for answer in question.answer.answers %}
-                                    {% if answer.is_good_answer %}
-                                        <span style="white-space: normal;">{{ answer.content }}</span>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div data-full-answer="{{ loop.index }}" class="d-none card bg-light">
-                                <div class="card-body">
-                                    {% for answer in question.answer.answers %}
-                                        <span style="display: block">
-                                            {{ answer.content }}
-                                            {% if answer.is_good_answer  %}
-                                                <span class="text-success">(Bonne réponse)</span>
-                                            {% endif %}
-                                        </span>
-                                        <div style="height: 1px; width: 100%; background-color: #c2cad2"
-                                             class="my-1"></div>
-                                    {% endfor %}
-                                    {% if answer.additionnal is defined %}
-                                        <a href="#">Infos supplémentaires</a>
-                                    {% endif %}
+                                <div data-full-answer="{{ loop.index }}" class="d-none card bg-light">
+                                    <div class="card-body">
+                                        {% for answer in question.answer.answers %}
+                                            <span style="display: block">
+                                                {{ answer.content }}
+                                                {% if answer.is_good_answer  %}
+                                                    <span class="text-success">(Bonne réponse)</span>
+                                                {% endif %}
+                                            </span>
+                                            <div style="height: 1px; width: 100%; background-color: #c2cad2"
+                                                 class="my-1"></div>
+                                        {% endfor %}
+                                        {% if question.answer.additional is defined %}
+    {#                                        TODO QUAND QUESTIONS SHOW SERA REFAIT#}
+                                            <a data-bs-toggle="tooltip">Infos supplémentaires</a>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    </td>
-                    <td>{% for type in question.getTypes() %}
-                            {{ type.getLabel() }}
-                        {% endfor %}
-                    </td>
-                    <td>{% for category in question.getCategories() %}
-                            {{ category.getLabel() }}
-                        {% endfor %}
-                    </td>
-                    <td>{{ question.getIsHardcore() }}</td>
-                    <td>{{ question.getStatus() }}</td>
-    {#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
-
-
-    {#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
-                    <td>{% if question.media|length > 0 %}
-                        OUI
-                        {% endif %}
-
-    {#                    <table>#}
-    {#                        {% for key, field in question.media %}#}
-    {#                            <tr>#}
-    {#                                <th>{{ key }} </th>#}
-    {#                                <td>{{ field }}</td>#}
-    {#                            </tr>#}
-    {#                        {% endfor %}#}
-    {#                    </table>#}
-                    </td>
-                    <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
-                    <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
-                    <td>
-                        <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
-                        <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="10">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div class="navigation">
-            {{ knp_pagination_render(questions) }}
+                            {% endif %}
+                        </td>
+                        <td>{% for type in question.getTypes() %}
+                                <span style="display: block">{{ type.getLabel() }}</span>
+                            {% endfor %}
+                        </td>
+                        <td>{% for category in question.getCategories() %}
+                                <span style="display: block">{{ category.getLabel() }}</span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if question.getIsHardcore() %}
+                                <i class="bi bi-check-lg text-success"></i>
+                            {% else %}
+                                <i class="bi bi-x-lg text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td>{{ question.getStatus() }}</td>
+                        <td>{% if question.media|length > 0 %}
+                                <i class="bi bi-check-lg text-success"></i>
+                            {% else %}
+                                <i class="bi bi-x-lg text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
+                        <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
+                        <td>
+                            <a href="{{ path('question_show', {'id': question.id}) }}"
+                               class="btn btn-sm btn-outline-primary mb-2"
+                            >
+                                Afficher
+                            </a>
+                            <a href="{{ path('question_edit', {'id': question.id}) }}"
+                               class="btn btn-sm btn-outline-primary"
+                            >
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="10">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation">
+                {{ knp_pagination_render(questions) }}
+            </div>
         </div>
-    </div>
     {% endblock %}
-    <a href="{{ path('question_new') }}">Create new</a>
+    <a href="{{ path('question_new') }}"
+       class="btn btn-primary"
+    >
+        Ajouter
+    </a>
 {% endblock %}
