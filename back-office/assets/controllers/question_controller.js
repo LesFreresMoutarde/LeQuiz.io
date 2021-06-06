@@ -23,6 +23,57 @@ export default class extends Controller {
         console.log(window.location.href);
         this.page = parseInt(Util.getParam('page', 1, 'number'));
         console.log("this page", this.page);
+        const paramsInUrl = Util.getParams();
+
+
+        if (paramsInUrl && paramsInUrl['page'])
+            delete paramsInUrl['page'];
+        console.log(paramsInUrl);
+        // Récupérer param
+
+    }
+
+    fillInputValues = (params) => {
+        const arrayProperties = ['categories', 'questionTypes', 'statuses'];
+        const values = this.getValuesMapping();
+
+        for (const valueType in values) {
+            for (const paramName in values[valueType]) {
+                switch (valueType) {
+                    case 'text':
+                        if (params[paramName])
+                        values[valueType][paramName] = params[paramName];
+                        break;
+                    case 'array':
+                        if (values[valueType][paramName].length > 0 && values[valueType][paramName][0] !== 'all')
+                            param[paramName] = values[valueType][paramName].join(',');
+                        break;
+                    case 'bool':
+                        if (values[valueType][paramName])
+                            param[paramName] = values[valueType][paramName]
+                        break;
+                }
+            }
+        }
+
+    }
+
+    getValuesMapping = () => {
+        return {
+            text: {
+                search: this.searchTarget.value,
+                uuid: this.uuidTarget.value
+            },
+            array: {
+                categories: this.categories,
+                questionTypes: this.questionTypes,
+                statuses: this.statuses
+            },
+            bool: {
+                isHardcore: this.isHardcore,
+                hasMedia: this.hasMedia
+            }
+        }
     }
 
     test = () => {
@@ -192,6 +243,14 @@ export default class extends Controller {
 
         this.timer = setTimeout(async () => {
 
+            // Database is waiting for a valid uuid, otherwise it crashes.
+            if (filter === 'uuid' && !Util.isUuidValid(this.uuidTarget.value) && this.uuidTarget.value !== '') {
+                console.log('INVALID UUID');
+                //TODO Toastr
+                clearTimeout(this.timer);
+                return;
+            }
+
             const fieldsToSort = this.buildParam();
 
             console.log("fieldsToSort", fieldsToSort);
@@ -248,29 +307,16 @@ export default class extends Controller {
     }
 
     buildParam = () => {
-        const values = {
-            text: {
-                search: this.searchTarget.value,
-                uuid: this.searchTarget.uuid
-            },
-            array: {
-                categories: this.categories,
-                questionTypes: this.questionTypes,
-                statuses: this.statuses
-            },
-            bool: {
-                isHardcore: this.isHardcore,
-                hasMedia: this.hasMedia
-            }
-        }
+        const values = this.getValuesMapping();
 
         let param = {};
 
-        //REVIEW values[valueType] = paramName - values[valueType][paramName] = paramValue
+        // values[valueType] = paramName - values[valueType][paramName] = paramValue
         for (const valueType in values) {
             for (const paramName in values[valueType]) {
                 switch (valueType) {
                     case 'text':
+                    case 'bool':
                         if (values[valueType][paramName])
                             param[paramName] = values[valueType][paramName];
                         break;
@@ -278,10 +324,10 @@ export default class extends Controller {
                         if (values[valueType][paramName].length > 0 && values[valueType][paramName][0] !== 'all')
                             param[paramName] = values[valueType][paramName].join(',');
                         break;
-                    case 'bool':
-                        if (values[valueType][paramName])
-                            param[paramName] = values[valueType][paramName]
-                        break;
+                    // case 'bool':
+                    //     if (values[valueType][paramName])
+                    //         param[paramName] = values[valueType][paramName]
+                    //     break;
                     default:
                         break;
                 }

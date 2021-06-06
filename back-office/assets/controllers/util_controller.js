@@ -1,4 +1,4 @@
-import * as url from "url";
+import {validate} from "uuid";
 
 class Util {
 
@@ -18,6 +18,23 @@ class Util {
         if (type === 'number' && isNaN(parseInt(param))) return defaultValue;
 
         return param;
+    }
+
+    static getParams = () => {
+
+        const queryString = window.location.search;
+
+        if (!queryString) return null;
+
+        const params = {};
+
+        const searchParams = new URLSearchParams(queryString);
+
+        for (const [paramName, paramValue] of searchParams.entries()) {
+            params[paramName] = paramValue;
+        }
+
+        return params;
     }
 
     static addParam = (paramName, paramValue) => {
@@ -73,6 +90,10 @@ class Util {
 
         return await response.text();
 
+    }
+
+    static isUuidValid = (uuid) => {
+        return validate(uuid);
     }
 }
 

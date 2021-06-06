@@ -195,8 +195,8 @@ class QuestionController extends AbstractController
             foreach ($params as $paramName => $value) {
                 switch ($paramName) {
                     case 'search':
-                        $whereParts[] = 'LOWER(q.content) LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'answers\'))'.
-                        ' LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'additional\')) LIKE LOWER(:search)';
+                        $whereParts[] = '(LOWER(q.content) LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'answers\'))'.
+                        ' LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'additional\')) LIKE LOWER(:search))';
                         $paramsReplacements['search'] = '%'.$value.'%';
                         break;
                     case 'uuid':
@@ -258,7 +258,6 @@ class QuestionController extends AbstractController
         $query->setParameters($paramsReplacements);
 
 //        dd($query->getResult());
-//        dd($paginator->paginate($query, $page, 10));
         return $paginator->paginate($query, $page, 10);
     }
 
