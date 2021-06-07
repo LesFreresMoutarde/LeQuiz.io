@@ -68,9 +68,7 @@ class Util {
         const headers = new Headers();
         headers.append('X-Requested-With', 'fetch');
 
-        // if (!route.startsWith('/'))
         let urlToFetch = `/${route}`;
-        console.log("param...", param);
 
         if (param) {
             urlToFetch += '?'
@@ -81,8 +79,6 @@ class Util {
             }
             urlToFetch = urlToFetch.slice(0, urlToFetch.length -1);
         }
-
-        console.log("final URL To Fetch", urlToFetch);
 
         const response = await fetch(urlToFetch, {headers});
 

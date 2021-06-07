@@ -33,7 +33,6 @@ class QuestionController extends AbstractController
         $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
 
         $params = $this->getParamFromUrl($request);
-//        dd($params);
 
         $questions = $this->getFilteredQuestions($page, $params, $em, $paginator);
 
@@ -183,10 +182,7 @@ class QuestionController extends AbstractController
 
     private function getFilteredQuestions(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
     {
-        // id, content, answer->>answers answer->>additional,
-        // isHardcore
-        // Faire une concaténation des params
-//        dd(empty($params));
+
         $queryString = 'SELECT q from App\Entity\Question q';
         $whereParts = [];
         $joinParts = [];
@@ -255,12 +251,9 @@ class QuestionController extends AbstractController
 
         }
 
-//        dump($queryString);
-//        dd($paramsReplacements);
         $query = $em->createQuery($queryString);
         $query->setParameters($paramsReplacements);
 
-//        dd($query->getResult());
         return $paginator->paginate($query, $page, 10);
     }
 

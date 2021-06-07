@@ -1,24 +1,10 @@
 import { Controller } from "stimulus";
 import Util from "./util_controller";
-import TomSelect from 'tom-select'
-import 'tom-select/dist/css/tom-select.bootstrap5.css'
-import util_controller from "./util_controller";
 
 export default class extends Controller {
 
-    static targets = ['search', 'uuid'];
-
     page;
     timer;
-
-    categoriesSelect;
-    search;
-    uuid;
-    categories = ['all']; //TODO Handling in connect();
-    questionTypes = ['all'];
-    statuses = ['all'];
-    isHardcore;
-    hasMedia;
 
     filters = {
         search: '',
@@ -31,26 +17,14 @@ export default class extends Controller {
     }
 
     initialize = () => {
-        console.log('init');
-
         this.page = parseInt(Util.getParam('page', 1, 'number'));
+
         const paramsInUrl = Util.getParams();
 
-        // delete paramsInUrl['page'];
-
-        this.fill(paramsInUrl);
+        this.fillInput(paramsInUrl);
     }
 
-    connect = () => {
-        console.log('connect');
-        console.log(window.location.href);
-        this.page = parseInt(Util.getParam('page', 1, 'number'));
-        console.log("this page", this.page);
-    }
-
-
-    // Cannot use
-    fill = (params) => {
+    fillInput = (params) => {
 
         if (!params) return;
 
@@ -62,6 +36,7 @@ export default class extends Controller {
             switch (typeof this.filters[param]) {
                 case "string":
                 case "boolean":
+
                     this.filters[param] = params[param];
                     inputElt = document.querySelector(`#${param}-input`);
                     inputElt.type === 'checkbox'
@@ -76,53 +51,8 @@ export default class extends Controller {
                             checkbox.checked = true;
                     })
                     break;
-                default:
-                    throw new Error();
             }
         }
-
-        // for (const paramName in params) {
-        //     console.log(params[paramName])
-        //     let inputElt;
-        //     switch (paramName) {
-        //         case 'search':
-        //             this.search = params[paramName];
-        //             inputElt = document.querySelector('#search-input');
-        //             inputElt.value = params[paramName];
-        //             break;
-        //         case 'uuid':
-        //             this.uuid = params[paramName];
-        //             inputElt = document.querySelector('#search-input');
-        //             inputElt.value = params[paramName];
-        //             break;
-        //         case 'categories':
-        //             this.categories = params[paramName].split(',');
-        //             const categoriesCheckboxes = document.querySelectorAll('input[data-checkboxes="categories"]');
-        //             categoriesCheckboxes.forEach(checkbox => {
-        //                 console.log
-        //             })
-        //             break;
-        //         case 'questionTypes':
-        //             this.questionTypes = params[paramName].split(',');
-        //             break;
-        //         case 'statuses':
-        //             this.statuses = params[paramName].split(',');
-        //             break;
-        //         case 'isHardcore':
-        //             this.isHardcore = !!params[paramName];
-        //             break;
-        //         case 'hasMedia':
-        //             this.hasMedia = !!params[paramName];
-        //             break;
-        //         default:
-        //             throw new Error();
-        //     }
-        // }
-
-    }
-
-    test = () => {
-        this.buildParam();
     }
 
     showCheckboxes = (e) => {
@@ -130,27 +60,7 @@ export default class extends Controller {
 
         const checkboxesDivElt = document.querySelector(`#${checkboxesFor}`)
 
-        if (checkboxesDivElt.classList.contains('d-none')) {
-            checkboxesDivElt.classList.remove('d-none');
-            return;
-        }
-
-        checkboxesDivElt.classList.add('d-none');
-    }
-
-    hideCheckboxes = (e) => {
-
-        if (e.target.hasAttribute('data-filter-select') ||
-            e.target.hasAttribute('data-click-not-hiding'))
-            return;
-
-        const checkboxesDivsElt = document.querySelectorAll('.checkboxes-div');
-
-        checkboxesDivsElt.forEach(checkboxesDivElt => {
-            if (!checkboxesDivElt.classList.contains('d-none'))
-                checkboxesDivElt.classList.add('d-none');
-
-        })
+        checkboxesDivElt.classList.toggle('d-none');
     }
 
     onPick = async (e) => {
@@ -177,8 +87,8 @@ export default class extends Controller {
 
         const fieldsParam = this.buildParam();
 
+
         const filteredData = await Util.getFilteredData('questions', fieldsParam);
-        console.log("filteredData", filteredData);
 
         document.querySelector('#questions-block').innerHTML = filteredData;
     }
@@ -234,7 +144,6 @@ export default class extends Controller {
         clearTimeout(this.timer)
 
         const value = e.target.value;
-        console.log("value", value);
 
         const filter = e.target.getAttribute('data-input');
 
@@ -250,25 +159,26 @@ export default class extends Controller {
         this.timer = setTimeout(async () => {
 
             // Database is waiting for a valid uuid, otherwise it crashes.
-            console.log('uuid', this.uuid)
             if (filter === 'uuid' && !Util.isUuidValid(this.filters.uuid) && this.filters.uuid !== '') {
-                console.log('INVALID UUID');
-                //TODO Toastr
+                //TODO TOASTR WHEN BUG RESOLVED
                 clearTimeout(this.timer);
                 return;
             }
 
             const fieldsToSort = this.buildParam();
 
-            console.log("fieldsToSort", fieldsToSort);
+            try {
+                const filteredData = await Util.getFilteredData('questions', fieldsToSort);
 
-            const filteredData = await Util.getFilteredData('questions', fieldsToSort);
+                document.querySelector('#questions-block').innerHTML = filteredData;
 
-            document.querySelector('#questions-block').innerHTML = filteredData;
-
-            this.deletePageParam();
-
-            clearTimeout(this.timer);
+            } catch (error) {
+                //TODO TOASTR WHEN BUG RESOLVED
+                console.error('Internal server error');
+            } finally {
+                this.deletePageParam();
+                clearTimeout(this.timer);
+            }
 
         },200)
     }
@@ -288,13 +198,20 @@ export default class extends Controller {
 
         window.history.pushState({}, "", newUrl);
 
-        const fieldToSort = this.buildParam();
+        const fieldsToSort = this.buildParam();
 
-        const filteredData = await Util.getFilteredData('questions', fieldToSort);
+        try {
+            const filteredData = await Util.getFilteredData('questions', fieldsToSort);
 
-        document.querySelector('#questions-block').innerHTML = filteredData;
+            document.querySelector('#questions-block').innerHTML = filteredData;
 
-        this.deletePageParam();
+        } catch (error) {
+            //TODO TOASTR WHEN BUG RESOLVED
+            console.error('Internal server error');
+        } finally {
+            this.deletePageParam();
+        }
+
     }
 
     deletePageParam = () => {
@@ -317,12 +234,9 @@ export default class extends Controller {
                     if (this.filters[filter].length > 0 && this.filters[filter][0] !== 'all')
                         param[filter] = this.filters[filter].join(',')
                     break;
-                default:
-                    throw new Error();
             }
         }
 
-        console.log("finalParam",param);
         return param
     }
 
@@ -346,11 +260,13 @@ export default class extends Controller {
 
         switch (e.type) {
             case 'mouseenter':
+                // Plus button
                 if (buttonElt.classList.contains('bi-plus-square')) {
                     buttonElt.classList.remove('bi-plus-square');
                     buttonElt.classList.add('bi-plus-square-fill');
                     return;
                 }
+                // Minus Button
                 buttonElt.classList.remove('bi-dash-square');
                 buttonElt.classList.add('bi-dash-square-fill');
                 break;

@@ -4,13 +4,23 @@
 
 {% block body %}
     <h1 class="mb-3">Questions</h1>
-    <div data-controller="question" data-action="click->question#hideCheckboxes">
+    <div data-controller="question">
         <div class="row mb-3">
             <div class="col-3">
-                <input type="text" data-input="uuid" id="uuid-input" data-question-target="uuid" data-action="question#onInput" placeholder="uuid" class="form-control"/>
+                <input type="text"
+                       data-input="uuid"
+                       id="uuid-input"
+                       data-action="question#onInput"
+                       placeholder="UUID"
+                       class="form-control"/>
             </div>
             <div class="col-3">
-                <input type="text" data-input="search" id="search-input" data-action="question#onInput" placeholder="question ou réponse" class="form-control"/>
+                <input type="text"
+                       data-input="search"
+                       id="search-input"
+                       data-action="question#onInput"
+                       placeholder="Question ou réponse"
+                       class="form-control"/>
             </div>
         </div>
         <div class="row mb-3">
@@ -146,7 +156,6 @@
                 </label>
             </div>
         </div>
-        <button data-action="question#test">Test</button>
     </div>
     {% block questions %}
         <div id="questions-block" data-controller="question" class="mb-3">
