@@ -8,7 +8,7 @@
         <li class="nav-item mb-1"
             data-link-id="{{ navItem.label }}-link"
             data-subLink-id="{{ navItem.label }}-subLinks"
-            data-action="mouseenter->navbar#showSubLinks mouseleave->navbar#hideSubLinks"
+            data-action="mouseenter->navbar#addActiveClass mouseleave->navbar#removeActiveClass"
         >
             {% if navItem.label == route %}
                 <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-white hard-active" aria-current="page">

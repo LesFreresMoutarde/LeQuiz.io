@@ -43,4 +43,9 @@ class Util
         return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $text))));
     }
 
+    static function isUuidValid(string $uuid): bool
+    {
+        return (bool) preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $uuid);
+    }
+
 }

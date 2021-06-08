@@ -3,24 +3,63 @@
 namespace App\Controller;
 
 use App\Entity\Question;
-use App\Repository\CategoryRepository;
+use App\Manager\CrudManager;
 use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
 use App\Util\Util;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 #[Route('/questions')]
 class QuestionController extends AbstractController
 {
     #[Route('/', name: 'question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository): Response
+    public function index(
+        Request $request,
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        Environment $environment,
+        CrudManager $crudManager
+    ): Response
     {
+
+        $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
+
+        $params = $this->getParamFromUrl($request);
+
+        $questions = $this->getFilteredQuestions($page, $params, $em, $paginator);
+
+        $categories = $crudManager->getCategories();
+        $questionTypes = $crudManager->getQuestionTypes();
+
+
+        if ($request->headers->has('X-Requested-With')) {
+
+            $response = new Response();
+
+            $template = $environment->load('question/index.html.twig');
+
+            $response->headers->set('Content-Type', 'text/plain');
+
+            $response->setStatusCode(Response::HTTP_OK);
+
+            $response->setContent($template->renderBlock('questions', ['questions' => $questions]));
+
+            $response->send();
+        }
+
+
         return $this->render('question/index.html.twig', [
-            'questions' => $questionRepository->findAll(),
+            'questions' => $questions,
+            'categories' => $categories,
+            'questionTypes' => $questionTypes,
+            'statuses' => Enums::STATUSES
         ]);
     }
 
@@ -68,7 +107,7 @@ class QuestionController extends AbstractController
 
     }
 
-    #[Route('/{id}', name: 'question_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'question_show', methods: ['GET'])]
     public function show(Question $question): Response
     {
         return $this->render('question/show.html.twig', [
@@ -80,7 +119,7 @@ class QuestionController extends AbstractController
     //       - JSON FOR MEDIA UPLOADING
     //       - Try/Catch Handling when toastr Ready
 
-    #[Route('/{id}/edit', name: 'question_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'question_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,
                          Question $question,
                          CategoryRepository $categoryRepository,
@@ -140,6 +179,95 @@ class QuestionController extends AbstractController
         return $this->redirectToRoute('question_index');
     }
 
+    private function getFilteredQuestions(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
+    {
+
+        $queryString = 'SELECT q from App\Entity\Question q';
+        $whereParts = [];
+        $joinParts = [];
+        $paramsReplacements = [];
+
+        if (!empty($params)) {
+            foreach ($params as $paramName => $value) {
+                switch ($paramName) {
+                    case 'search':
+                        $whereParts[] = '(LOWER(q.content) LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'answers\'))'.
+                        ' LIKE LOWER(:search) OR LOWER(JSON_GET_TEXT(q.answer, \'additional\')) LIKE LOWER(:search))';
+                        $paramsReplacements['search'] = '%'.$value.'%';
+                        break;
+                    case 'uuid':
+                        if (Util::isUuidValid($value)) {
+                            $whereParts[] = 'q.id = :uuid';
+                            $paramsReplacements['uuid'] = $value;
+                        }
+                        break;
+                    case 'categories':
+                        $value = explode(',', $value);
+
+                        $joinParts[] = 'JOIN q.categories c WITH';
+                        for ($i = 0; $i < count($value); $i++) {
+
+                            if ($i + 1 !== count($value))
+                                $joinParts[] = "c.name LIKE LOWER(:category$i) OR";
+                            else
+                                $joinParts[] =  "c.name LIKE LOWER(:category$i)";
+
+                            $paramsReplacements["category$i"] = '%'.$value[$i].'%';
+                        }
+                        break;
+                    case 'questionTypes':
+                        $value = explode(',', $value);
+                        $joinParts[] = 'JOIN q.types t WITH';
+                        for ($i = 0; $i < count($value); $i++) {
+
+                            if ($i + 1 !== count($value))
+                                $joinParts[] = "t.name LIKE LOWER(:type$i) OR";
+                            else
+                                $joinParts[] =  "t.name LIKE LOWER(:type$i)";
+
+                            $paramsReplacements["type$i"] = '%'.$value[$i].'%';
+                        }
+                        break;
+                    case 'statuses':
+                        $whereParts[] = 'LOWER(q.status) IN (:statuses)';
+                        $paramsReplacements['statuses'] = explode(',', $value);
+                        break;
+                    case 'isHardcore':
+                        $whereParts[] = 'q.isHardcore = true';
+                        break;
+                    case 'hasMedia':
+                        $whereParts[] = 'JSON_GET_TEXT(q.media, \'url\') != \'\'';
+                        break;
+                }
+            }
+
+            $whereString = implode(' AND ', $whereParts);
+            $joinString = implode(' ', $joinParts);
+
+            $queryString .= !empty($whereString) > 0
+                ? ' '.$joinString.' WHERE '.$whereString
+                : ' '.$joinString;
+
+        }
+
+        $query = $em->createQuery($queryString);
+        $query->setParameters($paramsReplacements);
+
+        return $paginator->paginate($query, $page, 10);
+    }
+
+    private function getParamFromUrl(Request $request): array
+    {
+        $possibleFields = ['search', 'uuid', 'categories', 'questionTypes', 'statuses', 'isHardcore', 'hasMedia'];
+        $params = [];
+
+        for ($i = 0; $i < count($possibleFields); $i++) {
+            if ($request->query->get($possibleFields[$i]) !== '' && !is_null($request->query->get($possibleFields[$i])))
+                 $params[$possibleFields[$i]] = $request->query->get($possibleFields[$i]);
+        }
+
+        return $params;
+    }
 
     private function isFormValid(array $allCategories, array $allQuestionTypes)
     {
@@ -343,9 +471,9 @@ class QuestionController extends AbstractController
 
             if (preg_match('/^additional-/', $formInputName)) {
 
-                list($fistKey, $midKey, $lastKey) = $parsedFormInput;
+                list($firstKey, $midKey, $lastKey) = $parsedFormInput;
 
-                if ($formInput !== '') $answers[$fistKey][$midKey][$lastKey] = $formInput;
+                if ($formInput !== '') $answers[$firstKey][$midKey][$lastKey] = $formInput;
             }
         }
 
