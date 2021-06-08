@@ -26,6 +26,10 @@ a {
     transition: color 0.1s ease-out;
 }
 
+a.no-underline {
+    text-decoration: none;
+}
+
 a:hover {
     color: #b1e7fa;
     cursor: pointer;
