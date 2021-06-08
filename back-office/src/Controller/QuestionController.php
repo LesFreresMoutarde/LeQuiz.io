@@ -8,7 +8,6 @@ use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
 use App\Util\Util;
-use ContainerL1zqxd7\getConsole_ErrorListenerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -472,11 +471,9 @@ class QuestionController extends AbstractController
 
             if (preg_match('/^additional-/', $formInputName)) {
 
-                //TODO Corriger fistKey par firstKey
-                list($fistKey, $midKey, $lastKey) = $parsedFormInput;
+                list($firstKey, $midKey, $lastKey) = $parsedFormInput;
 
-                //TODO Corriger fistKey par firstKey
-                if ($formInput !== '') $answers[$fistKey][$midKey][$lastKey] = $formInput;
+                if ($formInput !== '') $answers[$firstKey][$midKey][$lastKey] = $formInput;
             }
         }
 

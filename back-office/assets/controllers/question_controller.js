@@ -17,9 +17,9 @@ export default class extends Controller {
     }
 
     initialize = () => {
-        this.page = parseInt(Util.getParam('page', 1, 'number'));
+        this.page = parseInt(Util.getQueryStringParam('page', 1, 'number'));
 
-        const paramsInUrl = Util.getParams();
+        const paramsInUrl = Util.getQueryStringParams();
 
         this.fillInput(paramsInUrl);
     }
@@ -55,20 +55,20 @@ export default class extends Controller {
         }
     }
 
-    showCheckboxes = (e) => {
-        const checkboxesFor = e.currentTarget.getAttribute('data-checkboxes-for');
+    showCheckboxes = (evt) => {
+        const checkboxesFor = evt.currentTarget.getAttribute('data-checkboxes-for');
 
         const checkboxesDivElt = document.querySelector(`#${checkboxesFor}`)
 
         checkboxesDivElt.classList.toggle('d-none');
     }
 
-    onPick = async (e) => {
-        const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes-for');
+    onPick = async (evt) => {
+        const checkboxElts = this.getFilterCheckboxElements(evt, 'data-checkboxes-for');
 
         let checkboxesChangedCounter = 0;
 
-        const value = e.target.getAttribute('data-pick');
+        const value = evt.target.getAttribute('data-pick');
 
         const checked = {full: true, empty: false};
 
@@ -93,8 +93,8 @@ export default class extends Controller {
         document.querySelector('#questions-block').innerHTML = filteredData;
     }
 
-    onMultiCheckboxesChange = async (e) => {
-        const checkboxElts = this.getFilterCheckboxElements(e, 'data-checkboxes');
+    onMultiCheckboxesChange = async (evt) => {
+        const checkboxElts = this.getFilterCheckboxElements(evt, 'data-checkboxes');
 
         const checkboxesChecked = Array.from(checkboxElts)
             .filter(checkbox => checkbox.checked)
@@ -114,7 +114,7 @@ export default class extends Controller {
     };
 
     addAllToFilter = (filterName) => {
-        const newUrl = Util.deleteParam(filterName);
+        const newUrl = Util.deleteQueryStringParam(filterName);
 
         window.history.pushState({}, "", newUrl);
 
@@ -127,7 +127,7 @@ export default class extends Controller {
             return this.addAllToFilter(filterName)
         }
 
-        const newUrl = Util.addParam(filterName, checkboxesChecked.join(','))
+        const newUrl = Util.addQueryStringParam(filterName, checkboxesChecked.join(','))
         window.history.pushState({}, "", newUrl);
 
         return checkboxesChecked;
@@ -139,20 +139,20 @@ export default class extends Controller {
         return document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
     }
 
-    onInput = (e) => {
+    onInput = (evt) => {
 
         clearTimeout(this.timer)
 
-        const value = e.target.value;
+        const value = evt.target.value;
 
-        const filter = e.target.getAttribute('data-input');
+        const filter = evt.target.getAttribute('data-input');
 
         let newUrl;
 
-        this.filters[filter] = e.target.value;
+        this.filters[filter] = evt.target.value;
         this.filters[filter]
-            ? newUrl = Util.addParam(filter, this.filters[filter])
-            : newUrl = Util.deleteParam([filter, 'page']);
+            ? newUrl = Util.addQueryStringParam(filter, this.filters[filter])
+            : newUrl = Util.deleteQueryStringParam([filter, 'page']);
 
         window.history.pushState({}, "", newUrl);
 
@@ -183,18 +183,18 @@ export default class extends Controller {
         },200)
     }
 
-    onSingleCheckboxChange = async (e) => {
-        const filter = e.target.getAttribute('data-checkbox');
+    onSingleCheckboxChange = async (evt) => {
+        const filter = evt.target.getAttribute('data-checkbox');
 
-        const value = e.target.checked;
+        const value = evt.target.checked;
 
         this.filters[filter] = value;
 
         let newUrl;
 
         value
-            ? newUrl = Util.addParam(filter, value)
-            : newUrl = Util.deleteParam(filter);
+            ? newUrl = Util.addQueryStringParam(filter, value)
+            : newUrl = Util.deleteQueryStringParam(filter);
 
         window.history.pushState({}, "", newUrl);
 
@@ -215,7 +215,7 @@ export default class extends Controller {
     }
 
     deletePageParam = () => {
-        const newUrl = Util.deleteParam('page');
+        const newUrl = Util.deleteQueryStringParam('page');
 
         window.history.pushState({}, "", newUrl);
     }
@@ -240,8 +240,8 @@ export default class extends Controller {
         return param
     }
 
-    onFullAnswer = (e) => {
-        const buttonElt = e.target;
+    onFullAnswer = (evt) => {
+        const buttonElt = evt.target;
 
         const index = buttonElt.getAttribute('data-full-answer-button');
 
@@ -255,10 +255,10 @@ export default class extends Controller {
         answerDivElt.classList.toggle('d-none');
     }
 
-    onFullAnswerMouseEvent= (e) => {
-        const buttonElt = e.target;
+    onFullAnswerMouseEvent= (evt) => {
+        const buttonElt = evt.target;
 
-        switch (e.type) {
+        switch (evt.type) {
             case 'mouseenter':
                 // Plus button
                 if (buttonElt.classList.contains('bi-plus-square')) {

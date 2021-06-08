@@ -3,7 +3,7 @@ import {validate} from "uuid";
 class Util {
 
 
-    static getParam = (paramName, defaultValue, type) => {
+    static getQueryStringParam = (paramName, defaultValue, type) => {
 
         const queryString = window.location.search;
 
@@ -20,7 +20,7 @@ class Util {
         return param;
     }
 
-    static getParams = () => {
+    static getQueryStringParams = () => {
 
         const queryString = window.location.search;
 
@@ -37,7 +37,7 @@ class Util {
         return params;
     }
 
-    static addParam = (paramName, paramValue) => {
+    static addQueryStringParam = (paramName, paramValue) => {
 
         const queryString = window.location.search;
 
@@ -48,7 +48,7 @@ class Util {
         return `${window.location.href.split('?')[0]}?${decodeURIComponent(searchParams.toString())}`;
     }
 
-    static deleteParam = (paramName) => {
+    static deleteQueryStringParam = (paramName) => {
 
         if (typeof paramName === 'string') paramName = [paramName];
 
