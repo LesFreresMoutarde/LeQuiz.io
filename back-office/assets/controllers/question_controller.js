@@ -21,10 +21,10 @@ export default class extends Controller {
 
         const paramsInUrl = Util.getQueryStringParams();
 
-        this.fillInput(paramsInUrl);
+        this.fillFilterInputs(paramsInUrl);
     }
 
-    fillInput = (params) => {
+    fillFilterInputs = (params) => {
 
         if (!params) return;
 
