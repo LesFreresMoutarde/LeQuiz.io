@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+@font-face {
+    font-family: "Coolvetica Rg";
+    src: url("/webfonts/Coolvetica-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Cooper Hewitt";
+    src: url("/webfonts/CooperHewitt-Medium.woff2") format("woff2");
+}
 
 body {
     position: relative;
@@ -7,7 +15,7 @@ body {
     min-height: 100vh;
     margin-bottom: -60px;
 
-    font-family: 'Lato', sans-serif;
+    font-family: 'Cooper Hewitt', sans-serif;
     color: white;
 }
 
@@ -246,7 +254,7 @@ label.checkbox > input:checked + span::after {
 }
 
 button {
-    font-family: "Lato", sans-serif;
+    font-family: "Cooper Hewitt", sans-serif;
 }
 
 button:disabled {
