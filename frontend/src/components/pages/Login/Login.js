@@ -37,7 +37,7 @@ class Login extends React.Component {
                 <BackArrow onClick={this.goBack}/>
                 <div className="text-center">
                     <h1 className="mb">Connexion</h1>
-                    <p className="mb2">Tu n'as pas encore de compte ? <Link to="/register">Inscription</Link></p>
+                    <p className="mb2">Tu n'as pas encore de compte ? <Link to="/register">Inscris-toi</Link></p>
                     <form id="login-form" onSubmit={this.onLoginFormSubmit}>
                         <div className="mb3 mt3">
                             <input className="full-width" id="username-input" name="username" placeholder="Nom d'utilisateur ou adresse email" autoFocus autoComplete="username" required/>
@@ -53,7 +53,7 @@ class Login extends React.Component {
                         </div>
                         <button type="submit" className="button green mb2">Connexion</button>
                     </form>
-                    <small><Link to="/forgot-password">Mot de passe oublié</Link></small>
+                    <small><Link to="/forgot-password">Mot de passe oublié ?</Link></small>
                 </div>
             </>
         )

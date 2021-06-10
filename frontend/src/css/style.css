@@ -176,10 +176,10 @@ input {
     position: relative;
 
     border: 1px solid rgba(200, 200, 200, 0.3);
-    padding: 10px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 0;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #333;
     background-color: #fff;
     transition: background-color 0.1s ease-out;
@@ -225,7 +225,7 @@ label.checkbox > input + span::before {
     opacity: 1;
 
     border: 2px solid #fff;
-    border-radius: 3px;
+    border-radius: 0;
 
     transition: background-color 0.1s ease-out;
 
@@ -271,21 +271,20 @@ button:disabled {
 #register-form,
 #forgot-password-form,
 #reset-password-form {
-    max-width: 600px;
+    max-width: 460px;
     margin: auto;
 }
 
 .button {
     font-family: inherit;
-    font-size: 0.9em;
+    font-size: 1.2rem;
     font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
 
-    padding: 10px 20px;
+    padding: 15px 30px;
 
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
 
     transition: background-color 0.1s ease-out;
 }
@@ -299,7 +298,7 @@ button:disabled {
 }
 
 .button.green {
-    background-color: #219c4a;
+    background-color: #14B981;
     color: #f8f8f8;
 }
 

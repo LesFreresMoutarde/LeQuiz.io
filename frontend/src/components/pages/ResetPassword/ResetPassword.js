@@ -74,8 +74,7 @@ class ResetPassword extends React.Component {
 
         return (
             <div className="text-center">
-                <h1 className="mb">Réinitialisez votre mot de passe</h1>
-                <p className="mb2">Veuillez choisir un nouveau mot de passe.</p>
+                <h1 className="mb">Nouveau mot de passe</h1>
                 <form id="reset-password-form" onSubmit={this.onResetPasswordFormSubmit}>
                     <div className="mb3 mt3">
                         <input className="full-width" id="new-password-input" type="password" name="newPassword" placeholder="Nouveau mot de passe" autoFocus autoComplete="new-password" required/>

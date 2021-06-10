@@ -38,7 +38,7 @@ class Register extends React.Component {
                 <BackArrow onClick={this.goBack}/>
                 <div className="text-center">
                     <h1 className="mb">Inscription</h1>
-                    <p className="mb2">Tu as déjà un compte ? <Link to="/login">Connexion</Link></p>
+                    <p className="mb2">Tu as déjà un compte ? <Link to="/login">Connecte-toi</Link></p>
                     <form id="register-form" onSubmit={this.onRegisterFormSubmit}>
                         <div className="mb3 mt3">
                             <input className={"full-width" + (this.state.formErrors.username ? ' error' : '')} id="username-input" name="username" placeholder="Nom d'utilisateur" autoFocus autoComplete="username"/>
