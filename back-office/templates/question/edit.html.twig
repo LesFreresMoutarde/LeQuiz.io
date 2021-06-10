@@ -3,91 +3,188 @@
 {% block title %}Edit Question{% endblock %}
 
 {% block body %}
-    <h1>Edit Question</h1>
-
+    <div class="row">
+        <p>Question</p>
+    </div>
+{#    TODO created at updated at#}
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="question-id" class="form-label lead">Uuid</label>
+            <input type="text" id="question-id" class="form-control" disabled value="{{ question.getId() }}"/>
+        </div>
+    </div>
     <form action='{{ path('question_edit', {id: question.id})}}' method="post">
-        <label for="question-content">Question :</label>
-        <textarea id="question-content" name="question-content" required>{{ question.content }}</textarea>
-        <label for="question-type-select">Type</label>
-            {% for type in questionTypes %}
-                {% if type.name in question.types %}
-                    <input type="checkbox" id="cbx-type-{{ type.name }}"
-                           name="cbx-type-{{ type.name }}" value="{{ type.name }}" checked>
-                {% else %}
-                    <input type="checkbox" id="cbx-type-{{ type.name }}"
-                           name="cbx-type-{{ type.name }}" value="{{ type.name }}">
-                {% endif %}
-                <label for="cbx-type-{{ type.name }}">{{ type }}</label>
-            {% endfor %}
-        <div>
-            {% for category in categories %}
-                {% if category.name in question.categories %}
-                    <input type="checkbox" id="cbx-category-{{ category.name }}" name="cbx-category-{{ category.name }}" value="{{ category.name }}" checked>
-                {% else %}
-                    <input type="checkbox" id="cbx-category-{{ category.name }}" name="cbx-category-{{ category.name }}" value="{{ category.name }}">
-                {% endif %}
-                <label for="cbx-category-{{ category.name }}">{{ category }}</label>
-            {% endfor %}
-        </div>
-        <p>Réponses</p>
-        {% for answer in question.answer['answers'] %}
-            <div>
-                <input type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}"/>
-                {% if answer['is_good_answer'] == true %}
-                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}"
-                           value="1" checked/>
-                    <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
-
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="0"/>
-                    <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
-                {% else %}
-                    <input type="radio" id="good-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="1"/>
-                    <label for="good-answer-radio-{{ loop.index }}">Bonne réponse</label>
-
-                    <input type="radio" id="bad-answer-radio-{{ loop.index }}" name="answers-is_good_answer-{{ loop.index }}" value="0" checked/>
-                    <label for="bad-answer-radio-{{ loop.index }}">Mauvaise réponse</label>
-               {% endif %}
+        <div class="row mb-3">
+            <div class="col-6">
+                <label for="question-content" class="form-label lead">Contenu</label>
+                <textarea id="question-content"
+                          name="question-content"
+                          class="form-control"
+                          required
+                >{{ question.getContent() }}</textarea>
             </div>
-        {% endfor %}
-        <div>
-            <label for="additional-response_media-info">Information supplémentaire</label>
-            <textarea name="additional-response_media-info"
-                      id="additional-response_media-info"
-            >{{ question.answer['additional']['response_media']['info'] ?? '' }}</textarea>
         </div>
-{#        <div>#}
-{#        TODO RESPONSE MEDIA FILE INPUT #}
-{#        </div>#}
-        <div>
-            <label for="question-difficulty-select">Difficulté</label>
-            <select name="question-difficulty" id="question-difficulty-select">
-                {% for difficulty in questionDifficulty %}
-                    {% if question.difficulty == difficulty %}
-                        <option value="{{ difficulty }}" selected>{{ difficulty }}</option>>
+        <div class="row mb-3">
+            <label for="question-type-select" class="form-label lead">Types</label>
+            <div class="col-6">
+                {% for type in questionTypes %}
+                    {% if type.name in question.getTypes() %}
+                        <input type="checkbox" id="cbx-type-{{ type.getName() }}"
+                               name="cbx-type-{{ type.getName() }}"
+                               value="{{ type.getName()}}"
+                               class="form-check-input me-1"
+                               checked>
                     {% else %}
-                        <option value="{{ difficulty }}">{{ difficulty }}</option>
+                        <input type="checkbox"
+                               id="cbx-type-{{ type.getName() }}"
+                               name="cbx-type-{{ type.getName() }}"
+                               value="{{ type.getName() }}"
+                               class="form-check-input me-1">
                     {% endif %}
+                    <label for="cbx-type-{{ type.getName() }}"
+                           class="form-check-label me-2"
+                    >
+                        {{ type.getLabel() }}
+                    </label>
                 {% endfor %}
-            </select>
+            </div>
         </div>
-        <div>
-            <label for="question-status-select">Statut</label>
-            <select name="question-status" id="question-status-select">
-                {% for status in questionStatuses %}
-                    {% if question.status == status %}
-                        <option value="{{ status }}" selected>{{ status }}</option>>
+        <div class="row mb-3">
+            <label for="" class="form-label lead">Catégories</label>
+            <div class="col-6">
+                {% for category in categories %}
+                    {% if category.getName() in question.getCategories() %}
+                        <input type="checkbox"
+                               id="cbx-category-{{ category.getName() }}"
+                               name="cbx-category-{{ category.getName() }}"
+                               value="{{ category.getName() }}"
+                               class="form-check-input me-1"
+                               checked
+                        >
                     {% else %}
-                        <option value="{{ status }}">{{ status }}</option>
+                        <input type="checkbox"
+                               id="cbx-category-{{ category.getName() }}"
+                               name="cbx-category-{{ category.getName() }}"
+                               value="{{ category.getName() }}"
+                               class="form-check-input me-1"
+                        >
                     {% endif %}
+                    <label for="cbx-category-{{ category.getName() }}"
+                           class="form-check-label me-2"
+                    >
+                        {{ category.getLabel() }}
+                    </label>
                 {% endfor %}
-        </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="" class="form-label lead">Réponses</label>
+            {% for answer in question.answer['answers'] %}
+                <div class="col-8">
+                    <div class="row mb-3">
+                        <div class="col-8">
+{#                            <input type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}"/>#}
+                            <textarea name="answers-content-{{ loop.index }}"
+                                      id="answer-{{ loop.index }}"
+                                      class="form-control"
+                            >{{ answer['content'] }}</textarea>
+                        </div>
+                        <div class="col-4">
+                            {% if answer['is_good_answer'] == true %}
+                            <div class="row mb-2">
+                                <div class="col-12">
+                                    <input type="radio"
+                                           id="good-answer-radio-{{ loop.index }}"
+                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           value="1"
+                                           class="form-check-input"
+                                           checked/>
+                                    <label for="good-answer-radio-{{ loop.index }}"
+                                           class="form-check-label"
+                                    >
+                                        Bonne réponse
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="radio"
+                                           id="bad-answer-radio-{{ loop.index }}"
+                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           value="0"
+                                           class="form-check-input"
+                                    />
+                                    <label for="bad-answer-radio-{{ loop.index }}"
+                                           class="form-check-label"
+                                    >
+                                        Mauvaise réponse
+                                    </label>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="radio"
+                                           id="good-answer-radio-{{ loop.index }}"
+                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           value="1"
+                                           class="form-check-input"
+                                    />
+                                    <label for="good-answer-radio-{{ loop.index }}"
+                                           class="form-check-label"
+                                    >
+                                        Bonne réponse
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="radio"
+                                           id="bad-answer-radio-{{ loop.index }}"
+                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           value="0"
+                                           class="form-check-input"
+                                           checked
+                                    />
+                                    <label for="bad-answer-radio-{{ loop.index }}" class="form-check-label">
+                                        Mauvaise réponse
+                                    </label>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-6">
+                <label for="additional-response_media-info" class="form-label">Information supplémentaire</label>
+                <textarea name="additional-response_media-info"
+                          id="additional-response_media-info"
+                          class="form-control"
+                >{{ question.answer['additional']['response_media']['info'] ?? '' }}</textarea>
+            </div>
+        </div>
+{#        TODO RESPONSE MEDIA FILE INPUT WHEN FILE STORAGE STRATEGY #}
+        <div class="row mb-3">
+            <div class="col-6">
+                <label for="question-status-select" class="form-label lead">Statut</label>
+                <select name="question-status" id="question-status-select" class="form-select">
+                    {% for status in questionStatuses %}
+                        {% if question.getStatus() == status %}
+                            <option value="{{ status }}" selected>{{ status }}</option>>
+                        {% else %}
+                            <option value="{{ status }}">{{ status }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
         </div>
 {#        {% if question.customQuiz %}#}
 {#        TODO handling when changing a question Position. The position of the question below and above should move
            consequently #}
 {#        {% endif %}#}
         <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
-        <button type="submit">Envoyer</button>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 
     <a href="{{ path('question_index') }}">back to list</a>

@@ -3,8 +3,14 @@
 {% block title %}Question{% endblock %}
 
 {% block body %}
-    <h1>Question</h1>
 
+    <div>
+        <p>
+{#            <i class="bi bi-question-lg text-primary me-1"></i>#}
+            {{ question.content }}
+        </p>
+    </div>
+    <hr/>
     <table class="table">
         <tbody>
             <tr>
@@ -19,8 +25,8 @@
                 </td>
             </tr>
             <tr>
-                <th>Difficulty</th>
-                <td>{{ question.difficulty }}</td>
+                <th>isHardcore</th>
+                <td>{{ question.isHardcore }}</td>
             </tr>
             <tr>
                 <th>Content</th>

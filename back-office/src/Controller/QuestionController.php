@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Manager\CrudManager;
+use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
@@ -126,7 +127,7 @@ class QuestionController extends AbstractController
                          QuestionTypeRepository $questionTypeRepository): Response
     {
         $questionTypes = $questionTypeRepository->findAll();
-        $questionDifficulty = Enums::QUESTION_DIFFICULTY;
+//        $questionDifficulty = Enums::QUESTION_DIFFICULTY;
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
 
@@ -157,7 +158,7 @@ class QuestionController extends AbstractController
             return $this->render('question/edit.html.twig', [
                 'question' => $question,
                 'questionTypes' => $questionTypes,
-                'questionDifficulty' => $questionDifficulty,
+//                'questionDifficulty' => $questionDifficulty,
                 'questionStatuses' => $questionStatuses,
                 'categories' => $categories
             ]);
