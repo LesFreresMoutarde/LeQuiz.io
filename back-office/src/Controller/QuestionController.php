@@ -72,7 +72,6 @@ class QuestionController extends AbstractController
         $question = new Question();
 
         $questionTypes = $questionTypeRepository->findAll();
-        $questionDifficulty = Enums::QUESTION_DIFFICULTY;
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
 
@@ -101,7 +100,6 @@ class QuestionController extends AbstractController
         return $this->render('question/new.html.twig', [
             'question' => $question,
             'questionTypes' => $questionTypes,
-            'questionDifficulty' => $questionDifficulty,
             'questionStatuses' => $questionStatuses,
             'categories' => $categories
         ]);
@@ -468,6 +466,9 @@ class QuestionController extends AbstractController
                 }
 
                 $answerId = $parsedFormInput[count($parsedFormInput) - 1];
+
+                if (!array_key_exists('answers-is_good_answer-'.$answerId, $_POST))
+                    throw new \Exception('Cannot add answer without value');
 
                 if ($formInput !== '')  {
 

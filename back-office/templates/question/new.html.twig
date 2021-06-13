@@ -44,14 +44,6 @@
         {#        TODO RESPONSE MEDIA FILE INPUT #}
         {#        </div>#}
         <div>
-            <label for="question-difficulty-select">Difficulté</label>
-            <select name="question-difficulty" id="question-difficulty-select">
-                {% for difficulty in questionDifficulty %}
-                    <option value="{{ difficulty }}">{{ difficulty }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div>
             <label for="question-status-select">Statut</label>
             <select name="question-status" id="question-status-select">
                 {% for status in questionStatuses %}
