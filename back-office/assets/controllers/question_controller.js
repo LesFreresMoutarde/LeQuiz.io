@@ -307,8 +307,14 @@ export default class extends Controller {
             radioInputElt.removeAttribute('checked', '');
         })
 
-        const newAnswerId = this.getNewAnswerId(Array.from(answersElt).map(answerElt => answerElt.id));
-        const newAnswerDOMString = duplicatedAnswer.outerHTML.replaceAll(answersElt[0].id, newAnswerId)
+        const answersId = Array.from(answersElt)
+            .map(answerElt => answerElt.id.replace('answer-', ''));
+
+        const newAnswerId = this.getNewAnswerId(answersId);
+
+        const regex = new RegExp(answersElt[0].id.replace('answer-', ''),'ig')
+
+        const newAnswerDOMString = duplicatedAnswer.outerHTML.replaceAll(regex, newAnswerId)
 
         answerMainDivElt.insertAdjacentHTML("beforeend", newAnswerDOMString);
     }
@@ -322,47 +328,9 @@ export default class extends Controller {
         return newAnswerId;
     }
 
-    getNewAnswerDOMString = (count) => {
-        return `<div class="col-8 question-answers">
-    <div class="row mb-3">
-        <div class="col-8">
-            <textarea name=\`answers-content-${count}\`
-                        id=\`answer-${count}\`
-                        class="form-control"></textarea>
-        </div>
-        <div class="col-4">
-            <div class="row mb-2">
-                <div class="col-12">
-                    <input type="radio"
-                            id=\`good-answer-radio-${count}\`
-                            name=\`answers-is_good_answer-${count}\`
-                            value="1"
-                            class="form-check-input"
-                            checked/>
-                    <label for=\`good-answer-radio-${count}\`
-                            class="form-check-label"
-                    >
-                        Bonne réponse
-                    </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <input type="radio"
-                            id=\`bad-answer-radio-${count}\`
-                            name=\`answers-is_good_answer-${count}\`
-                            value="0"
-                            class="form-check-input"
-                    />
-                    <label for=\`bad-answer-radio-${count}\`
-                            class="form-check-label"
-                    >
-                        Mauvaise réponse
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>`
+    onDeleteAnswer = (evt) => {
+        const idToDelete = evt.currentTarget.getAttribute('data-delete-id');
+
+        document.querySelector(`#answer-${idToDelete}`).remove();
     }
 }
