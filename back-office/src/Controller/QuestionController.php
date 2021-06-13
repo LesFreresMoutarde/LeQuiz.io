@@ -65,15 +65,13 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/new', name: 'question_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,
-                        CategoryRepository $categoryRepository,
-                        QuestionTypeRepository $questionTypeRepository): Response
+    public function new(Request $request, CrudManager $crudManager): Response
     {
         $question = new Question();
 
-        $questionTypes = $questionTypeRepository->findAll();
+        $questionTypes = $crudManager->getQuestionTypes();
         $questionStatuses = Enums::STATUSES;
-        $categories = $categoryRepository->findAll();
+        $categories = $crudManager->getCategories();
         $answersUniqueId = Util::getRandomIntAsUniqueId(4, 100, 999);
 
         if ($request->getMethod() === 'POST') {
@@ -109,10 +107,19 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'question_show', methods: ['GET'])]
-    public function show(Question $question): Response
+    public function show(Question $question, CrudManager $crudManager): Response
     {
+        $questionTypes = $crudManager->getQuestionTypes();
+        $questionStatuses = Enums::STATUSES;
+        $categories = $crudManager->getCategories();
+        $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
+
         return $this->render('question/show.html.twig', [
             'question' => $question,
+            'questionTypes' => $questionTypes,
+            'questionStatuses' => $questionStatuses,
+            'categories' => $categories,
+            'answersUniqueId' => $answersUniqueId
         ]);
     }
 
@@ -121,21 +128,17 @@ class QuestionController extends AbstractController
     //       - Try/Catch Handling when toastr Ready
 
     #[Route('/edit/{id}', name: 'question_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request,
-                         Question $question,
-                         CategoryRepository $categoryRepository,
-                         QuestionTypeRepository $questionTypeRepository): Response
+    public function edit(Request $request, Question $question, CrudManager $crudManager): Response
     {
-        $questionTypes = $questionTypeRepository->findAll();
+        $questionTypes = $crudManager->getQuestionTypes();
         $questionStatuses = Enums::STATUSES;
-        $categories = $categoryRepository->findAll();
+        $categories = $crudManager->getCategories();
 
         $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
 //TODO
 //        try {
 
             if ($request->getMethod() === 'POST') {
-//                dd($_POST);
 
                 if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
 
@@ -155,10 +158,6 @@ class QuestionController extends AbstractController
                     'id' => $question->getId()
                 ]);
             }
-
-//        dd($question->getAnswer()['answers']);
-
-
 
         return $this->render('question/edit.html.twig', [
                 'question' => $question,

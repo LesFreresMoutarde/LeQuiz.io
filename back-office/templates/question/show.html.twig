@@ -3,120 +3,240 @@
 {% block title %}Question{% endblock %}
 
 {% block body %}
-
-    <div>
-        <p>
-{#            <i class="bi bi-question-lg text-primary me-1"></i>#}
-            {{ question.content }}
-        </p>
+    <div class="row">
+        <h1 class="h2">Question</h1>
+        <hr>
     </div>
-    <hr/>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ question.id }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{% for type in question.types %}
-                        {{ type }}
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <th>isHardcore</th>
-                <td>{{ question.isHardcore }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ question.content }}</td>
-            </tr>
-            <tr>
-                <th>Answer</th>
-{#                <td>{{ question.answer ? question.answer|json_encode : '' }}</td>#}
-                <td>
-                    <table>
-                    {% for key, field in question.answer %}
-                        {% if key == 'answers' %}
-                            <tr>
-                                <th>answers</th>
-                                <td>
-                                    <table>
-                                    {% for answer in field %}
-                                        <tr>
-                                        {% for key, answerField in answer %}
-                                            <td>
-                                            {% if key == 'content' %}
-                                                {{ answerField }}
-                                            {% elseif key == 'is_good_answer' and answerField %}
-                                                (Bonne réponse)
-                                             {% endif %}
-                                            </td>
-                                        {% endfor %}
-                                        </tr>
-                                    {% endfor %}
-                                    </table>
-                                </td>
-                            </tr>
-                        {% elseif key == 'additional' %}
-                            <tr>
-                                <th>additional</th>
-                                <td>
-                                    <table>
-                                        {% for additional in field %}
-                                            {% for key, additionalField in additional %}
-                                            <tr>
-                                                <td>
-                                                    {{ key }} : {{ additionalField }}
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </table>
-                                </td>
-                            </tr>
-                       {% endif %}
-                    {% endfor  %}
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ question.status }}</td>
-            </tr>
-            <tr>
-                <th>Media</th>
-{#                <td>{{ question.media ? question.media|json_encode : '' }}</td>#}
-                <td>
-                    <table>
-                        {% for key, field in question.media %}
-                            <tr>
-                                <th>{{ key }} </th>
-                                <td>{{ field }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Categories</th>
-                <td>
-                    {% for category in question.categories %}
-                        {{ category }}
-                    {% endfor %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="question-id" class="form-label lead">Uuid</label>
+            <input type="text" id="question-id" class="form-control" disabled value="{{ question.getId() }}"/>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <label for="question-created-at" class="form-label lead">Crée le</label>
+            <input type="text"
+                   id="question-created-at"
+                   class="form-control"
+                   disabled
+                   value="{{ question.getCreatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+            />
+        </div>
+        <div class="col-3">
+            <label for="question-updated-at" class="form-label lead">Mis à jour le</label>
+            <input type="text"
+                   id="question-updated-at"
+                   class="form-control"
+                   disabled
+                   value="{{ question.getUpdatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+            />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="question-content" class="form-label lead">Contenu</label>
+            <textarea id="question-content"
+                      name="question-content"
+                      class="form-control"
+                      disabled
+            >{{ question.getContent() }}</textarea>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="question-type-select" class="form-label lead">Types</label>
+        <div class="col-6">
+            {% for type in questionTypes %}
+                {% if type.name in question.getTypes() %}
+                    <input type="checkbox" id="cbx-type-{{ type.getName() }}"
+                           name="cbx-type-{{ type.getName() }}"
+                           value="{{ type.getName()}}"
+                           class="form-check-input me-1"
+                           checked
+                           disabled
+                    >
+                {% else %}
+                    <input type="checkbox"
+                           id="cbx-type-{{ type.getName() }}"
+                           name="cbx-type-{{ type.getName() }}"
+                           value="{{ type.getName() }}"
+                           class="form-check-input me-1"
+                           disabled
+                    >
+                {% endif %}
+                <label for="cbx-type-{{ type.getName() }}"
+                       class="form-check-label me-2"
+                >
+                    {{ type.getLabel() }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="" class="form-label lead">Catégories</label>
+        <div class="col-6">
+            {% for category in categories %}
+                {% if category.getName() in question.getCategories() %}
+                    <input type="checkbox"
+                           id="cbx-category-{{ category.getName() }}"
+                           name="cbx-category-{{ category.getName() }}"
+                           value="{{ category.getName() }}"
+                           class="form-check-input me-2"
+                           checked
+                           disabled
+                    >
+                {% else %}
+                    <input type="checkbox"
+                           id="cbx-category-{{ category.getName() }}"
+                           name="cbx-category-{{ category.getName() }}"
+                           value="{{ category.getName() }}"
+                           class="form-check-input me-2"
+                           disabled
+                    >
+                {% endif %}
+                <label for="cbx-category-{{ category.getName() }}"
+                       class="form-check-label me-2"
+                >
+                    {{ category.getLabel() }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3" data-controller="question">
+        <div style="display: flex; align-items: baseline">
+            <label for="" class="form-label lead me-1">Réponses</label>
+        </div>
+        <div id="answers">
+            {% for answer in question.answer['answers'] %}
+                <div class="col-8 question-answers" id="answer-{{ answersUniqueId[loop.index0] }}">
+                    <div class="row mb-3 d-flex">
+                        <div class="col-6">
+                        <textarea name="answers-content-{{ answersUniqueId[loop.index0] }}"
+                                  id="answer-{{ answersUniqueId[loop.index0] }}"
+                                  class="form-control"
+                                  disabled
+                        >{{ answer['content'] }}</textarea>
+                        </div>
+                        <div class="col-3">
+                            {% if answer['is_good_answer'] == true %}
+                                <div class="row mb-2">
+                                    <div class="col-12">
+                                        <input type="radio"
+                                               id="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                               name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
+                                               value="1"
+                                               class="form-check-input"
+                                               checked
+                                               disabled
+                                        />
+                                        <label for="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                               class="form-check-label"
+                                        >
+                                            Bonne réponse
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="radio"
+                                               id="bad-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                               name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
+                                               value="0"
+                                               class="form-check-input"
+                                               disabled
+                                        />
+                                        <label for="bad-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                               class="form-check-label"
+                                        >
+                                            Mauvaise réponse
+                                        </label>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="row mb-2">
+                                    <div class="col-12">
+                                        <input type="radio"
+                                               id="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                               name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
+                                               value="1"
+                                               class="form-check-input"
+                                               disabled
+                                        />
+                                        <label for="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                               class="form-check-label"
+                                        >
+                                            Bonne réponse
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="radio"
+                                               id="bad-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                               name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
+                                               value="0"
+                                               class="form-check-input"
+                                               checked
+                                               disabled
+                                        />
+                                        <label for="bad-answer-radio-{{ answersUniqueId[loop.index0] }}" class="form-check-label">
+                                            Mauvaise réponse
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-6">
+            <label for="additional-response_media-info" class="form-label">Information supplémentaire</label>
+            <textarea name="additional-response_media-info"
+                      id="additional-response_media-info"
+                      class="form-control"
+                      disabled
+            >{{ question.answer['additional']['response_media']['info'] ?? '' }}</textarea>
+        </div>
+    </div>
+    {#        TODO RESPONSE MEDIA FILE INPUT WHEN FILE STORAGE STRATEGY #}
+    <div class="row mb-3">
+        <label for="" class="form-label lead">Difficulté</label>
+        <div class="col-6">
+            {% if question.getIsHardcore() %}
+                <input type="checkbox"
+                       id="is-hardcore"
+                       class="form-check-input me-1"
+                       name="is-hardcore"
+                       checked
+                       disabled
+                >
+                <label for="is-hardcore" class="form-check-label">Hardcore</label>
+            {% else %}
+                <input type="checkbox" id="is-hardcore" class="form-check-input me-1" name="is-hardcore" disabled>
+                <label for="is-hardcore" class="form-check-label">Hardcore</label>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="question-status-select" class="form-label lead">Statut</label>
+            <select name="question-status" id="question-status-select" class="form-select" disabled>
+                {% for status in questionStatuses %}
+                    {% if question.getStatus() == status %}
+                        <option value="{{ status }}" selected>{{ status }}</option>>
+                    {% else %}
+                        <option value="{{ status }}">{{ status }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    {#        {% if question.customQuiz %}#}
+    {#        TODO handling when changing a question Position. The position of the question below and above should move
+       consequently #}
+    {#        {% endif %}#}
+    <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
 
     <a href="{{ path('question_index') }}">back to list</a>
 
