@@ -172,8 +172,9 @@
             </div>
         </div>
         <input type="hidden" name="token" value="{{ csrf_token('question_new_token') }}"/>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <div class="d-flex mt-4">
+            <button type="submit" class="btn btn-primary me-2">Envoyer</button>
+            <a href="{{ path('question_index') }}" class="btn btn-secondary">Liste</a>
+        </div>
     </form>
-
-    <a href="{{ path('question_index') }}">back to list</a>
 {% endblock %}

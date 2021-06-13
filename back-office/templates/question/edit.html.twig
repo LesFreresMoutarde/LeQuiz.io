@@ -241,11 +241,11 @@
            consequently #}
 {#        {% endif %}#}
         <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <button type="submit" class="btn btn-primary me-2">Envoyer</button>
     </form>
-
-    <a href="{{ path('question_index') }}">back to list</a>
-
-    {{ include('question/_delete_form.html.twig') }}
+    <div class="d-flex mt-4">
+        <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Liste</a>
+        {{ include('question/_delete_form.html.twig') }}
+    </div>
 
 {% endblock %}
