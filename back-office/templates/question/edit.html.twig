@@ -4,13 +4,33 @@
 
 {% block body %}
     <div class="row">
-        <p>Question</p>
+        <h1 class="h2">Modifier une question</h1>
+        <hr>
     </div>
-{#    TODO created at updated at#}
     <div class="row mb-3">
         <div class="col-6">
             <label for="question-id" class="form-label lead">Uuid</label>
             <input type="text" id="question-id" class="form-control" disabled value="{{ question.getId() }}"/>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <label for="question-created-at" class="form-label lead">Crée le</label>
+            <input type="text"
+                   id="question-created-at"
+                   class="form-control"
+                   disabled
+                   value="{{ question.getCreatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+            />
+        </div>
+        <div class="col-3">
+            <label for="question-updated-at" class="form-label lead">Mis à jour le</label>
+            <input type="text"
+                   id="question-updated-at"
+                   class="form-control"
+                   disabled
+                   value="{{ question.getUpdatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+            />
         </div>
     </div>
     <form action='{{ path('question_edit', {id: question.id})}}' method="post">
@@ -77,15 +97,29 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="row mb-3">
-            <label for="" class="form-label lead">Réponses</label>
+        <div class="row mb-3" data-controller="question">
+            <div style="display: flex; align-items: baseline">
+                <label for="" class="form-label lead me-1">Réponses</label>
+                <div>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary"
+                            style="max-width: 25px; max-height: 25px;
+                             display: flex;
+                             align-items: center;
+                             justify-content: center"
+                            data-action="question#onAddAnswer"
+                    >
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="answers">
             {% for answer in question.answer['answers'] %}
-                <div class="col-8">
+                <div class="col-8 question-answers" id="{{ answersUniqueId[loop.index0] }}">
                     <div class="row mb-3">
                         <div class="col-8">
-{#                            <input type="text" name="answers-content-{{ loop.index }}" id="answer-{{ loop.index }}" value="{{ answer['content'] }}"/>#}
-                            <textarea name="answers-content-{{ loop.index }}"
-                                      id="answer-{{ loop.index }}"
+                            <textarea name="answers-content-{{ answersUniqueId[loop.index0] }}"
+                                      id="answer-{{ answersUniqueId[loop.index0] }}"
                                       class="form-control"
                             >{{ answer['content'] }}</textarea>
                         </div>
@@ -94,12 +128,13 @@
                             <div class="row mb-2">
                                 <div class="col-12">
                                     <input type="radio"
-                                           id="good-answer-radio-{{ loop.index }}"
-                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           id="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                           name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
                                            value="1"
                                            class="form-check-input"
-                                           checked/>
-                                    <label for="good-answer-radio-{{ loop.index }}"
+                                           checked
+                                    />
+                                    <label for="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
                                            class="form-check-label"
                                     >
                                         Bonne réponse
@@ -109,12 +144,12 @@
                             <div class="row">
                                 <div class="col-12">
                                     <input type="radio"
-                                           id="bad-answer-radio-{{ loop.index }}"
-                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           id="bad-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                           name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
                                            value="0"
                                            class="form-check-input"
                                     />
-                                    <label for="bad-answer-radio-{{ loop.index }}"
+                                    <label for="bad-answer-radio-{{ answersUniqueId[loop.index0] }}"
                                            class="form-check-label"
                                     >
                                         Mauvaise réponse
@@ -122,15 +157,15 @@
                                 </div>
                             </div>
                             {% else %}
-                            <div class="row">
+                            <div class="row mb-2">
                                 <div class="col-12">
                                     <input type="radio"
-                                           id="good-answer-radio-{{ loop.index }}"
-                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           id="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                           name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
                                            value="1"
                                            class="form-check-input"
                                     />
-                                    <label for="good-answer-radio-{{ loop.index }}"
+                                    <label for="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
                                            class="form-check-label"
                                     >
                                         Bonne réponse
@@ -140,13 +175,13 @@
                             <div class="row">
                                 <div class="col-12">
                                     <input type="radio"
-                                           id="bad-answer-radio-{{ loop.index }}"
-                                           name="answers-is_good_answer-{{ loop.index }}"
+                                           id="bad-answer-radio-{{ answersUniqueId[loop.index0] }}"
+                                           name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
                                            value="0"
                                            class="form-check-input"
                                            checked
                                     />
-                                    <label for="bad-answer-radio-{{ loop.index }}" class="form-check-label">
+                                    <label for="bad-answer-radio-{{ answersUniqueId[loop.index0] }}" class="form-check-label">
                                         Mauvaise réponse
                                     </label>
                                 </div>
@@ -156,6 +191,7 @@
                     </div>
                 </div>
             {% endfor %}
+            </div>
             <div class="col-6">
                 <label for="additional-response_media-info" class="form-label">Information supplémentaire</label>
                 <textarea name="additional-response_media-info"
@@ -165,6 +201,18 @@
             </div>
         </div>
 {#        TODO RESPONSE MEDIA FILE INPUT WHEN FILE STORAGE STRATEGY #}
+        <div class="row mb-3">
+            <label for="" class="form-label lead">Difficulté</label>
+            <div class="col-6">
+                {% if question.getIsHardcore() %}
+                    <input type="checkbox" id="is-hardcore" class="form-check-input me-1" name="is-hardcore" checked>
+                    <label for="is-hardcore" class="form-check-label">Hardcore</label>
+                {% else %}
+                    <input type="checkbox" id="is-hardcore" class="form-check-input me-1" name="is-hardcore">
+                    <label for="is-hardcore" class="form-check-label">Hardcore</label>
+                {% endif %}
+            </div>
+        </div>
         <div class="row mb-3">
             <div class="col-6">
                 <label for="question-status-select" class="form-label lead">Statut</label>

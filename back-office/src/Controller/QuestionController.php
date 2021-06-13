@@ -127,14 +127,23 @@ class QuestionController extends AbstractController
                          QuestionTypeRepository $questionTypeRepository): Response
     {
         $questionTypes = $questionTypeRepository->findAll();
-//        $questionDifficulty = Enums::QUESTION_DIFFICULTY;
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
+        $answersUniqueId = [];
+
+        for ($i = 0; $i < count($question->getAnswer()['answers']); $i++) {
+            do {
+                $uniqueId = random_int(100,999);
+            } while (in_array($uniqueId, $answersUniqueId));
+
+            $answersUniqueId[] = $uniqueId;
+        }
 
 //TODO
 //        try {
 
             if ($request->getMethod() === 'POST') {
+//                dd($_POST);
 
                 if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
 
@@ -155,12 +164,16 @@ class QuestionController extends AbstractController
                 ]);
             }
 
-            return $this->render('question/edit.html.twig', [
+//        dd($question->getAnswer()['answers']);
+
+
+
+        return $this->render('question/edit.html.twig', [
                 'question' => $question,
                 'questionTypes' => $questionTypes,
-//                'questionDifficulty' => $questionDifficulty,
                 'questionStatuses' => $questionStatuses,
-                'categories' => $categories
+                'categories' => $categories,
+                'answersUniqueId' => $answersUniqueId
             ]);
 //        } catch (\Exception $e) {
 
@@ -375,10 +388,6 @@ class QuestionController extends AbstractController
         if (!in_array($_POST['question-status'], Enums::STATUSES))
             throw new \Exception('Invalid status');
 
-        if (!in_array($_POST['question-difficulty'], Enums::QUESTION_DIFFICULTY))
-            throw new \Exception('Invalid difficulty');
-
-
         $answers = [];
         $goodAnswersCount = 0;
 
@@ -396,7 +405,6 @@ class QuestionController extends AbstractController
                 }
             }
         }
-
         // Based on the parent question type picked by the user, check if answers array have valid count of answers and
         // goodAnswers
         switch ($parentQuestionType->getName()) {
@@ -423,7 +431,7 @@ class QuestionController extends AbstractController
      * @throws \Exception
      */
     private function hasFormRequiredFields() {
-        define('REQUIRED_FIELDS', array('question-content', 'question-difficulty', 'question-status'));
+        define('REQUIRED_FIELDS', array('question-content', 'question-status'));
         define('DYNAMIC_REQUIRED_FIELDS', array('cbx-type', 'cbx-category', 'answers-content', 'answers-is_good_answer'));
         $dynamicFieldsMatch = [];
 
@@ -477,7 +485,7 @@ class QuestionController extends AbstractController
                 if ($formInput !== '') $answers[$firstKey][$midKey][$lastKey] = $formInput;
             }
         }
-
+        dd($answers);
         return $answers;
     }
 
@@ -488,9 +496,13 @@ class QuestionController extends AbstractController
                                        array $answersJson)
     {
         $question->setContent($_POST['question-content']);
-        $question->setDifficulty($_POST['question-difficulty']);
         $question->setStatus($_POST['question-status']);
         $question->setAnswer($answersJson);
+
+        if (array_key_exists('is-hardcore', $_POST))
+            $question->setIsHardcore(true);
+        else
+            $question->setIsHardcore(false);
 
         foreach ($question->getCategories() as $category) {
             $question->removeCategory($category);

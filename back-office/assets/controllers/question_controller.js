@@ -284,4 +284,85 @@ export default class extends Controller {
         }
     }
 
+    onAddAnswer = () => {
+        const answersElt = document.querySelectorAll('.question-answers');
+
+        const answerMainDivElt = document.querySelector('#answers');
+
+        const duplicatedAnswer = answersElt[0].cloneNode(true);
+
+        const radiosInputElt = duplicatedAnswer.querySelectorAll('input[type="radio"]');
+
+        const textareaElt = duplicatedAnswer.querySelector('textarea');
+
+        textareaElt.textContent = '';
+
+        radiosInputElt.forEach((radioInputElt) => {
+
+            if (radioInputElt.id.startsWith('good')) {
+                radioInputElt.setAttribute('checked', '');
+                return;
+            }
+
+            radioInputElt.removeAttribute('checked', '');
+        })
+
+        const newAnswerId = this.getNewAnswerId(Array.from(answersElt).map(answerElt => answerElt.id));
+        const newAnswerDOMString = duplicatedAnswer.outerHTML.replaceAll(answersElt[0].id, newAnswerId)
+
+        answerMainDivElt.insertAdjacentHTML("beforeend", newAnswerDOMString);
+    }
+
+    getNewAnswerId = (answersId) => {
+        let newAnswerId = ''
+        do {
+            newAnswerId = Math.round(Math.random() * (999 - 100) + 100)
+        } while (answersId.includes(newAnswerId))
+
+        return newAnswerId;
+    }
+
+    getNewAnswerDOMString = (count) => {
+        return `<div class="col-8 question-answers">
+    <div class="row mb-3">
+        <div class="col-8">
+            <textarea name=\`answers-content-${count}\`
+                        id=\`answer-${count}\`
+                        class="form-control"></textarea>
+        </div>
+        <div class="col-4">
+            <div class="row mb-2">
+                <div class="col-12">
+                    <input type="radio"
+                            id=\`good-answer-radio-${count}\`
+                            name=\`answers-is_good_answer-${count}\`
+                            value="1"
+                            class="form-check-input"
+                            checked/>
+                    <label for=\`good-answer-radio-${count}\`
+                            class="form-check-label"
+                    >
+                        Bonne réponse
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <input type="radio"
+                            id=\`bad-answer-radio-${count}\`
+                            name=\`answers-is_good_answer-${count}\`
+                            value="0"
+                            class="form-check-input"
+                    />
+                    <label for=\`bad-answer-radio-${count}\`
+                            class="form-check-label"
+                    >
+                        Mauvaise réponse
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>`
+    }
 }
