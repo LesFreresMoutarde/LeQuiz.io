@@ -4,9 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Manager\CrudManager;
-use App\Repository\CategoryRepository;
-use App\Repository\QuestionRepository;
-use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
 use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
@@ -135,7 +132,7 @@ class QuestionController extends AbstractController
         $categories = $crudManager->getCategories();
 
         $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
-//TODO
+//TODO END OF BACK OFFICE FIRST VERSION
 //        try {
 
             if ($request->getMethod() === 'POST') {
