@@ -74,6 +74,7 @@ class QuestionController extends AbstractController
         $questionTypes = $questionTypeRepository->findAll();
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
+        $answersUniqueId = Util::getRandomIntAsUniqueId(4, 100, 999);
 
         if ($request->getMethod() === 'POST') {
 
@@ -101,7 +102,8 @@ class QuestionController extends AbstractController
             'question' => $question,
             'questionTypes' => $questionTypes,
             'questionStatuses' => $questionStatuses,
-            'categories' => $categories
+            'categories' => $categories,
+            'answersUniqueId' => $answersUniqueId
         ]);
 
     }
@@ -127,16 +129,8 @@ class QuestionController extends AbstractController
         $questionTypes = $questionTypeRepository->findAll();
         $questionStatuses = Enums::STATUSES;
         $categories = $categoryRepository->findAll();
-        $answersUniqueId = [];
 
-        for ($i = 0; $i < count($question->getAnswer()['answers']); $i++) {
-            do {
-                $uniqueId = random_int(100,999);
-            } while (in_array($uniqueId, $answersUniqueId));
-
-            $answersUniqueId[] = $uniqueId;
-        }
-
+        $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
 //TODO
 //        try {
 
@@ -486,7 +480,7 @@ class QuestionController extends AbstractController
                 if ($formInput !== '') $answers[$firstKey][$midKey][$lastKey] = $formInput;
             }
         }
-        dd($answers);
+
         return $answers;
     }
 

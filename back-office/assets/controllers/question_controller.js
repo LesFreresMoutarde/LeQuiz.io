@@ -298,13 +298,7 @@ export default class extends Controller {
         textareaElt.textContent = '';
 
         radiosInputElt.forEach((radioInputElt) => {
-
-            if (radioInputElt.id.startsWith('good')) {
-                radioInputElt.setAttribute('checked', '');
-                return;
-            }
-
-            radioInputElt.removeAttribute('checked', '');
+            radioInputElt.removeAttribute('checked');
         })
 
         const answersId = Array.from(answersElt)
