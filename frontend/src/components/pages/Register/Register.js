@@ -38,7 +38,7 @@ class Register extends React.Component {
                 <BackArrow onClick={this.goBack}/>
                 <div className="text-center">
                     <h1 className="mb">Inscription</h1>
-                    <p className="mb2">Tu as déjà un compte ? <Link to="/login">Connecte-toi</Link></p>
+                    <p className="mb2">Tu as déjà un compte ? <Link to="/login">Connectez-vous</Link></p>
                     <form id="register-form" onSubmit={this.onRegisterFormSubmit}>
                         <div className="mb3 mt3">
                             <input className={"full-width" + (this.state.formErrors.username ? ' error' : '')} id="username-input" name="username" placeholder="Nom d'utilisateur" autoFocus autoComplete="username"/>
@@ -50,7 +50,7 @@ class Register extends React.Component {
                             <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="new-password"/>
                         </div>
                         <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.confirmPassword ? ' error' : '')} id="confirm-password-input" type="password" name="confirmPassword" placeholder="Confirmation du mot de passe" autoComplete="new-password"/>
+                            <input className={"full-width" + (this.state.formErrors.confirmPassword ? ' error' : '')} id="confirm-password-input" type="password" name="confirmPassword" placeholder="Confirmez votre mot de passe" autoComplete="new-password"/>
                         </div>
                         <div className="mb3 text-left">
                             <label className="checkbox">
