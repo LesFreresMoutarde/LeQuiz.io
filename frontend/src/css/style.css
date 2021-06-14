@@ -18,6 +18,7 @@ body {
     margin-bottom: -60px;
 
     font-family: 'Cooper Hewitt', sans-serif;
+    letter-spacing: 0.5px;
     color: white;
 }
 
@@ -167,6 +168,23 @@ a:hover {
     margin-right: 5px;
 }
 
+.footer-feedback-button {
+    font-size: 1rem;
+    background-color: #fff;
+    color: #23C5EF;
+    border: 2px solid #fff;
+    border-radius: 1em;
+    padding: 4px 25px;
+
+    transition: background-color 0.1s ease-out, color 0.1s ease-out;
+}
+
+.footer-feedback-button:hover {
+    cursor: pointer;
+    background-color: #23C5EF;
+    color: #fff;
+}
+
 #page-content {
     margin-left: 40px;
     margin-right: 40px;
@@ -261,6 +279,7 @@ label.checkbox > input:checked + span::after {
 
 button {
     font-family: "Cooper Hewitt", sans-serif;
+    letter-spacing: 0.5px;
 }
 
 button:disabled {
