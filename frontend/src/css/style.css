@@ -171,7 +171,7 @@ a:hover {
 .footer-feedback-button {
     font-size: 1rem;
     background-color: #fff;
-    color: #23C5EF;
+    color: #24BFF0;
     border: 2px solid #fff;
     border-radius: 1em;
     padding: 4px 25px;
@@ -181,7 +181,7 @@ a:hover {
 
 .footer-feedback-button:hover {
     cursor: pointer;
-    background-color: #23C5EF;
+    background-color: #24BFF0;
     color: #fff;
 }
 
