@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import '../../../../css/gameMode.css';
 
 const GameMode = ({gameMode, pickGameMode}) => {
     const {label, description, allowed, classname} = gameMode;
