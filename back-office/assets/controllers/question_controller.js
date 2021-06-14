@@ -284,4 +284,47 @@ export default class extends Controller {
         }
     }
 
+    onAddAnswer = () => {
+        const answersElt = document.querySelectorAll('.question-answers');
+
+        const answerMainDivElt = document.querySelector('#answers');
+
+        const duplicatedAnswer = answersElt[0].cloneNode(true);
+
+        const radiosInputElt = duplicatedAnswer.querySelectorAll('input[type="radio"]');
+
+        const textareaElt = duplicatedAnswer.querySelector('textarea');
+
+        textareaElt.textContent = '';
+
+        radiosInputElt.forEach((radioInputElt) => {
+            radioInputElt.removeAttribute('checked');
+        })
+
+        const answersId = Array.from(answersElt)
+            .map(answerElt => answerElt.id.replace('answer-', ''));
+
+        const newAnswerId = this.getNewAnswerId(answersId);
+
+        const regex = new RegExp(answersElt[0].id.replace('answer-', ''),'ig')
+
+        const newAnswerDOMString = duplicatedAnswer.outerHTML.replaceAll(regex, newAnswerId)
+
+        answerMainDivElt.insertAdjacentHTML("beforeend", newAnswerDOMString);
+    }
+
+    getNewAnswerId = (answersId) => {
+        let newAnswerId = ''
+        do {
+            newAnswerId = Math.round(Math.random() * (999 - 100) + 100)
+        } while (answersId.includes(newAnswerId))
+
+        return newAnswerId;
+    }
+
+    onDeleteAnswer = (evt) => {
+        const idToDelete = evt.currentTarget.getAttribute('data-delete-id');
+
+        document.querySelector(`#answer-${idToDelete}`).remove();
+    }
 }

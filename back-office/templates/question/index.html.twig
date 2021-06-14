@@ -3,7 +3,10 @@
 {% block title %}Question index{% endblock %}
 
 {% block body %}
-    <h1 class="mb-3">Questions</h1>
+    <div class="row">
+        <h1 class="h2">Questions</h1>
+        <hr>
+    </div>
     <div data-controller="question">
         <div class="row mb-3">
             <div class="col-3">
@@ -105,7 +108,7 @@
             <div class="col-3">
                 <div class="form-select d-flex justify-content-start"
                      data-action="click->question#showCheckboxes" id="statuses-input" data-checkboxes-for="statuses" data-filter-select>
-                    <span class="placeholder" data-click-not-hiding>Statuts</span>
+                    <span class="placeholder" data-click-not-hiding>Statut</span>
                 </div>
                 <div id="statuses" class="checkboxes-div d-none" data-click-not-hiding>
                     <div class="mb-2" data-click-not-hiding>

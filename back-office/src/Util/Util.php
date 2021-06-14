@@ -48,4 +48,19 @@ class Util
         return (bool) preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $uuid);
     }
 
+    static function getRandomIntAsUniqueId(int $nbOfId, int $min, int $max): array
+    {
+        $uniqueIds = [];
+
+        for ($i = 0; $i < $nbOfId; $i++) {
+            do {
+                $uniqueId = random_int($min,$max);
+            } while (in_array($uniqueId, $uniqueIds));
+
+            $uniqueIds[] = $uniqueId;
+        }
+
+        return  $uniqueIds;
+    }
+
 }

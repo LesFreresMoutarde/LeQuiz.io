@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Manager\CrudManager;
-use App\Repository\QuestionRepository;
-use App\Repository\QuestionTypeRepository;
 use App\Util\Enums;
 use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
@@ -64,16 +62,14 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/new', name: 'question_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,
-                        CategoryRepository $categoryRepository,
-                        QuestionTypeRepository $questionTypeRepository): Response
+    public function new(Request $request, CrudManager $crudManager): Response
     {
         $question = new Question();
 
-        $questionTypes = $questionTypeRepository->findAll();
-        $questionDifficulty = Enums::QUESTION_DIFFICULTY;
+        $questionTypes = $crudManager->getQuestionTypes();
         $questionStatuses = Enums::STATUSES;
-        $categories = $categoryRepository->findAll();
+        $categories = $crudManager->getCategories();
+        $answersUniqueId = Util::getRandomIntAsUniqueId(4, 100, 999);
 
         if ($request->getMethod() === 'POST') {
 
@@ -100,18 +96,27 @@ class QuestionController extends AbstractController
         return $this->render('question/new.html.twig', [
             'question' => $question,
             'questionTypes' => $questionTypes,
-            'questionDifficulty' => $questionDifficulty,
             'questionStatuses' => $questionStatuses,
-            'categories' => $categories
+            'categories' => $categories,
+            'answersUniqueId' => $answersUniqueId
         ]);
 
     }
 
     #[Route('/show/{id}', name: 'question_show', methods: ['GET'])]
-    public function show(Question $question): Response
+    public function show(Question $question, CrudManager $crudManager): Response
     {
+        $questionTypes = $crudManager->getQuestionTypes();
+        $questionStatuses = Enums::STATUSES;
+        $categories = $crudManager->getCategories();
+        $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
+
         return $this->render('question/show.html.twig', [
             'question' => $question,
+            'questionTypes' => $questionTypes,
+            'questionStatuses' => $questionStatuses,
+            'categories' => $categories,
+            'answersUniqueId' => $answersUniqueId
         ]);
     }
 
@@ -120,17 +125,14 @@ class QuestionController extends AbstractController
     //       - Try/Catch Handling when toastr Ready
 
     #[Route('/edit/{id}', name: 'question_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request,
-                         Question $question,
-                         CategoryRepository $categoryRepository,
-                         QuestionTypeRepository $questionTypeRepository): Response
+    public function edit(Request $request, Question $question, CrudManager $crudManager): Response
     {
-        $questionTypes = $questionTypeRepository->findAll();
-        $questionDifficulty = Enums::QUESTION_DIFFICULTY;
+        $questionTypes = $crudManager->getQuestionTypes();
         $questionStatuses = Enums::STATUSES;
-        $categories = $categoryRepository->findAll();
+        $categories = $crudManager->getCategories();
 
-//TODO
+        $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
+//TODO END OF BACK OFFICE FIRST VERSION
 //        try {
 
             if ($request->getMethod() === 'POST') {
@@ -154,12 +156,12 @@ class QuestionController extends AbstractController
                 ]);
             }
 
-            return $this->render('question/edit.html.twig', [
+        return $this->render('question/edit.html.twig', [
                 'question' => $question,
                 'questionTypes' => $questionTypes,
-                'questionDifficulty' => $questionDifficulty,
                 'questionStatuses' => $questionStatuses,
-                'categories' => $categories
+                'categories' => $categories,
+                'answersUniqueId' => $answersUniqueId
             ]);
 //        } catch (\Exception $e) {
 
@@ -374,10 +376,6 @@ class QuestionController extends AbstractController
         if (!in_array($_POST['question-status'], Enums::STATUSES))
             throw new \Exception('Invalid status');
 
-        if (!in_array($_POST['question-difficulty'], Enums::QUESTION_DIFFICULTY))
-            throw new \Exception('Invalid difficulty');
-
-
         $answers = [];
         $goodAnswersCount = 0;
 
@@ -395,7 +393,6 @@ class QuestionController extends AbstractController
                 }
             }
         }
-
         // Based on the parent question type picked by the user, check if answers array have valid count of answers and
         // goodAnswers
         switch ($parentQuestionType->getName()) {
@@ -422,7 +419,7 @@ class QuestionController extends AbstractController
      * @throws \Exception
      */
     private function hasFormRequiredFields() {
-        define('REQUIRED_FIELDS', array('question-content', 'question-difficulty', 'question-status'));
+        define('REQUIRED_FIELDS', array('question-content', 'question-status'));
         define('DYNAMIC_REQUIRED_FIELDS', array('cbx-type', 'cbx-category', 'answers-content', 'answers-is_good_answer'));
         $dynamicFieldsMatch = [];
 
@@ -460,6 +457,9 @@ class QuestionController extends AbstractController
 
                 $answerId = $parsedFormInput[count($parsedFormInput) - 1];
 
+                if (!array_key_exists('answers-is_good_answer-'.$answerId, $_POST))
+                    throw new \Exception('Cannot add answer without value');
+
                 if ($formInput !== '')  {
 
                     $answers['answers'][] = [
@@ -487,9 +487,13 @@ class QuestionController extends AbstractController
                                        array $answersJson)
     {
         $question->setContent($_POST['question-content']);
-        $question->setDifficulty($_POST['question-difficulty']);
         $question->setStatus($_POST['question-status']);
         $question->setAnswer($answersJson);
+
+        if (array_key_exists('is-hardcore', $_POST))
+            $question->setIsHardcore(true);
+        else
+            $question->setIsHardcore(false);
 
         foreach ($question->getCategories() as $category) {
             $question->removeCategory($category);
