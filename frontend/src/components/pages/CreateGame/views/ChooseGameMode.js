@@ -10,7 +10,7 @@ const toastr = new Toastr();
 
 export default class ChooseGameMode extends React.Component {
 
-    static TITLE = 'Choisissez un mode de jeu';
+    static TITLE = 'Mode de jeu';
 
     constructor(props) {
         super(props);
@@ -79,17 +79,17 @@ export default class ChooseGameMode extends React.Component {
         } else {
             const { gameModes } = this.state;
             return (
-                    <>
-                        <div className="create-game-header">
-                            <BackArrow onClick={this.goBack}/>
-                            <Title title={ChooseGameMode.TITLE}/>
-                        </div>
-                        <div className="game-mode-container">
-                            {gameModes.map((gameMode, index) => {
-                                return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
-                            })}
-                        </div>
-                    </>
+                <>
+                    <div className="create-game-header">
+                        <BackArrow onClick={this.goBack}/>
+                        <Title title={ChooseGameMode.TITLE}/>
+                    </div>
+                    <div className="game-mode-container">
+                        {gameModes.map((gameMode, index) => {
+                            return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
+                        })}
+                    </div>
+                </>
             )
         }
     }
