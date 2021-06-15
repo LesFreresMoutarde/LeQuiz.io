@@ -16,7 +16,7 @@ const mainRouter = require('./routes/mainRouter');
 
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
-    res.setHeader('Access-Control-Allow-Origin', env.frontUrl);
+    res.setHeader('Access-Control-Allow-Origin', process.env.NODE_ENV === 'development' ? '*' : env.frontUrl);
     res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     next();
