@@ -24,19 +24,25 @@ const GameMode = ({gameMode, pickGameMode}) => {
         return (
             <>
                 {label}
-                {(() => {
-                    if (!allowed) {
-                        return(
-                            <img className="game-mode-label-disabled" src="/img/icons/locked.svg" />
-                        );
-                    }
-                })()}
+                {!allowed && (
+                    <img className="game-mode-label-disabled-desktop" src="/img/icons/locked.svg" />
+                )}
             </>
         )
     }
 
     return (
         <button className={`game-mode gm-${classname.toLowerCase()} ${!allowed ? 'disabled' : ''} ${playDisabledAnimation ? 'disabled-animation' : ''}`} onClick={onClick}>
+            {!allowed && (
+                <img className="game-mode-disabled-mobile" src="/img/icons/locked.svg" style={{
+                    maxHeight: 20,
+                    maxWidth: 20,
+                    position: 'absolute',
+                    right: 10,
+                    top: 10,
+                }} />
+            )}
+
             <div className="game-mode-label-mobile">{getGameModeLabelContent()}</div>
             <div className="game-mode-button-content">
                 <div className="game-mode-label-container">

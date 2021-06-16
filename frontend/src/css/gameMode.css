@@ -22,10 +22,16 @@
     margin-bottom: 10px;
 
     overflow: hidden;
+
+    position: relative;
+}
+
+.game-mode-disabled-mobile {
+    display: none;
 }
 
 .game-mode-button-content {
-    border: 3px solid red;
+    /*border: 3px solid red;*/
 
     height: 100%;
 
@@ -39,7 +45,7 @@
 .game-mode:not(.disabled):hover {
     cursor: pointer;
 
-    /*background-color: #14a9d9;*/
+    /*background-color: #DC71C7;*/
 }
 
 .game-mode.disabled.disabled-animation {
@@ -73,15 +79,15 @@
 }
 
 .game-mode-label-mobile {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 
-    margin-top: 5px;
+    margin-top: 10px;
 
     display: none;
 }
 
 .game-mode-label-container {
-    border: 3px solid yellow;
+    /*border: 3px solid yellow;*/
 
     display: flex;
     flex-direction: column;
@@ -90,7 +96,7 @@
 }
 
 .game-mode-icon-container {
-    border: 3px solid mediumpurple;
+    /*border: 3px solid mediumpurple;*/
 
     height: 80%;
 
@@ -105,7 +111,7 @@
 }
 
 .game-mode-label-desktop {
-    border: 3px solid orange;
+    /*border: 3px solid orange;*/
 
     height: 20%;
 
@@ -117,14 +123,15 @@
     justify-content: center;
 }
 
-.game-mode-label-disabled {
+.game-mode-label-disabled-desktop {
     max-width: 30px;
     max-height: 30px;
+
     margin-left: 5px;
 }
 
 .game-mode-description-container {
-    border: 3px solid palevioletred;
+    /*border: 3px solid palevioletred;*/
 
     height: 80%;
 
@@ -134,9 +141,10 @@
 }
 
 .game-mode-description {
-    font-size: 1rem;
+    font-size: 1.1rem;
     padding-left: 15px;
     padding-right: 15px;
+    margin-top: 10px;
 }
 
 .game-mode:focus {
@@ -149,10 +157,20 @@
     }
 
     .game-mode {
+        border: 3.5px solid #fff;
+
         width: 100%;
         height: auto;
 
         border-radius: 15px;
+    }
+
+    .game-mode:not(.disabled):hover {
+        background-color: #DC71C7;
+    }
+
+    .game-mode-disabled-mobile {
+        display: initial;
     }
 
     .game-mode-label-mobile {
@@ -171,15 +189,15 @@
         align-self: center;
     }
 
-    .game-mode-label-disabled {
-        max-width: 20px;
-        max-height: 20px;
-        margin-top: 3px;
+    .game-mode-label-disabled-desktop {
+        display: none;
     }
 
     .game-mode-icon-container {
         width: 80px;
         height: 80px;
+        margin-bottom: 10px;
+        margin-left: 10px;
     }
 
     .game-mode-icon {
@@ -192,10 +210,16 @@
     }
 
     .game-mode-description-container {
+        width: 100%;
+
         align-self: center;
+
+        margin-bottom: 10px;
     }
 
     .game-mode-description {
         font-size: 0.85rem;
+
+        text-align: left;
     }
 }
