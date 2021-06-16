@@ -252,20 +252,13 @@
                                 <span style="display: block">{{ category.getLabel() }}</span>
                             {% endfor %}
                         </td>
-                        <td>
-                            {% if question.getIsHardcore() %}
-                                <i class="bi bi-check-lg text-success"></i>
-                            {% else %}
-                                <i class="bi bi-x-lg text-danger"></i>
-                            {% endif %}
-                        </td>
+                        <td>{{ question.getIsHardcore()
+                                ? '<i class="bi bi-check-lg text-success"></i>'
+                                : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
                         <td>{{ question.getStatus() }}</td>
-                        <td>{% if question.media|length > 0 %}
-                                <i class="bi bi-check-lg text-success"></i>
-                            {% else %}
-                                <i class="bi bi-x-lg text-danger"></i>
-                            {% endif %}
-                        </td>
+                        <td>{{ question.media|length > 0
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
                         <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
                         <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
                         <td>

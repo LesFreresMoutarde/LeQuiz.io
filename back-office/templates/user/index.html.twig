@@ -36,14 +36,28 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.plan }}</td>
                         <td>{{ user.role }}</td>
-                        <td>{{ user.isTrustyWriter ? 'Yes' : 'No' }}</td>
-                        <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
-                        <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
-                        <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
-                        <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
+                        <td>{{ user.isTrustyWriter
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
+                        <td>{{ user.isActive
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
+                        <td>{{ user.isBanned
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
+                        <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
+                        <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
                         <td>
-                            <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                            <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                            <a href="{{ path('user_show', {'id': user.id}) }}"
+                               class="btn btn-sm btn-outline-primary mb-2"
+                            >
+                                Afficher
+                            </a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}"
+                               class="btn btn-sm btn-outline-primary mb-2"
+                            >
+                                Modifier
+                            </a>
                         </td>
                     </tr>
                 {% else %}
