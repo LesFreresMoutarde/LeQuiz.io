@@ -3,64 +3,57 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Plan</th>
-                <th>Role</th>
-                <th>IsTrustyWriter</th>
-                <th>IsActive</th>
-                <th>IsBanned</th>
-                <th>UnbanDate</th>
-                <th>DeletedAt</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.plan }}</td>
-                <td>{{ user.role }}</td>
-                <td>{{ user.isTrustyWriter ? 'Yes' : 'No' }}</td>
-                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
-                <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
-                <td>
-                    {% if user.isBanned %}
-                        Banned
-                    {% elseif not user.isBanned and not user.unbanDate %}
-                        Not Banned
-                    {% else %}
-                        {{ user.unbanDate }}
-                    {% endif %}
-                </td>
-{#                <td>{{ user.unbanDate ? user.unbanDate|date('Y-m-d H:i:s T') : 'Not banned' }}</td>#}
-                <td>{{ user.deletedAt ? user.deletedAt|date('Y-m-d H:i:s T') : 'Not deleted' }}</td>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="16">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    <div class="row">
+        <h1 class="h2">Utilisateurs</h1>
+        <hr>
+    </div>
+    {% block users %}
+        <div id="users-block" data-controller="users" class="mb-3">
+            <div class="count mb-2">
+                <span style="font-size: 1.1em">Total : </span><span class="badge bg-primary" style="font-size: 1em">40000</span>
+            </div>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Uuid</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Plan</th>
+                        <th>Role</th>
+                        <th>Rédacteur validé</th>
+                        <th>Actif</th>
+                        <th>Banni</th>
+                        <th>Créé le</th>
+                        <th>Modifié le </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.plan }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{{ user.isTrustyWriter ? 'Yes' : 'No' }}</td>
+                        <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                        <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
+                        <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
+                        <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
+                        <td>
+                            <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="16">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
     <a href="{{ path('user_new') }}">Create new</a>
 {% endblock %}
