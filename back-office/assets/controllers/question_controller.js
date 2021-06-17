@@ -3,6 +3,8 @@ import Util from "./util_controller";
 
 export default class extends Controller {
 
+    ENTITY_NAME = 'questions';
+    BLOCK_TO_REPLACE = '#questions-block';
     page;
     timer;
 
@@ -20,224 +22,27 @@ export default class extends Controller {
         this.page = parseInt(Util.getQueryStringParam('page', 1, 'number'));
 
         const paramsInUrl = Util.getQueryStringParams();
-
-        this.fillFilterInputs(paramsInUrl);
-    }
-
-    fillFilterInputs = (params) => {
-
-        if (!params) return;
-
-        delete params['page'];
-
-        let inputElt;
-
-        for (const param in params) {
-            switch (typeof this.filters[param]) {
-                case "string":
-                case "boolean":
-
-                    this.filters[param] = params[param];
-                    inputElt = document.querySelector(`#${param}-input`);
-                    inputElt.type === 'checkbox'
-                        ? inputElt.checked = !!this.filters[param]
-                        : inputElt.value = this.filters[param];
-                    break;
-                case "object":
-                    this.filters[param] = params[param].split(',');
-                    const checkboxes = document.querySelectorAll(`input[data-checkboxes="${param}"]`);
-                    checkboxes.forEach(checkbox => {
-                        if (this.filters[param].includes(checkbox.value))
-                            checkbox.checked = true;
-                    })
-                    break;
-            }
-        }
+        Util.fillFilterInputs(paramsInUrl, this.filters);
     }
 
     showCheckboxes = (evt) => {
-        const checkboxesFor = evt.currentTarget.getAttribute('data-checkboxes-for');
-
-        const checkboxesDivElt = document.querySelector(`#${checkboxesFor}`)
-
-        checkboxesDivElt.classList.toggle('d-none');
+        Util.showCheckboxes(evt);
     }
 
     onPick = async (evt) => {
-        const checkboxElts = this.getFilterCheckboxElements(evt, 'data-checkboxes-for');
-
-        let checkboxesChangedCounter = 0;
-
-        const value = evt.target.getAttribute('data-pick');
-
-        const checked = {full: true, empty: false};
-
-        checkboxElts.forEach((checkboxElt) => {
-            if (checkboxElt.checked !== checked[value]) {
-                checkboxElt.checked = checked[value];
-                checkboxesChangedCounter++
-            }
-        });
-
-        if (checkboxesChangedCounter === 0) return;
-
-        const filter = checkboxElts[0].getAttribute('data-checkboxes')
-
-        this.filters[filter] = this.addAllToFilter(filter);
-
-        const fieldsParam = this.buildParam();
-
-
-        const filteredData = await Util.getFilteredData('questions', fieldsParam);
-
-        document.querySelector('#questions-block').innerHTML = filteredData;
+        await Util.onCheckboxesButtonClick(this.filters, this.ENTITY_NAME, this.BLOCK_TO_REPLACE, evt);
     }
 
     onMultiCheckboxesChange = async (evt) => {
-        const checkboxElts = this.getFilterCheckboxElements(evt, 'data-checkboxes');
-
-        const checkboxesChecked = Array.from(checkboxElts)
-            .filter(checkbox => checkbox.checked)
-            .map((checkbox) => checkbox.value);
-
-        const filter = checkboxElts[0].getAttribute('data-checkboxes')
-
-        this.filters[filter] = this.handleCheckboxChange(filter, checkboxElts, checkboxesChecked);
-
-        const fieldsParam = this.buildParam();
-
-        const filteredData = await Util.getFilteredData('questions', fieldsParam);
-
-        this.deletePageParam();
-
-        document.querySelector('#questions-block').innerHTML = filteredData;
+        await Util.onMultiCheckboxesChange(this.filters, this.ENTITY_NAME, this.BLOCK_TO_REPLACE, evt);
     };
 
-    addAllToFilter = (filterName) => {
-        const newUrl = Util.deleteQueryStringParam(filterName);
-
-        window.history.pushState({}, "", newUrl);
-
-        return ['all'];
-    }
-
-    handleCheckboxChange = (filterName, checkboxes, checkboxesChecked) => {
-
-        if (checkboxesChecked.length === 0 || checkboxesChecked.length === checkboxes.length) {
-            return this.addAllToFilter(filterName)
-        }
-
-        const newUrl = Util.addQueryStringParam(filterName, checkboxesChecked.join(','))
-        window.history.pushState({}, "", newUrl);
-
-        return checkboxesChecked;
-    }
-
-    getFilterCheckboxElements = (evt, attribute) => {
-        const checkboxesFor = evt.target.getAttribute(attribute);
-
-        return document.querySelectorAll(`input[data-checkboxes="${checkboxesFor}"]`);
-    }
-
     onInput = (evt) => {
-
-        clearTimeout(this.timer)
-
-        const value = evt.target.value;
-
-        const filter = evt.target.getAttribute('data-input');
-
-        let newUrl;
-
-        this.filters[filter] = evt.target.value;
-        this.filters[filter]
-            ? newUrl = Util.addQueryStringParam(filter, this.filters[filter])
-            : newUrl = Util.deleteQueryStringParam([filter, 'page']);
-
-        window.history.pushState({}, "", newUrl);
-
-        this.timer = setTimeout(async () => {
-
-            // Database is waiting for a valid uuid, otherwise it crashes.
-            if (filter === 'uuid' && !Util.isUuidValid(this.filters.uuid) && this.filters.uuid !== '') {
-                //TODO TOASTR WHEN BUG RESOLVED
-                clearTimeout(this.timer);
-                return;
-            }
-
-            const fieldsToSort = this.buildParam();
-
-            try {
-                const filteredData = await Util.getFilteredData('questions', fieldsToSort);
-
-                document.querySelector('#questions-block').innerHTML = filteredData;
-
-            } catch (error) {
-                //TODO TOASTR WHEN BUG RESOLVED
-                console.error('Internal server error');
-            } finally {
-                this.deletePageParam();
-                clearTimeout(this.timer);
-            }
-
-        },200)
+        Util.onFormInput(this.timer, this.filters, this.ENTITY_NAME, this.BLOCK_TO_REPLACE, evt);
     }
 
-    onSingleCheckboxChange = async (evt) => {
-        const filter = evt.target.getAttribute('data-checkbox');
-
-        const value = evt.target.checked;
-
-        this.filters[filter] = value;
-
-        let newUrl;
-
-        value
-            ? newUrl = Util.addQueryStringParam(filter, value)
-            : newUrl = Util.deleteQueryStringParam(filter);
-
-        window.history.pushState({}, "", newUrl);
-
-        const fieldsToSort = this.buildParam();
-
-        try {
-            const filteredData = await Util.getFilteredData('questions', fieldsToSort);
-
-            document.querySelector('#questions-block').innerHTML = filteredData;
-
-        } catch (error) {
-            //TODO TOASTR WHEN BUG RESOLVED
-            console.error('Internal server error');
-        } finally {
-            this.deletePageParam();
-        }
-
-    }
-
-    deletePageParam = () => {
-        const newUrl = Util.deleteQueryStringParam('page');
-
-        window.history.pushState({}, "", newUrl);
-    }
-
-    buildParam = () => {
-        let param = {};
-
-        for (const filter in this.filters) {
-            switch (typeof this.filters[filter]) {
-                case "string":
-                case "boolean":
-                    if (this.filters[filter])
-                        param[filter] = this.filters[filter];
-                    break;
-                case "object":
-                    if (this.filters[filter].length > 0 && this.filters[filter][0] !== 'all')
-                        param[filter] = this.filters[filter].join(',')
-                    break;
-            }
-        }
-
-        return param
+    onUniqueCheckboxChange = async (evt) => {
+        await Util.onUniqueCheckboxChange(this.filters, this.ENTITY_NAME, this.BLOCK_TO_REPLACE, evt);
     }
 
     onFullAnswer = (evt) => {
