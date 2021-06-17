@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\EditUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Util\Enums;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,8 @@ class UserController extends AbstractController
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'plans' => Enums::USER_PLANS,
+            'roles' => Enums::USER_ROLES,
         ]);
     }
 
