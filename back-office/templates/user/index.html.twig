@@ -7,8 +7,107 @@
         <h1 class="h2">Utilisateurs</h1>
         <hr>
     </div>
+    <div data-controller="user">
+        <div class="row mb-3">
+            <div class="col-3">
+                <input type="text"
+                       data-input="uuid"
+                       id="uuid-input"
+                       data-action="user#onInput"
+                       placeholder="UUID"
+                       class="form-control"/>
+            </div>
+            <div class="col-3">
+                <input type="text"
+                       data-input="search"
+                       id="search-input"
+                       data-action="user#onInput"
+                       placeholder="Username ou email"
+                       class="form-control"/>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-3">
+                <div class="form-select d-flex justify-content-start"
+                     data-action="click->user#showCheckboxes" id="plans-input" data-checkboxes-for="plans" data-filter-select>
+                    <span class="placeholder" data-click-not-hiding>Plans</span>
+                </div>
+                <div id="plans" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="full"
+                                data-checkboxes-for="plans"
+                                data-click-not-hiding
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="empty"
+                                data-checkboxes-for="plans"
+                                data-click-not-hiding
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-start" data-click-not-hiding>
+                        {% for plan in plans %}
+                            <label class="form-check-label mb-1 me-1" data-click-not-hiding>
+                                <input type="checkbox"
+                                       data-checkboxes="plans"
+                                       class="form-check-input"
+                                       value="{{ plan }}"
+                                       data-action="change->user#onMultiCheckboxesChange"
+                                       data-click-not-hiding
+                                >
+                                {{ plan }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-select d-flex justify-content-start"
+                     data-action="click->user#showCheckboxes" id="roles-input" data-checkboxes-for="roles" data-filter-select>
+                    <span class="placeholder" data-click-not-hiding>Roles</span>
+                </div>
+                <div id="roles" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="full"
+                                data-checkboxes-for="roles"
+                                data-click-not-hiding
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="empty"
+                                data-checkboxes-for="roles"
+                                data-click-not-hiding
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    {% for role in roles %}
+                        <label class="form-check-label mb-1 me-1" data-click-not-hiding>
+                            <input type="checkbox"
+                                   data-checkboxes="roles"
+                                   class="form-check-input"
+                                   value="{{ role }}"
+                                   data-action="change->user#onMultiCheckboxesChange"
+                                   data-click-not-hiding
+                            >
+                            {{ role }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+    </div>
     {% block users %}
-        <div id="users-block" data-controller="users" class="mb-3">
+        <div id="users-block" data-controller="user" class="mb-3">
             <div class="count mb-2">
                 <span style="font-size: 1.1em">Total : </span><span class="badge bg-primary" style="font-size: 1em">40000</span>
             </div>
