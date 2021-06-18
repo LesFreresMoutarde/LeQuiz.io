@@ -169,11 +169,9 @@ class UserController extends AbstractController
         $queryString .= !empty($whereString) > 0
             ? ' WHERE '.$whereString
             : '';
-//        dd($queryString);
 
         $query = $em->createQuery($queryString);
         $query->setParameters($paramsReplacements);
-//        dd($query->getResult());
 
         return $paginator->paginate($query, $page, 10);
     }
