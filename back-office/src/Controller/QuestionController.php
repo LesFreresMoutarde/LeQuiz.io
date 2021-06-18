@@ -18,7 +18,7 @@ use Twig\Environment;
 class QuestionController extends AbstractController
 {
 
-    private const FILTERS = ['search', 'uuid', 'categories', 'questionTypes', 'statuses', 'isHardcore', 'hasMedia'];
+    private const POSSIBLE_FILTERS = ['search', 'uuid', 'categories', 'questionTypes', 'statuses', 'isHardcore', 'hasMedia'];
 
     #[Route('/', name: 'question_index', methods: ['GET'])]
     public function index(
@@ -32,8 +32,7 @@ class QuestionController extends AbstractController
 
         $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
 
-//        $params = $this->getParamFromUrl($request);
-        $params = Util::getParamFromUrl($request, self::FILTERS);
+        $params = Util::getParamFromUrl($request, self::POSSIBLE_FILTERS);
 
         $questions = $this->getFilteredQuestions($page, $params, $em, $paginator);
 

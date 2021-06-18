@@ -7,6 +7,9 @@ use App\Form\EditUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Util\Enums;
+use App\Util\Util;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +19,24 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 #[Route('/users')]
 class UserController extends AbstractController
 {
+    private const POSSIBLE_FILTERS = ['search', 'uuid', 'plans', 'roles', 'isTrustyWriter', 'isActive', 'isBanned'];
+
     #[Route('/', name: 'user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index
+    (
+        Request $request,
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator
+    ): Response
     {
+        $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
+
+        $params = Util::getParamFromUrl($request, self::POSSIBLE_FILTERS);
+
+        $users = $this->getFilteredUsers($page, $params, $em, $paginator);
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
             'plans' => Enums::USER_PLANS,
             'roles' => Enums::USER_ROLES,
         ]);
@@ -90,5 +106,58 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_index');
+    }
+
+    private function getFilteredUsers(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
+    {
+        $queryString = 'SELECT u from App\Entity\User u';
+        $whereParts = [];
+        $paramsReplacements = [];
+
+        if (!empty($params)) {
+            foreach ($params as $paramName => $value) {
+                switch ($paramName) {
+                    case 'search':
+                        $whereParts[] = '(LOWER(u.username) LIKE LOWER(:search) OR LOWER(u.email) LIKE LOWER(:search))';
+                        $paramsReplacements['search'] = '%'.$value.'%';
+                        break;
+                    case 'uuid':
+                        if (Util::isUuidValid($value)) {
+                            $whereParts[] = 'u.id = :uuid';
+                            $paramsReplacements['uuid'] = $value;
+                        }
+                        break;
+                    case 'plans':
+                        $whereParts[] = 'LOWER(u.plan) IN (:plans)';
+                        $paramsReplacements['plans'] = explode(',', $value);
+                        break;
+                    case 'roles':
+                        $whereParts[] = 'LOWER(u.role) IN (:roles)';
+                        $paramsReplacements['roles'] = explode(',', $value);
+                        break;
+                    case 'isTrustyWriter':
+                        $whereParts[] = 'u.isTrustyWriter = true';
+                        break;
+                    case 'isActive':
+                        $whereParts[] = 'u.isActive = true';
+                        break;
+                    case 'isBanned':
+                        $whereParts[] = 'u.isBanned = true';
+                        break;
+                }
+            }
+        }
+
+        $whereString = implode(' AND ', $whereParts);
+        $queryString .= !empty($whereString) > 0
+            ? ' WHERE '.$whereString
+            : '';
+//        dd($queryString);
+
+        $query = $em->createQuery($queryString);
+        $query->setParameters($paramsReplacements);
+//        dd($query->getResult());
+
+        return $paginator->paginate($query, $page, 10);
     }
 }
