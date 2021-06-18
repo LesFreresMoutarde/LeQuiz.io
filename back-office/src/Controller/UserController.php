@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Twig\Environment;
 
 #[Route('/users')]
 class UserController extends AbstractController
@@ -26,7 +27,8 @@ class UserController extends AbstractController
     (
         Request $request,
         EntityManagerInterface $em,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        Environment $environment
     ): Response
     {
         $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
@@ -34,6 +36,21 @@ class UserController extends AbstractController
         $params = Util::getParamFromUrl($request, self::POSSIBLE_FILTERS);
 
         $users = $this->getFilteredUsers($page, $params, $em, $paginator);
+
+        if ($request->headers->has('X-Requested-With')) {
+
+            $response = new Response();
+
+            $template = $environment->load('user/index.html.twig');
+
+            $response->headers->set('Content-Type', 'text/plain');
+
+            $response->setStatusCode(Response::HTTP_OK);
+
+            $response->setContent($template->renderBlock('users', ['users' => $users]));
+
+            $response->send();
+        }
 
         return $this->render('user/index.html.twig', [
             'users' => $users,
