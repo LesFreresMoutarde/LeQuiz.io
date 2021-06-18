@@ -3,12 +3,154 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <div class="row">
+        <h1 class="h2">Modifier un utilisateur</h1>
+        <hr>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="user-id" class="form-label lead">Uuid</label>
+            <input type="text" id="user-id" class="form-control" disabled value="{{ user.getId() }}"/>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <label for="user-created-at" class="form-label lead">Crée le</label>
+            <input type="text"
+                   id="user-created-at"
+                   class="form-control"
+                   disabled
+                   value="{{ user.getCreatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+            />
+        </div>
+        <div class="col-3">
+            <label for="user-updated-at" class="form-label lead">Mis à jour le</label>
+            <input type="text"
+                   id="user-updated-at"
+                   class="form-control"
+                   disabled
+                   value="{{ user.getUpdatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+            />
+        </div>
+    </div>
+    {{ form_start(form) }}
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="user-username" class="form-label lead">Username</label>
+            {{ form_widget(form.username,
+                {'attr':
+                    {
+                        'placeholder': 'Username',
+                        'class': 'form-control',
+                        'id': 'user-username'
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="user-email" class="form-label lead">Email</label>
+            {{ form_widget(form.email,
+                {'attr':
+                    {
+                        'placeholder': 'Email',
+                        'class': 'form-control',
+                        'id': 'user-email'
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <label for="user-plan" class="form-label lead">Plan</label>
+            {{ form_widget(form.plan,
+                {'attr':
+                    {
+                        'placeholder': 'Plan',
+                        'class': 'form-select',
+                        'id': 'user-plan'
+                    }
+                }
+            )}}
+        </div>
+        <div class="col-3">
+            <label for="user-role" class="form-label lead">Role</label>
+            {{ form_widget(form.role,
+                {'attr':
+                    {
+                        'placeholder': 'Role',
+                        'class': 'form-select',
+                        'id': 'user-role'
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            {{ form_widget(form.isTrustyWriter,
+                {'attr':
+                    {
+                        'class': 'form-check-input me-1',
+                        'id': 'user-isTrustyWriter'
+                    }
+                }
+            )}}
+            {{ form_label(form.isTrustyWriter, 'Rédacteur validé', {'label_attr': {'class': 'form-check-label me-2'}}) }}
+            {{ form_widget(form.isActive,
+                {'attr':
+                    {
+                        'class': 'form-check-input me-1',
+                        'id': 'user-isActive'
+                    }
+                }
+            )}}
+            {{ form_label(form.isActive, 'Actif', {'label_attr': {'class': 'form-check-label me-2'}}) }}
+            {{ form_widget(form.isBanned,
+                {'attr':
+                    {
+                        'class': 'form-check-input me-1',
+                        'id': 'user-isBanned'
+                    }
+                }
+            )}}
+            {{ form_label(form.isBanned, 'Banni', {'label_attr': {'class': 'form-check-label me-2'}}) }}
+        </div>
+    </div>
+    <div class="row mb-3" data-controller="user">
+        <div class="col-6">
+            <label for="user-unbanDate" class="form-label lead">Débanni le</label>
+            {{ form_widget(form.unbanDate,
+                {'attr':
+                    {
+                        'id': 'user-unbanDate',
+                        'class': 'form-control bg-white',
+                        'placeholder': 'Date de débannissement'
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="mb-3">
+{#        TODO#}
+        <button type="button" class="btn btn-warning text-white">Réinitialiser le mot de passe</button>
+    </div>
+        {{ form_widget(form.submit,
+            {'attr':
+                {
+                    'class': 'btn btn-primary'
+                }
+            }
+        ) }}
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-    <button>Password reset</button>//TODO
+    {{ form_end(form) }}
+    <div class="d-flex mt-4">
+        <a href="{{ path('user_index') }}" class="btn btn-secondary me-2">Retour</a>
+        {{ include('user/_delete_form.html.twig') }}
+    </div>
 
-    <a href="{{ path('user_index') }}">back to list</a>
 
-    {{ include('user/_delete_form.html.twig') }}
+
 {% endblock %}

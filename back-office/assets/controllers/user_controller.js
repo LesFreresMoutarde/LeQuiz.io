@@ -1,5 +1,7 @@
 import { Controller } from "stimulus";
 import Util from "./util_controller";
+import flatpickr from "flatpickr";
+import '../../node_modules/flatpickr/dist/flatpickr.min.css'
 
 export default class extends Controller {
 
@@ -23,6 +25,7 @@ export default class extends Controller {
 
         const paramsInUrl = Util.getQueryStringParams();
         Util.fillFilterInputs(paramsInUrl, this.filters);
+        flatpickr('#edit_user_unbanDate', {minDate: 'today'})
     }
 
     showCheckboxes = (evt) => {
