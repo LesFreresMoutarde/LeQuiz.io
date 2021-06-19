@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import '../../../../css/gameMode.css';
-import {isMobile} from "react-device-detect";
+import {isConsole, isMobile, isSmartTV} from "react-device-detect";
 
 const GameMode = ({gameMode, pickGameMode}) => {
     const {label, description, allowed, classname} = gameMode;
@@ -32,11 +32,13 @@ const GameMode = ({gameMode, pickGameMode}) => {
         )
     }
 
+    const useMobileLayout = isMobile || isSmartTV || isConsole;
+
     return (
         <button
             className={`
                 game-mode game-mode-${classname.toLowerCase()}
-                ${isMobile ? 'mobile' : ''}
+                ${useMobileLayout ? 'mobile' : ''}
                 ${!allowed ? 'disabled' : ''}
                 ${playDisabledAnimation ? 'disabled-animation' : ''}
             `}
