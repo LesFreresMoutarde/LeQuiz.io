@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import '../../../../css/gameMode.css';
+import {isMobile} from "react-device-detect";
 
 const GameMode = ({gameMode, pickGameMode}) => {
     const {label, description, allowed, classname} = gameMode;
@@ -32,7 +33,15 @@ const GameMode = ({gameMode, pickGameMode}) => {
     }
 
     return (
-        <button className={`game-mode gm-${classname.toLowerCase()} ${!allowed ? 'disabled' : ''} ${playDisabledAnimation ? 'disabled-animation' : ''}`} onClick={onClick}>
+        <button
+            className={`
+                game-mode game-mode-${classname.toLowerCase()}
+                ${isMobile ? 'mobile' : ''}
+                ${!allowed ? 'disabled' : ''}
+                ${playDisabledAnimation ? 'disabled-animation' : ''}
+            `}
+            onClick={onClick}
+        >
             {!allowed && (
                 <img className="game-mode-disabled-mobile" src="/img/icons/locked.svg" style={{
                     maxHeight: 20,
