@@ -1,3 +1,7 @@
+:root {
+    --game-mode-border-color: #fff;
+}
+
 .game-mode-container {
     display: flex;
     flex-wrap: wrap;
@@ -6,11 +10,11 @@
 }
 
 .game-mode {
-    border: 3px solid #fff;
+    border: 3px solid var(--game-mode-border-color);
     border-radius: 30px;
 
     color: #fff;
-    background-color: #24BFF0;
+    background-color: var(--element-primary-background-color);
 
     transition: background-color 0.15s ease-out;
     padding: 0;
@@ -221,76 +225,3 @@
         font-size: 0.9rem;
     }
 }
-
-/*@media screen and (max-width: 1280px) {*/
-/*    !*.game-mode-container {*!*/
-/*    !*    flex-direction: column;*!*/
-/*    !*}*!*/
-
-/*    .game-mode { !**!*/
-/*        border: 3.5px solid #fff;*/
-
-/*        width: 100%;*/
-/*        height: auto;*/
-
-/*        border-radius: 15px;*/
-/*    }*/
-
-/*    !*.game-mode:not(.disabled):hover {*!*/
-/*    !*    background-color: #DC71C7;*!*/
-/*    !*}*!*/
-
-/*    .game-mode-disabled-mobile { !**!*/
-/*        display: initial;*/
-/*    }*/
-
-/*    .game-mode-label-mobile { !**!*/
-/*        display: block;*/
-/*    }*/
-
-/*    .game-mode-button-content { !**!*/
-/*        display: flex;*/
-/*    }*/
-
-/*    .game-mode:hover .game-mode-button-content { !**!*/
-/*        transform: none;*/
-/*    }*/
-
-/*    .game-mode-label-container { !**!*/
-/*        align-self: center;*/
-/*    }*/
-
-/*    .game-mode-label-disabled-desktop { !**!*/
-/*        display: none;*/
-/*    }*/
-
-/*    .game-mode-icon-container { !**!*/
-/*        width: 80px;*/
-/*        height: 80px;*/
-/*        margin-bottom: 10px;*/
-/*        margin-left: 10px;*/
-/*    }*/
-
-/*    .game-mode-icon { !**!*/
-/*        max-width: 90%;*/
-/*        max-height: 90%;*/
-/*    }*/
-
-/*    .game-mode-label-desktop { !**!*/
-/*        display: none;*/
-/*    }*/
-
-/*    .game-mode-description-container { !**!*/
-/*        width: 100%;*/
-
-/*        align-self: center;*/
-
-/*        margin-bottom: 10px;*/
-/*    }*/
-
-/*    .game-mode-description { !**!*/
-/*        font-size: 0.85rem;*/
-
-/*        text-align: left;*/
-/*    }*/
-/*}*/
