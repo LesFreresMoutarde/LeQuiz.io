@@ -241,11 +241,12 @@
            consequently #}
 {#        {% endif %}#}
         <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
-        <button type="submit" class="btn btn-primary me-2">Envoyer</button>
+        <div class="d-flex mt-4">
+            <button type="submit" class="btn btn-primary me-2">Envoyer</button>
+            <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Retour</a>
+            <a href="{{ path('question_delete', {'id': question.getId()}) }}" class="btn btn-danger">Supprimer</a>
+        </div>
     </form>
-    <div class="d-flex mt-4">
-        <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Retour</a>
-        {{ include('question/_delete_form.html.twig') }}
-    </div>
+
 
 {% endblock %}
