@@ -20,7 +20,7 @@
                    id="user-created-at"
                    class="form-control"
                    disabled
-                   value="{{ user.getCreatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+                   value="{{ user.getCreatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
             />
         </div>
         <div class="col-3">
@@ -29,7 +29,7 @@
                    id="user-updated-at"
                    class="form-control"
                    disabled
-                   value="{{ user.getUpdatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+                   value="{{ user.getUpdatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
             />
         </div>
     </div>
@@ -121,16 +121,29 @@
     </div>
     <div class="row mb-3" data-controller="user">
         <div class="col-6">
-            <label for="user-unbanDate" class="form-label lead">Débanni le</label>
-            {{ form_widget(form.unbanDate,
-                {'attr':
-                    {
-                        'id': 'user-unbanDate',
-                        'class': 'form-control bg-white',
-                        'placeholder': 'Date de débannissement'
-                    }
-                }
-            )}}
+            <label for="user-unbanDate"
+                   class="form-label lead"
+            >
+                Débanni le <span style="font-size: 0.7em">(UTC)</span>
+            </label>
+           <div class="d-flex">
+               <input type="text"
+                      id="user-unbanDate"
+                      name="unbanDate"
+                      class="form-select bg-white date-picker me-2"
+                      placeholder="Date de débannissement"
+                      value="{{ user.getUnbanDate()
+                      ? user.getUnbanDate()|date('d-m-Y H:i:s', false)
+                      : '' }}"
+               />
+               <button type="button"
+                       id="unbanDate-clear"
+                       class="btn btn-sm btn-danger"
+                       data-action="user#clearUnbanDateField"
+               >
+                   <i class="bi bi-x-lg"></i>
+               </button>
+           </div>
         </div>
     </div>
     <div class="mb-3">

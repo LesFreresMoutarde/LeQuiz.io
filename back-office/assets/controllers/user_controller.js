@@ -25,7 +25,16 @@ export default class extends Controller {
 
         const paramsInUrl = Util.getQueryStringParams();
         Util.fillFilterInputs(paramsInUrl, this.filters);
-        flatpickr('#edit_user_unbanDate', {minDate: 'today'})
+
+        if (document.querySelector('.date-picker')) {
+            flatpickr('.date-picker', {
+                dateFormat: 'd-m-Y H:i:S',
+                enableTime: true,
+                minTime: '00:00',
+                maxTime: '00:00',
+                minDate: new Date().fp_incr(1),
+            });
+        }
     }
 
     showCheckboxes = (evt) => {
@@ -48,5 +57,8 @@ export default class extends Controller {
         await Util.onUniqueCheckboxChange(this.filters, this.ENTITY_NAME, this.BLOCK_TO_REPLACE, evt);
     }
 
+    clearUnbanDateField = () => {
+        document.querySelector('.date-picker').value = '';
+    }
 
 }

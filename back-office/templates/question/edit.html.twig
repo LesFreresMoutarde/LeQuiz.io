@@ -20,7 +20,7 @@
                    id="question-created-at"
                    class="form-control"
                    disabled
-                   value="{{ question.getCreatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+                   value="{{ question.getCreatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
             />
         </div>
         <div class="col-3">
@@ -29,7 +29,7 @@
                    id="question-updated-at"
                    class="form-control"
                    disabled
-                   value="{{ question.getUpdatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+                   value="{{ question.getUpdatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
             />
         </div>
     </div>

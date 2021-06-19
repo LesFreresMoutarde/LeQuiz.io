@@ -99,12 +99,21 @@ class UserController extends AbstractController
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 
-
-//    dd($form);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($_POST['unbanDate']) {
+                $user->setUnbanDate(
+                    \DateTime::createFromFormat('d-m-Y H:i:s', $_POST['unbanDate'])
+                );
+            }
+
+            if (!$user->getIsBanned() && $user->getUnbanDate())
+                $user->setUnbanDate(null);
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('user_show', [
+                'id' => $user->getId()
+            ]);
         }
 
         return $this->render('user/edit.html.twig', [

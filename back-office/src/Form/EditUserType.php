@@ -35,9 +35,7 @@ class EditUserType extends AbstractType
             ->add('isTrustyWriter')
             ->add('isActive')
             ->add('isBanned')
-            ->add('unbanDate', TextType::class, [
-//                'html5' => false
-            ])
+//            ->add('unbanDate', TextType::class)
             ->add('submit', SubmitType::class, ['label' => 'Modifier'])
         ;
     }
