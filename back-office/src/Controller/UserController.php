@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditUserType;
 use App\Form\UserType;
-use App\Repository\UserRepository;
 use App\Util\Enums;
 use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 #[Route('/users')]
@@ -67,7 +67,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);
             $user->setIsBanned(false);
@@ -85,12 +84,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'user_show', methods: ['GET'])]
-    public function show(User $user): Response
+    public function show(User $user, Security $security): Response
     {
         $form = $this->createForm(EditUserType::class, $user);
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
+            'currentUser' => $security->getUser(),
             'form' => $form->createView(),
             'context' => 'show'
         ]);
@@ -98,7 +98,7 @@ class UserController extends AbstractController
 
     //TODO Password Reset
     #[Route('/edit/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, Security $security): Response
     {
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
@@ -126,6 +126,7 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
+            'currentUser' => $security->getUser(),
             'form' => $form->createView(),
             'context' => 'edit'
         ]);
