@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row">
-        <h1 class="h2">Modifier un utilisateur</h1>
+        <h1 class="h2">{{ context == 'show' ? 'Utilisateur' : 'Modifier un utilisateur' }}</h1>
         <hr>
     </div>
     <div class="row mb-3">
