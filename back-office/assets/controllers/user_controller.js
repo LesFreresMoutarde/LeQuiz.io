@@ -26,7 +26,9 @@ export default class extends Controller {
         const paramsInUrl = Util.getQueryStringParams();
         Util.fillFilterInputs(paramsInUrl, this.filters);
 
-        if (document.querySelector('.date-picker')) {
+        const unbanDateInputElt = document.querySelector('.date-picker');
+        if (unbanDateInputElt && !unbanDateInputElt.getAttribute('data-disabled')) {
+            console.log(unbanDateInputElt.getAttribute('data-disabled'))
             flatpickr('.date-picker', {
                 dateFormat: 'd-m-Y H:i:S',
                 enableTime: true,
@@ -34,6 +36,8 @@ export default class extends Controller {
                 maxTime: '00:00',
                 minDate: new Date().fp_incr(1),
             });
+        } else if (unbanDateInputElt && unbanDateInputElt.getAttribute('data-disabled')) {
+            unbanDateInputElt.setAttribute('disabled', 'true');
         }
     }
 
@@ -58,7 +62,7 @@ export default class extends Controller {
     }
 
     clearUnbanDateField = () => {
-        document.querySelector('.date-picker').value = '';
+        document.querySelector('.date-picker').value = null;
     }
 
 }

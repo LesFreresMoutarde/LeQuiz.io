@@ -87,8 +87,12 @@ class UserController extends AbstractController
     #[Route('/show/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
+        $form = $this->createForm(EditUserType::class, $user);
+
+        return $this->render('user/edit.html.twig', [
             'user' => $user,
+            'form' => $form->createView(),
+            'context' => 'show'
         ]);
     }
 
@@ -100,10 +104,14 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($_POST['unbanDate']) {
+//            dd($_POST);
+//            if (array_key_exists('unbanDate', $_POST)) {
+            if ($_POST['unbanDate'] !== '') {
                 $user->setUnbanDate(
                     \DateTime::createFromFormat('d-m-Y H:i:s', $_POST['unbanDate'])
                 );
+            } else {;
+                $user->setUnbanDate(null);
             }
 
             if (!$user->getIsBanned() && $user->getUnbanDate())
@@ -112,13 +120,14 @@ class UserController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_show', [
-                'id' => $user->getId()
+                'id' => $user->getId(),
             ]);
         }
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'context' => 'edit'
         ]);
     }
 

@@ -42,7 +42,8 @@
                     {
                         'placeholder': 'Username',
                         'class': 'form-control',
-                        'id': 'user-username'
+                        'id': 'user-username',
+                        'disabled': context == 'show' ? true : false
                     }
                 }
             )}}
@@ -56,7 +57,8 @@
                     {
                         'placeholder': 'Email',
                         'class': 'form-control',
-                        'id': 'user-email'
+                        'id': 'user-email',
+                        'disabled': context == 'show' ? true : false
                     }
                 }
             )}}
@@ -70,7 +72,8 @@
                     {
                         'placeholder': 'Plan',
                         'class': 'form-select',
-                        'id': 'user-plan'
+                        'id': 'user-plan',
+                        'disabled': context == 'show' ? true : false
                     }
                 }
             )}}
@@ -82,7 +85,8 @@
                     {
                         'placeholder': 'Role',
                         'class': 'form-select',
-                        'id': 'user-role'
+                        'id': 'user-role',
+                        'disabled': context == 'show' ? true : false
                     }
                 }
             )}}
@@ -94,7 +98,8 @@
                 {'attr':
                     {
                         'class': 'form-check-input me-1',
-                        'id': 'user-isTrustyWriter'
+                        'id': 'user-isTrustyWriter',
+                        'disabled': context == 'show' ? true : false
                     }
                 }
             )}}
@@ -103,7 +108,8 @@
                 {'attr':
                     {
                         'class': 'form-check-input me-1',
-                        'id': 'user-isActive'
+                        'id': 'user-isActive',
+                        'disabled': context == 'show' ? true : false
                     }
                 }
             )}}
@@ -112,7 +118,8 @@
                 {'attr':
                     {
                         'class': 'form-check-input me-1',
-                        'id': 'user-isBanned'
+                        'id': 'user-isBanned',
+                        'disabled': context == 'show' ? true : false
                     }
                 }
             )}}
@@ -130,12 +137,14 @@
                <input type="text"
                       id="user-unbanDate"
                       name="unbanDate"
-                      class="form-select bg-white date-picker me-2"
+                      class="{{ context == 'edit' ? 'form-select bg-white date-picker me-2' : 'form-select date-picker'}}"
                       placeholder="Date de débannissement"
                       value="{{ user.getUnbanDate()
                       ? user.getUnbanDate()|date('d-m-Y H:i:s', false)
-                      : '' }}"
+                      : null }}"
+                      data-disabled="{{ context == 'show' ? true : false }}"
                />
+               {% if context == 'edit' %}
                <button type="button"
                        id="unbanDate-clear"
                        class="btn btn-sm btn-danger"
@@ -143,21 +152,27 @@
                >
                    <i class="bi bi-x-lg"></i>
                </button>
+               {% endif %}
            </div>
         </div>
     </div>
     <div class="mb-3">
 {#        TODO#}
+        {% if context == 'edit' %}
         <button type="button" class="btn btn-warning text-white">Réinitialiser le mot de passe</button>
+        {% endif %}
     </div>
     <div class="d-flex mt-4">
         {{ form_widget(form.submit,
             {'attr':
                 {
-                    'class': 'btn btn-primary me-2'
+                    'class': context == 'edit' ? 'btn btn-primary me-2' : 'd-none'
                 }
             }
         ) }}
+        {% if context == 'show' %}
+        <a href="{{ path('user_edit', {'id': user.getId()}) }}" class="btn btn-primary me-2">Modifier</a>
+        {% endif %}
         <a href="{{ path('user_index') }}" class="btn btn-secondary me-2">Retour</a>
         <a href="{{ path('user_delete', {'id': user.getId()}) }}" class="btn btn-danger">Supprimer</a>
     </div>
