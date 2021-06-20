@@ -237,8 +237,9 @@
                                                  class="my-1"></div>
                                         {% endfor %}
                                         {% if question.answer.additional is defined %}
-    {#                                        TODO QUAND QUESTIONS SHOW SERA REFAIT#}
-                                            <a data-bs-toggle="tooltip">Infos supplémentaires</a>
+                                            <a href="{{ path('question_show', {'id': question.id}) }}">
+                                                Infos supplémentaires
+                                            </a>
                                         {% endif %}
                                     </div>
                                 </div>
