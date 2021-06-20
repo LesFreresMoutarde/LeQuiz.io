@@ -37,6 +37,7 @@
     <div class="row mb-3">
         <div class="col-6">
             <label for="user-username" class="form-label lead">Username</label>
+            {{ form_errors(form.username) }}
             {{ form_widget(form.username,
                 {'attr':
                     {
@@ -52,6 +53,7 @@
     <div class="row mb-3">
         <div class="col-6">
             <label for="user-email" class="form-label lead">Email</label>
+            {{ form_errors(form.email) }}
             {{ form_widget(form.email,
                 {'attr':
                     {
@@ -67,6 +69,7 @@
     <div class="row mb-3">
         <div class="col-3">
             <label for="user-plan" class="form-label lead">Plan</label>
+            {{ form_errors(form.plan) }}
             {{ form_widget(form.plan,
                 {'attr':
                     {
@@ -80,6 +83,7 @@
         </div>
         <div class="col-3">
             <label for="user-role" class="form-label lead">Role</label>
+            {{ form_errors(form.role) }}
             {{ form_widget(form.role,
                 {'attr':
                     {
@@ -94,6 +98,9 @@
     </div>
     <div class="row mb-3">
         <div class="col-6">
+            {{ form_errors(form.isTrustyWriter) }}
+            {{ form_errors(form.isActive) }}
+            {{ form_errors(form.isBanned) }}
             {{ form_widget(form.isTrustyWriter,
                 {'attr':
                     {
@@ -174,7 +181,9 @@
         <a href="{{ path('user_edit', {'id': user.getId()}) }}" class="btn btn-primary me-2">Modifier</a>
         {% endif %}
         <a href="{{ path('user_index') }}" class="btn btn-secondary me-2">Retour</a>
+        {% if currentUser.getId() != user.getId()  %}
         <a href="{{ path('user_delete', {'id': user.getId()}) }}" class="btn btn-danger">Supprimer</a>
+        {% endif %}
     </div>
     {{ form_end(form) }}
 {% endblock %}
