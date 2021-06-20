@@ -37,6 +37,7 @@ export default class extends Controller {
                 minDate: new Date().fp_incr(1),
             });
         } else if (unbanDateInputElt && unbanDateInputElt.getAttribute('data-disabled')) {
+            // If context === 'show'. We disabled the input here because doing that in view prevents flatpickr working.
             unbanDateInputElt.setAttribute('disabled', 'true');
         }
     }
