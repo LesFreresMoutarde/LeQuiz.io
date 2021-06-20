@@ -74,7 +74,9 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('user_show', [
+                'id' => $user->getId(),
+            ]);
         }
 
         return $this->render('user/new.html.twig', [
@@ -104,8 +106,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            dd($_POST);
-//            if (array_key_exists('unbanDate', $_POST)) {
             if ($_POST['unbanDate'] !== '') {
                 $user->setUnbanDate(
                     \DateTime::createFromFormat('d-m-Y H:i:s', $_POST['unbanDate'])
@@ -133,7 +133,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'user_delete')]
-    public function delete(Request $request, User $user): Response
+    public function delete(User $user): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user->setIsActive(false);
