@@ -132,4 +132,9 @@ export default class extends Controller {
 
         document.querySelector(`#answer-${idToDelete}`).remove();
     }
+
+    deleteQuestion = async (evt) => {
+        const uuid = evt.currentTarget.getAttribute('data-uuid');
+        await Util.deleteEntity(this.ENTITY_NAME, uuid);
+    }
 }

@@ -10,6 +10,7 @@ use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -132,14 +133,17 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'user_delete')]
+    #[Route('/{id}', name: 'user_delete', methods: ['DELETE'], format: 'json')]
     public function delete(User $user): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user->setIsActive(false);
         $entityManager->flush();
 
-        return $this->redirectToRoute('user_index');
+        $response = new JsonResponse();
+        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+
+        return $response;
     }
 
     private function getFilteredUsers(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)

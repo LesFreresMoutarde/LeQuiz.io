@@ -240,7 +240,13 @@
     <div class="d-flex">
         <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Retour</a>
         <a href="{{ path('question_edit', {'id': question.id}) }}" class="btn btn-primary me-2" >Modifier</a>
-        {{ include('question/_delete_form.html.twig') }}
+        <button class="btn btn-danger"
+                data-uuid="{{ question.getId() }}"
+                data-controller="question"
+                data-action="question#deleteQuestion"
+        >
+            Supprimer
+        </button>
     </div>
 
 

@@ -182,7 +182,13 @@
         {% endif %}
         <a href="{{ path('user_index') }}" class="btn btn-secondary me-2">Retour</a>
         {% if currentUser.getId() != user.getId()  %}
-        <a href="{{ path('user_delete', {'id': user.getId()}) }}" class="btn btn-danger">Supprimer</a>
+            <button class="btn btn-danger"
+                    data-uuid="{{ user.getId() }}"
+                    data-controller="user"
+                    data-action="user#deleteUser"
+            >
+                Supprimer
+            </button>
         {% endif %}
     </div>
     {{ form_end(form) }}

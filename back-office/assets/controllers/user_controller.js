@@ -66,4 +66,9 @@ export default class extends Controller {
         document.querySelector('.date-picker').value = null;
     }
 
+    deleteUser = async (evt) => {
+        const uuid = evt.currentTarget.getAttribute('data-uuid');
+        await Util.deleteEntity(this.ENTITY_NAME, uuid);
+    }
+
 }

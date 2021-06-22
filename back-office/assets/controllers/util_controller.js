@@ -315,6 +315,31 @@ class Util {
         return validate(uuid);
     }
 
+    static deleteEntity = async (entity, uuid) => {
+        try {
+            const headers = new Headers();
+            headers.append('X-Requested-With', 'fetch');
+
+            if (!Util.isUuidValid(uuid)) throw new Error('Invalid Uuid');
+
+            const response = await fetch(`/${entity}/${uuid}`, {headers, method: 'DELETE'});
+
+            switch (response.status) {
+                case 204:
+                    window.location.href = (`/${entity}/`);
+                    break;
+                case 404:
+                    throw new Error('Not Found');
+                default:
+                    throw new Error('Internal Server Error');
+            }
+
+        } catch (error) {
+            //TODO Quand Toastr pret
+            console.error(error)
+        }
+    }
+
 }
 
 export default Util;
