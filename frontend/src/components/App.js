@@ -26,6 +26,7 @@ import ApiUtil from "../util/ApiUtil";
 import FeedbackModal from "./pages/FeedbackModal/FeedbackModal";
 import Contact from "./pages/Contact/Contact";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
+import {isMobileOnly} from "react-device-detect";
 const toastr = new Toastr();
 
 let instance;
@@ -141,6 +142,8 @@ class App extends React.Component {
             );
         }
 
+        const hideFooter = isMobileOnly
+
         if(isLoading) {
             return (
                 <div className="app loading">
@@ -176,7 +179,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer displayFeedbackModal={this.displayFeedbackModal}/>
+                    {!hideFooter && <Footer displayFeedbackModal={this.displayFeedbackModal}/>}
                 </div>
             );
         }
