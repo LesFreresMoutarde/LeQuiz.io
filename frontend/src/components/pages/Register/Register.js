@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import App from "../../App";
+import {app} from "../../App";
 import Util from "../../../util/Util";
 
 import Toastr from "toastr2";
@@ -93,7 +93,7 @@ class Register extends React.Component {
                 AuthUtil.setAccesstoken(responseJson.accessToken);
                 AuthUtil.setRefreshToken(responseJson.refreshToken);
 
-                App.GLOBAL.setUser(AuthUtil.accessTokenPayload.user);
+                app.setUser(AuthUtil.accessTokenPayload.user);
 
                 this.setState({
                     redirect: true,

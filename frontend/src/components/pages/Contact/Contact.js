@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import App from "../../App";
+import {app} from "../../App";
 import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
 import AuthUtil from "../../../util/AuthUtil";
@@ -8,7 +8,7 @@ const Contact = () => {
 
     const title = 'Contact';
 
-    const [username, setUsername] = useState(App.GLOBAL.state.user ? App.GLOBAL.state.user.username : '');
+    const [username, setUsername] = useState(app.state.user ? app.state.user.username : '');
     const [email, setEmail] = useState('');
     const [fetchedEmail, setFetchedEmail] = useState(false);
     const [subject, setSubject] = useState('');
@@ -26,7 +26,7 @@ const Contact = () => {
             setFetchedEmail(data.email);
         }
 
-        if (App.GLOBAL.state.user) fetchEmail()
+        if (app.state.user) fetchEmail()
 
     }, [])
 
@@ -54,7 +54,7 @@ const Contact = () => {
             if (!email.match(/\S+@\S+\.\S+/))
                 errors.push(`${formElements.email.value} n'est pas une adresse valide`);
 
-            if (App.GLOBAL.state.user) {
+            if (app.state.user) {
 
                 if (fetchedEmail) {
                     if (username !== AuthUtil.accessTokenPayload.user.username || email !== fetchedEmail)
@@ -91,8 +91,8 @@ const Contact = () => {
                            placeholder="nom d'utilisateur"
                            value={username}
                            onChange={(e) => setUsername(e.target.value)}
-                           autoFocus={!App.GLOBAL.state.user}
-                           readOnly={App.GLOBAL.state.user}
+                           autoFocus={!app.state.user}
+                           readOnly={app.state.user}
                     />
                 </div>
                 <div className="mb">

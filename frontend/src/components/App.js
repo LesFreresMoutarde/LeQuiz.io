@@ -28,13 +28,19 @@ import Contact from "./pages/Contact/Contact";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
 const toastr = new Toastr();
 
+let instance;
 
 class App extends React.Component {
 
-    static GLOBAL = null;
-
     constructor(props) {
         super(props);
+
+        if (instance) {
+            throw new Error('App has already been instanciated');
+        }
+
+        instance = this;
+
         this.state = {
             redirect: false,
             isLoading: true,
@@ -43,8 +49,6 @@ class App extends React.Component {
         };
 
         this.nextRedirect = null;
-
-        App.GLOBAL = this;
     }
 
     componentDidMount = async () => {
@@ -178,5 +182,7 @@ class App extends React.Component {
         }
     }
 }
+
+export { instance as app }
 
 export default App;

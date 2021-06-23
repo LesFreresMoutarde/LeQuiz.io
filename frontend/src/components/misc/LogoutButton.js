@@ -1,5 +1,5 @@
 import React from "react";
-import App from "../App";
+import {app} from "../App";
 import Loader from "./Loader";
 
 class LogoutButton extends React.Component {
@@ -47,7 +47,7 @@ class LogoutButton extends React.Component {
             isLoading: true,
         });
 
-        if(!(await App.GLOBAL.logoutUser())) {
+        if(!(await app.logoutUser())) {
             this.setState({
                 isLoading: false,
             });
