@@ -148,13 +148,13 @@
             <div class="col-2">
                 <label class="me-1 form-check-label">
                     <input type="checkbox" class="form-check-input" id="isHardcore-input"
-                           data-checkbox="isHardcore" data-action="change->question#onSingleCheckboxChange"/>
+                           data-checkbox="isHardcore" data-action="change->question#onUniqueCheckboxChange"/>
                     <span>Hardcore</span>
                 </label>
 
                 <label class="form-check-label">
                     <input type="checkbox" class="form-check-input" id="hasMedia-input"
-                           data-checkbox="hasMedia" data-action="change->question#onSingleCheckboxChange"/>
+                           data-checkbox="hasMedia" data-action="change->question#onUniqueCheckboxChange"/>
                     <span>Media</span>
                 </label>
             </div>
@@ -237,8 +237,9 @@
                                                  class="my-1"></div>
                                         {% endfor %}
                                         {% if question.answer.additional is defined %}
-    {#                                        TODO QUAND QUESTIONS SHOW SERA REFAIT#}
-                                            <a data-bs-toggle="tooltip">Infos supplémentaires</a>
+                                            <a href="{{ path('question_show', {'id': question.id}) }}">
+                                                Infos supplémentaires
+                                            </a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -252,22 +253,15 @@
                                 <span style="display: block">{{ category.getLabel() }}</span>
                             {% endfor %}
                         </td>
-                        <td>
-                            {% if question.getIsHardcore() %}
-                                <i class="bi bi-check-lg text-success"></i>
-                            {% else %}
-                                <i class="bi bi-x-lg text-danger"></i>
-                            {% endif %}
-                        </td>
+                        <td>{{ question.getIsHardcore()
+                                ? '<i class="bi bi-check-lg text-success"></i>'
+                                : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
                         <td>{{ question.getStatus() }}</td>
-                        <td>{% if question.media|length > 0 %}
-                                <i class="bi bi-check-lg text-success"></i>
-                            {% else %}
-                                <i class="bi bi-x-lg text-danger"></i>
-                            {% endif %}
-                        </td>
-                        <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
-                        <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s', 'Europe/Paris') : '' }}</td>
+                        <td>{{ question.media|length > 0
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
+                        <td>{{ question.createdAt ? question.createdAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
+                        <td>{{ question.updatedAt ? question.updatedAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
                         <td>
                             <a href="{{ path('question_show', {'id': question.id}) }}"
                                class="btn btn-sm btn-outline-primary mb-2"
@@ -293,9 +287,5 @@
             </div>
         </div>
     {% endblock %}
-    <a href="{{ path('question_new') }}"
-       class="btn btn-primary"
-    >
-        Ajouter
-    </a>
+    <a href="{{ path('question_new') }}" class="btn btn-primary">Ajouter</a>
 {% endblock %}

@@ -4,6 +4,8 @@
 namespace App\Util;
 
 
+use Symfony\Component\HttpFoundation\Request;
+
 class Util
 {
     const NAVBAR_ITEMS = [
@@ -61,6 +63,18 @@ class Util
         }
 
         return  $uniqueIds;
+    }
+
+    static function getParamFromUrl(Request $request, $filters): array
+    {
+        $params = [];
+
+        for ($i = 0; $i < count($filters); $i++) {
+            if ($request->query->get($filters[$i]) !== '' && !is_null($request->query->get($filters[$i])))
+                $params[$filters[$i]] = $request->query->get($filters[$i]);
+        }
+
+        return $params;
     }
 
 }

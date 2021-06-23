@@ -3,12 +3,193 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
-
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-    <button>Password reset</button>//TODO
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    {{ include('user/_delete_form.html.twig') }}
+    <div class="row">
+        <h1 class="h2">{{ context == 'show' ? 'Utilisateur' : 'Modifier un utilisateur' }}</h1>
+        <hr>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="user-id" class="form-label lead">Uuid</label>
+            <input type="text" id="user-id" class="form-control" disabled value="{{ user.getId() }}"/>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <label for="user-created-at" class="form-label lead">Crée le</label>
+            <input type="text"
+                   id="user-created-at"
+                   class="form-control"
+                   disabled
+                   value="{{ user.getCreatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
+            />
+        </div>
+        <div class="col-3">
+            <label for="user-updated-at" class="form-label lead">Mis à jour le</label>
+            <input type="text"
+                   id="user-updated-at"
+                   class="form-control"
+                   disabled
+                   value="{{ user.getUpdatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
+            />
+        </div>
+    </div>
+    {{ form_start(form) }}
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="user-username" class="form-label lead">Username</label>
+            {{ form_errors(form.username) }}
+            {{ form_widget(form.username,
+                {'attr':
+                    {
+                        'placeholder': 'Username',
+                        'class': 'form-control',
+                        'id': 'user-username',
+                        'disabled': context == 'show' ? true : false
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="user-email" class="form-label lead">Email</label>
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email,
+                {'attr':
+                    {
+                        'placeholder': 'Email',
+                        'class': 'form-control',
+                        'id': 'user-email',
+                        'disabled': context == 'show' ? true : false
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <label for="user-plan" class="form-label lead">Plan</label>
+            {{ form_errors(form.plan) }}
+            {{ form_widget(form.plan,
+                {'attr':
+                    {
+                        'placeholder': 'Plan',
+                        'class': 'form-select',
+                        'id': 'user-plan',
+                        'disabled': context == 'show' ? true : false
+                    }
+                }
+            )}}
+        </div>
+        <div class="col-3">
+            <label for="user-role" class="form-label lead">Role</label>
+            {{ form_errors(form.role) }}
+            {{ form_widget(form.role,
+                {'attr':
+                    {
+                        'placeholder': 'Role',
+                        'class': 'form-select',
+                        'id': 'user-role',
+                        'disabled': context == 'show' ? true : false
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            {{ form_errors(form.isTrustyWriter) }}
+            {{ form_errors(form.isActive) }}
+            {{ form_errors(form.isBanned) }}
+            {{ form_widget(form.isTrustyWriter,
+                {'attr':
+                    {
+                        'class': 'form-check-input me-1',
+                        'id': 'user-isTrustyWriter',
+                        'disabled': context == 'show' ? true : false
+                    }
+                }
+            )}}
+            {{ form_label(form.isTrustyWriter, 'Rédacteur validé', {'label_attr': {'class': 'form-check-label me-2'}}) }}
+            {{ form_widget(form.isActive,
+                {'attr':
+                    {
+                        'class': 'form-check-input me-1',
+                        'id': 'user-isActive',
+                        'disabled': context == 'show' ? true : false
+                    }
+                }
+            )}}
+            {{ form_label(form.isActive, 'Actif', {'label_attr': {'class': 'form-check-label me-2'}}) }}
+            {{ form_widget(form.isBanned,
+                {'attr':
+                    {
+                        'class': 'form-check-input me-1',
+                        'id': 'user-isBanned',
+                        'disabled': context == 'show' ? true : false
+                    }
+                }
+            )}}
+            {{ form_label(form.isBanned, 'Banni', {'label_attr': {'class': 'form-check-label me-2'}}) }}
+        </div>
+    </div>
+    <div class="row mb-3" data-controller="user">
+        <div class="col-6">
+            <label for="user-unbanDate"
+                   class="form-label lead"
+            >
+                Débanni le <span style="font-size: 0.7em">(UTC)</span>
+            </label>
+           <div class="d-flex">
+               <input type="text"
+                      id="user-unbanDate"
+                      name="unbanDate"
+                      class="{{ context == 'edit' ? 'form-select bg-white date-picker me-2' : 'form-select date-picker'}}"
+                      placeholder="Date de débannissement"
+                      value="{{ user.getUnbanDate()
+                      ? user.getUnbanDate()|date('d-m-Y H:i:s', false)
+                      : null }}"
+                      data-disabled="{{ context == 'show' ? true : false }}"
+               />
+               {% if context == 'edit' %}
+               <button type="button"
+                       id="unbanDate-clear"
+                       class="btn btn-sm btn-danger"
+                       data-action="user#clearUnbanDateField"
+               >
+                   <i class="bi bi-x-lg"></i>
+               </button>
+               {% endif %}
+           </div>
+        </div>
+    </div>
+    <div class="mb-3">
+{#        TODO#}
+        {% if context == 'edit' %}
+        <button type="button" class="btn btn-warning text-white">Réinitialiser le mot de passe</button>
+        {% endif %}
+    </div>
+    <div class="d-flex mt-4">
+        {{ form_widget(form.submit,
+            {'attr':
+                {
+                    'class': context == 'edit' ? 'btn btn-primary me-2' : 'd-none'
+                }
+            }
+        ) }}
+        {% if context == 'show' %}
+        <a href="{{ path('user_edit', {'id': user.getId()}) }}" class="btn btn-primary me-2">Modifier</a>
+        {% endif %}
+        <a href="{{ path('user_index') }}" class="btn btn-secondary me-2">Retour</a>
+        {% if currentUser.getId() != user.getId()  %}
+            <button class="btn btn-danger"
+                    data-uuid="{{ user.getId() }}"
+                    data-controller="user"
+                    data-action="user#deleteUser"
+            >
+                Supprimer
+            </button>
+        {% endif %}
+    </div>
+    {{ form_end(form) }}
 {% endblock %}
