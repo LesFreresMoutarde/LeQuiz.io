@@ -190,3 +190,9 @@ h6.mb, .h6.mb {
 .centered-item {
     margin: auto;
 }
+
+@media screen and (max-width: 992px) {
+    h1, .h1 {
+        font-size: 3em;
+    }
+}
