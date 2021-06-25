@@ -75,8 +75,12 @@ class QuestionTypeController extends AbstractController
     #[Route('/{id}', name: 'question_type_show', methods: ['GET'])]
     public function show(QuestionType $questionType): Response
     {
-        return $this->render('question_type/show.html.twig', [
-            'question_type' => $questionType,
+        $form = $this->createForm(QuestionTypeType::class, $questionType);
+
+        return $this->render('question_type/edit.html.twig', [
+            'questionType' => $questionType,
+            'form' => $form->createView(),
+            'context'=> 'show'
         ]);
     }
 
@@ -89,12 +93,15 @@ class QuestionTypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('question_type_index');
+            return $this->redirectToRoute('question_type_show', [
+                'id' => $questionType->getId()
+            ]);
         }
 
         return $this->render('question_type/edit.html.twig', [
-            'question_type' => $questionType,
+            'questionType' => $questionType,
             'form' => $form->createView(),
+            'context'=> 'edit'
         ]);
     }
 
