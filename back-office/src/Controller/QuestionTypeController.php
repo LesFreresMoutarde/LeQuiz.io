@@ -98,17 +98,17 @@ class QuestionTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'question_type_delete', methods: ['DELETE'])]
-    public function delete(Request $request, QuestionType $questionType): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$questionType->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($questionType);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('question_type_index');
-    }
+//    #[Route('/{id}', name: 'question_type_delete', methods: ['DELETE'])]
+//    public function delete(Request $request, QuestionType $questionType): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$questionType->getId(), $request->request->get('_token'))) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->remove($questionType);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('question_type_index');
+//    }
 
     private function getFilteredQuestionTypes(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
     {
