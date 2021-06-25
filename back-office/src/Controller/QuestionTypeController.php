@@ -5,19 +5,49 @@ namespace App\Controller;
 use App\Entity\QuestionType;
 use App\Form\QuestionTypeType;
 use App\Repository\QuestionTypeRepository;
+use App\Util\Util;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 #[Route('/question-types')]
 class QuestionTypeController extends AbstractController
 {
+    private const POSSIBLE_FILTERS = ['search', 'uuid', 'isChild'];
+
     #[Route('/', name: 'question_type_index', methods: ['GET'])]
-    public function index(QuestionTypeRepository $questionTypeRepository): Response
+    public function index( Request $request,
+                           EntityManagerInterface $em,
+                           PaginatorInterface $paginator,
+                           Environment $environment): Response
     {
+        $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
+
+        $params = Util::getParamFromUrl($request, self::POSSIBLE_FILTERS);
+
+        $questionTypes = $this->getFilteredQuestionTypes($page, $params, $em, $paginator);
+
+        if ($request->headers->has('X-Requested-With')) {
+
+            $response = new Response();
+
+            $template = $environment->load('question_type/index.html.twig');
+
+            $response->headers->set('Content-Type', 'text/plain');
+
+            $response->setStatusCode(Response::HTTP_OK);
+
+            $response->setContent($template->renderBlock('questionTypes', ['questionTypes' => $questionTypes]));
+
+            $response->send();
+        }
+
         return $this->render('question_type/index.html.twig', [
-            'question_types' => $questionTypeRepository->findAll(),
+            'questionTypes' => $questionTypes,
         ]);
     }
 
@@ -78,5 +108,42 @@ class QuestionTypeController extends AbstractController
         }
 
         return $this->redirectToRoute('question_type_index');
+    }
+
+    private function getFilteredQuestionTypes(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
+    {
+        $queryString = 'SELECT t from App\Entity\QuestionType t';
+        $whereParts = [];
+        $paramsReplacements = [];
+
+        if (!empty($params)) {
+            foreach ($params as $paramName => $value) {
+                switch ($paramName) {
+                    case 'search':
+                        $whereParts[] = '(LOWER(t.name) LIKE LOWER(:search) OR LOWER(t.label) LIKE LOWER(:search))';
+                        $paramsReplacements['search'] = '%'.$value.'%';
+                        break;
+                    case 'uuid':
+                        if (Util::isUuidValid($value)) {
+                            $whereParts[] = 't.id = :uuid';
+                            $paramsReplacements['uuid'] = $value;
+                        }
+                        break;
+                    case 'isChild':
+                        $whereParts[] = 't.isChild = true';
+                        break;
+                }
+            }
+        }
+
+        $whereString = implode(' AND ', $whereParts);
+        $queryString .= !empty($whereString) > 0
+            ? ' WHERE '.$whereString
+            : '';
+
+        $query = $em->createQuery($queryString);
+        $query->setParameters($paramsReplacements);
+
+        return $paginator->paginate($query, $page, 10);
     }
 }
