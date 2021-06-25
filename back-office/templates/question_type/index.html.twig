@@ -38,9 +38,10 @@
     </div>
     {% block questionTypes %}
         <div id="questionTypes-block" data-controller="questionType" class="mb-3">
-{#            <div class="count mb-2">#}
-{#                <span style="font-size: 1.1em">Total : </span><span class="badge bg-primary" style="font-size: 1em">{{ questions.getTotalItemCount }}</span>#}
-{#            </div>#}
+            <div class="count mb-2">
+                <span style="font-size: 1.1em">Total : </span>
+                <span class="badge bg-primary" style="font-size: 1em">{{ questionTypes.getTotalItemCount }}</span>
+            </div>
             <table  class="table table-striped">
                 <thead class="table-dark">
                     <tr>
@@ -84,11 +85,10 @@
                 {% endfor %}
                 </tbody>
             </table>
-{#            <div class="navigation">#}
-{#                {{ knp_pagination_render(questions) }}#}
-{#            </div#}
+            <div class="navigation">
+                {{ knp_pagination_render(questionTypes) }}
+            </div>
         </div>
     {% endblock %}
-
-    <a href="{{ path('question_type_new') }}">Create new</a>
+    <a href="{{ path('question_type_new') }}" class="btn btn-primary">Ajouter</a>
 {% endblock %}
