@@ -29,8 +29,10 @@ export default class extends Controller {
         await Util.onUniqueCheckboxChange(this.filters, this.ENTITY_NAME, this.BLOCK_TO_REPLACE, evt);
     }
 
-    //TODO IN V2 : Un type de question est-il supprimable ?
+    //TODO IN V2 : What Happens when type has questions related to itself
     deleteQuestionType = async (evt) => {
+        const uuid = evt.currentTarget.getAttribute('data-uuid');
+        await Util.deleteEntity(this.ENTITY_NAME, uuid);
     }
 
 }

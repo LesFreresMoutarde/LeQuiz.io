@@ -88,7 +88,21 @@
             'label': context == 'edit' ?'Modifier'
             }
         ) }}
-        <a href="{{ path('question_type_index') }}" class="btn btn-secondary">Retour</a>
+        {% if context == 'show' %}
+            <a href="{{ path('question_type_edit', {'id': questionType.getId()}) }}"
+               class="btn btn-primary me-2"
+            >
+                Modifier
+            </a>
+        {% endif %}
+        <a href="{{ path('question_type_index') }}" class="btn btn-secondary me-2">Retour</a>
+        <button class="btn btn-danger"
+                data-uuid="{{ questionType.getId() }}"
+                data-controller="questionType"
+                data-action="questionType#deleteQuestionType"
+        >
+            Supprimer
+        </button>
     </div>
     {{ form_end(form) }}
 {#    {{ include('question_type/_delete_form.html.twig') }}#}
