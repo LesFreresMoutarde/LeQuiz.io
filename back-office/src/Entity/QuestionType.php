@@ -42,7 +42,7 @@ class QuestionType extends EntityBase
      *
      * @ORM\Column(name="`isChild`", type="boolean", nullable=false)
      */
-    private $ischild;
+    private $isChild;
 
 
     public function getId(): ?string
@@ -74,14 +74,14 @@ class QuestionType extends EntityBase
         return $this;
     }
 
-    public function getIschild(): ?bool
+    public function getIsChild(): ?bool
     {
-        return $this->ischild;
+        return $this->isChild;
     }
 
-    public function setIschild(bool $ischild): self
+    public function setIsChild(bool $isChild): self
     {
-        $this->ischild = $ischild;
+        $this->isChild = $isChild;
 
         return $this;
     }
