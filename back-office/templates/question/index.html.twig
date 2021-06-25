@@ -262,7 +262,7 @@
                             : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
                         <td>{{ question.createdAt ? question.createdAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
                         <td>{{ question.updatedAt ? question.updatedAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
-                        <td>
+                        <td style="display: flex; flex-direction: column">
                             <a href="{{ path('question_show', {'id': question.id}) }}"
                                class="btn btn-sm btn-outline-primary mb-2"
                             >
