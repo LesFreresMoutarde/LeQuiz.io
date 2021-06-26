@@ -21,11 +21,12 @@ class QuestionTypeController extends AbstractController
     private const POSSIBLE_FILTERS = ['search', 'uuid', 'isChild'];
 
     #[Route('/', name: 'question_type_index', methods: ['GET'])]
-    public function index( Request $request,
-                           EntityManagerInterface $em,
-                           PaginatorInterface $paginator,
-                           Environment $environment): Response
-    {
+    public function index(
+        Request $request,
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        Environment $environment
+    ): Response {
         $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
 
         $params = Util::getParamFromUrl($request, self::POSSIBLE_FILTERS);
