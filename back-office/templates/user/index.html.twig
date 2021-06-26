@@ -165,7 +165,7 @@
                             : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
                         <td>{{ user.createdAt ? user.createdAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
                         <td>{{ user.updatedAt ? user.updatedAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
-                        <td>
+                        <td style="display: flex; flex-direction: column">
                             <a href="{{ path('user_show', {'id': user.id}) }}"
                                class="btn btn-sm btn-outline-primary mb-2"
                             >

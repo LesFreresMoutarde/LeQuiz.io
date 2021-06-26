@@ -3,9 +3,63 @@
 {% block title %}New QuestionType{% endblock %}
 
 {% block body %}
-    <h1>Create new QuestionType</h1>
-
-    {{ include('question_type/_form.html.twig') }}
-
-    <a href="{{ path('question_type_index') }}">back to list</a>
+    <div class="row">
+        <h1 class="h2">Ajouter un type de question</h1>
+        <hr>
+    </div>
+    {{ form_start(form) }}
+        <div class="row mb-3">
+            <div class="col-3">
+                <label for="questionType-name" class="form-label lead">Nom</label>
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name,
+                    {'attr':
+                        {
+                            'placeholder': 'Nom',
+                            'class': 'form-control',
+                            'id': 'questionType-name',
+                        }
+                    }
+                )}}
+            </div>
+            <div class="col-3">
+                <label for="questionType-label" class="form-label lead">Label</label>
+                {{ form_errors(form.label) }}
+                {{ form_widget(form.label,
+                    {'attr':
+                        {
+                            'placeholder': 'Label',
+                            'class': 'form-control',
+                            'id': 'questionType-label',
+                        }
+                    }
+                )}}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-6">
+                {{ form_errors(form.isChild) }}
+                {{ form_widget(form.isChild,
+                    {'attr':
+                        {
+                            'class': 'form-check-input',
+                            'id': 'questionType-isChild',
+                        }
+                    }
+                )}}
+                {{ form_label(form.isChild, 'Type enfant', {'label_attr': {'class': 'form-check-label'}}) }}
+            </div>
+        </div>
+        <div class="d-flex mt-4">
+            {{ form_widget(form.submit,
+                {'attr':
+                    {
+                        'class':'btn btn-primary me-2',
+                    },
+                'label': 'Ajouter'
+                }
+            ) }}
+            <a href="{{ path('question_type_index') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    {{ form_end(form) }}
 {% endblock %}
