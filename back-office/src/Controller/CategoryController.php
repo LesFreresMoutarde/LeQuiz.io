@@ -76,8 +76,12 @@ class CategoryController extends AbstractController
     #[Route('/{id}', name: 'category_show', methods: ['GET'])]
     public function show(Category $category): Response
     {
-        return $this->render('category/show.html.twig', [
+        $form = $this->createForm(CategoryType::class, $category);
+
+        return $this->render('category/edit.html.twig', [
             'category' => $category,
+            'form' => $form->createView(),
+            'context' => 'show'
         ]);
     }
 
@@ -90,12 +94,15 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('category_show', [
+                'id' => $category->getId()
+            ]);
         }
 
         return $this->render('category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            'context' => 'edit'
         ]);
     }
 
