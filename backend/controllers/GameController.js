@@ -5,11 +5,10 @@ const Serie = require("../models/gameModes/Serie");
 const Ascension = require("../models/gameModes/Ascension");
 const Blitz = require("../models/gameModes/Blitz");
 const Survivant = require("../models/gameModes/Survivant");
-const UnauthorizedError = require("../errors/base/UnauthorizedError");
-const InternalServerError = require("../errors/base/InternalServerError");
-const InvalidGameModeError = require("../errors/game/InvalidGameModeError");
-const UnknownPlanError = require("../errors/user/UnknownPlanError");
+
 const DatabaseError = require("../errors/misc/DatabaseError");
+const GameModeNotFoundError = require("../errors/game/GameModeNotFoundError");
+const UserPlanNotFoundError = require("../errors/user/UserPlanNotFoundError");
 
 class GameController extends MainController {
 
@@ -66,7 +65,7 @@ class GameController extends MainController {
 
     getAllowedGameModes = (plan) => {
 
-        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw new UnknownPlanError();
+        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw new UserPlanNotFoundError();
 
         const allowedGameModes = [];
 
@@ -184,7 +183,7 @@ class GameController extends MainController {
             }
         });
 
-        if (!winCriterion) throw new InvalidGameModeError();
+        if (!winCriterion) throw new GameModeNotFoundError();
 
         return winCriterion;
     };
