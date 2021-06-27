@@ -1,6 +1,15 @@
 const argon2 = require('argon2');
 const MainController = require('./mainController/MainController');
 const PasswordUtil = require("../util/PasswordUtil");
+const UserNotFoundByTokenError = require("../errors/auth/token/UserNotFoundByTokenError");
+const MissingParametersError = require("../errors/misc/MissingParametersError");
+const IncorrectPasswordError = require("../errors/auth/password/IncorrectPasswordError");
+const AlreadyUsedEmailError = require("../errors/auth/email/AlreadyUsedEmailError");
+const InvalidEmailError = require("../errors/auth/email/InvalidEmailError");
+const DatabaseError = require("../errors/misc/DatabaseError");
+const NotMatchingPasswordsError = require("../errors/auth/password/NotMatchingPasswordsError");
+const NewPasswordIdenticalToPreviousError = require("../errors/auth/password/NewPasswordIdenticalToPreviousError");
+const TooShortPasswordError = require("../errors/auth/password/TooShortPasswordError");
 
 class SettingsController extends MainController {
     actionGetEmail = async (accessTokenPayload) => {
@@ -12,19 +21,14 @@ class SettingsController extends MainController {
             }
         });
 
-        if(user === null) {
-            this.statusCode = 400;
-            this.response = {
-                error: 'User not found',
-            }
-            return;
-        }
+        if (user === null) throw new UserNotFoundByTokenError();
 
         this.response = {
             email: user.email,
         };
     }
 
+    //TODO REFACTO
     actionEditEmail = async (requestBody, accessTokenPayload) => {
         const requiredBodyFields = ['newEmail', 'password'];
         const missingFields = [];
@@ -35,13 +39,7 @@ class SettingsController extends MainController {
             }
         }
 
-        if(missingFields.length > 0) {
-            this.statusCode = 400;
-            this.response = {
-                error: `Missing parameters: ${missingFields.join(', ')}`,
-            }
-            return;
-        }
+        if (missingFields.length > 0) throw new MissingParametersError(missingFields.join(', '))
 
         const userId = accessTokenPayload.user.id;
 
@@ -51,25 +49,12 @@ class SettingsController extends MainController {
             }
         });
 
-        if(user === null) {
-            this.statusCode = 404;
-            this.response = {
-                error: 'User not found',
-            };
-            return;
-        }
+        if (user === null) throw new UserNotFoundByTokenError();
 
         const userPasswordHash = user.password;
 
-        if(!(await argon2.verify(userPasswordHash, requestBody.password))) {
-            this.statusCode = 401;
-            this.response = {
-                errors: {
-                    password: 'Mot de passe incorrect',
-                },
-            };
-            return;
-        }
+        if (!(await argon2.verify(userPasswordHash, requestBody.password)))
+            throw new IncorrectPasswordError()
 
         const existingUserWithNewEmail = await db.User.findOne({
             where: {
@@ -77,15 +62,7 @@ class SettingsController extends MainController {
             }
         });
 
-        if(existingUserWithNewEmail !== null) {
-            this.statusCode = 422;
-            this.response = {
-                errors: {
-                    newEmail: "Cette adresse email est déjà utilisée",
-                },
-            };
-            return;
-        }
+        if (existingUserWithNewEmail !== null) throw new AlreadyUsedEmailError();
 
         try {
             user.email = requestBody.newEmail;
@@ -93,15 +70,9 @@ class SettingsController extends MainController {
         } catch(e) {
             switch(e.constructor.name) {
                 case 'ValidationError':
-                    this.statusCode = 422;
-                    this.response = {
-                        errors: {
-                            newEmail: 'Cette adresse email est invalide',
-                        },
-                    };
-                    return;
+                    throw new InvalidEmailError();
                 default:
-                    throw e;
+                    throw new DatabaseError();
             }
         }
 
@@ -110,6 +81,7 @@ class SettingsController extends MainController {
         };
     }
 
+    //TODO REFACTO
     actionEditPassword = async (requestBody, accessTokenPayload) => {
         const requiredBodyFields = ['currentPassword', 'newPassword', 'confirmNewPassword'];
         const missingFields = [];
@@ -120,13 +92,7 @@ class SettingsController extends MainController {
             }
         }
 
-        if(missingFields.length > 0) {
-            this.statusCode = 400;
-            this.response = {
-                error: `Missing parameters: ${missingFields.join(', ')}`,
-            }
-            return;
-        }
+        if (missingFields.length > 0) throw new MissingParametersError(missingFields.join(', '))
 
         const userId = accessTokenPayload.user.id;
 
@@ -136,59 +102,29 @@ class SettingsController extends MainController {
             }
         });
 
-        if(user === null) {
-            this.statusCode = 404;
-            this.response = {
-                error: 'User not found',
-            };
-            return;
-        }
+        if (user === null) throw new UserNotFoundByTokenError();
 
         const userPasswordHash = user.password;
 
-        if(!(await argon2.verify(userPasswordHash, requestBody.currentPassword))) {
-            this.statusCode = 401;
-            this.response = {
-                errors: {
-                    password: 'Mot de passe incorrect',
-                },
-            };
-            return;
-        }
+        if (!(await argon2.verify(userPasswordHash, requestBody.password)))
+            throw new IncorrectPasswordError()
 
-        if(requestBody.newPassword !== requestBody.confirmNewPassword) {
-            this.statusCode = 422;
-            this.response = {
-                errors: {
-                    confirmNewPassword: 'Les champs de nouveau mot de passe ne correspondent pas',
-                },
-            };
-            return;
-        }
+        if (requestBody.newPassword !== requestBody.confirmNewPassword) throw new NotMatchingPasswordsError();
 
-        if(requestBody.currentPassword === requestBody.newPassword) {
-            this.statusCode = 422;
-            this.response = {
-                errors: {
-                    newPassword: 'Le nouveau mot de passe est identique au mot de passe actuel',
-                },
-            };
-        }
+        if (requestBody.currentPassword === requestBody.newPassword) throw new NewPasswordIdenticalToPreviousError();
 
-        if(requestBody.newPassword.length < PasswordUtil.MIN_LENGTH) {
-            this.statusCode = 422;
-            this.response = {
-                errors: {
-                    newPassword: `Le nouveau mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`,
-                },
-            };
-            return;
-        }
+        if(requestBody.newPassword.length < PasswordUtil.MIN_LENGTH) throw new TooShortPasswordError();
 
         user.password = await PasswordUtil.hashPassword(requestBody.newPassword);
-        await user.save();
 
-        this.statusCode = 204;
+        try {
+            await user.save();
+            this.statusCode = 204;
+        } catch (error) {
+            throw new DatabaseError();
+        }
+
+
     }
 }
 
