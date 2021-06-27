@@ -12,7 +12,7 @@ require('./manager/SocketEngine')(server);
 CronManager.executeCronTasks();
 
 const mainRouter = require('./routes/mainRouter');
-const UnauthorizedError = require("./errors/UnauthorizedError");
+const UnauthorizedError = require("./errors/base/UnauthorizedError");
 
 
 app.all('*', (req, res, next) => {
@@ -36,7 +36,8 @@ app.all('*', (req, res, next) => {
         '/auth/access-token',
         '/toto',
         '/game/modes',
-        '/game/categories'
+        '/game/categories',
+        '/game/options'
     ];
 
     if(excludedUrls.includes(req.url.split('?')[0])) {
@@ -95,7 +96,6 @@ app.use((error, req, res, next) => {
     } else {
         responseData.message = 'Internal Error';
     }
-
     res.json(responseData);
 });
 
