@@ -5,6 +5,7 @@ const Serie = require("../models/gameModes/Serie");
 const Ascension = require("../models/gameModes/Ascension");
 const Blitz = require("../models/gameModes/Blitz");
 const Survivant = require("../models/gameModes/Survivant");
+const UnauthorizedError = require("../errors/UnauthorizedError");
 
 class GameController extends MainController {
 
@@ -43,14 +44,15 @@ class GameController extends MainController {
 
     actionModes = (plan) => {
         const response = {};
-        try {
+        // try {
             response.gameModes = this.getAllowedGameModes(plan);
             this.response = response;
-        } catch (error) {
-            this.statusCode = 400;
-            response.error = error;
-            this.response = response;
-        }
+        // } catch (error) {
+        //     console.log("triggered here");
+        //     this.statusCode = 400;
+        //     response.error = error;
+        //     this.response = response;
+        // }
     };
     
     actionOptions = async (gameMode, categories) => {
@@ -80,7 +82,7 @@ class GameController extends MainController {
 
     getAllowedGameModes = (plan) => {
 
-        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
+        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw new UnauthorizedError('Unknown plan');
 
         const allowedGameModes = [];
 

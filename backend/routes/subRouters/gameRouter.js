@@ -10,6 +10,7 @@ gameRouter.post('/modes', (req, res, next) => {
         res.status(gameController.statusCode);
         res.json(gameController.response);
     } catch (error) {
+        console.log("catch block from gameRouter", error)
         next(error);
     }
 });
