@@ -9,6 +9,7 @@ use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -106,16 +107,17 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'category_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Category $category): Response
+    #[Route('/{id}', name: 'category_delete', methods: ['DELETE'], format: 'json')]
+    public function delete(Category $category): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($category);
+        $entityManager->flush();
 
-        return $this->redirectToRoute('category_index');
+        $response = new JsonResponse();
+        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+
+        return $response;
     }
 
     private function getFilteredCategories(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)

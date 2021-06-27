@@ -70,7 +70,7 @@
                 {
                     'class': context == 'edit' ? 'btn btn-primary me-2' : 'd-none',
                 },
-                'label': context == 'edit' ? 'Modifier'
+                'label': 'Modifier'
             }
         ) }}
         {% if context == 'show' %}
@@ -81,8 +81,7 @@
             </a>
         {% endif %}
         <a href="{{ path('category_index') }}" class="btn btn-secondary me-2">Retour</a>
-        <button type="button"
-                class="btn btn-danger"
+        <button class="btn btn-danger"
                 data-uuid="{{ category.getId() }}"
                 data-controller="category"
                 data-action="category#deleteCategory"
