@@ -96,8 +96,7 @@
             </a>
         {% endif %}
         <a href="{{ path('question_type_index') }}" class="btn btn-secondary me-2">Retour</a>
-        <button type="button"
-                class="btn btn-danger"
+        <button class="btn btn-danger"
                 data-uuid="{{ questionType.getId() }}"
                 data-controller="questionType"
                 data-action="questionType#deleteQuestionType"

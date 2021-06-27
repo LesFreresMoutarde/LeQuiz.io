@@ -244,8 +244,7 @@
         <div class="d-flex mt-4">
             <button type="submit" class="btn btn-primary me-2">Envoyer</button>
             <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Retour</a>
-            <button type="button"
-                    class="btn btn-danger"
+            <button class="btn btn-danger"
                     data-uuid="{{ question.getId() }}"
                     data-controller="question"
                     data-action="question#deleteQuestion"
