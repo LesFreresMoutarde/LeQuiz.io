@@ -3,36 +3,73 @@
 {% block title %}RefreshToken index{% endblock %}
 
 {% block body %}
-    <h1>RefreshToken index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Token</th>
-                <th>ExpirationDate</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for refresh_token in refresh_tokens %}
-            <tr>
-                <td>
-                   {{ refresh_token.user ? refresh_token.user.username : 'Guest' }}
-                </td>
-                <td>{{ refresh_token.token}}</td>
-{#                <td>{{ refresh_token.token|u.truncate(30, '...') }}</td>#}
-                <td>{{ refresh_token.expirationDate ? refresh_token.expirationDate|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>
-                    <a href="{{ path('refresh_token_show', {'token': refresh_token.token}) }}">show</a>
-                    {{ include('refresh_token/_delete_form.html.twig') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <h1 class="h2">Refresh tokens</h1>
+        <hr>
+    </div>
+    <div data-controller="refreshToken">
+        <div class="row mb-3">
+            <div class="col-6">
+                <input type="text"
+                       data-input="search"
+                       id="search-input"
+                       data-action="refreshToken#onInput"
+                       placeholder="Utilisateur"
+                       class="form-control"/>
+            </div>
+        </div>
+    </div>
+    {% block refreshTokens %}
+        <div id="refreshTokens-block" data-controller="refreshToken" class="mb-3">
+            <div class="count mb-2">
+                <span style="font-size: 1.1em">Total : </span>
+                <span class="badge bg-primary" style="font-size: 1em">{{ refreshTokens.getTotalItemCount }}</span>
+            </div>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Utilisateur</th>
+                        <th>Token</th>
+                        <th>Date d'expiration</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for refreshToken in refreshTokens %}
+                    <tr>
+                        <td>
+                           {{ refreshToken.getUser() ? refreshToken.getUser().getUsername() : 'Guest' }}
+                        </td>
+                        <td>{{ refreshToken.getToken()|u.truncate(70, '...') }}</td>
+                        <td>{{ refreshToken.getExpirationDate()
+                            ? refreshToken.getExpirationDate()|date('d-m-Y H:i:s', 'Europe/Paris')
+                            : '' }}
+                        </td>
+                        <td style="display: flex; flex-direction: column">
+                            <a href="{{ path('refresh_token_show', {'token': refreshToken.getToken()}) }}"
+                               class="btn btn-sm btn-outline-primary mb-2"
+                            >
+                                Afficher
+                            </a>
+                            <button class="btn btn-sm btn-outline-danger"
+                                    data-uuid="{{ refreshToken.getToken() }}"
+                                    data-controller="refreshToken"
+                            >
+                                Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation">
+                {{ knp_pagination_render(refreshTokens) }}
+            </div>
+        </div>
+    {% endblock %}
+    <button class="btn btn-outline-danger mb-3">Supprimer tous les tokens</button>
 {% endblock %}
