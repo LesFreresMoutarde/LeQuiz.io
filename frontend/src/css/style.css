@@ -70,12 +70,16 @@ a:hover {
     padding: 20px;
 }
 
-.header-user {
+.header-left {
+    float: left;
+}
+
+.header-right {
     float: right;
     display: table;
 }
 
-.header-user > div {
+.header-right > div {
     display: table-cell;
     vertical-align: middle;
 }
@@ -369,8 +373,13 @@ button {
     cursor: pointer;
 }
 
-.back-arrow-button:hover {
-    filter: brightness(95%);
+.back-arrow-button svg {
+    transform: scaleX(0.95);
+    transition: transform ease-out 0.1s;
+}
+
+.back-arrow-button:hover svg {
+    transform: scaleX(1) translateX(-2.5%);
 }
 
 .back-arrow-button:focus {

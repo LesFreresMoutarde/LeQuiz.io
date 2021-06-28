@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import LogoutButton from "./misc/LogoutButton";
+import BackArrow from "./misc/BackArrow";
 
 class Header extends React.Component {
     getHeaderUserSection = () => {
@@ -32,7 +33,10 @@ class Header extends React.Component {
     render = () => {
         return (
             <header className="app-header">
-                <div className="header-user">
+                <div className="header-left">
+                    <BackArrow />
+                </div>
+                <div className="header-right">
                     {this.getHeaderUserSection()}
                 </div>
                 <div className="clearfix"/>
