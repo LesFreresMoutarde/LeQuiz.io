@@ -93,6 +93,8 @@ a:hover {
 .header-user-settings-cog {
     padding-left: 10px;
     font-size: 1.3em;
+    position: relative;
+    top: 3px;
 }
 
 .header-user-settings-cog a svg {
@@ -104,7 +106,7 @@ a:hover {
 }
 
 .header-user-settings-cog a:hover svg {
-    transform: rotate(30deg);
+    transform: rotate(22.5deg);
 }
 
 .header-user-logout-button {

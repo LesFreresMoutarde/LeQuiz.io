@@ -1,9 +1,8 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCog} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import LogoutButton from "./misc/LogoutButton";
 import BackArrow from "./misc/BackArrow";
+import SettingsButton from "./misc/SettingsButton";
 
 class Header extends React.Component {
     getHeaderUserSection = () => {
@@ -15,7 +14,7 @@ class Header extends React.Component {
                     </div>
                     <div className="header-user-settings-cog">
                         <Link to="/settings">
-                            <FontAwesomeIcon icon={faCog} />
+                            <SettingsButton />
                         </Link>
                     </div>
                     <div className="header-user-logout-button">
