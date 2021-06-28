@@ -1,6 +1,6 @@
 import React from "react";
 import Title from "../../misc/Title";
-import BackArrow from "../../misc/BackArrow";
+import BackArrow, {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 
 class JoinRoom extends React.Component {
 
@@ -16,10 +16,6 @@ class JoinRoom extends React.Component {
     handleChange = (event) => {
         this.setState({valueInput: event.target.value});
     }
-
-    goBack = () => {
-        this.props.history.goBack();
-    };
 
     goToRoom = () => {
         if (this.state.valueInput != '') {
@@ -37,7 +33,7 @@ class JoinRoom extends React.Component {
         return (
             <>
                 <div className="create-game-header">
-                    <BackArrow onClick={this.goBack}/>
+                    <BackArrow onClick={ON_CLICK_GO_BACK}/>
                     <Title title={JoinRoom.TITLE}/>
                 </div>
             <div className="join-room-div">

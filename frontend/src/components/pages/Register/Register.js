@@ -4,7 +4,7 @@ import {app} from "../../App";
 import Util from "../../../util/Util";
 
 import Toastr from "toastr2";
-import BackArrow from "../../misc/BackArrow";
+import BackArrow, {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
@@ -22,10 +22,6 @@ class Register extends React.Component {
         UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.GUEST_ONLY);
     }
 
-    goBack = () => {
-        this.props.history.goBack();
-    };
-
     render = () => {
         if(this.state.redirect) {
             return(
@@ -35,7 +31,7 @@ class Register extends React.Component {
 
         return(
             <>
-                <BackArrow onClick={this.goBack}/>
+                <BackArrow onClick={ON_CLICK_GO_BACK}/>
                 <div className="text-center">
                     <h1 className="mb">Inscription</h1>
                     <p className="mb2">Vous avez déjà un compte ? <Link to="/login">Connectez-vous</Link></p>
