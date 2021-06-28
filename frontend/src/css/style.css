@@ -68,10 +68,16 @@ a:hover {
 
 .app-header {
     padding: 20px;
+    height: 90px;
+
+    display: flex;
+    align-items: center;
 }
 
 .header-left {
     float: left;
+
+    flex: 1;
 }
 
 .header-right {

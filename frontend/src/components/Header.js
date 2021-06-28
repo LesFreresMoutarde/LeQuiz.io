@@ -39,7 +39,6 @@ class Header extends React.Component {
                 <div className="header-right">
                     {this.getHeaderUserSection()}
                 </div>
-                <div className="clearfix"/>
             </header>
         )
     }
