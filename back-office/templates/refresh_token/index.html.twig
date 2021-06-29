@@ -40,7 +40,7 @@
                         <td>
                            {{ refreshToken.getUser() ? refreshToken.getUser().getUsername() : 'Guest' }}
                         </td>
-                        <td>{{ refreshToken.getToken()|u.truncate(70, '...') }}</td>
+                        <td>{{ refreshToken.getToken()|u.truncate(20, '...') }}{{ refreshToken.getToken()|u.slice(-10) }}</td>
                         <td>{{ refreshToken.getExpirationDate()
                             ? refreshToken.getExpirationDate()|date('d-m-Y H:i:s', 'Europe/Paris')
                             : '' }}
@@ -69,9 +69,13 @@
     {% endblock %}
     <button class="btn btn-danger me-2"
             data-controller="refreshToken"
+            data-scope="clear"
             data-action="refreshToken#clearRefreshToken"
     >
         Supprimer tous les tokens
     </button>
-    <button class="btn btn-secondary">Supprimer les tokens des Guests</button>
+    <button class="btn btn-secondary"
+            data-controller="refreshToken"
+            data-scope="guest-clear"
+            data-action="refreshToken#clearRefreshToken">Supprimer les tokens des Guests</button>
 {% endblock %}
