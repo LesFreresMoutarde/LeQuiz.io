@@ -383,11 +383,12 @@ button {
 
 .back-arrow-button svg {
     transform: scaleX(0.95);
+    transform-origin: right;
     transition: transform ease-out 0.1s;
 }
 
 .back-arrow-button:hover svg {
-    transform: scaleX(1) translateX(-2.5%);
+    transform: scaleX(1);
 }
 
 .back-arrow-button:focus {
