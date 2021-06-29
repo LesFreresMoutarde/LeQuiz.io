@@ -46,11 +46,11 @@
                             : '' }}
                         </td>
                         <td style="display: flex; flex-direction: column">
-                            <a href="{{ path('refresh_token_show', {'token': refreshToken.getToken()}) }}"
-                               class="btn btn-sm btn-outline-primary mb-2"
-                            >
-                                Afficher
-                            </a>
+{#                            <a href="{{ path('refresh_token_show', {'token': refreshToken.getToken()}) }}"#}
+{#                               class="btn btn-sm btn-outline-primary mb-2"#}
+{#                            >#}
+{#                                Afficher#}
+{#                            </a>#}
                             <button class="btn btn-sm btn-outline-danger"
                                     data-uuid="{{ refreshToken.getToken() }}"
                                     data-controller="refreshToken"
@@ -61,7 +61,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="3">no records found</td>
+                        <td colspan="4">no records found</td>
                     </tr>
                 {% endfor %}
                 </tbody>
