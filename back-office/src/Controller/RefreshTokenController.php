@@ -8,6 +8,8 @@ use App\Manager\CrudManager;
 use App\Repository\RefreshTokenRepository;
 use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -64,9 +66,24 @@ class RefreshTokenController extends AbstractController
     }
 
     #[Route('/clear', name: 'refresh_token_clear', methods: ['DELETE'], format: 'json')]
-    public function deleteAll(EntityManagerInterface $entityManager): Response
+    public function clear(EntityManagerInterface $entityManager): Response
     {
         $query = $entityManager->createQuery("DELETE App\Entity\RefreshToken r");
+        $query->execute();
+
+        $response = new JsonResponse();
+        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+
+        return $response;
+    }
+
+    // Use of a native query because of use of reserved word 'user'
+    #[Route('/guest-clear', name: 'refresh_token_guest_clear', methods: ['DELETE'], format: 'json')]
+    public function guestClear(EntityManagerInterface $entityManager): Response
+    {
+        $rsm = new ResultSetMappingBuilder($entityManager);
+
+        $query = $entityManager->createNativeQuery('DELETE FROM "refresh_token" WHERE "refresh_token"."userId" IS NULL', $rsm);
         $query->execute();
 
         $response = new JsonResponse();
