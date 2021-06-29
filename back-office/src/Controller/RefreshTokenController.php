@@ -10,6 +10,7 @@ use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,16 +63,29 @@ class RefreshTokenController extends AbstractController
         ]);
     }
 
-    #[Route('/{token}', name: 'refresh_token_delete', methods: ['DELETE'])]
-    public function delete(Request $request, RefreshToken $refreshToken): Response
+    #[Route('/clear', name: 'refresh_token_clear', methods: ['DELETE'], format: 'json')]
+    public function deleteAll(EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$refreshToken->getToken(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($refreshToken);
-            $entityManager->flush();
-        }
+        $query = $entityManager->createQuery("DELETE App\Entity\RefreshToken r");
+        $query->execute();
 
-        return $this->redirectToRoute('refresh_token_index');
+        $response = new JsonResponse();
+        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+
+        return $response;
+    }
+
+    #[Route('/{token}', name: 'refresh_token_delete', methods: ['DELETE'], format: 'json')]
+    public function delete(RefreshToken $refreshToken): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($refreshToken);
+        $entityManager->flush();
+
+        $response = new JsonResponse();
+        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+
+        return $response;
     }
 
     private function getFilteredRefreshTokens(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
