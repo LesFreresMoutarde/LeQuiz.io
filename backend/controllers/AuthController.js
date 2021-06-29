@@ -9,6 +9,10 @@ const MainController = require('./mainController/MainController');
 const PasswordUtil = require("../util/PasswordUtil");
 const RandomUtil = require("../util/RandomUtil");
 const env = require('../config/env');
+const NotYetValidTokenError = require("../errors/auth/token/NotYetValidTokenError");
+const ExpiredTokenError = require("../errors/auth/token/ExpiredTokenError");
+const MalformedTokenError = require("../errors/auth/token/MalformedTokenError");
+const InternalServerError = require("../errors/base/InternalServerError");
 
 class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
@@ -48,16 +52,9 @@ class AuthController extends MainController {
             return;
         }
 
-
         const response = {};
 
-        const verification = AuthController.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
-        if(!verification.verified) {
-            response.error = verification.error
-            this.response = response;
-            this.statusCode = 400;
-            return;
-        }
+        const payload = AuthController.verifyToken(inputRefreshToken, AuthController.TOKEN_TYPE_REFRESH_TOKEN);
 
         const records = await db.sequelize.query(
             'SELECT * FROM "refresh_token" WHERE "token" = :token',
@@ -78,7 +75,7 @@ class AuthController extends MainController {
 
         const dbRefreshToken = records[0];
 
-        const refreshTokenPayload = verification.payload;
+        const refreshTokenPayload = payload;
 
         // Check if userId associated to refreshToken in db matches with refreshToken payload
         let userIdsMatch = true;
@@ -104,8 +101,8 @@ class AuthController extends MainController {
         }
 
         // Check if user exists
-        if(verification.payload.user) {
-            const userId = verification.payload.user.id;
+        if(payload.user) {
+            const userId = payload.user.id;
 
             const user = await db.User.findOne({
                 where: {
@@ -510,37 +507,27 @@ class AuthController extends MainController {
      * }}
      */
     static verifyToken = (token, type = null) => {
-        const result = {};
-
         try {
             const payload = jwt.verify(token, AuthController.JWT_SECRET);
+
             if(type !== null) { // Verify token type (accessToken/refreshToken)
                 AuthController.verifyTokenType(payload, type);
             }
 
-            result.verified = true;
-            result.payload = payload;
-            return result;
+            return payload;
         } catch(e) {
-            result.verified = false;
             switch(e.constructor.name) {
                 case 'JsonWebTokenError':
-                    result.error = 'Malformed token';
-                    break;
+                    throw new MalformedTokenError();
                 case 'TokenExpiredError':
-                    result.error = 'Token has expired';
-                    break;
+                    throw new ExpiredTokenError();
                 case 'NotBeforeError':
-                    result.error = 'Token is not yet valid';
-                    break;
+                    throw new NotYetValidTokenError();
                 case 'InvalidTokenTypeError':
-                    result.error = e.message;
-                    break;
-                default:
                     throw e;
+                default:
+                    throw new InternalServerError()
             }
-
-            return result;
         }
     }
 
@@ -552,7 +539,7 @@ class AuthController extends MainController {
      */
     static verifyTokenType = (tokenPayload, expectedTypes) => {
         if(!tokenPayload.hasOwnProperty('type')) {
-            throw new InvalidTokenTypeError('Token type not found in payload');
+            throw new InvalidTokenTypeError('Type absent du payload du token');
         }
 
         if(typeof expectedTypes === 'string') {
@@ -560,7 +547,7 @@ class AuthController extends MainController {
         }
 
         if(!expectedTypes.includes(tokenPayload.type)) {
-            throw new InvalidTokenTypeError(`Type ${tokenPayload.type} does not match any expected type (${expectedTypes.join(', ')})`);
+            throw new InvalidTokenTypeError(`Type ${tokenPayload.type} ne correspond avec aucun des types attendus (${expectedTypes.join(', ')})`);
         }
     }
 

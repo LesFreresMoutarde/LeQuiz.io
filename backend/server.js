@@ -55,16 +55,7 @@ app.all('*', (req, res, next) => {
 
     req.accessToken = req.headers.authorization;
 
-    const accessTokenVerification = AuthController.verifyToken(req.accessToken, AuthController.TOKEN_TYPE_ACCESS_TOKEN);
-    if(!accessTokenVerification.verified) {
-        res.status(401);
-        res.send({
-            error: accessTokenVerification.error,
-        });
-        return;
-    }
-
-    req.accessTokenPayload = accessTokenVerification.payload;
+    req.accessTokenPayload = AuthController.verifyToken(req.accessToken, AuthController.TOKEN_TYPE_ACCESS_TOKEN);
 
     next();
 });
