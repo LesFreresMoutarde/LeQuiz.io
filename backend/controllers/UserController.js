@@ -1,13 +1,15 @@
 const MainController = require('./mainController/MainController');
 const EmailUtil = require("../util/EmailUtil");
+const InvalidEmailError = require("../errors/auth/email/InvalidEmailError");
+const EmptyBodyError = require("../errors/misc/EmptyBodyError");
 
 class UserController extends MainController {
 
     actionContact = async ({username, email, subject, message}) => {
 
-        if (!EmailUtil.isEmailAddressValid(email)) throw new Error('Invalid email');
+        if (!EmailUtil.isEmailAddressValid(email)) throw new InvalidEmailError();
 
-        if (subject === '' || message === '' || username === '') throw new Error('Empty body')
+        if (subject === '' || message === '' || username === '') throw new EmptyBodyError();
 
         await EmailUtil.sendEmailFromNoreply({
             to: EmailUtil.CONTACT_ADDRESS,
@@ -30,7 +32,7 @@ ${email}
 
     actionFeedback = async ({subject, message}) => {
 
-        if (message === '') throw new Error('Empty body')
+        if (message === '') throw new EmptyBodyError();
 
         await EmailUtil.sendEmailFromNoreply({
             to: EmailUtil.CONTACT_ADDRESS,
