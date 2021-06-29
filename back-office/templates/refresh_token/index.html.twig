@@ -46,14 +46,10 @@
                             : '' }}
                         </td>
                         <td style="display: flex; flex-direction: column">
-{#                            <a href="{{ path('refresh_token_show', {'token': refreshToken.getToken()}) }}"#}
-{#                               class="btn btn-sm btn-outline-primary mb-2"#}
-{#                            >#}
-{#                                Afficher#}
-{#                            </a>#}
                             <button class="btn btn-sm btn-outline-danger"
                                     data-uuid="{{ refreshToken.getToken() }}"
                                     data-controller="refreshToken"
+                                    data-action="refreshToken#deleteRefreshToken"
                             >
                                 Supprimer
                             </button>
@@ -71,5 +67,11 @@
             </div>
         </div>
     {% endblock %}
-    <button class="btn btn-outline-danger mb-3">Supprimer tous les tokens</button>
+    <button class="btn btn-danger me-2"
+            data-controller="refreshToken"
+            data-action="refreshToken#clearRefreshToken"
+    >
+        Supprimer tous les tokens
+    </button>
+    <button class="btn btn-secondary">Supprimer les tokens des Guests</button>
 {% endblock %}
