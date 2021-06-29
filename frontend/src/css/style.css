@@ -75,26 +75,32 @@ a:hover {
 }
 
 .header-left {
-    float: left;
-
     flex: 1;
+    display: flex;
+    align-items: center;
+
+    height: 100%;
 }
 
 .header-right {
-    float: right;
-    display: table;
+    display: flex;
+    align-items: center;
+
+    height: 100%;
 }
 
 .header-right > div {
-    display: table-cell;
-    vertical-align: middle;
 }
 
 .header-user-settings-cog {
     padding-left: 10px;
     font-size: 1.3em;
-    position: relative;
-    top: 3px;
+}
+
+.header-user-settings-cog a {
+    display: flex;
+    align-self: center;
+    align-items: center;
 }
 
 .header-user-settings-cog a svg {
@@ -111,9 +117,9 @@ a:hover {
 
 .header-user-logout-button {
     padding-left: 10px;
-    padding-right: 5px;
-    position: relative;
-    top: 1px;
+    display: flex;
+    align-self: center;
+    align-items: center;
 }
 
 .logout-button:hover {
@@ -379,6 +385,9 @@ button {
     background: none;
     border: none;
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
 }
 
 .back-arrow-button svg {
