@@ -27,12 +27,14 @@ export default class extends Controller {
         await Util.deleteEntity(this.ENTITY_NAME, uuid, false);
     }
 
-    clearRefreshToken = async () => {
+    clearRefreshToken = async (evt) => {
         try {
             const headers = new Headers();
             headers.append('X-Requested-With', 'fetch');
 
-            const response = await fetch(`/${this.ENTITY_NAME}/clear`, {headers, method: 'DELETE'});
+            const scope = evt.currentTarget.getAttribute('data-scope');
+
+            const response = await fetch(`/${this.ENTITY_NAME}/${scope}`, {headers, method: 'DELETE'});
 
             Util.handleResponseStatusFromDeleteRequest(response.status, `/${this.ENTITY_NAME}/`);
 
