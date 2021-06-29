@@ -29,7 +29,7 @@ class LogoutButton extends React.Component {
         } else {
 
             return (
-                <svg className="logout-button" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1"
+                <svg className="logout-button" onClick={this.onClick} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1"
                      x="0px" y="0px" viewBox="8 19 100 64" height="26" width="36" fill="white"
                      xmlSpace="preserve">
                     <path className="logout-button-arrow" strokeWidth="3" stroke="white"
