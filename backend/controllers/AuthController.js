@@ -27,6 +27,8 @@ const TooShortPasswordError = require("../errors/auth/password/TooShortPasswordE
 const NotMatchingPasswordsError = require("../errors/auth/password/NotMatchingPasswordsError");
 const InvalidRegistrationError = require("../errors/auth/InvalidRegistrationError");
 const BadCredentialsError = require("../errors/auth/BadCredentialsError");
+const NotLoggedUserError = require("../errors/auth/NotLoggedUserError");
+const BannedUserError = require("../errors/auth/BannedUserError");
 
 class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
@@ -116,7 +118,7 @@ class AuthController extends MainController {
 
             if (user === null) throw new UserNotFoundByTokenError();
 
-            // TODO check if user is banned
+            if (user.isBanned) throw new BannedUserError();
         }
 
         const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, refreshTokenPayload);
@@ -161,14 +163,7 @@ class AuthController extends MainController {
 
         if (!(await argon2.verify(userPasswordHash, requestBody.password))) throw new BadCredentialsError();
 
-        if(user.isBanned) {
-            this.statusCode = 403;
-            this.response = {
-                error: 'User is banned',
-                unbanDate: user.unbanDate,
-            }
-            return;
-        }
+        if (user.isBanned) throw new BannedUserError();
 
         const currentAccessTokenPayload = {...accessTokenPayload};
         const newAccessTokenPayload = Object.assign(currentAccessTokenPayload, {
@@ -201,12 +196,7 @@ class AuthController extends MainController {
     actionLogout = async (accessTokenPayload) => {
         console.log(accessTokenPayload);
 
-        if(!accessTokenPayload.hasOwnProperty('user')) {
-            this.statusCode = 400;
-            this.response = {
-                error: 'User is not logged in',
-            };
-        }
+        if (!accessTokenPayload.hasOwnProperty('user')) throw new NotLoggedUserError();
 
         if(accessTokenPayload.user.hasOwnProperty('id')) {
             await this.invalidateUserRefreshTokens(accessTokenPayload.user.id);
@@ -317,9 +307,6 @@ class AuthController extends MainController {
     actionForgotPassword = async (requestBody) => {
         const requiredBodyFields = ['username']; // We have only one field for this form, but we keep consistency with other actions
         const missingFields = [];
-        const badCredentialsResponse = {
-            error: 'The provided username or email address do not correspond to any user',
-        }
 
         for(const requiredField of requiredBodyFields) {
             if(!requestBody.hasOwnProperty(requiredField)) {
@@ -327,13 +314,7 @@ class AuthController extends MainController {
             }
         }
 
-        if(missingFields.length > 0) {
-            this.statusCode = 400;
-            this.response = {
-                error: `Missing parameters: ${missingFields.join(', ')}`,
-            }
-            return;
-        }
+        if (missingFields.length > 0) throw new MissingParametersError(missingFields.join(', '));
 
         const user = await db.User.findOne({
             where: {
@@ -344,15 +325,9 @@ class AuthController extends MainController {
             }
         });
 
-        if(user === null) {
-            this.statusCode = 404;
-            this.response = badCredentialsResponse;
-            return;
-        }
+        if(user === null) throw new BadCredentialsError();
 
         const lastResetPasswordEmailSendDate = user.lastResetPasswordEmailSendDate;
-
-        console.log(lastResetPasswordEmailSendDate);
 
         const now = new Date();
 
@@ -381,9 +356,6 @@ class AuthController extends MainController {
     actionPasswordResetTokenExists = async (requestParams) => {
         const requiredBodyFields = ['passwordResetToken']; // We have only one field for this form, but we keep consistency with other actions
         const missingFields = [];
-        const badCredentialsResponse = {
-            error: 'This token does not exist',
-        }
 
         for(const requiredField of requiredBodyFields) {
             if(!requestParams.hasOwnProperty(requiredField)) {
@@ -391,13 +363,7 @@ class AuthController extends MainController {
             }
         }
 
-        if(missingFields.length > 0) {
-            this.statusCode = 400;
-            this.response = {
-                error: `Missing parameters: ${missingFields.join(', ')}`,
-            }
-            return;
-        }
+        if (missingFields.length > 0) throw new MissingParametersError(missingFields.join(', '));
 
         const user = await db.User.findOne({
             where: {
@@ -405,11 +371,7 @@ class AuthController extends MainController {
             }
         });
 
-        if(user === null) {
-            this.statusCode = 404;
-            this.response = badCredentialsResponse;
-            return;
-        }
+        if (user === null) throw new BadCredentialsError('Token inexistant');
 
         this.statusCode = 204;
     }
@@ -417,9 +379,6 @@ class AuthController extends MainController {
     actionResetPassword = async (requestBody) => {
         const requiredBodyFields = ['newPassword', 'confirmNewPassword', 'passwordResetToken']; // We have only one field for this form, but we keep consistency with other actions
         const missingFields = [];
-        const badCredentialsResponse = {
-            error: 'This token does not exist',
-        }
 
         for(const requiredField of requiredBodyFields) {
             if(!requestBody.hasOwnProperty(requiredField)) {
@@ -427,13 +386,7 @@ class AuthController extends MainController {
             }
         }
 
-        if(missingFields.length > 0) {
-            this.statusCode = 400;
-            this.response = {
-                error: `Missing parameters: ${missingFields.join(', ')}`,
-            }
-            return;
-        }
+        if (missingFields.length > 0) throw new MissingParametersError(missingFields.join(', '));
 
         const user = await db.User.findOne({
             where: {
@@ -441,31 +394,11 @@ class AuthController extends MainController {
             }
         });
 
-        if(user === null) {
-            this.statusCode = 404;
-            this.response = badCredentialsResponse;
-            return;
-        }
+        if (user === null) throw new BadCredentialsError('Token inexistant');
 
-        if(requestBody.newPassword !== requestBody.confirmNewPassword) {
-            this.statusCode = 422;
-            this.response = {
-                errors: {
-                    confirmNewPassword: 'Les champs de nouveau mot de passe ne correspondent pas',
-                },
-            };
-            return;
-        }
+        if (requestBody.newPassword !== requestBody.confirmNewPassword) throw new NotMatchingPasswordsError();
 
-        if(requestBody.newPassword.length < PasswordUtil.MIN_LENGTH) {
-            this.statusCode = 422;
-            this.response = {
-                errors: {
-                    newPassword: `Le nouveau mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`,
-                },
-            };
-            return;
-        }
+        if(requestBody.newPassword.length < PasswordUtil.MIN_LENGTH) throw new TooShortPasswordError();
 
         user.password = await PasswordUtil.hashPassword(requestBody.newPassword);
         user.passwordResetToken = null;
@@ -550,7 +483,8 @@ class AuthController extends MainController {
                     break;
                 default:
                     throw new InvalidTokenTypeError(`Type ${type} ne correspond 
-                    avec aucun des types attendus (${AuthController.TOKEN_TYPE_ACCESS_TOKEN}, ${AuthController.TOKEN_TYPE_REFRESH_TOKEN})`);
+                    avec aucun des types attendus (${AuthController.TOKEN_TYPE_ACCESS_TOKEN}, 
+                    ${AuthController.TOKEN_TYPE_REFRESH_TOKEN})`);
             }
         }
 
@@ -561,7 +495,8 @@ class AuthController extends MainController {
         delete payload.slt;
 
         payload.type = type;
-        payload.slt = RandomUtil.getRandomString(RandomUtil.RANDOM_ALPHANUMERIC_ALL_CASE, 64); // A salt added in token payload to make it unique
+        // A salt added in token payload to make it unique
+        payload.slt = RandomUtil.getRandomString(RandomUtil.RANDOM_ALPHANUMERIC_ALL_CASE, 64);
 
         return jwt.sign(payload, AuthController.JWT_SECRET, {
             expiresIn,
@@ -586,15 +521,19 @@ class AuthController extends MainController {
     }
 
     invalidateUserRefreshTokens = async (userId) => {
-        await db.sequelize.query(
-            'DELETE from "refresh_token" WHERE "userId" = :userId',
-            {
-                replacements: {
-                    userId,
+        try {
+            await db.sequelize.query(
+                'DELETE from "refresh_token" WHERE "userId" = :userId',
+                {
+                    replacements: {
+                        userId,
+                    },
+                    type: QueryTypes.DELETE,
                 },
-                type: QueryTypes.DELETE,
-            },
-        );
+            );
+        } catch (error) {
+            throw new DatabaseError();
+        }
     }
 
     saveRefreshToken = async (refreshToken, expirationDate, userId = null) => {
