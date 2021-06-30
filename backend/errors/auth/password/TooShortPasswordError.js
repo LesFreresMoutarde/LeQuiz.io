@@ -4,7 +4,7 @@ const PasswordUtil = require("../../../util/PasswordUtil");
 class TooShortPasswordError extends UnprocessableEntityError {
 
     constructor() {
-        super(`Le nouveau mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`);
+        super(`Le mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`);
     }
 }
 
