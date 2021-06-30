@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {app} from "../../App";
 
 const titleStyle = {
     fontSize: '1.5em',
@@ -11,6 +12,10 @@ const paraStyle = {
 }
 
 const LegalNotice = () => {
+
+    useEffect(() => {
+        app.showBackArrow(false);
+    }, []);
 
     return (
         <>

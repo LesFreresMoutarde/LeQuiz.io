@@ -6,6 +6,7 @@ import Toastr from "toastr2";
 import Loader from "../../misc/Loader";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
+import {app} from "../../App";
 const toastr = new Toastr();
 
 /**
@@ -44,6 +45,7 @@ class ResetPassword extends React.Component {
             })()
         }
 
+        app.showBackArrow(false);
     }
 
     render = () => {

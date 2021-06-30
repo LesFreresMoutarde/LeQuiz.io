@@ -141,16 +141,11 @@ export default class ChooseCategories extends React.Component {
         this.props.submit(this.pickedCategories);
     };
 
-    goBack = () => {
-        this.props.goBack('chooseCategories');
-    }
-
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseCategories.TITLE}/>
                     </div>
                     <div className="app loading">
@@ -166,7 +161,6 @@ export default class ChooseCategories extends React.Component {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseCategories.TITLE}/>
                     </div>
                     <div className="category-container">

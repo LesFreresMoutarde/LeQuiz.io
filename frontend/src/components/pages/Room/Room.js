@@ -11,6 +11,7 @@ import CreateGame from "../CreateGame/CreateGame";
 import Toastr from "toastr2";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
+import {app} from "../../App";
 const toastr = new Toastr();
 
 class Room extends React.Component {
@@ -90,6 +91,7 @@ class Room extends React.Component {
             }
         })()
 
+        app.showBackArrow(false);
     }
 
 

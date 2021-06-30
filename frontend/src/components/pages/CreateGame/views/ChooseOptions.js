@@ -154,16 +154,11 @@ export default class ChooseOptions extends React.Component {
 
     };
 
-    goBack = () => {
-        this.props.goBack('chooseOptions')
-    }
-
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
                     <div className="app loading">
@@ -185,7 +180,6 @@ export default class ChooseOptions extends React.Component {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
                     <div className="game-options-container">

@@ -57,16 +57,11 @@ export default class ChooseGameMode extends React.Component {
        this.props.submit(gameMode);
     };
 
-    goBack = () => {
-        this.props.goBack('chooseGameMode');
-    }
-
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseGameMode.TITLE}/>
                     </div>
                     <div className="app loading">
@@ -81,7 +76,6 @@ export default class ChooseGameMode extends React.Component {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseGameMode.TITLE}/>
                     </div>
                     <div className="game-mode-container">
