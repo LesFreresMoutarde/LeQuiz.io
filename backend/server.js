@@ -12,8 +12,6 @@ require('./manager/SocketEngine')(server);
 CronManager.executeCronTasks();
 
 const mainRouter = require('./routes/mainRouter');
-const UnauthorizedError = require("./errors/base/UnauthorizedError");
-
 
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
@@ -34,10 +32,6 @@ app.all('*', (req, res, next) => {
 
     const excludedUrls = [ // The URLs for which the access token is not required
         '/auth/access-token',
-        '/toto',
-        '/game/modes',
-        '/game/categories',
-        '/game/options'
     ];
 
     if(excludedUrls.includes(req.url.split('?')[0])) {
@@ -72,21 +66,14 @@ app.use((req, res ,next) => {
 
 /** Not-Handled-In-Methods Errors Handler **/
 app.use((error, req, res, next) => {
-    console.log('middleware triggered');
-    console.log("constructor name", error.constructor.name);
-    console.log("Unauthorized", error instanceof UnauthorizedError);
-    console.error('message', error.message);
-    console.error('status', error.status);
-
-    res.status(error.status || 500);
-
     const responseData = {};
 
-    if (process.env.NODE_ENV === 'development') {
-        responseData.message = error.message;
-    } else {
-        responseData.message = 'Internal Error';
-    }
+    const status = error.status || 500
+
+    status === 500 ? responseData.message = 'Internal Server Error' : responseData.message = error.message;
+
+    res.status(status);
+
     res.json(responseData);
 });
 
