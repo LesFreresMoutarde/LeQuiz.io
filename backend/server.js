@@ -64,7 +64,7 @@ app.use((req, res ,next) => {
     next(new Error(JSON.stringify({status: 404, message: 'Not Found'})));
 });
 
-/** Not-Handled-In-Methods Errors Handler **/
+/** Errors Handler Middleware **/
 app.use((error, req, res, next) => {
     const responseData = {};
 
