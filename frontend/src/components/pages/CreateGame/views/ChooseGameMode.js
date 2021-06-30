@@ -2,7 +2,6 @@ import React from "react";
 import Loader from "../../../misc/Loader";
 import GameMode from "../components/GameMode";
 import Title from "../../../misc/Title";
-import BackArrow from "../../../misc/BackArrow";
 import Toastr from "toastr2";
 import AuthUtil from "../../../../util/AuthUtil";
 import ApiUtil from "../../../../util/ApiUtil";
