@@ -3,6 +3,7 @@ import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
 import BackArrow, {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 import UserAccessUtil from "../../../util/UserAccessUtil";
+import {app} from "../../App";
 
 class Settings extends React.Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class Settings extends React.Component {
 
     componentDidMount() {
         this.showDesktopSection('email');
+        app.showBackArrow(true, ON_CLICK_GO_BACK);
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {

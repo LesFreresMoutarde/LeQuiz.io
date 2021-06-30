@@ -1,7 +1,12 @@
 import React from "react";
 import Logo from "../../misc/Logo";
+import {app} from "../../App";
 
 class Home extends React.Component {
+
+    componentDidMount() {
+        app.showBackArrow(false);
+    }
 
     createRoom = () => {
         this.props.history.push('/create-room');

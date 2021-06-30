@@ -47,6 +47,8 @@ class App extends React.Component {
             isLoading: true,
             user: null,
             showFeedbackModal: false,
+            showBackArrow: false,
+            backArrowOnClick: null,
         };
 
         this.nextRedirect = null;
@@ -83,6 +85,19 @@ class App extends React.Component {
 
     closeFeedbackModal = () => {
         this.setState({showFeedbackModal: false});
+    }
+
+    /**
+     * Display or not the header Back Arrow. This function must be called in
+     * the componentDidMount of a main "page" component
+     * @param {boolean} show
+     * @param {string|function} onClick
+     */
+    showBackArrow = (show = true, onClick = () => {}) => {
+        this.setState({
+            showBackArrow: show,
+            backArrowOnClick: onClick,
+        });
     }
 
     logoutUser = async () => {
@@ -159,7 +174,7 @@ class App extends React.Component {
                         <FeedbackModal closeModal={this.closeFeedbackModal}/>
                     }
                     <div className="content-wrapper">
-                        <Header user={user} />
+                        <Header user={user} showBackArrow={this.state.showBackArrow} backArrowOnClick={this.state.backArrowOnClick} />
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
 
