@@ -142,7 +142,7 @@ class App extends React.Component {
 
     render = () => {
 
-        const {redirect, isLoading, user, showFeedbackModal} = this.state;
+        const {redirect, isLoading, user, showFeedbackModal, showBackArrow, backArrowOnClick} = this.state;
 
         if (redirect) {
             const url = this.nextRedirect;
@@ -174,7 +174,7 @@ class App extends React.Component {
                         <FeedbackModal closeModal={this.closeFeedbackModal}/>
                     }
                     <div className="content-wrapper">
-                        <Header user={user} showBackArrow={this.state.showBackArrow} backArrowOnClick={this.state.backArrowOnClick} />
+                        <Header user={user} showBackArrow={showBackArrow} backArrowOnClick={backArrowOnClick} />
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
 
