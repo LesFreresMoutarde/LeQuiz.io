@@ -13,6 +13,19 @@ const NotYetValidTokenError = require("../errors/auth/token/NotYetValidTokenErro
 const ExpiredTokenError = require("../errors/auth/token/ExpiredTokenError");
 const MalformedTokenError = require("../errors/auth/token/MalformedTokenError");
 const InternalServerError = require("../errors/base/InternalServerError");
+const DatabaseError = require("../errors/misc/DatabaseError");
+const UnknownRefreshTokenError = require("../errors/auth/token/UnknownRefreshTokenError");
+const InvalidRefreshTokenError = require("../errors/auth/token/InvalidRefreshTokenError");
+const UserNotFoundByTokenError = require("../errors/auth/token/UserNotFoundByTokenError");
+const MissingParametersError = require("../errors/misc/MissingParametersError");
+const InvalidEmailError = require("../errors/auth/email/InvalidEmailError");
+const AlreadyUsedEmailError = require("../errors/auth/email/AlreadyUsedEmailError");
+const AlreadyUsedUsernameError = require("../errors/auth/username/AlreadyUsedUsernameError");
+const InvalidUsernameError = require("../errors/auth/username/InvalidUsernameError");
+const TooLongUsernameError = require("../errors/auth/username/TooLongUsernameError");
+const TooShortPasswordError = require("../errors/auth/password/TooShortPasswordError");
+const NotMatchingPasswordsError = require("../errors/auth/password/NotMatchingPasswordsError");
+const InvalidRegistrationError = require("../errors/auth/InvalidRegistrationError");
 
 class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
@@ -66,12 +79,7 @@ class AuthController extends MainController {
             }
         );
 
-        if(records.length < 1) {
-            response.error = 'Unknown refresh token';
-            this.response = response;
-            this.statusCode = 400;
-            return;
-        }
+        if (records.length < 1) throw new UnknownRefreshTokenError();
 
         const dbRefreshToken = records[0];
 
@@ -93,12 +101,7 @@ class AuthController extends MainController {
             }
         }
 
-        if(!userIdsMatch) {
-            response.error = 'Invalid refresh token user';
-            this.response = response;
-            this.statusCode = 400;
-            return;
-        }
+        if (!userIdsMatch) throw new InvalidRefreshTokenError();
 
         // Check if user exists
         if(payload.user) {
@@ -110,12 +113,7 @@ class AuthController extends MainController {
                 }
             });
 
-            if(user === null) {
-                response.error = 'User not found';
-                this.statusCode = 400;
-                this.response = response;
-                return;
-            }
+            if (user === null) throw new UserNotFoundByTokenError();
 
             // TODO check if user is banned
         }
@@ -241,13 +239,7 @@ class AuthController extends MainController {
             }
         }
 
-        if(missingFields.length > 0) {
-            this.statusCode = 400;
-            this.response = {
-                error: `Missing parameters: ${missingFields.join(', ')}`,
-            }
-            return;
-        }
+        if (missingFields.length > 0) throw new MissingParametersError(missingFields.join(', '));
 
         const errors = {};
 
@@ -258,11 +250,11 @@ class AuthController extends MainController {
         });
 
         if (existingUserWithUsername !== null) {
-            errors.username = "Ce nom d'utilisateur est déjà utilisé";
+            errors.username = new AlreadyUsedUsernameError().message;
         } else if (!requestBody.username.match("^[a-zA-Z0-9_]*$")) {
-            errors.username = "Votre nom d'utilisateur ne peut contenir que des caractères alphanumériques et des underscores '_'";
+            errors.username = new InvalidUsernameError().message;
         } else if (requestBody.username.length > 30) {
-            errors.username = "Votre nom d'utilisateur doit faire maximum 30 caractères";
+            errors.username = new TooLongUsernameError().message;
         }
 
         const existingUserWithEmail = await db.User.findOne({
@@ -272,26 +264,20 @@ class AuthController extends MainController {
         });
 
         if (existingUserWithEmail !== null) {
-            errors.email = "Cette adresse email est déjà utilisée";
+            errors.email = new AlreadyUsedEmailError().message;
         } else if(!EmailUtil.isEmailAddressValid(requestBody.email)) {
-            errors.email = "Cette adresse email n'est pas valide";
+            errors.email = new InvalidEmailError().message;
         }
 
         if (requestBody.password.length < PasswordUtil.MIN_LENGTH) {
-            errors.password = `Le mot de passe doit faire au moins ${PasswordUtil.MIN_LENGTH} caractères`;
+            errors.password = new TooShortPasswordError().message;
         }
 
         if (requestBody.password !== requestBody.confirmPassword) {
-            errors.confirmPassword = 'Les champs de mot de passe ne correspondent pas';
+            errors.confirmPassword = new NotMatchingPasswordsError().message;
         }
 
-        if (Object.keys(errors).length > 0) {
-            this.statusCode = 422;
-            this.response = {
-                errors,
-            };
-            return;
-        }
+        if (Object.keys(errors).length > 0) throw new InvalidRegistrationError(errors);
 
         const user = await db.User.create({
             username: requestBody.username,
@@ -314,12 +300,18 @@ class AuthController extends MainController {
             }
         });
 
-        const refreshTokenLifetime = requestBody.stayLoggedIn ? AuthController.REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN : AuthController.REFRESH_TOKEN_LIFETIME;
+        const refreshTokenLifetime = requestBody.stayLoggedIn
+            ? AuthController.REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN
+            : AuthController.REFRESH_TOKEN_LIFETIME;
 
         console.log(refreshTokenLifetime, requestBody.stayLoggedIn);
 
         const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, newAccessTokenPayload);
-        const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, newAccessTokenPayload, refreshTokenLifetime);
+        const newRefreshToken = this.generateToken
+        (
+            AuthController.TOKEN_TYPE_REFRESH_TOKEN,
+            newAccessTokenPayload, refreshTokenLifetime
+        );
 
         const refreshTokenExpirationDate = new Date();
         refreshTokenExpirationDate.setTime(refreshTokenExpirationDate.getTime() + (refreshTokenLifetime * 1000));
@@ -571,7 +563,8 @@ class AuthController extends MainController {
                     expiresIn = AuthController.REFRESH_TOKEN_LIFETIME;
                     break;
                 default:
-                    throw new InvalidTokenTypeError();
+                    throw new InvalidTokenTypeError(`Type ${type} ne correspond 
+                    avec aucun des types attendus (${AuthController.TOKEN_TYPE_ACCESS_TOKEN}, ${AuthController.TOKEN_TYPE_REFRESH_TOKEN})`);
             }
         }
 
@@ -590,15 +583,20 @@ class AuthController extends MainController {
     }
 
     invalidateRefreshToken = async (refreshToken) => {
-        await db.sequelize.query(
-            'DELETE FROM "refresh_token" WHERE token = :token',
-            {
-                replacements: {
-                    token: refreshToken,
+        try {
+            await db.sequelize.query(
+                'DELETE FROM "refresh_token" WHERE token = :token',
+                {
+                    replacements: {
+                        token: refreshToken,
+                    },
+                    type: QueryTypes.DELETE,
                 },
-                type: QueryTypes.DELETE,
-            },
-        );
+            );
+        } catch (error) {
+            throw new DatabaseError();
+        }
+
     }
 
     invalidateUserRefreshTokens = async (userId) => {
@@ -614,17 +612,22 @@ class AuthController extends MainController {
     }
 
     saveRefreshToken = async (refreshToken, expirationDate, userId = null) => {
-        await db.sequelize.query(
-            'INSERT INTO "refresh_token" ("token", "userId", "expirationDate") VALUES (:token, :userId, :expirationDate)',
-            {
-                replacements: {
-                    token: refreshToken,
-                    userId,
-                    expirationDate,
+        try {
+            await db.sequelize.query(
+                'INSERT INTO "refresh_token" ("token", "userId", "expirationDate") VALUES (:token, :userId, :expirationDate)',
+                {
+                    replacements: {
+                        token: refreshToken,
+                        userId,
+                        expirationDate,
+                    },
+                    type: QueryTypes.INSERT,
                 },
-                type: QueryTypes.INSERT,
-            },
-        );
+            );
+        } catch (error) {
+            throw new DatabaseError()
+        }
+
     }
 
     sendResetPasswordEmailToUser = async (user) => {
