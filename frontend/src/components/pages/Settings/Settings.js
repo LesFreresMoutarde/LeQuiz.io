@@ -1,7 +1,7 @@
 import React from "react";
 import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
-import BackArrow, {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
+import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 import UserAccessUtil from "../../../util/UserAccessUtil";
 import {app} from "../../App";
 
@@ -73,10 +73,6 @@ class Settings extends React.Component {
 
     render = () => {
         return (
-            <>
-            <div className="mb2">
-                <BackArrow onClick={ON_CLICK_GO_BACK}/>
-            </div>
             <div className="flex-container">
                 <nav id="page-lateral-navigation">
                     <ul>
@@ -100,7 +96,6 @@ class Settings extends React.Component {
                     </div>
                 </div>
             </div>
-        </>
         )
     }
 }

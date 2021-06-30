@@ -1,6 +1,7 @@
 import React from "react";
 import Title from "../../misc/Title";
-import BackArrow, {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
+import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
+import {app} from "../../App";
 
 class JoinRoom extends React.Component {
 
@@ -11,6 +12,10 @@ class JoinRoom extends React.Component {
         this.state = {
             valueInput: ''
         };
+    }
+
+    componentDidMount() {
+        app.showBackArrow(true, ON_CLICK_GO_BACK);
     }
 
     handleChange = (event) => {
@@ -32,10 +37,9 @@ class JoinRoom extends React.Component {
     render = () => {
         return (
             <>
-                <div className="create-game-header">
-                    <BackArrow onClick={ON_CLICK_GO_BACK}/>
-                    <Title title={JoinRoom.TITLE}/>
-                </div>
+            <div className="create-game-header">
+                <Title title={JoinRoom.TITLE}/>
+            </div>
             <div className="join-room-div">
                 <label htmlFor="join-room-input" className="join-room-label">Entrez le code de la partie</label>
                 <input type="text" id="join-room-input" value={this.state.valueInput} onChange={this.handleChange} onKeyPress={this.handleEnterKey}/>

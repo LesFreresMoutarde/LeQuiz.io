@@ -4,10 +4,10 @@ import Util from "../../../util/Util";
 import {app} from "../../App";
 
 import Toastr from "toastr2";
-import BackArrow, {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
+import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 const toastr = new Toastr();
 
 class Login extends React.Component {
@@ -21,6 +21,10 @@ class Login extends React.Component {
         UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.GUEST_ONLY);
     }
 
+    componentDidMount() {
+        app.showBackArrow(true, ON_CLICK_GO_BACK);
+    }
+
     render = () => {
         if(this.state.redirect) {
             return(
@@ -29,8 +33,6 @@ class Login extends React.Component {
         }
 
         return(
-            <>
-                <BackArrow onClick={ON_CLICK_GO_BACK}/>
                 <div className="text-center">
                     <h1 className="mb">Connexion</h1>
                     <p className="mb2">Vous n'avez pas encore de compte ? <Link to="/register">Inscrivez-vous</Link></p>
@@ -51,7 +53,6 @@ class Login extends React.Component {
                     </form>
                     <small><Link to="/forgot-password">Mot de passe oublié ?</Link></small>
                 </div>
-            </>
         )
     }
 
