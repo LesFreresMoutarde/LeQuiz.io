@@ -26,6 +26,7 @@ const TooLongUsernameError = require("../errors/auth/username/TooLongUsernameErr
 const TooShortPasswordError = require("../errors/auth/password/TooShortPasswordError");
 const NotMatchingPasswordsError = require("../errors/auth/password/NotMatchingPasswordsError");
 const InvalidRegistrationError = require("../errors/auth/InvalidRegistrationError");
+const BadCredentialsError = require("../errors/auth/BadCredentialsError");
 
 class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
@@ -136,9 +137,6 @@ class AuthController extends MainController {
     actionLogin = async (requestBody, accessTokenPayload) => {
         const requiredBodyFields = ['username', 'password', 'stayLoggedIn'];
         const missingFields = [];
-        const badCredentialsResponse = {
-            error: 'The provided credentials do not correspond to any user',
-        };
 
         for(const requiredField of requiredBodyFields) {
             if(!requestBody.hasOwnProperty(requiredField)) {
@@ -146,13 +144,7 @@ class AuthController extends MainController {
             }
         }
 
-        if(missingFields.length > 0) {
-            this.statusCode = 400;
-            this.response = {
-                error: `Missing parameters: ${missingFields.join(', ')}`,
-            }
-            return;
-        }
+        if (missingFields.length > 0) throw new MissingParametersError(missingFields.join(', '));
 
         const user = await db.User.findOne({
             where: {
@@ -163,19 +155,11 @@ class AuthController extends MainController {
             },
         });
 
-        if(user === null) {
-            this.statusCode = 404;
-            this.response = badCredentialsResponse;
-            return;
-        }
+        if (user === null) throw new BadCredentialsError();
 
         const userPasswordHash = user.password;
 
-        if(!(await argon2.verify(userPasswordHash, requestBody.password))) {
-            this.statusCode = 404;
-            this.response = badCredentialsResponse;
-            return;
-        }
+        if (!(await argon2.verify(userPasswordHash, requestBody.password))) throw new BadCredentialsError();
 
         if(user.isBanned) {
             this.statusCode = 403;
@@ -196,7 +180,9 @@ class AuthController extends MainController {
             }
         });
 
-        const refreshTokenLifetime = requestBody.stayLoggedIn ? AuthController.REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN : AuthController.REFRESH_TOKEN_LIFETIME;
+        const refreshTokenLifetime = requestBody.stayLoggedIn
+            ? AuthController.REFRESH_TOKEN_LIFETIME_STAY_LOGGED_IN
+            : AuthController.REFRESH_TOKEN_LIFETIME;
 
         const newAccessToken = this.generateToken(AuthController.TOKEN_TYPE_ACCESS_TOKEN, newAccessTokenPayload);
         const newRefreshToken = this.generateToken(AuthController.TOKEN_TYPE_REFRESH_TOKEN, newAccessTokenPayload, refreshTokenLifetime);
