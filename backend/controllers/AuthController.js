@@ -29,6 +29,7 @@ const InvalidRegistrationError = require("../errors/auth/InvalidRegistrationErro
 const BadCredentialsError = require("../errors/auth/BadCredentialsError");
 const NotLoggedUserError = require("../errors/auth/NotLoggedUserError");
 const BannedUserError = require("../errors/auth/BannedUserError");
+const TooManyRequestsError = require("../errors/base/TooManyRequestsError");
 
 class AuthController extends MainController {
     static TOKEN_TYPE_ACCESS_TOKEN = 'accessToken';
@@ -337,12 +338,12 @@ class AuthController extends MainController {
             if(diffSeconds < 300) {
                 const minutesToWait = Math.ceil((300 - diffSeconds) / 60);
 
-                this.statusCode = 429;
-                this.response = {
-                    minutesToWait
-                };
-
-                return;
+                throw new TooManyRequestsError
+                (
+                    `Veuillez patienter 
+                    ${minutesToWait} minute${minutesToWait > 1 ? 's' : ''} 
+                    avant de demander un nouvel email de réinitialisation.`
+                );
             }
         }
 
