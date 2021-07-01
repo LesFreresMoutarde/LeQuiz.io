@@ -7,7 +7,6 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -93,7 +92,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         if ($this->passwordEncoder->isPasswordValid($user, $credentials['password'])) {
 
             if  (implode($user->getRoles()) !== self::ROLE_ADMIN)
-                throw new UnauthorizedHttpException('Only administrators are allowed');
+                throw new CustomUserMessageAuthenticationException('Only administrators are allowed');
 
             return true;
         }
