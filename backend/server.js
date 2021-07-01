@@ -70,7 +70,9 @@ app.use((error, req, res, next) => {
 
     const status = error.status || 500
 
-    status === 500 ? responseData.message = 'Internal Server Error' : responseData.message = error.message;
+    status === 500
+        ? responseData.message = 'Erreur interne du serveur. Réessayez plus tard'
+        : responseData.message = error.message;
 
     res.status(status);
 
