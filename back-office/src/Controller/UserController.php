@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Twig\Environment;
 
 #[Route('/users')]
@@ -103,7 +104,6 @@ class UserController extends AbstractController
     #[Route('/edit/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, Security $security): Response
     {
-        dd($_ENV);
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 
@@ -145,6 +145,12 @@ class UserController extends AbstractController
         $response->setStatusCode(Response::HTTP_NO_CONTENT);
 
         return $response;
+    }
+
+    #[Route('reset-password/{id}', name: 'user_reset_password', methods: ['GET'], format: 'json')]
+    public function resetPassword(User $user, HttpClientInterface $httpClient): Response
+    {
+        $response = $httpClient->request('metohod', 'url', [option => 'option'])
     }
 
     private function getFilteredUsers(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
