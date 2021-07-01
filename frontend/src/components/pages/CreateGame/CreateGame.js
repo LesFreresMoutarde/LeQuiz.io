@@ -1,4 +1,5 @@
 import React from "react";
+import '../../../css/pages/createGame.css';
 import Util from "../../../util/Util";
 import GameUtil from "../../../util/GameUtil";
 import ChooseGameMode from "./views/ChooseGameMode";

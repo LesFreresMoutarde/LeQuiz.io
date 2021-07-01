@@ -1,6 +1,10 @@
 :root {
     --app-background-color: #23C5EF;
     --element-primary-background-color: #24BFF0;
+
+    --button-blue-color: #40D9FF;
+
+    --button-pink-color: #DC71C7;
 }
 
 @font-face {
@@ -87,9 +91,6 @@ a:hover {
     align-items: center;
 
     height: 100%;
-}
-
-.header-right > div {
 }
 
 .header-user-settings-cog {
@@ -402,20 +403,6 @@ button {
 
 .back-arrow-button:focus {
     outline: none;
-}
-
-.home-menu {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    margin-top: 100px;
-}
-
-.home-title-description {
-    margin-top: 30px;
-    font-size: 1.4rem;
-    font-weight: 400;
-    text-align: center;
 }
 
 .homepage-button {

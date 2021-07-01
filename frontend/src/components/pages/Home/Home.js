@@ -1,40 +1,55 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Logo from "../../misc/Logo";
 import {app} from "../../App";
+import '../../../css/pages/home.css';
+import {Link} from "react-router-dom";
+import JoinRoomButtonIcon from "../../misc/JoinRoomButtonIcon";
 
-class Home extends React.Component {
+const Home = () => {
+    const [ joinRoomCode, setJoinRoomCode ] = useState('');
 
-    componentDidMount() {
+    useEffect(() => {
         app.showBackArrow(false);
+    }, []);
+
+    const onJoinRoomInputChange = (e) => {
+        setJoinRoomCode(e.target.value);
     }
 
-    createRoom = () => {
-        this.props.history.push('/create-room');
-    };
+    const onJoinRoomInputKeyUp = (e) => {
+        if (e.keyCode !== 13) {
+            return;
+        }
 
-    joinRoom = () => {
-        this.props.history.push('/join-room');
-    };
+        if (joinRoomCode === '') {
+            return;
+        }
 
-    render = () => {
-        return (
-            <>
-                <Logo height="200" width="300"/>
-                <div>
-                    <h1 className="home-title-description">Plateforme de quiz multijoueur en temps réel</h1>
-                </div>
-                <div className="home-menu">
-                    <button className="homepage-button create-room-button" onClick={this.createRoom}>
-                        <p className="homepage-button-label">Créer un salon</p>
-                    </button>
-                    <button className="homepage-button join-room-button" onClick={this.joinRoom}>
-                        <p className="homepage-button-label">Rejoindre un salon</p>
-                    </button>
-                </div>
-            </>
-
-        );
+        console.log('LETS GO')
     }
+
+    return (
+        <>
+            <Logo height="200" width="300"/>
+            <div className="home-menu">
+                <Link to="/create-room" className="home-create-room-button">Créer un salon</Link>
+
+
+                <div className="home-join-room-form">
+                    <input type="text"
+                           id="home-join-room-input"
+                           placeholder="Rejoindre un salon"
+                           onChange={onJoinRoomInputChange}
+                           onKeyUp={onJoinRoomInputKeyUp}
+                           value={joinRoomCode}
+                    />
+                    <Link to={`/room/${joinRoomCode}`} id="home-join-room-button">
+                        <JoinRoomButtonIcon />
+                    </Link>
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default Home;

@@ -186,7 +186,6 @@ class App extends React.Component {
                                 <Route exact path="/reset-password/:token" component={ResetPassword} />
                                 <Route exact path="/settings" component={Settings}/>
                                 <Route path="/create-room/" component={CreateGame}/>
-                                <Route exact path="/join-room" component={JoinRoom}/>
                                 <Route path="/room/:id" component={Room}/>
                                 <Route path="/contact" component={Contact}/>
                                 <Route path="/mentions-legales" component={LegalNotice}/>

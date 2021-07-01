@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import '../../../../css/gameMode.css';
 import {isConsole, isMobile, isSmartTV} from "react-device-detect";
 
 const GameMode = ({gameMode, pickGameMode}) => {
