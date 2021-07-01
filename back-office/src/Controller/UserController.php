@@ -103,6 +103,7 @@ class UserController extends AbstractController
     #[Route('/edit/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, Security $security): Response
     {
+        dd($_ENV);
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 

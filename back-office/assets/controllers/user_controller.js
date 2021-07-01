@@ -71,4 +71,13 @@ export default class extends Controller {
         await Util.deleteEntity(this.ENTITY_NAME, uuid);
     }
 
+    resetPassword = async (evt) => {
+        const email = evt.currentTarget.getAttribute('data-user');
+
+        const headers = new Headers();
+        headers.append('X-Requested-With', 'fetch');
+
+        const response = await fetch('', {headers})
+    }
+
 }
