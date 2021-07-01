@@ -515,6 +515,8 @@ class AuthController extends MainController {
                 },
             );
         } catch (error) {
+            // to log native error
+            console.error(error);
             throw new DatabaseError();
         }
 
@@ -532,6 +534,8 @@ class AuthController extends MainController {
                 },
             );
         } catch (error) {
+            // to log native error
+            console.error(error);
             throw new DatabaseError();
         }
     }
@@ -550,6 +554,8 @@ class AuthController extends MainController {
                 },
             );
         } catch (error) {
+            // to log native error
+            console.error(error);
             throw new DatabaseError()
         }
 
