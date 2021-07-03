@@ -8,10 +8,8 @@ use App\Form\UserType;
 use App\Util\Enums;
 use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
-use GuzzleHttp\Client;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -152,45 +150,39 @@ class UserController extends AbstractController
     #[Route('/reset-password/{id}', name: 'user_reset_password', methods: ['GET'], format: 'json')]
     public function resetPassword(User $user, HttpClientInterface $httpClient): Response
     {
-//        dd($httpClient);
 
         $entityManager = $this->getDoctrine()->getManager();
         $user->setLastResetPasswordEmailSendDate(new \Datetime('now', new \DateTimeZone('UTC')));
 
         $passwordResetToken = Util::getRandomString(128);
-//        dd($_ENV['FRONT_URL']."/reset-password/$passwordResetToken");
 
         $user->setPasswordResetToken($passwordResetToken);
         $entityManager->flush();
 
-        // fetcher l'api
+        $response = new JsonResponse();
+
         try {
-//            $client = new Client();
-//            $res = $client->request('POST', 'http://localhost:9000/email/send-reset-password-email');
-            $response = $httpClient->request(
-                'GET',
-                'http://jsonplaceholder.typicode.com/todos/1',
+            $httpClient->request(
+                'POST',
+                $_ENV['PRIVATE_API_URL'].'/email/send-reset-password-email',
+                [
+                    'body' =>
+                        [
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'resetPasswordUrl' => $_ENV['FRONT_URL']."/reset-password/$passwordResetToken"
+                        ]
+                ]
             );
 
+            $response->setStatusCode(Response::HTTP_OK);
 
-//            $response = $httpClient->request
-//            (
-//                'GET',
-//                'http://localhost:9000/',
-////                $_ENV['PRIVATE_API_URL'].'/email/send-reset-password-email',
-////                [
-////                    'body' =>
-////                        [
-////                            'username' => $user->getUsername(),
-////                            'email' => $user->getEmail(),
-////                            'resetPasswordUrl' => $_ENV['FRONT_URL']."/reset-password/$passwordResetToken"
-////                        ]
-////                ]
-//            );
-
-            dd($response->getContent());
+            return $response;
         } catch (\Exception $exception) {
-            dd($exception);
+            //$exception à logger plus tard
+            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response->setContent(json_encode('La réinitialisation de mot de passe à échouée. Réessayez plus tard.'));
+            return $response;
         }
 
     }
