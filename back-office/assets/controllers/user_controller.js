@@ -28,7 +28,6 @@ export default class extends Controller {
 
         const unbanDateInputElt = document.querySelector('.date-picker');
         if (unbanDateInputElt && !unbanDateInputElt.getAttribute('data-disabled')) {
-            console.log(unbanDateInputElt.getAttribute('data-disabled'))
             flatpickr('.date-picker', {
                 dateFormat: 'd-m-Y H:i:S',
                 enableTime: true,
@@ -72,12 +71,13 @@ export default class extends Controller {
     }
 
     resetPassword = async (evt) => {
-        const email = evt.currentTarget.getAttribute('data-user');
+        const uuid = evt.currentTarget.getAttribute('data-user');
 
         const headers = new Headers();
         headers.append('X-Requested-With', 'fetch');
 
-        const response = await fetch('', {headers})
-    }
+        const response = await fetch(`/${this.ENTITY_NAME}/reset-password/${uuid}`, {headers})
 
+        console.log('response', await response.text())
+    }
 }

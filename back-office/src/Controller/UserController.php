@@ -8,8 +8,10 @@ use App\Form\UserType;
 use App\Util\Enums;
 use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -147,10 +149,50 @@ class UserController extends AbstractController
         return $response;
     }
 
-    #[Route('reset-password/{id}', name: 'user_reset_password', methods: ['GET'], format: 'json')]
+    #[Route('/reset-password/{id}', name: 'user_reset_password', methods: ['GET'], format: 'json')]
     public function resetPassword(User $user, HttpClientInterface $httpClient): Response
     {
-        $response = $httpClient->request('metohod', 'url', [option => 'option'])
+//        dd($httpClient);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $user->setLastResetPasswordEmailSendDate(new \Datetime('now', new \DateTimeZone('UTC')));
+
+        $passwordResetToken = Util::getRandomString(128);
+//        dd($_ENV['FRONT_URL']."/reset-password/$passwordResetToken");
+
+        $user->setPasswordResetToken($passwordResetToken);
+        $entityManager->flush();
+
+        // fetcher l'api
+        try {
+//            $client = new Client();
+//            $res = $client->request('POST', 'http://localhost:9000/email/send-reset-password-email');
+            $response = $httpClient->request(
+                'GET',
+                'http://jsonplaceholder.typicode.com/todos/1',
+            );
+
+
+//            $response = $httpClient->request
+//            (
+//                'GET',
+//                'http://localhost:9000/',
+////                $_ENV['PRIVATE_API_URL'].'/email/send-reset-password-email',
+////                [
+////                    'body' =>
+////                        [
+////                            'username' => $user->getUsername(),
+////                            'email' => $user->getEmail(),
+////                            'resetPasswordUrl' => $_ENV['FRONT_URL']."/reset-password/$passwordResetToken"
+////                        ]
+////                ]
+//            );
+
+            dd($response->getContent());
+        } catch (\Exception $exception) {
+            dd($exception);
+        }
+
     }
 
     private function getFilteredUsers(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
