@@ -76,8 +76,18 @@ export default class extends Controller {
         const headers = new Headers();
         headers.append('X-Requested-With', 'fetch');
 
-        const response = await fetch(`/${this.ENTITY_NAME}/reset-password/${uuid}`, {headers})
+        try {
+            const response = await fetch(`/${this.ENTITY_NAME}/reset-password/${uuid}`, {headers});
 
-        console.log('response', await response.text())
+
+            if (response.status === 500) throw new Error(await response.json())
+
+            //Todo toastr quand debug
+            console.log('Success')
+
+        } catch (error) {
+            //TODO toastr quand debug
+            console.error(error.message)
+        }
     }
 }
