@@ -21,7 +21,6 @@ class SendResetPasswordEmailResponder implements ResponderInterface
 {
     public function respond(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
-        dd('toto a fait requete');
         $post = $request->getParsedBody();
 
         $paramsValidator = new ParamsValidator([
