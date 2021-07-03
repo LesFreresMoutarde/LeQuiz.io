@@ -77,4 +77,9 @@ class Util
         return $params;
     }
 
+    static function getRandomString($length)
+    {
+        return bin2hex(random_bytes($length / 2));
+    }
+
 }
