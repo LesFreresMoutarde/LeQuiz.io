@@ -1,93 +1,84 @@
-<p style="text-align: center"><img src="logo.png" alt="Logo"></p>
+# <p style="text-align: center"><img src="logo.png" alt="leQuiz.io"></p>
 
-# LeQuiz.io
+## Mise en route
 
-## Description
-LeQuiz.io is a real time multiplayer quiz platform. People can generate quizzes based on various thematics and game options in order to play with their friends.  
-This project is powered by Node.JS and React.
+### Prérequis
 
-### Features
-
-- Generate a quiz
-    - Choose game mode
-    - Choose questions categories
-    - Choose game options (number and type of questions)
-    - A random quiz is automatically generated according to the settings chosen with the questions in the database
-- In the waiting lobby, change quiz settings and get the room unique code to share it with people who want to join the game
-- Play in realtime to the generated quiz
-    - Answer the questions
-    - See live scores
-- At the end of the game, you can generate another quiz and restart a game with all the people in your room
-
-### Upcoming features
-
-- More game modes
-- Create, share and play custom quizzes
-- Integration of community questions after validation by approvers
-- Paid subscription model to access all game modes
-
-## Getting started
-
-### Prerequisites
-
-You need to install some software to run the application:
+Les programmes suivants sont nécessaires pour lancer le projet
 
 - [Docker CE](https://www.docker.com/community-edition)
 - [Docker Compose](https://docs.docker.com/compose/install)
 
 
-### Configuration
+### Initialisation
 
-Some values are dependent on the execution environment of the application, like URLs or database configuration. Those value are located in :
-- Backend: `backend/config/env.js`
-- Frontend: `frontend/src/config/env.js`
+Après avoir cloné le dépôt git, certaines opérations sont nécessaires pour 
+faire fonctionner le projet.
 
-You have to create those `env.js` files from the `env.default.js` templates in each directory described above, and fill in the values.
+#### Création des fichiers de configuration
 
-### Install dependencies
+Certaines valeurs dépendent de l'environnement d'exécution (développement, 
+production), comme des URL ou la configuration d'accès à la base de données.
 
-TODO
+Chaque brique du projet a son propre fichier de configuration, qui doit être créé manuellement à partir 
+d'un fichier "template" :
 
-### Run project
+- Frontend : `frontend/src/config/env.js` à partir de `frontend/src/config/env.default.js`
+- Backend : `backend/config/env.js` à partir de `backend/config/env.default.js`
+- Back-office : `back-office/.env.local` à partir de `back-office/.env`
+- Private API : `private-api/config/config.php` à partir de `private-api/config/config.default.php`
+
+#### Installation des dépendances
+
+Les dépendances Node.JS du frontend, du backend et du back-office sont automatiquement installées au 
+lancement des containers.
+
+Pour installer les dépendances de la Private API :
+
+```bash
+docker-compose exec private-api composer install
+```
+
+#### Lancement du projet
 
 ```bash
 docker-compose up -d
 ```
-> Notice: Check the `docker-compose.yml` file content. If other containers use the same ports, change yours.
 
-The node dependencies are installed automatically at first startup.
+> Note: Vérifiez le contenu du fichier `docker-compose.yml`. Si d'autres containers utilisent les mêmes ports,
+> vous pouvez créer un fichier `docker-compose.override.yml` en spécifiant d'autres ports.
 
-### Access
+### Accès
 
-You should access to:
+Vous pouvez accéder à :
 
-- Application frontend: [http://127.0.0.1](http://127.0.0.1)
-- Application backend (API): [http://127.0.0.1:3000](http://127.0.0.1:3000)
-- Common internal API: [http://127.0.0.1:9000](http://127.0.0.1:9000)
-- Mailhog: [http://127.0.0.1:8025](http://127.0.0.1:8025)
-- adminer: [http://127.0.0.1:8080](http://127.0.0.1:8080)
-  - system: PostgreSQL
-  - host: `database`
-  - username: `admin`
-  - password: `admin`
-  - database: `lequiz-io`
+- Frontend : [http://127.0.0.1](http://127.0.0.1)
+- Backend : [http://127.0.0.1:3000](http://127.0.0.1:3000)
+- API privée commune : [http://127.0.0.1:9000](http://127.0.0.1:9000)
+- Mailhog : [http://127.0.0.1:8025](http://127.0.0.1:8025)
+- adminer : [http://127.0.0.1:8080](http://127.0.0.1:8080)
+  - Système : PostgreSQL
+  - Host : `database`
+  - Utilisateur : `admin`
+  - Mot de passe : `admin`
+  - Base de données : `lequiz-io`
   
-> Notice: If you're using Docker Toolbox, change 127.0.0.1 by the IP address of your virtual machine, ie 192.168.99.100
+> Note: Si vous utilisez Docker Toolbox, changez 127.0.0.1 par l'adresse IP de votre machine virtuelle, 
+> par exemple 192.168.99.100
 
-### Fake data
+### Données d'exemple
 
-Fake data is generated automatically when the `database` Docker container is started. You can change or remove it in the file `sql/import.sql`.
+Des données d'exemple sont générées quand le container Docker `database` est démarré.
+Vous pouvez les changer ou les supprimer avec le fichier `sql/import.sql`.
 
-You can login
+Vous pouvez vous connecter
 
-- as user with `user1@example.com` to `user9@example.com` or `user1` to `user9`
-- as reviewer with `reviewer1@example.com` and `reviewer2@example.com` or `reviewer1` and `reviewer2`
-- as admin with `admin1@example.com` or `admin1`
+- en tant qu'utilisateur avec `user1@example.com` à `user9@example.com` ou `user1` à `user9`
+- en tant que reviewer avec `reviewer1@example.com` et `reviewer2@example.com` ou `reviewer1` et `reviewer2`
+- en tant qu'admin avec `admin1@example.com` ou `admin1`
   
-For all the demo accounts, the password is `password`
-
-> Note: Users, reviewers and admins have different roles in the database, but as it stands, the higher roles do not have access to additional functionality. This will come later.
+Pour tous ces comptes, le mot de passe est `password`.
 
 ### Build
 
-To build the React app (the frontend), run `npm run build` in the `frontend` directory.
+Pour créer un build de production du frontend, lancez `npm run build` dans le répertoire `frontend`.
