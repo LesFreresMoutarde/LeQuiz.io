@@ -78,3 +78,39 @@
 #home-join-room-button:hover svg {
     transform: translateX(5px);
 }
+
+@media screen and (max-width: 576px) {
+    .home-create-room-button {
+        font-size: 3em;
+        padding: 50px;
+        border-radius: 50px;
+    }
+
+    .home-join-room-form {
+        flex-direction: column;
+    }
+
+    #home-join-room-input {
+        font-size: 1.5em;
+    }
+
+    #home-join-room-button {
+        margin-left: 0;
+        margin-top: 10px;
+
+        width: 100%;
+
+        height: 60px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .home-create-room-button {
+        font-size: 2.5em;
+        padding: 30px;
+    }
+
+    #home-join-room-input {
+        font-size: 1.3em;
+    }
+}
