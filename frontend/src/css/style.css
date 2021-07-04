@@ -334,10 +334,6 @@ button {
     transition: background-color 0.1s ease-out;
 }
 
-.button:focus {
-    outline: none;
-}
-
 .button:hover {
     cursor: pointer;
 }
