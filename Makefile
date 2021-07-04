@@ -16,7 +16,7 @@ init_private_api:
 	docker compose exec private-api composer install
 
 logs:
-	docker compose logs --follow --timestamps
+	docker compose logs --follow
 
 down:
 	docker compose down
