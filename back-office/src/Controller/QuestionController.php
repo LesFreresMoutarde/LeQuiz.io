@@ -19,7 +19,10 @@ use Twig\Environment;
 class QuestionController extends AbstractController
 {
 
-    private const POSSIBLE_FILTERS = ['search', 'uuid', 'categories', 'questionTypes', 'statuses', 'isHardcore', 'hasMedia'];
+    private const POSSIBLE_FILTERS = [
+        'search', 'uuid', 'categories', 'questionTypes',
+        'statuses', 'isHardcore', 'hasMedia', 'tags'
+    ];
 
     #[Route('/', name: 'question_index', methods: ['GET'])]
     public function index(
@@ -39,6 +42,7 @@ class QuestionController extends AbstractController
 
         $categories = $crudManager->getCategories();
         $questionTypes = $crudManager->getQuestionTypes();
+        $tags = $crudManager->getTags();
 
 
         if ($request->headers->has('X-Requested-With')) {
@@ -61,6 +65,7 @@ class QuestionController extends AbstractController
             'questions' => $questions,
             'categories' => $categories,
             'questionTypes' => $questionTypes,
+            'tags' => $tags,
             'statuses' => Enums::STATUSES
         ]);
     }
@@ -233,6 +238,19 @@ class QuestionController extends AbstractController
                                 $joinParts[] =  "t.name LIKE LOWER(:type$i)";
 
                             $paramsReplacements["type$i"] = '%'.$value[$i].'%';
+                        }
+                        break;
+                    case 'tags':
+                        $value = explode(',', $value);
+                        $joinParts[] = 'JOIN q.tags tg WITH';
+                        for ($i = 0; $i < count($value); $i++) {
+
+                            if ($i + 1 !== count($value))
+                                $joinParts[] = "tg.name LIKE LOWER(:tag$i) OR";
+                            else
+                                $joinParts[] =  "tg.name LIKE LOWER(:tag$i)";
+
+                            $paramsReplacements["tag$i"] = '%'.$value[$i].'%';
                         }
                         break;
                     case 'statuses':
