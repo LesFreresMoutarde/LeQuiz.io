@@ -79,7 +79,15 @@ class Util
 
     static function getRandomString($length)
     {
-        return bin2hex(random_bytes($length / 2));
+        $alphaNumeric = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        $outputCharacters = [];
+
+        for ($i = 0; $i < $length; ++$i) {
+            $outputCharacters[$i] = str_split($alphaNumeric)[random_int(0, strlen($alphaNumeric) - 1)];
+        }
+
+        return implode($outputCharacters);
     }
 
 }
