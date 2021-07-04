@@ -41,6 +41,8 @@ const GameMode = ({gameMode, pickGameMode}) => {
                 ${!allowed ? 'disabled' : ''}
                 ${playDisabledAnimation ? 'disabled-animation' : ''}
             `}
+            aria-label={`${label} ${!allowed ? '(verrouillé)' : ''}`}
+            aria-describedby={`game-mode-${classname.toLowerCase()}-description`}
             onClick={onClick}
         >
             {!allowed && (
@@ -64,7 +66,7 @@ const GameMode = ({gameMode, pickGameMode}) => {
                     </span>
                 </div>
                 <div className={"game-mode-description-container"}>
-                    <span className="game-mode-description">{description}</span>
+                    <span className="game-mode-description" id={`game-mode-${classname.toLowerCase()}-description`}>{description}</span>
                 </div>
             </div>
         </button>

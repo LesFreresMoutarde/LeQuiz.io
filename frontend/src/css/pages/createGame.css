@@ -211,10 +211,6 @@
     text-align: left;
 }
 
-.game-mode:focus {
-    outline: none;
-}
-
 @media screen and (max-width: 375px) {
     .game-mode.mobile .game-mode-icon-container {
         width: 50px;
