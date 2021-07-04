@@ -71,14 +71,6 @@
     background-color: var(--button-blue-color-lighter);
 }
 
-#home-join-room-button svg {
-    transition: transform 0.1s ease-out;
-}
-
-#home-join-room-button:hover svg {
-    transform: translateX(5px);
-}
-
 @media screen and (max-width: 576px) {
     .home-create-room-button {
         font-size: 3em;
