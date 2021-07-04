@@ -164,9 +164,15 @@
         </div>
     </div>
     <div class="mb-3">
-{#        TODO#}
         {% if context == 'edit' %}
-        <button type="button" class="btn btn-warning text-white">Réinitialiser le mot de passe</button>
+            <button type="button"
+                    class="btn btn-warning text-white"
+                    data-controller="user"
+                    data-action="user#resetPassword"
+                    data-user="{{ user.getId() }}"
+            >
+                Réinitialiser le mot de passe
+            </button>
         {% endif %}
     </div>
     <div class="d-flex mt-4">

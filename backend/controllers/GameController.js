@@ -6,6 +6,10 @@ const Ascension = require("../models/gameModes/Ascension");
 const Blitz = require("../models/gameModes/Blitz");
 const Survivant = require("../models/gameModes/Survivant");
 
+const DatabaseError = require("../errors/misc/DatabaseError");
+const GameModeNotFoundError = require("../errors/game/GameModeNotFoundError");
+const UserPlanNotFoundError = require("../errors/user/UserPlanNotFoundError");
+
 class GameController extends MainController {
 
     static GAME_MODES = [Serie, Ascension, Blitz, Survivant];
@@ -19,14 +23,8 @@ class GameController extends MainController {
 
     actionCategories = async () => {
         const response = {};
-        try {
-            response.categories = await this.getCategories();
-            this.response = response;
-        } catch (error) {
-            this.statusCode = 400;
-            response.error = error;
-            this.response = response;
-        }
+        response.categories = await this.getCategories();
+        this.response = response;
     };
 
     actionCreateRoom = () => {
@@ -43,14 +41,8 @@ class GameController extends MainController {
 
     actionModes = (plan) => {
         const response = {};
-        try {
-            response.gameModes = this.getAllowedGameModes(plan);
-            this.response = response;
-        } catch (error) {
-            this.statusCode = 400;
-            response.error = error;
-            this.response = response;
-        }
+        response.gameModes = this.getAllowedGameModes(plan);
+        this.response = response;
     };
     
     actionOptions = async (gameMode, categories) => {
@@ -58,16 +50,9 @@ class GameController extends MainController {
             gameOptions: {}
         };
 
-        try {
-            response.gameOptions.questionTypes = await this.getQuestionTypes(categories);
-            response.gameOptions.winCriterion = this.getWinCriterion(gameMode);
-            this.response = response;
-        } catch (error) {
-            console.error(error);
-            this.statusCode = 400;
-            response.error = error;
-            this.response = response;
-        }
+        response.gameOptions.questionTypes = await this.getQuestionTypes(categories);
+        response.gameOptions.winCriterion = this.getWinCriterion(gameMode);
+        this.response = response;
     };
 
     actionVerifyRoom = (roomId) => {
@@ -80,7 +65,7 @@ class GameController extends MainController {
 
     getAllowedGameModes = (plan) => {
 
-        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw 'Unknown plan';
+        if (!GameController.GAME_MODE_PERMISSIONS.hasOwnProperty(plan)) throw new UserPlanNotFoundError();
 
         const allowedGameModes = [];
 
@@ -106,9 +91,10 @@ class GameController extends MainController {
 
     getCategories = async () => {
 
-        const categories = [];
+        try {
+            const categories = [];
 
-        const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label", 
+            const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label", 
             COUNT(*) as "nbQuestions", "question_type"."name" as "type" 
             FROM "category" 
             INNER JOIN "category_question" 
@@ -122,44 +108,49 @@ class GameController extends MainController {
             WHERE "question"."status" = :status
             GROUP BY "category"."id", "question_type"."name"
             ORDER BY "category"."name";`,
-            {
-                replacements: {
-                    status: db.Question.STATUS_APPROVED
-                },
-                type: db.sequelize.QueryTypes.SELECT
-            }
-        );
+                {
+                    replacements: {
+                        status: db.Question.STATUS_APPROVED
+                    },
+                    type: db.sequelize.QueryTypes.SELECT
+                }
+            );
 
-        for (let i = 0; i < records.length; i++) {
-            if (i === 0) {
-                categories.push({
-                    id: records[i].id,
-                    name: records[i].name,
-                    label: records[i].label,
-                    nbQuestions : {
-                        [records[i].type]: records[i].nbQuestions
-                    }
-                })
-            } else if (records[i-1].id === records[i].id) {
-                categories[i-1]['nbQuestions'][[records[i].type]] = records[i].nbQuestions
-            } else {
-                categories.push({
-                    id: records[i].id,
-                    name: records[i].name,
-                    label: records[i].label,
-                    nbQuestions : {
-                        [records[i].type]: records[i].nbQuestions
-                    }
-                })
+            for (let i = 0; i < records.length; i++) {
+                if (i === 0) {
+                    categories.push({
+                        id: records[i].id,
+                        name: records[i].name,
+                        label: records[i].label,
+                        nbQuestions : {
+                            [records[i].type]: records[i].nbQuestions
+                        }
+                    })
+                } else if (records[i-1].id === records[i].id) {
+                    categories[i-1]['nbQuestions'][[records[i].type]] = records[i].nbQuestions
+                } else {
+                    categories.push({
+                        id: records[i].id,
+                        name: records[i].name,
+                        label: records[i].label,
+                        nbQuestions : {
+                            [records[i].type]: records[i].nbQuestions
+                        }
+                    })
+                }
             }
+
+            return categories;
+        } catch (error) {
+            throw new DatabaseError();
         }
 
-        return categories;
     };
 
     getQuestionTypes = async (categories) => {
 
-        return await db.sequelize.query(`SELECT "question_type"."name", "question_type"."label",
+        try {
+            return await db.sequelize.query(`SELECT "question_type"."name", "question_type"."label",
             "question_type"."id", COUNT(*) as "nbQuestions"
             FROM "question_type" 
             INNER JOIN "question_type_question" ON "question_type"."id" = "question_type_question"."questionTypeId"
@@ -170,14 +161,16 @@ class GameController extends MainController {
             AND "question"."status" = :status
             GROUP BY "question_type"."name", "question_type"."label", "question_type"."id"
             ORDER BY "question_type"."label";`,
-            {
-                replacements: {
-                    status: db.Question.STATUS_APPROVED,
-                    categories: categories
-                },
-                type: db.sequelize.QueryTypes.SELECT
-            });
-
+                {
+                    replacements: {
+                        status: db.Question.STATUS_APPROVED,
+                        categories: categories
+                    },
+                    type: db.sequelize.QueryTypes.SELECT
+                });
+        } catch (error) {
+            throw new DatabaseError();
+        }
     };
 
     getWinCriterion = (gameMode) => {
@@ -190,7 +183,7 @@ class GameController extends MainController {
             }
         });
 
-        if (!winCriterion) throw new Error('Invalid Game Mode');
+        if (!winCriterion) throw new GameModeNotFoundError();
 
         return winCriterion;
     };

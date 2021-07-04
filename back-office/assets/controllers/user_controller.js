@@ -28,7 +28,6 @@ export default class extends Controller {
 
         const unbanDateInputElt = document.querySelector('.date-picker');
         if (unbanDateInputElt && !unbanDateInputElt.getAttribute('data-disabled')) {
-            console.log(unbanDateInputElt.getAttribute('data-disabled'))
             flatpickr('.date-picker', {
                 dateFormat: 'd-m-Y H:i:S',
                 enableTime: true,
@@ -71,4 +70,24 @@ export default class extends Controller {
         await Util.deleteEntity(this.ENTITY_NAME, uuid);
     }
 
+    resetPassword = async (evt) => {
+        const uuid = evt.currentTarget.getAttribute('data-user');
+
+        const headers = new Headers();
+        headers.append('X-Requested-With', 'fetch');
+
+        try {
+            const response = await fetch(`/${this.ENTITY_NAME}/reset-password/${uuid}`, {headers});
+
+
+            if (response.status === 500) throw new Error(await response.json())
+
+            //Todo toastr quand debug
+            console.log('Success')
+
+        } catch (error) {
+            //TODO toastr quand debug
+            console.error(error.message)
+        }
+    }
 }
