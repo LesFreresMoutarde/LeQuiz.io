@@ -8,7 +8,7 @@ Les programmes suivants sont nécessaires pour lancer le projet
 
 - [Docker CE](https://www.docker.com/community-edition)
 - [Docker Compose](https://docs.docker.com/compose/install)
-
+- [Make](https://www.gnu.org/software/make/)
 
 ### Initialisation
 
@@ -28,25 +28,32 @@ d'un fichier "template" :
 - Back-office : `back-office/.env.local` à partir de `back-office/.env`
 - Private API : `private-api/config/config.php` à partir de `private-api/config/config.default.php`
 
-#### Installation des dépendances
-
-Les dépendances Node.JS du frontend, du backend et du back-office sont automatiquement installées au 
-lancement des containers.
-
-Pour installer les dépendances de la Private API :
-
-```bash
-docker-compose exec private-api composer install
-```
-
 #### Lancement du projet
 
+La cible `run` du Makefile permet de lancer le projet et d'installer automatiquement toutes les dépendances.
+
 ```bash
-docker-compose up -d
+make run
 ```
+
+Une fois l'initialisation terminée, les logs sont affichés en direct dans la console. Pour les masquer, faites `Ctrl+C`.
 
 > Note: Vérifiez le contenu du fichier `docker-compose.yml`. Si d'autres containers utilisent les mêmes ports,
 > vous pouvez créer un fichier `docker-compose.override.yml` en spécifiant d'autres ports.
+
+#### Autres commandes
+
+```bash
+make logs
+```
+
+Affiche en direct les logs des containers.
+
+```bash
+make down
+```
+
+Arrête et supprime tous les containers (équivalent à `docker compose down`)
 
 ### Accès
 

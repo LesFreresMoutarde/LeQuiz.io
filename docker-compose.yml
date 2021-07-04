@@ -53,16 +53,9 @@ services:
     environment:
       WEB_DOCUMENT_ROOT: /app/public
 
-  back-office-dependencies:
-    build: ./back-office/Dockerfile
-    container_name: lequiz.io-back-office-dependencies
-    restart: always
-    volumes:
-      - ./back-office:/app
-    command: sh -c "composer install && npm install --verbose && npm run watch"
-
   private-api:
     image: webdevops/php-nginx:8.0
+    container_name: lequiz.io-private-api
     working_dir: /app
     restart: always
     environment:
@@ -74,6 +67,7 @@ services:
 
   mailhog:
     image: mailhog/mailhog
+    container_name: lequiz.io-mailhog
     ports:
       - 1025:1025
       - 8025:8025
