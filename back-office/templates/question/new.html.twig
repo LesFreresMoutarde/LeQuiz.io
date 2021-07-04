@@ -70,6 +70,22 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="row mb-3">
+            <label for="" class="form-label lead">Tags</label>
+            <div class="col-6">
+                {% for tag in tags %}
+                    <input type="checkbox"
+                           id="cbx-tag-{{ tag.getName() }}"
+                           name="cbx-tag-{{ tag.getName() }}"
+                           value="{{ tag.getName() }}"
+                           class="form-check-input me-2"
+                    >
+                    <label for="cbx-tag-{{ tag.getName() }}" class="form-check-label me-2">
+                        {{ tag.getLabel() }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
         <div class="row mb-3" data-controller="question">
             <div style="display: flex; align-items: baseline">
                 <label for="" class="form-label lead me-1">Réponses</label>
