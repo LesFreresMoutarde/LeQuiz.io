@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Twig\Environment;
 
 #[Route('/users')]
@@ -144,6 +145,46 @@ class UserController extends AbstractController
         $response->setStatusCode(Response::HTTP_NO_CONTENT);
 
         return $response;
+    }
+
+    #[Route('/reset-password/{id}', name: 'user_reset_password', methods: ['GET'], format: 'json')]
+    public function resetPassword(User $user, HttpClientInterface $httpClient): Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $user->setLastResetPasswordEmailSendDate(new \Datetime('now', new \DateTimeZone('UTC')));
+
+        $passwordResetToken = Util::getRandomString(128);
+
+        $user->setPasswordResetToken($passwordResetToken);
+        $entityManager->flush();
+
+        $response = new JsonResponse();
+
+        try {
+            $httpClient->request(
+                'POST',
+                $_ENV['PRIVATE_API_URL'].'/email/send-reset-password-email',
+                [
+                    'body' =>
+                        [
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'resetPasswordUrl' => $_ENV['FRONT_URL']."/reset-password/$passwordResetToken"
+                        ]
+                ]
+            );
+
+            $response->setStatusCode(Response::HTTP_OK);
+
+            return $response;
+        } catch (\Exception $exception) {
+            //$exception à logger plus tard
+            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response->setContent(json_encode('La réinitialisation de mot de passe à échouée. Réessayez plus tard.'));
+            return $response;
+        }
+
     }
 
     private function getFilteredUsers(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
