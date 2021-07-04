@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row">
-        <h1 class="h2">Modifier une question</h1>
+        <h1 class="h2">{{ context == 'show' ? 'Question' : 'Modifier une question' }}</h1>
         <hr>
     </div>
     <div class="row mb-3">
@@ -40,7 +40,11 @@
                 <textarea id="question-content"
                           name="question-content"
                           class="form-control"
-                          required
+                        {% if context == 'show' %}
+                            disabled
+                        {% else %}
+                            required
+                        {% endif %}
                 >{{ question.getContent() }}</textarea>
             </div>
         </div>
@@ -48,22 +52,18 @@
             <label for="question-type-select" class="form-label lead">Types</label>
             <div class="col-6">
                 {% for type in questionTypes %}
-                    {% if type.name in question.getTypes() %}
-                        <input type="checkbox" id="cbx-type-{{ type.getName() }}"
-                               name="cbx-type-{{ type.getName() }}"
-                               value="{{ type.getName()}}"
-                               class="form-check-input me-1"
-                               checked>
-                    {% else %}
-                        <input type="checkbox"
-                               id="cbx-type-{{ type.getName() }}"
-                               name="cbx-type-{{ type.getName() }}"
-                               value="{{ type.getName() }}"
-                               class="form-check-input me-1">
-                    {% endif %}
-                    <label for="cbx-type-{{ type.getName() }}"
-                           class="form-check-label me-2"
+                    <input type="checkbox" id="cbx-type-{{ type.getName() }}"
+                           name="cbx-type-{{ type.getName() }}"
+                           value="{{ type.getName()}}"
+                           class="form-check-input me-1"
+                            {% if context == 'show' %}
+                                disabled
+                            {% endif %}
+                            {% if type.name in question.getTypes() %}
+                                checked
+                            {% endif %}
                     >
+                    <label for="cbx-type-{{ type.getName() }}" class="form-check-label me-2">
                         {{ type.getLabel() }}
                     </label>
                 {% endfor %}
@@ -73,26 +73,42 @@
             <label for="" class="form-label lead">Catégories</label>
             <div class="col-6">
                 {% for category in categories %}
-                    {% if category.getName() in question.getCategories() %}
-                        <input type="checkbox"
-                               id="cbx-category-{{ category.getName() }}"
-                               name="cbx-category-{{ category.getName() }}"
-                               value="{{ category.getName() }}"
-                               class="form-check-input me-2"
-                               checked
-                        >
-                    {% else %}
-                        <input type="checkbox"
-                               id="cbx-category-{{ category.getName() }}"
-                               name="cbx-category-{{ category.getName() }}"
-                               value="{{ category.getName() }}"
-                               class="form-check-input me-2"
-                        >
-                    {% endif %}
-                    <label for="cbx-category-{{ category.getName() }}"
-                           class="form-check-label me-2"
+                    <input type="checkbox"
+                           id="cbx-category-{{ category.getName() }}"
+                           name="cbx-category-{{ category.getName() }}"
+                           value="{{ category.getName() }}"
+                           class="form-check-input me-2"
+                            {% if category.getName() in question.getCategories() %}
+                                checked
+                            {% endif %}
+                            {% if context == 'show' %}
+                                disabled
+                            {% endif %}
                     >
+                    <label for="cbx-category-{{ category.getName() }}" class="form-check-label me-2">
                         {{ category.getLabel() }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="" class="form-label lead">Tags</label>
+            <div class="col-6">
+                {% for tag in tags %}
+                    <input type="checkbox"
+                           id="cbx-tag-{{ tag.getName() }}"
+                           name="cbx-tag-{{ tag.getName() }}"
+                           value="{{ tag.getName() }}"
+                           class="form-check-input me-2"
+                            {% if tag.getName() in question.getTags() %}
+                                checked
+                            {% endif %}
+                            {% if context == 'show' %}
+                                disabled
+                            {% endif %}
+                    >
+                    <label for="cbx-tag-{{ tag.getName() }}" class="form-check-label me-2">
+                        {{ tag.getLabel() }}
                     </label>
                 {% endfor %}
             </div>
@@ -100,18 +116,20 @@
         <div class="row mb-3" data-controller="question">
             <div style="display: flex; align-items: baseline">
                 <label for="" class="form-label lead me-1">Réponses</label>
-                <div>
-                    <button type="button"
-                            class="btn btn-sm btn-outline-primary"
-                            style="max-width: 25px; max-height: 25px;
-                             display: flex;
-                             align-items: center;
-                             justify-content: center"
-                            data-action="question#onAddAnswer"
-                    >
-                        <i class="bi bi-plus-lg"></i>
-                    </button>
-                </div>
+                {% if context == 'edit' %}
+                    <div>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-primary"
+                                style="max-width: 25px; max-height: 25px;
+                                 display: flex;
+                                 align-items: center;
+                                 justify-content: center"
+                                data-action="question#onAddAnswer"
+                        >
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
+                {% endif %}
             </div>
             <div id="answers">
             {% for answer in question.answer['answers'] %}
@@ -121,6 +139,9 @@
                             <textarea name="answers-content-{{ answersUniqueId[loop.index0] }}"
                                       id="answer-{{ answersUniqueId[loop.index0] }}"
                                       class="form-control"
+                                      {% if context == 'show' %}
+                                          disabled
+                                      {% endif %}
                             >{{ answer['content'] }}</textarea>
                         </div>
                         <div class="col-3">
@@ -133,6 +154,9 @@
                                            value="1"
                                            class="form-check-input"
                                            checked
+                                            {% if context == 'show' %}
+                                                disabled
+                                            {% endif %}
                                     />
                                     <label for="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
                                            class="form-check-label"
@@ -148,6 +172,9 @@
                                            name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
                                            value="0"
                                            class="form-check-input"
+                                            {% if context == 'show' %}
+                                                disabled
+                                            {% endif %}
                                     />
                                     <label for="bad-answer-radio-{{ answersUniqueId[loop.index0] }}"
                                            class="form-check-label"
@@ -164,6 +191,9 @@
                                            name="answers-is_good_answer-{{ answersUniqueId[loop.index0] }}"
                                            value="1"
                                            class="form-check-input"
+                                            {% if context == 'show' %}
+                                                disabled
+                                            {% endif %}
                                     />
                                     <label for="good-answer-radio-{{ answersUniqueId[loop.index0] }}"
                                            class="form-check-label"
@@ -180,6 +210,9 @@
                                            value="0"
                                            class="form-check-input"
                                            checked
+                                            {% if context == 'show' %}
+                                                disabled
+                                            {% endif %}
                                     />
                                     <label for="bad-answer-radio-{{ answersUniqueId[loop.index0] }}" class="form-check-label">
                                         Mauvaise réponse
@@ -188,15 +221,17 @@
                             </div>
                             {% endif %}
                         </div>
-                        <div class="col-2 d-flex align-items-center">
-                            <button type="button"
-                                    class="btn btn-sm btn-outline-danger"
-                                    data-action="question#onDeleteAnswer"
-                                    data-delete-id="{{ answersUniqueId[loop.index0] }}"
-                            >
-                                <i class="bi bi-trash-fill"></i>
-                            </button>
-                        </div>
+                        {% if context == 'edit' %}
+                            <div class="col-2 d-flex align-items-center">
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        data-action="question#onDeleteAnswer"
+                                        data-delete-id="{{ answersUniqueId[loop.index0] }}"
+                                >
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
@@ -206,6 +241,9 @@
                 <textarea name="additional-response_media-info"
                           id="additional-response_media-info"
                           class="form-control"
+                          {% if context == 'show' %}
+                              disabled
+                          {% endif %}
                 >{{ question.answer['additional']['response_media']['info'] ?? '' }}</textarea>
             </div>
         </div>
@@ -213,25 +251,38 @@
         <div class="row mb-3">
             <label for="" class="form-label lead">Difficulté</label>
             <div class="col-6">
-                {% if question.getIsHardcore() %}
-                    <input type="checkbox" id="is-hardcore" class="form-check-input me-1" name="is-hardcore" checked>
-                    <label for="is-hardcore" class="form-check-label">Hardcore</label>
-                {% else %}
-                    <input type="checkbox" id="is-hardcore" class="form-check-input me-1" name="is-hardcore">
-                    <label for="is-hardcore" class="form-check-label">Hardcore</label>
-                {% endif %}
+                <input type="checkbox"
+                       id="is-hardcore"
+                       class="form-check-input me-1"
+                       name="is-hardcore"
+                        {% if question.getIsHardcore() %}
+                            checked
+                        {% endif %}
+                        {% if context == 'show' %}
+                            disabled
+                        {% endif %}
+                >
+                <label for="is-hardcore" class="form-check-label">Hardcore</label>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-6">
                 <label for="question-status-select" class="form-label lead">Statut</label>
-                <select name="question-status" id="question-status-select" class="form-select">
-                    {% for status in questionStatuses %}
-                        {% if question.getStatus() == status %}
-                            <option value="{{ status }}" selected>{{ status }}</option>>
-                        {% else %}
-                            <option value="{{ status }}">{{ status }}</option>
+                <select name="question-status"
+                        id="question-status-select"
+                        class="form-select"
+                        {% if context == 'show' %}
+                            disabled
                         {% endif %}
+                >
+                    {% for status in questionStatuses %}
+                            <option value="{{ status }}"
+                                    {% if question.getStatus() == status %}
+                                        selected
+                                    {% endif %}
+                            >
+                                {{ status }}
+                            </option>>
                     {% endfor %}
                 </select>
             </div>
@@ -242,7 +293,11 @@
 {#        {% endif %}#}
         <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
         <div class="d-flex mt-4">
-            <button type="submit" class="btn btn-primary me-2">Envoyer</button>
+            {% if context == 'edit' %}
+                <button type="submit" class="btn btn-primary me-2">Envoyer</button>
+            {% else %}
+                <a href="{{ path('question_edit', {'id': question.getId()}) }}" class="btn btn-primary me-2">Modifier</a>
+            {% endif %}
             <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Retour</a>
             <button class="btn btn-danger"
                     data-uuid="{{ question.getId() }}"
