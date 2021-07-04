@@ -46,20 +46,27 @@ const GameMode = ({gameMode, pickGameMode}) => {
             onClick={onClick}
         >
             {!allowed && (
-                <img className="game-mode-disabled-mobile" src="/img/icons/locked.svg" style={{
-                    maxHeight: 20,
-                    maxWidth: 20,
-                    position: 'absolute',
-                    right: 10,
-                    top: 10,
-                }} />
+                <img className="game-mode-disabled-mobile"
+                     src="/img/icons/locked.svg"
+                     style={{
+                         maxHeight: 20,
+                         maxWidth: 20,
+                         position: 'absolute',
+                         right: 10,
+                         top: 10,
+                     }}
+                     alt="Verrouillé"
+                />
             )}
 
             <div className="game-mode-label-mobile">{getGameModeLabelContent()}</div>
             <div className="game-mode-button-content">
                 <div className="game-mode-label-container">
                     <div className="game-mode-icon-container">
-                        <img className="game-mode-icon" src={`/img/icons/gamemodes/${classname.toLowerCase()}.svg`} alt={`Logo ${label}`}/>
+                        <img className="game-mode-icon"
+                             src={`/img/icons/gamemodes/${classname.toLowerCase()}.svg`}
+                             alt={`Logo ${label}`}
+                        />
                     </div>
                     <span className="game-mode-label-desktop">
                         {getGameModeLabelContent()}
