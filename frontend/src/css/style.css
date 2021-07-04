@@ -275,6 +275,11 @@ label.checkbox > input + span::before {
     cursor: pointer;
 }
 
+label.checkbox > input:focus-visible + span::before {
+    outline: auto;
+    outline: -webkit-focus-ring-color 1px auto;
+}
+
 label.checkbox > input + span::after {
     content: '';
     width: 8px;
