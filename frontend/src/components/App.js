@@ -7,7 +7,6 @@ import '../css/toastr.override.css';
 import {Switch, Route, Redirect} from "react-router-dom";
 import Home from "./pages/Home/Home";
 import CreateGame from "./pages/CreateGame/CreateGame";
-import JoinRoom from "./pages/JoinRoom/JoinRoom";
 import Footer from "./Footer";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";

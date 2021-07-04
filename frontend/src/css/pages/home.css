@@ -58,6 +58,8 @@
 
     background-color: var(--button-blue-color);
 
+    transition: background-color 0.1s ease-out;
+
     width: 100px;
 
     display: flex;
@@ -66,5 +68,13 @@
 }
 
 #home-join-room-button:hover {
-    background-color: red;
+    background-color: var(--button-blue-color-lighter);
+}
+
+#home-join-room-button svg {
+    transition: transform 0.1s ease-out;
+}
+
+#home-join-room-button:hover svg {
+    transform: translateX(5px);
 }
