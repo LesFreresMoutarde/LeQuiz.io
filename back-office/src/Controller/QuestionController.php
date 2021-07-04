@@ -78,6 +78,7 @@ class QuestionController extends AbstractController
         $questionTypes = $crudManager->getQuestionTypes();
         $questionStatuses = Enums::STATUSES;
         $categories = $crudManager->getCategories();
+        $tags = $crudManager->getTags();
         $answersUniqueId = Util::getRandomIntAsUniqueId(4, 100, 999);
 
         if ($request->getMethod() === 'POST') {
@@ -87,11 +88,11 @@ class QuestionController extends AbstractController
             if (!$this->isCsrfTokenValid('question_new_token', $submittedToken)) throw new \Exception('Invalid token');
 
             list($completePickedQuestionTypes,
-                $completePickedCategories) = $this->isFormValid($categories, $questionTypes);
+                $completePickedCategories, $completePickedTags) = $this->isFormValid($categories, $questionTypes, $tags);
 
             $answersJson = $this->generateAnswersJson();
 
-            $question = $this->setQuestionValues($question, $completePickedQuestionTypes, $completePickedCategories, $answersJson);
+            $question = $this->setQuestionValues($question, $completePickedQuestionTypes, $completePickedCategories, $completePickedTags,$answersJson);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($question);
@@ -107,6 +108,7 @@ class QuestionController extends AbstractController
             'questionTypes' => $questionTypes,
             'questionStatuses' => $questionStatuses,
             'categories' => $categories,
+            'tags' => $tags,
             'answersUniqueId' => $answersUniqueId
         ]);
 
@@ -118,14 +120,17 @@ class QuestionController extends AbstractController
         $questionTypes = $crudManager->getQuestionTypes();
         $questionStatuses = Enums::STATUSES;
         $categories = $crudManager->getCategories();
+        $tags = $crudManager->getTags();
         $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
 
-        return $this->render('question/show.html.twig', [
+        return $this->render('question/edit.html.twig', [
             'question' => $question,
             'questionTypes' => $questionTypes,
             'questionStatuses' => $questionStatuses,
             'categories' => $categories,
-            'answersUniqueId' => $answersUniqueId
+            'tags' => $tags,
+            'answersUniqueId' => $answersUniqueId,
+            'context' => 'show'
         ]);
     }
 
@@ -139,6 +144,7 @@ class QuestionController extends AbstractController
         $questionTypes = $crudManager->getQuestionTypes();
         $questionStatuses = Enums::STATUSES;
         $categories = $crudManager->getCategories();
+        $tags = $crudManager->getTags();
 
         $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
 //TODO END OF BACK OFFICE FIRST VERSION
@@ -151,11 +157,18 @@ class QuestionController extends AbstractController
                 if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
 
                 list($completePickedQuestionTypes,
-                    $completePickedCategories) = $this->isFormValid($categories, $questionTypes);
+                    $completePickedCategories, $completePickedTags) = $this->isFormValid($categories, $questionTypes, $tags);
 
                 $answersJson = $this->generateAnswersJson();
 
-                $question = $this->setQuestionValues($question, $completePickedQuestionTypes, $completePickedCategories, $answersJson);
+                $question = $this->setQuestionValues
+                (
+                    $question,
+                    $completePickedQuestionTypes,
+                    $completePickedCategories,
+                    $completePickedTags,
+                    $answersJson
+                );
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->flush();
@@ -170,7 +183,9 @@ class QuestionController extends AbstractController
                 'questionTypes' => $questionTypes,
                 'questionStatuses' => $questionStatuses,
                 'categories' => $categories,
-                'answersUniqueId' => $answersUniqueId
+                'tags' => $tags,
+                'answersUniqueId' => $answersUniqueId,
+                'context' => 'edit'
             ]);
 //        } catch (\Exception $e) {
 
@@ -294,13 +309,14 @@ class QuestionController extends AbstractController
         return $params;
     }
 
-    private function isFormValid(array $allCategories, array $allQuestionTypes)
+    private function isFormValid(array $allCategories, array $allQuestionTypes, array $allTags)
     {
 
         $this->hasFormRequiredFields();
 
         $pickedCategories = [];
         $pickedQuestionTypes = [];
+        $pickedTags = [];
 
         foreach ($_POST as $formInputName => $formInput) {
             if (preg_match('/^cbx-category-/', $formInputName)) {
@@ -310,17 +326,31 @@ class QuestionController extends AbstractController
             } else if (preg_match('/^cbx-type-/', $formInputName)) {
 
                 $pickedQuestionTypes[] = $formInput;
+            } else if (preg_match('/^cbx-tag-/', $formInputName)) {
+
+                $pickedTags[] = $formInput;
             }
         }
 
-        return $this->hasFormValidValues($allCategories, $pickedCategories, $allQuestionTypes, $pickedQuestionTypes);
+        return $this->hasFormValidValues(
+            $allCategories,
+            $pickedCategories,
+            $allQuestionTypes,
+            $pickedQuestionTypes,
+            $allTags,
+            $pickedTags
+        );
     }
 
-    private function hasFormValidValues(array $allCategories,
-                                        array $pickedCategories,
-                                        array $allQuestionTypes,
-                                        array $pickedQuestionTypes)
-    {
+    private function hasFormValidValues
+    (
+        array $allCategories,
+        array $pickedCategories,
+        array $allQuestionTypes,
+        array $pickedQuestionTypes,
+        array $allTags,
+        array $pickedTags
+    ) {
 
         // Retrieving Question Types Models from user choices
         $completePickedQuestionTypes = [];
@@ -396,6 +426,25 @@ class QuestionController extends AbstractController
             throw new \Exception('Too many categories');
         }
 
+        // Retrieving Tags Models from user choices
+        $completePickedTags = [];
+
+        foreach ($allTags as $dbTag) {
+
+            foreach ($pickedTags as $pickedTag) {
+                if ($dbTag->getName() === $pickedTag) {
+                    $completePickedTags[] = $dbTag;
+                }
+            }
+        }
+        // Verify if categories are valid
+        if (count($completePickedTags) !== count($pickedTags)) {
+
+            throw new \Exception('Invalid tag');
+
+        }
+
+
         if (!in_array($_POST['question-status'], Enums::STATUSES))
             throw new \Exception('Invalid status');
 
@@ -433,7 +482,7 @@ class QuestionController extends AbstractController
                 break;
         }
 
-        return [$completePickedQuestionTypes, $completePickedCategories];
+        return [$completePickedQuestionTypes, $completePickedCategories, $completePickedTags];
     }
 
     /**
@@ -472,7 +521,7 @@ class QuestionController extends AbstractController
 
             $parsedFormInput = explode('-', $formInputName);
 
-            if (preg_match('/^answers-content/', $formInputName)) {
+            if (preg_match('/^answers-content/', $formInputName) && $formInput !== '') {
 
                 foreach ($answers['answers'] as $answer) {
                     if ($answer['content'] === $formInput) throw new \Exception('Value not unique');
@@ -483,13 +532,11 @@ class QuestionController extends AbstractController
                 if (!array_key_exists('answers-is_good_answer-'.$answerId, $_POST))
                     throw new \Exception('Cannot add answer without value');
 
-                if ($formInput !== '')  {
+                $answers['answers'][] = [
+                    'content' => $formInput,
+                    'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
+                ];
 
-                    $answers['answers'][] = [
-                        'content' => $formInput,
-                        'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
-                    ];
-                }
             }
 
             if (preg_match('/^additional-/', $formInputName)) {
@@ -507,6 +554,7 @@ class QuestionController extends AbstractController
     private function setQuestionValues(Question $question,
                                        array $pickedQuestionTypes,
                                        array $pickedCategories,
+                                       array $pickedTags,
                                        array $answersJson)
     {
         $question->setContent($_POST['question-content']);
@@ -526,6 +574,10 @@ class QuestionController extends AbstractController
             $question->removeType($type);
         }
 
+        foreach ($question->getTags() as $tag) {
+            $question->removeTag($tag);
+        }
+
         foreach ($pickedQuestionTypes as $questionType) {
             $question->addType($questionType);
         }
@@ -534,8 +586,11 @@ class QuestionController extends AbstractController
             $question->addCategory($category);
         }
 
-        return $question;
+        foreach ($pickedTags as $tag) {
+            $question->addTag($tag);
+        }
 
+        return $question;
     }
 
 }
