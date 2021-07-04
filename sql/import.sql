@@ -244,7 +244,7 @@ CREATE INDEX "tag_label" ON "public"."tag" USING btree ("label");
 CREATE INDEX "tag_name" ON "public"."tag" USING btree ("name");
 
 INSERT INTO "tag" ("id", "name", "label", "createdAt", "updatedAt") VALUES
-('a639a6a8-a286-4b0f-bbad-84fc655739cb',	'football',	'Foobtall',	'2021-07-03 21:15:12.754+00',	'2021-07-03 21:15:12.754+00'),
+('a639a6a8-a286-4b0f-bbad-84fc655739cb',	'football',	'Football',	'2021-07-03 21:15:12.754+00',	'2021-07-03 21:15:12.754+00'),
 ('aa4a1ad6-e5af-4ab2-a048-b1d83ec7f33d',	'mythologie',	'Mythologie',	'2021-07-03 21:15:12.761+00',	'2021-07-03 21:15:12.761+00'),
 ('cc2dd0b6-893a-4bcb-8e32-c78c5f344936',	'usa',	'Etats-Unis d''Amérique',	'2021-07-03 21:15:12.766+00',	'2021-07-03 21:15:12.766+00'),
 ('f99b8944-94a9-4a02-bdc5-83c142bf7467',	'grece',	'Grèce',	'2021-07-03 21:15:12.771+00',	'2021-07-03 21:15:12.771+00');
