@@ -25,6 +25,10 @@ class Util
             'url' => '/question-types',
             'label' => 'question-types',
         ],
+        'Tags' => [
+            'url' => '/tags',
+            'label' => 'tags'
+        ],
         'Tokens' => [
             'url' => '/refresh-tokens',
             'label' => 'refresh-tokens',
