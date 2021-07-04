@@ -13,6 +13,7 @@ export default class extends Controller {
         uuid: '',
         categories: ['all'],
         questionTypes: ['all'],
+        tags: ['all'],
         statuses: ['all'],
         isHardcore: false,
         hasMedia: false,
