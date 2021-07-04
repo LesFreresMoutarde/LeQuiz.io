@@ -6,6 +6,7 @@ namespace App\Manager;
 
 use App\Repository\CategoryRepository;
 use App\Repository\QuestionTypeRepository;
+use App\Repository\TagRepository;
 
 class CrudManager
 {
@@ -17,10 +18,26 @@ class CrudManager
      * @var QuestionTypeRepository
      */
     private QuestionTypeRepository $questionTypeRepository;
+    /**
+     * @var TagRepository
+     */
+    private TagRepository $tagRepository;
 
-    public function __construct(CategoryRepository $categoryRepository, QuestionTypeRepository $questionTypeRepository) {
+    /**
+     * CrudManager constructor.
+     * @param CategoryRepository $categoryRepository
+     * @param QuestionTypeRepository $questionTypeRepository
+     * @param TagRepository $tagRepository
+     */
+    public function __construct
+    (
+        CategoryRepository $categoryRepository,
+        QuestionTypeRepository $questionTypeRepository,
+        TagRepository $tagRepository
+    ) {
         $this->categoryRepository = $categoryRepository;
         $this->questionTypeRepository = $questionTypeRepository;
+        $this->tagRepository = $tagRepository;
     }
 
     public function getCategories()
@@ -32,4 +49,10 @@ class CrudManager
     {
         return $this->questionTypeRepository->findBy([], ['label' => 'ASC']);
     }
+
+    public function getTags()
+    {
+        return $this->tagRepository->findBy([], ['label' => 'ASC']);
+    }
+
 }
