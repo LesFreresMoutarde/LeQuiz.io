@@ -20,7 +20,7 @@
                    id="question-created-at"
                    class="form-control"
                    disabled
-                   value="{{ question.getCreatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+                   value="{{ question.getCreatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
             />
         </div>
         <div class="col-3">
@@ -29,7 +29,7 @@
                    id="question-updated-at"
                    class="form-control"
                    disabled
-                   value="{{ question.getUpdatedAt()|date('Y-m-d H:i:s', 'Europe/Paris') }}"
+                   value="{{ question.getUpdatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') }}"
             />
         </div>
     </div>
@@ -241,11 +241,18 @@
            consequently #}
 {#        {% endif %}#}
         <input type="hidden" name="token" value="{{ csrf_token('question_edit_token') }}"/>
-        <button type="submit" class="btn btn-primary me-2">Envoyer</button>
+        <div class="d-flex mt-4">
+            <button type="submit" class="btn btn-primary me-2">Envoyer</button>
+            <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Retour</a>
+            <button class="btn btn-danger"
+                    data-uuid="{{ question.getId() }}"
+                    data-controller="question"
+                    data-action="question#deleteQuestion"
+            >
+                Supprimer
+            </button>
+        </div>
     </form>
-    <div class="d-flex mt-4">
-        <a href="{{ path('question_index') }}" class="btn btn-secondary me-2">Retour</a>
-        {{ include('question/_delete_form.html.twig') }}
-    </div>
+
 
 {% endblock %}

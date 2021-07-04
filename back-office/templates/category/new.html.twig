@@ -3,9 +3,49 @@
 {% block title %}New Category{% endblock %}
 
 {% block body %}
-    <h1>Create new Category</h1>
-
-    {{ include('category/_form.html.twig') }}
-
-    <a href="{{ path('category_index') }}">back to list</a>
+    <div class="row">
+        <h1 class="h2">Ajouter une catégorie</h1>
+        <hr>
+    </div>
+    {{ form_start(form) }}
+    <div class="row mb-3">
+        <div class="col-3">
+            <label for="category-name" class="form-label lead">Nom</label>
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name,
+                {'attr':
+                    {
+                        'placeholder': 'Nom',
+                        'class': 'form-control',
+                        'id': 'category-name',
+                    }
+                }
+            )}}
+        </div>
+        <div class="col-3">
+            <label for="category-label" class="form-label lead">Label</label>
+            {{ form_errors(form.label) }}
+            {{ form_widget(form.label,
+                {'attr':
+                    {
+                        'placeholder': 'Label',
+                        'class': 'form-control',
+                        'id': 'category-label',
+                    }
+                }
+            )}}
+        </div>
+    </div>
+    <div class="d-flex mt-4">
+        {{ form_widget(form.submit,
+            {'attr':
+                {
+                    'class':'btn btn-primary me-2',
+                },
+                'label': 'Ajouter'
+            }
+        ) }}
+        <a href="{{ path('category_index') }}" class="btn btn-secondary">Retour</a>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\QuestionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,8 @@ class QuestionTypeType extends AbstractType
         $builder
             ->add('name')
             ->add('label')
-            ->add('ischild')
+            ->add('isChild')
+            ->add('submit', SubmitType::class)
         ;
     }
 

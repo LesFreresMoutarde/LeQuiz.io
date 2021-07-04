@@ -14,6 +14,10 @@
                 <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-white hard-active" aria-current="page">
                     {{ navItemKey }}
                 </a>
+            {% elseif navItem.label == 'logout' %}
+                <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-danger" aria-current="page">
+                    {{ navItemKey }}
+                </a>
             {% else %}
                 <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-white" aria-current="page">
                     {{ navItemKey }}

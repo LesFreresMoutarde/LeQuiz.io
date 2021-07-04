@@ -3,64 +3,192 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Plan</th>
-                <th>Role</th>
-                <th>IsTrustyWriter</th>
-                <th>IsActive</th>
-                <th>IsBanned</th>
-                <th>UnbanDate</th>
-                <th>DeletedAt</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.plan }}</td>
-                <td>{{ user.role }}</td>
-                <td>{{ user.isTrustyWriter ? 'Yes' : 'No' }}</td>
-                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
-                <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
-                <td>
-                    {% if user.isBanned %}
-                        Banned
-                    {% elseif not user.isBanned and not user.unbanDate %}
-                        Not Banned
-                    {% else %}
-                        {{ user.unbanDate }}
-                    {% endif %}
-                </td>
-{#                <td>{{ user.unbanDate ? user.unbanDate|date('Y-m-d H:i:s T') : 'Not banned' }}</td>#}
-                <td>{{ user.deletedAt ? user.deletedAt|date('Y-m-d H:i:s T') : 'Not deleted' }}</td>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="16">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('user_new') }}">Create new</a>
+    <div class="row">
+        <h1 class="h2">Utilisateurs</h1>
+        <hr>
+    </div>
+    <div data-controller="user">
+        <div class="row mb-3">
+            <div class="col-3">
+                <input type="text"
+                       data-input="uuid"
+                       id="uuid-input"
+                       data-action="user#onInput"
+                       placeholder="UUID"
+                       class="form-control"/>
+            </div>
+            <div class="col-3">
+                <input type="text"
+                       data-input="search"
+                       id="search-input"
+                       data-action="user#onInput"
+                       placeholder="Username ou email"
+                       class="form-control"/>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-3">
+                <div class="form-select d-flex justify-content-start"
+                     data-action="click->user#showCheckboxes" id="plans-input" data-checkboxes-for="plans" data-filter-select>
+                    <span class="placeholder" data-click-not-hiding>Plans</span>
+                </div>
+                <div id="plans" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="full"
+                                data-checkboxes-for="plans"
+                                data-click-not-hiding
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="empty"
+                                data-checkboxes-for="plans"
+                                data-click-not-hiding
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-start" data-click-not-hiding>
+                        {% for plan in plans %}
+                            <label class="form-check-label mb-1 me-1" data-click-not-hiding>
+                                <input type="checkbox"
+                                       data-checkboxes="plans"
+                                       class="form-check-input"
+                                       value="{{ plan }}"
+                                       data-action="change->user#onMultiCheckboxesChange"
+                                       data-click-not-hiding
+                                >
+                                {{ plan }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-select d-flex justify-content-start"
+                     data-action="click->user#showCheckboxes" id="roles-input" data-checkboxes-for="roles" data-filter-select>
+                    <span class="placeholder" data-click-not-hiding>Roles</span>
+                </div>
+                <div id="roles" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="full"
+                                data-checkboxes-for="roles"
+                                data-click-not-hiding
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->user#onPick"
+                                data-pick="empty"
+                                data-checkboxes-for="roles"
+                                data-click-not-hiding
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    {% for role in roles %}
+                        <label class="form-check-label mb-1 me-1" data-click-not-hiding>
+                            <input type="checkbox"
+                                   data-checkboxes="roles"
+                                   class="form-check-input"
+                                   value="{{ role }}"
+                                   data-action="change->user#onMultiCheckboxesChange"
+                                   data-click-not-hiding
+                            >
+                            {{ role }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                <label class="me-1 form-check-label">
+                    <input type="checkbox" class="form-check-input" id="isTrustyWriter-input"
+                           data-checkbox="isTrustyWriter" data-action="change->user#onUniqueCheckboxChange"/>
+                    <span>Rédacteur validé</span>
+                </label>
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="isActive-input"
+                           data-checkbox="isActive" data-action="change->user#onUniqueCheckboxChange"/>
+                    <span>Actif</span>
+                </label>
+                <label class="me-1 form-check-label">
+                    <input type="checkbox" class="form-check-input" id="isBanned-input"
+                           data-checkbox="isBanned" data-action="change->user#onUniqueCheckboxChange"/>
+                    <span>Banni</span>
+                </label>
+            </div>
+        </div>
+    {% block users %}
+        <div id="users-block" data-controller="user" class="mb-3">
+            <div class="count mb-2">
+                <span style="font-size: 1.1em">Total : </span><span class="badge bg-primary" style="font-size: 1em">{{ users.getTotalItemCount }}</span>
+            </div>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Uuid</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Plan</th>
+                        <th>Role</th>
+                        <th>Rédacteur validé</th>
+                        <th>Actif</th>
+                        <th>Banni</th>
+                        <th>Créé le</th>
+                        <th>Modifié le </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.plan }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{{ user.isTrustyWriter
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
+                        <td>{{ user.isActive
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
+                        <td>{{ user.isBanned
+                            ? '<i class="bi bi-check-lg text-success"></i>'
+                            : '<i class="bi bi-x-lg text-danger"></i>' }}</td>
+                        <td>{{ user.createdAt ? user.createdAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
+                        <td>{{ user.updatedAt ? user.updatedAt|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
+                        <td style="display: flex; flex-direction: column">
+                            <a href="{{ path('user_show', {'id': user.id}) }}"
+                               class="btn btn-sm btn-outline-primary mb-2"
+                            >
+                                Afficher
+                            </a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}"
+                               class="btn btn-sm btn-outline-primary mb-2"
+                            >
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="16">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation">
+                {{ knp_pagination_render(users) }}
+            </div>
+        </div>
+    {% endblock %}
+        <a href="{{ path('user_new') }}" class="btn btn-primary">Ajouter</a>
 {% endblock %}

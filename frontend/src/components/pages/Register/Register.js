@@ -100,7 +100,7 @@ class Register extends React.Component {
 
                 break;
             case 422:
-                this.handleErrors(responseJson.errors);
+                this.handleErrors(responseJson.message);
                 break;
             default:
                 toastr.error('Une erreur inconnue est survenue');

@@ -3,35 +3,85 @@
 {% block title %}Category index{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Label</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.label }}</td>
-                <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('category_new') }}">Create new</a>
+    <div class="row">
+        <h1 class="h2">Catégories</h1>
+        <hr>
+    </div>
+    <div data-controller="category">
+        <div class="row mb-3">
+            <div class="col-3">
+                <input type="text"
+                       data-input="uuid"
+                       id="uuid-input"
+                       data-action="category#onInput"
+                       placeholder="UUID"
+                       class="form-control"/>
+            </div>
+            <div class="col-3">
+                <input type="text"
+                       data-input="search"
+                       id="search-input"
+                       data-action="category#onInput"
+                       placeholder="Nom ou label"
+                       class="form-control"/>
+            </div>
+        </div>
+    </div>
+    {% block categories %}
+        <div id="categories-block" data-controller="category" class="mb-3">
+            <div class="count mb-2">
+                <span style="font-size: 1.1em">Total : </span>
+                <span class="badge bg-primary" style="font-size: 1em">{{ categories.getTotalItemCount }}</span>
+            </div>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Uuid</th>
+                        <th>Nom</th>
+                        <th>Label</th>
+                        <th>Crée le</th>
+                        <th>Modifié le</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.getId() }}</td>
+                        <td>{{ category.getName() }}</td>
+                        <td>{{ category.getLabel() }}</td>
+                        <td>{{ category.getCreatedAt()
+                            ? category.getCreatedAt()|date('d-m-Y H:i:s', 'Europe/Paris')
+                            : '' }}
+                        </td>
+                        <td>{{ category.getUpdatedAt()
+                            ? category.getUpdatedAt()|date('d-m-Y H:i:s', 'Europe/Paris')
+                            : '' }}
+                        </td>
+                        <td style="display: flex; flex-direction: column">
+                            <a href="{{ path('category_show', {'id': category.getId()}) }}"
+                               class="btn btn-sm btn-outline-primary mb-2"
+                            >
+                                Afficher
+                            </a>
+                            <a href="{{ path('category_edit', {'id': category.getId()}) }}"
+                               class="btn btn-sm btn-outline-primary"
+                            >
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation">
+                {{ knp_pagination_render(categories) }}
+            </div>
+        </div>
+    {% endblock %}
+    <a href="{{ path('category_new') }}" class="btn btn-primary">Ajouter</a>
 {% endblock %}

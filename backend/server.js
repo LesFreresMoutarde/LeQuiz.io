@@ -13,7 +13,6 @@ CronManager.executeCronTasks();
 
 const mainRouter = require('./routes/mainRouter');
 
-
 app.all('*', (req, res, next) => {
     console.log(req.method, req.url);
     res.setHeader('Access-Control-Allow-Origin', process.env.NODE_ENV === 'development' ? '*' : env.frontUrl);
@@ -50,16 +49,7 @@ app.all('*', (req, res, next) => {
 
     req.accessToken = req.headers.authorization;
 
-    const accessTokenVerification = AuthController.verifyToken(req.accessToken, AuthController.TOKEN_TYPE_ACCESS_TOKEN);
-    if(!accessTokenVerification.verified) {
-        res.status(401);
-        res.send({
-            error: accessTokenVerification.error,
-        });
-        return;
-    }
-
-    req.accessTokenPayload = accessTokenVerification.payload;
+    req.accessTokenPayload = AuthController.verifyToken(req.accessToken, AuthController.TOKEN_TYPE_ACCESS_TOKEN);
 
     next();
 });
@@ -74,19 +64,17 @@ app.use((req, res ,next) => {
     next(new Error(JSON.stringify({status: 404, message: 'Not Found'})));
 });
 
-/** Not-Handled-In-Methods Errors Handler **/
+/** Errors Handler Middleware **/
 app.use((error, req, res, next) => {
-    console.error(error);
-
-    res.status(error.status || 500);
-
     const responseData = {};
 
-    if (process.env.NODE_ENV === 'development') {
-        responseData.message = error.message;
-    } else {
-        responseData.message = 'Internal Error';
-    }
+    const status = error.status || 500
+
+    status === 500
+        ? responseData.message = 'Erreur interne du serveur. Réessayez plus tard'
+        : responseData.message = error.message;
+
+    res.status(status);
 
     res.json(responseData);
 });

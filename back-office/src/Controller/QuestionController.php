@@ -9,6 +9,7 @@ use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +18,9 @@ use Twig\Environment;
 #[Route('/questions')]
 class QuestionController extends AbstractController
 {
+
+    private const POSSIBLE_FILTERS = ['search', 'uuid', 'categories', 'questionTypes', 'statuses', 'isHardcore', 'hasMedia'];
+
     #[Route('/', name: 'question_index', methods: ['GET'])]
     public function index(
         Request $request,
@@ -29,7 +33,7 @@ class QuestionController extends AbstractController
 
         $page = 0 !== $request->query->getInt('page') ? $request->query->getInt('page') : 1;
 
-        $params = $this->getParamFromUrl($request);
+        $params = Util::getParamFromUrl($request, self::POSSIBLE_FILTERS);
 
         $questions = $this->getFilteredQuestions($page, $params, $em, $paginator);
 
@@ -169,16 +173,17 @@ class QuestionController extends AbstractController
 //        }
     }
 
-    #[Route('/{id}', name: 'question_delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: 'question_delete', methods: ['DELETE'], format: 'json')]
     public function delete(Request $request, Question $question): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($question);
-            $entityManager->flush();
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($question);
+        $entityManager->flush();
 
-        return $this->redirectToRoute('question_index');
+        $response = new JsonResponse();
+        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+
+        return $response;
     }
 
     private function getFilteredQuestions(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
