@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {app} from "../../App";
-import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
 import AuthUtil from "../../../util/AuthUtil";
 
@@ -37,8 +36,6 @@ const Contact = () => {
         'message': {label: 'message', value: message}
     };
 
-    const toastr = new Toastr();
-
     const submitForm = async (evt) => {
         evt.preventDefault()
         const errors = [];
@@ -71,12 +68,12 @@ const Contact = () => {
             if (!response.ok)
                 throw new Error('Impossible d\'envoyer votre message. Réessayez ultérieurement');
 
-            toastr.success('Votre message a été envoyé. Nous vous répondrons dans les plus bref délais');
+            app.toastr.success('Votre message a été envoyé. Nous vous répondrons dans les plus bref délais');
 
         } catch (error) {
             const errors = error.message.split('#');
             errors.reverse().forEach(error => {
-                toastr.error(error)
+                app.toastr.error(error)
             })
         }
     }

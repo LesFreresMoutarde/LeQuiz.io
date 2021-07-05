@@ -1,8 +1,7 @@
 import React from "react";
 
-import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../../App";
 
 class PasswordSettings extends React.Component {
     constructor(props) {
@@ -63,7 +62,7 @@ class PasswordSettings extends React.Component {
         newPasswordInput.value = '';
         confirmNewPasswordInput.value = '';
 
-        toastr.success('Votre mot de passe a été mis à jour');
+        app.toastr.success('Votre mot de passe a été mis à jour');
     }
 
     handleErrors = (errors) => {
@@ -72,7 +71,7 @@ class PasswordSettings extends React.Component {
         this.setState(state);
 
         for(const field in this.state.formErrors) {
-            toastr.error(this.state.formErrors[field]);
+            app.toastr.error(this.state.formErrors[field]);
         }
     }
 

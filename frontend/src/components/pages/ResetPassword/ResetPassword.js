@@ -2,12 +2,10 @@ import React from "react";
 import {Redirect} from "react-router-dom";
 import Util from "../../../util/Util";
 
-import Toastr from "toastr2";
 import Loader from "../../misc/Loader";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
 import {app} from "../../App";
-const toastr = new Toastr();
 
 /**
  * Component displayed when the user wants to receive an email to reset his/her password
@@ -108,7 +106,7 @@ class ResetPassword extends React.Component {
             case 204:
                 Util.verbose('Password reset successful');
 
-                toastr.success('Votre mot de passe a été réinitialisé.');
+                app.toastr.success('Votre mot de passe a été réinitialisé.');
 
                 this.setState({
                     isCompleted: true,
@@ -118,11 +116,11 @@ class ResetPassword extends React.Component {
                 const responseJson = await response.json();
 
                 for(const field in responseJson.errors) {
-                    toastr.error(responseJson.errors[field]);
+                    app.toastr.error(responseJson.errors[field]);
                 }
                 break;
             default:
-                toastr.error('Une erreur inconnue est survenue.');
+                app.toastr.error('Une erreur inconnue est survenue.');
         }
     }
 }

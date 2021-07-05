@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from "react";
 import Logo from "../../misc/Logo";
 import {app} from "../../App";
-import Toastr from "toastr2";
 import '../../../css/pages/home.css';
 import {Link} from "react-router-dom";
 import JoinRoomButtonIcon from "../../misc/JoinRoomButtonIcon";
-
-const toastr = new Toastr();
 
 const Home = () => {
     const [ joinRoomCode, setJoinRoomCode ] = useState('');
@@ -38,7 +35,7 @@ const Home = () => {
         if (joinRoomCode === '') {
             e.preventDefault();
             joinRoomInputRef.focus();
-            toastr.error("Veuillez entrer le code d'une room")
+            app.toastr.error("Veuillez entrer le code d'une room")
         }
     }
 

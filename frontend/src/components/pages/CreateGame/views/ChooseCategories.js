@@ -7,10 +7,8 @@ import Category from "../components/Category";
 import NextButton from "../../../misc/NextButton";
 import PickAll from "../../../misc/PickAll";
 import UnpickAll from "../../../misc/UnpickAll";
-import BackArrow from "../../../misc/BackArrow";
-import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../../App";
 
 export default class ChooseCategories extends React.Component {
 
@@ -50,7 +48,7 @@ export default class ChooseCategories extends React.Component {
                     gameConfiguration.categories.map(category => this.pickCategory(category));
                 }
             } catch (error) {
-                toastr.error('Impossible d\'afficher les catégories, réessayez ultérieurement')
+                app.toastr.error('Impossible d\'afficher les catégories, réessayez ultérieurement')
             }
         })();
     }

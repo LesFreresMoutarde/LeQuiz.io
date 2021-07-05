@@ -3,12 +3,10 @@ import {Link, Redirect} from "react-router-dom";
 import Util from "../../../util/Util";
 import {app} from "../../App";
 
-import Toastr from "toastr2";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
 import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
-const toastr = new Toastr();
 
 class Login extends React.Component {
     constructor(props) {
@@ -87,13 +85,13 @@ class Login extends React.Component {
                 break;
             case 403:
                 console.log(responseJson);
-                toastr.error("Vous avez été banni jusqu'à TODO");
+                app.toastr.error("Vous avez été banni jusqu'à TODO");
                 break;
             case 404:
-                toastr.error('Ces identifiants sont incorrects');
+                app.toastr.error('Ces identifiants sont incorrects');
                 break;
             default:
-                toastr.error('Une erreur inconnue est survenue');
+                app.toastr.error('Une erreur inconnue est survenue');
                 break;
         }
     }

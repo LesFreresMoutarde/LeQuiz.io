@@ -3,12 +3,10 @@ import {Link, Redirect} from "react-router-dom";
 import {app} from "../../App";
 import Util from "../../../util/Util";
 
-import Toastr from "toastr2";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
 import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
-const toastr = new Toastr();
 
 class Register extends React.Component {
     constructor(props) {
@@ -96,14 +94,14 @@ class Register extends React.Component {
                     redirect: true,
                 })
 
-                toastr.success('Bienvenue sur LeQuiz.io !');
+                app.toastr.success('Bienvenue sur LeQuiz.io !');
 
                 break;
             case 422:
                 this.handleErrors(responseJson.message);
                 break;
             default:
-                toastr.error('Une erreur inconnue est survenue');
+                app.toastr.error('Une erreur inconnue est survenue');
                 break;
         }
     }
@@ -114,7 +112,7 @@ class Register extends React.Component {
         this.setState(state);
 
         for(const field in this.state.formErrors) {
-            toastr.error(this.state.formErrors[field]);
+            app.toastr.error(this.state.formErrors[field]);
         }
     }
 }

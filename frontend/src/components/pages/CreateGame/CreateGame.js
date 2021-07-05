@@ -6,10 +6,8 @@ import ChooseGameMode from "./views/ChooseGameMode";
 import ChooseCategories from "./views/ChooseCategories";
 import ChooseOptions from "./views/ChooseOptions";
 import Loader from "../../misc/Loader";
-import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
 import {app} from "../../App";
-const toastr = new Toastr();
 
 export default class CreateGame extends React.Component {
 
@@ -159,7 +157,7 @@ export default class CreateGame extends React.Component {
                 this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
             }
         } catch (e) {
-            toastr.error('Impossible de créer un salon, réessayez ultérieurement')
+            app.toastr.error('Impossible de créer un salon, réessayez ultérieurement')
         }
 
     };

@@ -26,7 +26,6 @@ import FeedbackModal from "./pages/FeedbackModal/FeedbackModal";
 import Contact from "./pages/Contact/Contact";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
 import {isMobileOnly} from "react-device-detect";
-const toastr = new Toastr();
 
 let instance;
 
@@ -40,6 +39,8 @@ class App extends React.Component {
         }
 
         instance = this;
+
+        this.toastr = new Toastr();
 
         this.state = {
             redirect: false,
@@ -111,7 +112,7 @@ class App extends React.Component {
         });
 
         if(!response.ok) {
-            toastr.error('Une erreur inconnue est survenue');
+            this.toastr.error('Une erreur inconnue est survenue');
             return false;
         }
 
@@ -119,13 +120,13 @@ class App extends React.Component {
             await AuthUtil.getNewAccessToken();
         } catch(e) {
             console.error(e);
-            toastr.error('Une erreur inconnue est survenue');
+            this.toastr.error('Une erreur inconnue est survenue');
             return false;
         }
 
         this.setUser(null);
 
-        toastr.success("Vous n'êtes plus connecté");
+        this.toastr.success("Vous n'êtes plus connecté");
 
         this.redirectTo('/');
 

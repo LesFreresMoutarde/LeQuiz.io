@@ -1,12 +1,10 @@
 import React from "react";
 import Util from "../../../util/Util";
 
-import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
 import {app} from "../../App";
 import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
-const toastr = new Toastr();
 
 /**
  * Component displayed when the user wants to receive an email to reset his/her password
@@ -52,13 +50,13 @@ class ForgotPassword extends React.Component {
         switch(response.status) {
             case 200:
                 Util.verbose('Forgot password request successfully sent');
-                toastr.success('Un email vous a été envoyé pour réinitialiser votre mot de passe.');
+                app.toastr.success('Un email vous a été envoyé pour réinitialiser votre mot de passe.');
                 break;
             case 404:
-                toastr.error('Aucun utilisateur ne correspond à ce nom ou cette adresse email.');
+                app.toastr.error('Aucun utilisateur ne correspond à ce nom ou cette adresse email.');
                 break;
             case 429:
-                toastr.error(`Veuillez patienter ${responseJson.minutesToWait} minute${responseJson.minutesToWait > 1 ? 's' : ''} avant de demander un nouvel email de réinitialisation.`);
+                app.toastr.error(`Veuillez patienter ${responseJson.minutesToWait} minute${responseJson.minutesToWait > 1 ? 's' : ''} avant de demander un nouvel email de réinitialisation.`);
                 break;
         }
 
