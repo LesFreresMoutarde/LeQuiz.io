@@ -234,10 +234,47 @@
 
 .category-container-header {
     border: 3px solid greenyellow;
+
+    display: flex;
 }
 
 .category-list {
     border: 3px solid orange;
+}
+
+.pick-all-categories-button,
+.unpick-all-categories-button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 50px;
+
+    opacity: 1;
+    transition: opacity 0.1s ease-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pick-all-categories-button:not(:disabled):hover,
+.unpick-all-categories-button:not(:disabled):hover {
+    cursor: pointer;
+}
+
+.pick-all-categories-button:disabled,
+.unpick-all-categories-button:disabled {
+    opacity: 0.6;
+}
+
+.pick-all-categories-button {
+    background-color: var(--button-green-color);
+}
+
+.unpick-all-categories-button {
+    background-color: var(--button-red-color);
+
+    margin-left: 15px;
 }
 
 .selected-categories-container {

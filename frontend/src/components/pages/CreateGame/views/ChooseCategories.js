@@ -170,6 +170,8 @@ export default class ChooseCategories extends React.Component {
 
                     <div className="category-container">
                         <div className="category-container-header">
+                            <PickAll pickAll={this.pickAll} disabled={pickAllDisabled}/>
+                            <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>
                             PickAll, UnpickAll, search
                         </div>
                         <div className="category-list">

@@ -5,6 +5,10 @@
     --button-blue-color: #40D9FF;
     --button-blue-color-lighter: #4fe3ff;
 
+    --button-green-color: #14B981;
+
+    --button-red-color: #DB2557;
+
     --button-pink-color: #DC71C7;
 }
 
@@ -456,36 +460,6 @@ button {
 
 .large-button:hover {
     filter: brightness(1.05);
-}
-
-.pick-buttons-wrapper {
-    display: flex;
-    margin-bottom: 25px;
-}
-
-.pick-buttons {
-    width: 25%;
-    border: none;
-    border-radius: 10px;
-    padding: 5px
-}
-
-.pick-buttons:focus {
-    outline: none;
-}
-
-.pick-buttons:enabled:hover {
-    filter: brightness(95%);
-    cursor: pointer;
-}
-
-.pick-all {
-    background-color: #1E9B48;
-    margin-right: 20px;
-}
-
-.unpick-all {
-    background-color: #CE3D1B;
 }
 
 .game-options-container {
