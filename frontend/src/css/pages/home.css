@@ -34,7 +34,7 @@
 }
 
 .home-join-room-form {
-    margin-top: 40px;
+    margin-top: 100px;
 
     display: flex;
 }
@@ -79,6 +79,8 @@
     }
 
     .home-join-room-form {
+        margin-top: 50px;
+
         flex-direction: column;
     }
 
