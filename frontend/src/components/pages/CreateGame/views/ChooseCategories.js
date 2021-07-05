@@ -14,7 +14,7 @@ const toastr = new Toastr();
 
 export default class ChooseCategories extends React.Component {
 
-    static TITLE = 'Choisissez des thèmes';
+    static TITLE = 'Catégories';
 
     pickedCategories = [];
 
