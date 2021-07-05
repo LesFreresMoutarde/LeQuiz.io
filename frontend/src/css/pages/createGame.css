@@ -233,8 +233,6 @@
 }
 
 .category-container-header {
-    border: 3px solid greenyellow;
-
     display: flex;
 }
 
@@ -275,6 +273,12 @@
     background-color: var(--button-red-color);
 
     margin-left: 15px;
+}
+
+.search-categories-input {
+    margin-left: 15px;
+
+    padding: 6px 12px;
 }
 
 .selected-categories-container {
