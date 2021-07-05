@@ -2,6 +2,9 @@
     --game-mode-border-color: #fff;
 }
 
+
+/** CHOOSE GAME MODE */
+
 .game-mode-container {
     display: flex;
     flex-wrap: wrap;
@@ -220,4 +223,29 @@
     .game-mode.mobile .game-mode-description {
         font-size: 0.9rem;
     }
+}
+
+
+/** CHOOSE CATEGORIES */
+
+.category-container {
+    border: 3px solid red;
+}
+
+.category-container-header {
+    border: 3px solid greenyellow;
+}
+
+.category-list {
+    border: 3px solid orange;
+}
+
+.selected-categories-container {
+    width: 300px;
+
+    margin-top: 50px;
+}
+
+.selected-categories-list {
+    border: 3px solid chartreuse;
 }

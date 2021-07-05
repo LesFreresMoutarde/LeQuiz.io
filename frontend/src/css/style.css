@@ -446,53 +446,6 @@ button {
     margin-bottom: 50px;
 }
 
-.category-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.category-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    width: 13%;
-    margin-left: 130px;
-    margin-bottom: 60px;
-
-}
-
-.category {
-    padding: 40px 0;
-    text-align: center;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    background-color: #1888C6;
-}
-
-.category:hover {
-    filter: brightness(1.05);
-}
-
-.category:focus:visited {
-    background-color: #1888C6;
-}
-
-.category:focus {
-    outline: none;
-}
-
-.category-selected {
-    background-color: #5B1EBC;
-}
-
-.category-name {
-    font-size: 1.8em;
-    color: white
-}
-
 .large-button {
     border: none;
     border-radius: 20px;

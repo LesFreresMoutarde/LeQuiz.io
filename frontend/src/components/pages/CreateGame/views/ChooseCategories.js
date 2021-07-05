@@ -35,6 +35,10 @@ export default class ChooseCategories extends React.Component {
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                 const categories = await this.getCategories();
 
+                // TODO REMOVE
+                categories.push(...categories);
+                categories.push(...categories);
+
                 console.log(categories)
 
                 this.setState({
@@ -163,27 +167,43 @@ export default class ChooseCategories extends React.Component {
                     <div className="create-game-header">
                         <Title title={ChooseCategories.TITLE}/>
                     </div>
+
                     <div className="category-container">
-                       {categories.map((category, index) => {
-                            if (index === 0) {
-                               return (
-                                   <div key={index} className="category-wrapper">
-                                       <div className="pick-buttons-wrapper">
-                                           <PickAll id="pick-all" pickAll={this.pickAll} disabled={pickAllDisabled}/>
-                                           <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>
-                                       </div>
-                                       <Category category={category} pickCategory={this.pickCategory}/>
-                                   </div>
-                               )
-                           } else {
-                               return (
-                                   <div key={index} className="category-wrapper">
-                                       <Category category={category} pickCategory={this.pickCategory}/>
-                                   </div>
-                               )
-                           }
-                       })}
+                        <div className="category-container-header">
+                            PickAll, UnpickAll, search
+                        </div>
+                        <div className="category-list">
+                            scrollable
+                        </div>
                     </div>
+
+                    <div className="selected-categories-container">
+                        <div className="selected-categories-list">
+                            scrollable
+                        </div>
+                    </div>
+
+                    {/*<div className="category-container">*/}
+                    {/*   {categories.map((category, index) => {*/}
+                    {/*        if (index === 0) {*/}
+                    {/*           return (*/}
+                    {/*               <div key={index} className="category-wrapper">*/}
+                    {/*                   <div className="pick-buttons-wrapper">*/}
+                    {/*                       <PickAll id="pick-all" pickAll={this.pickAll} disabled={pickAllDisabled}/>*/}
+                    {/*                       <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>*/}
+                    {/*                   </div>*/}
+                    {/*                   <Category category={category} pickCategory={this.pickCategory}/>*/}
+                    {/*               </div>*/}
+                    {/*           )*/}
+                    {/*       } else {*/}
+                    {/*           return (*/}
+                    {/*               <div key={index} className="category-wrapper">*/}
+                    {/*                   <Category category={category} pickCategory={this.pickCategory}/>*/}
+                    {/*               </div>*/}
+                    {/*           )*/}
+                    {/*       }*/}
+                    {/*   })}*/}
+                    {/*</div>*/}
                     <NextButton disabled={nextButtonDisabled}
                                 onClick={this.submitCategories}
                                 sizeClass="large-button"
