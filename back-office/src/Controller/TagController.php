@@ -9,6 +9,7 @@ use App\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -75,10 +76,15 @@ class TagController extends AbstractController
     }
 
     #[Route('/{id}', name: 'tag_show', methods: ['GET'])]
-    public function show(Tag $tag): Response
+    public function show(Request $request, Tag $tag): Response
     {
-        return $this->render('tag/show.html.twig', [
+        $form = $this->createForm(TagType::class, $tag);
+        $form->handleRequest($request);
+
+        return $this->render('tag/edit.html.twig', [
             'tag' => $tag,
+            'form' => $form->createView(),
+            'context' => 'show',
         ]);
     }
 
@@ -91,25 +97,29 @@ class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tag_index');
+            return $this->redirectToRoute('tag_show', [
+                'id' => $tag->getId()
+            ]);
         }
 
         return $this->render('tag/edit.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
+            'context' => 'edit'
         ]);
     }
 
-    #[Route('/{id}', name: 'tag_delete', methods: ['POST'])]
-    public function delete(Request $request, Tag $tag): Response
+    #[Route('/{id}', name: 'tag_delete', methods: ['DELETE'], format: 'json')]
+    public function delete(Tag $tag): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($tag);
-            $entityManager->flush();
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($tag);
+        $entityManager->flush();
 
-        return $this->redirectToRoute('tag_index');
+        $response = new JsonResponse();
+        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+
+        return $response;
     }
 
     private function getFilteredTags(int $page, array $params, EntityManagerInterface $em, PaginatorInterface $paginator)
