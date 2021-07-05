@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Tag;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +15,7 @@ class TagType extends AbstractType
         $builder
             ->add('name')
             ->add('label')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('submit', SubmitType::class)
         ;
     }
 
