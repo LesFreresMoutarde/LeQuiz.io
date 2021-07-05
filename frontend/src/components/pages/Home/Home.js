@@ -32,8 +32,6 @@ const Home = () => {
         }
 
         joinRoomButtonRef.click();
-
-        console.log('LETS GO', joinRoomButtonRef)
     }
 
     const onJoinRoomButtonClick = (e) => {

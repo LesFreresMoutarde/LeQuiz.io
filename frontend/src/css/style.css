@@ -32,7 +32,7 @@ body {
     margin-bottom: -60px;
 
     font-family: 'Cooper Hewitt', sans-serif;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.03em;
     color: white;
 }
 
@@ -897,13 +897,6 @@ button {
         padding: 50px;
     }
 
-    /* Categories */
-    .category-wrapper {
-        width: 18%;
-        margin-left: 60px;
-        margin-bottom: 60px;
-    }
-
     /* Game Options */
     .win-criterion-input {
         width: 25%;
@@ -933,13 +926,6 @@ button {
     /* Homepage */
     .homepage-button {
         width: 70%;
-        margin-bottom: 60px;
-    }
-
-    /* Categories */
-    .category-wrapper {
-        width: 20%;
-        margin-left: 50px;
         margin-bottom: 60px;
     }
 
@@ -980,17 +966,6 @@ button {
     /* Homepage */
     .homepage-button {
         width: 80%;
-    }
-
-    /* Categories */
-    .category-wrapper {
-        width: 25%;
-        margin-bottom: 60px;
-    }
-
-    .category-name {
-        font-size: 1.7em;
-        color: white
     }
 
     /* Question */
@@ -1104,21 +1079,6 @@ button {
     /* Create game cycle */
     .create-game-header {
         flex-direction: column;
-    }
-
-    /* Categories */
-    .category-wrapper {
-        width: 35%;
-        margin-left: 30px;
-        margin-bottom: 60px;
-    }
-
-    .category {
-        padding: 30px 0;
-    }
-
-    .category-name {
-        font-size: 1.2em;
     }
 
     .pick-buttons {

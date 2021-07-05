@@ -238,6 +238,16 @@
 
 .category-list {
     border: 3px solid orange;
+
+    margin-top: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.category {
+/*    TODO */
 }
 
 .pick-all-categories-button,

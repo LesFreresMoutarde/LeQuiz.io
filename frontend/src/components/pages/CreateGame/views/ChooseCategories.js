@@ -175,10 +175,15 @@ export default class ChooseCategories extends React.Component {
                             <input className="search-categories-input"
                                    type="text"
                                    placeholder="TODO Rechercher une catégorie"
+                                   autoFocus={true}
                             />
                         </div>
                         <div className="category-list">
-                            scrollable
+                            {categories.map((category, index) => {
+                                return (
+                                    <Category key={index} category={category} pickCategory={this.pickCategory} />
+                                );
+                            })}
                         </div>
                     </div>
 
