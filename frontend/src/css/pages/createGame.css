@@ -116,8 +116,6 @@
 }
 
 .game-mode-label-container {
-    /*border: 3px solid yellow;*/
-
     display: flex;
     flex-direction: column;
 
@@ -129,8 +127,6 @@
 }
 
 .game-mode-icon-container {
-    /*border: 3px solid mediumpurple;*/
-
     height: 80%;
 
     display: flex;
@@ -229,25 +225,43 @@
 /** CHOOSE CATEGORIES */
 
 .category-container {
-    border: 3px solid red;
+    /*border: 3px solid red;*/
 }
 
 .category-container-header {
     display: flex;
+    margin-bottom: 10px;
 }
 
 .category-list {
-    border: 3px solid orange;
+    /*border: 3px solid orange;*/
 
-    margin-top: 30px;
+    margin: 0 -20px;
 
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
+.category-list::after {
+    content: "";
+    flex: auto;
+}
+
 .category {
-/*    TODO */
+    border: 3px solid var(--game-mode-border-color);
+    background-color: var(--element-primary-background-color);
+    border-radius: 30px;
+
+    color: #fff;
+    font-size: 1.4em;
+
+    margin: 40px 20px;
+    padding: 25px 40px;
+}
+
+.category:hover {
+    cursor: pointer;
 }
 
 .pick-all-categories-button,
