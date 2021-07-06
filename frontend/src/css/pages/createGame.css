@@ -322,3 +322,26 @@
 .selected-categories-list {
     border: 3px solid chartreuse;
 }
+
+@media screen and (max-width: 768px) {
+    .category-list {
+        margin: 0 -20px;
+    }
+
+    .category {
+        width: 100%;
+
+        border: 3.5px solid #fff;
+        border-radius: 15px;
+
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .category {
+        padding: 15px 25px;
+        font-size: 1.2em;
+    }
+}
