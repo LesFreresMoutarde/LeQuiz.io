@@ -14,8 +14,6 @@ export default class ChooseCategories extends React.Component {
 
     static TITLE = 'Catégories';
 
-    pickedCategories = [];
-
     constructor(props) {
         super(props);
         this.state = {
@@ -37,16 +35,15 @@ export default class ChooseCategories extends React.Component {
                     category.selected = false;
                 });
 
-                console.log(categories)
-
                 this.setState({
                     isLoading: false,
-                    categories
+                    categories,
                 });
 
-                if (gameConfiguration.categories.length > 0) {
-                    gameConfiguration.categories.map(category => this.pickCategory(category));
-                }
+                gameConfiguration.categories.map(gameConfigurationCategory => {
+                    const category = categories.find(category => category.id === gameConfigurationCategory.id);
+                    this.pickCategory(category);
+                });
             } catch (error) {
                 app.toastr.error('Impossible d\'afficher les catégories, réessayez ultérieurement')
             }
@@ -64,15 +61,6 @@ export default class ChooseCategories extends React.Component {
     };
 
     pickCategory = (category) => {
-
-        const pickCategoriesId = this.pickedCategories.map(pickedCategory => (pickedCategory.id));
-
-        if (!pickCategoriesId.includes(category.id)) {
-            this.pickedCategories.push(category)
-        } else {
-            this.pickedCategories.splice(pickCategoriesId.indexOf(category.id), 1);
-        }
-
         category.selected = !category.selected;
 
         this.handleButtonsState();
@@ -81,64 +69,54 @@ export default class ChooseCategories extends React.Component {
     pickAll = () => {
         const { categories } = this.state;
 
-        this.pickedCategories = [];
-
-        this.pickedCategories.push(...categories);
-
-        const categoriesElt = Array.from(document.querySelectorAll('.category'));
-
-        categoriesElt.map((categoryElt) => {
-            categoryElt.classList.remove('category-selected');
-            categoryElt.classList.add('category-selected');
+        categories.map((category) => {
+            category.selected = true;
         });
 
         this.handleButtonsState();
     };
 
     unpickAll = () => {
-        this.pickedCategories = [];
+        const { categories } = this.state;
 
-        const categoriesElt = Array.from(document.querySelectorAll('.category'));
-
-        categoriesElt.map((categoryElt) => {
-            categoryElt.classList.remove('category-selected');
+        categories.map((category) => {
+            category.selected = false;
         });
 
         this.handleButtonsState();
     };
 
+    getPickedCategories = () => {
+        return this.state.categories.filter(category => category.selected);
+    }
+
     handleButtonsState = () => {
         const { categories } = this.state;
+        const pickedCategories = this.getPickedCategories();
 
-        if (this.pickedCategories.length === categories.length) {
-
+        if (pickedCategories.length === categories.length) {
             this.setState({
                 pickAllDisabled: true,
                 unpickAllDisabled: false,
                 nextButtonDisabled: false,
             });
-
-        } else if (this.pickedCategories.length === 0) {
-
+        } else if (pickedCategories.length === 0) {
             this.setState({
                 pickAllDisabled: false,
                 unpickAllDisabled: true,
                 nextButtonDisabled: true,
             });
-
         } else {
-
             this.setState({
                 pickAllDisabled: false,
                 unpickAllDisabled: false,
                 nextButtonDisabled: false,
             });
-
         }
     };
 
     submitCategories = () => {
-        this.props.submit(this.pickedCategories);
+        this.props.submit(this.getPickedCategories());
     };
 
     render() {
