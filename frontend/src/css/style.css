@@ -1,6 +1,8 @@
 :root {
     --app-background-color: #23C5EF;
+
     --element-primary-background-color: #24BFF0;
+    --element-primary-background-color-lighter: #3fcaf6;
 
     --button-blue-color: #40D9FF;
     --button-blue-color-lighter: #4fe3ff;

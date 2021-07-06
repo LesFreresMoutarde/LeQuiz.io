@@ -11,7 +11,7 @@ const onKeyUp = (e) => {
 const Category = ({category, pickCategory, index}) => {
     return (
         <button id={`category-${category.name.toLowerCase()}`}
-                className="category"
+                className={`category ${category.selected ? 'selected' : ''}`}
                 role="checkbox"
                 onClick={() => pickCategory(category)}
                 onKeyUp={onKeyUp}

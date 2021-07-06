@@ -253,6 +253,8 @@
     background-color: var(--element-primary-background-color);
     border-radius: 30px;
 
+    transition: background-color 0.1s ease-out;
+
     color: #fff;
     font-size: 1.4em;
 
@@ -262,6 +264,12 @@
 
 .category:hover {
     cursor: pointer;
+
+    background-color: var(--element-primary-background-color-lighter);
+}
+
+.category.selected {
+    background-color: var(--button-pink-color);
 }
 
 .pick-all-categories-button,

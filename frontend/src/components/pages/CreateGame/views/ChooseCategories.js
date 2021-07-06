@@ -20,7 +20,7 @@ export default class ChooseCategories extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
-            categories: false,
+            categories: null,
             pickAllDisabled: false,
             unpickAllDisabled: true,
             nextButtonDisabled: true,
@@ -33,9 +33,9 @@ export default class ChooseCategories extends React.Component {
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                 const categories = await this.getCategories();
 
-                // TODO REMOVE
-                categories.push(...categories);
-                categories.push(...categories);
+                categories.map(category => {
+                    category.selected = false;
+                });
 
                 console.log(categories)
 
@@ -69,13 +69,11 @@ export default class ChooseCategories extends React.Component {
 
         if (!pickCategoriesId.includes(category.id)) {
             this.pickedCategories.push(category)
-
         } else {
             this.pickedCategories.splice(pickCategoriesId.indexOf(category.id), 1);
         }
 
-        const categoryElt = document.querySelector(`#category-${category.name.toLowerCase()}`);
-        categoryElt.classList.toggle('category-selected');
+        category.selected = !category.selected;
 
         this.handleButtonsState();
     };
