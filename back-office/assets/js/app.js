@@ -8,8 +8,10 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import '../styles/app.scss';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Tooltip, Toast, Popover } from 'bootstrap';
-
-
+// import { Tooltip, Toast, Popover } from 'bootstrap';
+import Toastr from "toastr2";
+import '../styles/toastr.css';
 // start the Stimulus application
 import './bootstrap';
+
+global.toastr = new Toastr();
