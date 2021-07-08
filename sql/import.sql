@@ -450,4 +450,13 @@ INSERT INTO "tag_question" ("questionId", "tagId", "createdAt", "updatedAt") VAL
 ('9cbff2eb-d750-4f76-b5cf-99474ee689b6',	'f99b8944-94a9-4a02-bdc5-83c142bf7467',	'2021-07-03 21:15:12.957+00',	'2021-07-03 21:15:12.957+00'),
 ('cec72f0c-b364-4e17-a994-45ae1567c2de',	'cc2dd0b6-893a-4bcb-8e32-c78c5f344936',	'2021-07-03 21:15:13.226+00',	'2021-07-03 21:15:13.226+00');
 
+DROP TABLE IF EXISTS "refresh_token";
+CREATE TABLE "public"."refresh_token" (
+    "token" text NOT NULL,
+    "userId" uuid,
+    "expirationDate" timestamptz NOT NULL,
+    CONSTRAINT "refresh_token_token" PRIMARY KEY ("token"),
+    CONSTRAINT "refresh_token_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"(id) ON UPDATE RESTRICT ON DELETE RESTRICT NOT DEFERRABLE
+) WITH (oids = false);
+
 -- 2021-07-03 21:18:55.77472+00
