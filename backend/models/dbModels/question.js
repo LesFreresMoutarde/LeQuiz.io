@@ -41,6 +41,12 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'types'
             });
 
+            this.belongsToMany(models.Tag, {
+                foreignKey: 'questionId',
+                through: 'tag_question',
+                as: 'tags'
+            });
+
             this.belongsTo(models.CustomQuiz, {
                 foreignKey: 'customQuizId',
                 as: 'customQuiz'

@@ -97,6 +97,17 @@ class Question extends EntityBase
     private $types;
 
     /**
+     * @var Tag[]
+     *
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="questions")
+     * @ORM\JoinTable(name="tag_question",
+     *     joinColumns={@ORM\JoinColumn(name="`questionId`", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="`tagId`", referencedColumnName="id")}
+     *     )
+     */
+    private $tags;
+
+    /**
      * @var QuestionPosition
      *
      * @ORM\OneToOne(targetEntity="QuestionPosition", mappedBy="question")
@@ -107,6 +118,7 @@ class Question extends EntityBase
     {
         $this->categories = new ArrayCollection();
         $this->types = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -252,6 +264,30 @@ class Question extends EntityBase
     public function removeType(QuestionType $type): self
     {
         $this->types->removeElement($type);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }

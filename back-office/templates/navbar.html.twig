@@ -15,9 +15,11 @@
                     {{ navItemKey }}
                 </a>
             {% elseif navItem.label == 'logout' %}
+                {% if app.user %}
                 <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-danger" aria-current="page">
                     {{ navItemKey }}
                 </a>
+                {% endif %}
             {% else %}
                 <a href="{{ navItem.url }}" id="{{ navItem.label }}-link" class="nav-link text-white" aria-current="page">
                     {{ navItemKey }}
@@ -26,4 +28,5 @@
         </li>
     {% endfor %}
     </ul>
+    <span class="copyright">leQuiz.io © 2021</span>
 </div>

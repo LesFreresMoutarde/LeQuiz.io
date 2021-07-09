@@ -315,7 +315,8 @@
         {
           "name": "histoire"
         }
-      ]
+      ],
+      "tags": [{"name": "mythologie"}, {"name": "grece"}]
     }
   },
   {
@@ -915,8 +916,8 @@
       "media": {
 
       },
-      "categories": [{"name": "musique"}]
-
+      "categories": [{"name": "musique"}],
+      "tags": [{"name": "usa"}]
     }
   },
   {
