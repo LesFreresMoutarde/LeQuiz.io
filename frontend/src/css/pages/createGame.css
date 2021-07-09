@@ -257,11 +257,8 @@
 
     overflow-y: scroll;
     overflow-x: hidden;
-}
 
-.category-list::after {
-    content: "";
-    flex: auto;
+    height: 250px;
 }
 
 .category {
