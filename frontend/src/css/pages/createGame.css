@@ -1,5 +1,10 @@
 :root {
     --game-mode-border-color: #fff;
+
+    --category-button-width: 250px;
+    --category-button-horizontal-margin: 25px;
+    --category-button-vertical-margin: 40px;
+    --category-buttons-count-per-row: 4;
 }
 
 
@@ -226,6 +231,15 @@
 
 .category-container {
     /*border: 3px solid red;*/
+
+    width: calc(
+        var(--category-button-width) * var(--category-buttons-count-per-row)
+        +
+        var(--category-button-horizontal-margin) * (var(--category-buttons-count-per-row) * 2 - 2)
+        +
+        70px
+    );
+    margin: auto;
 }
 
 .category-container-header {
@@ -236,11 +250,13 @@
 .category-list {
     /*border: 3px solid orange;*/
 
-    margin: 0 -20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: calc(var(--category-button-horizontal-margin) * -1);
+    margin-right: 0;
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .category-list::after {
@@ -258,8 +274,10 @@
     color: #fff;
     font-size: 1.4em;
 
-    margin: 40px 20px;
-    padding: 25px 40px;
+    margin: var(--category-button-vertical-margin) var(--category-button-horizontal-margin);
+    padding: 25px 0;
+
+    width: var(--category-button-width);
 }
 
 .category:hover {
@@ -323,9 +341,26 @@
     border: 3px solid chartreuse;
 }
 
+@media screen and (max-width: 1336px) {
+    :root {
+        --category-buttons-count-per-row: 3
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    :root {
+        --category-buttons-count-per-row: 2
+    }
+}
+
 @media screen and (max-width: 768px) {
+    .category-container {
+        width: 100%;
+    }
+
     .category-list {
         margin: 0 -20px;
+        padding-right: 50px;
     }
 
     .category {
@@ -340,6 +375,10 @@
 }
 
 @media screen and (max-width: 375px) {
+    .category-list {
+        padding-right: 35px;
+    }
+
     .category {
         padding: 15px 25px;
         font-size: 1.2em;
