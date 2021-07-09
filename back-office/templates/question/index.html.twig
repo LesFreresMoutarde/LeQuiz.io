@@ -69,6 +69,48 @@
             </div>
             <div class="col-3">
                 <div class="form-select d-flex justify-content-start"
+                     data-action="click->question#showCheckboxes" id="tags-input" data-checkboxes-for="tags" data-filter-select>
+                    <span class="placeholder" data-click-not-hiding>Tags</span>
+                </div>
+                <div id="tags" class="checkboxes-div d-none" data-click-not-hiding>
+                    <div class="mb-2" data-click-not-hiding>
+                        <button class="btn btn-primary btn-sm"
+                                data-action="click->question#onPick"
+                                data-pick="full"
+                                data-checkboxes-for="tags"
+                                data-click-not-hiding
+                        >
+                            Toutes
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-action="click->question#onPick"
+                                data-pick="empty"
+                                data-checkboxes-for="tags"
+                                data-click-not-hiding
+                        >
+                            Vider
+                        </button>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-start" data-click-not-hiding>
+                        {% for tag in tags %}
+                            <label class="form-check-label mb-1 me-1" data-click-not-hiding>
+                                <input type="checkbox"
+                                       data-checkboxes="tags"
+                                       class="form-check-input"
+                                       value="{{ tag.getName() }}"
+                                       data-action="change->question#onMultiCheckboxesChange"
+                                       data-click-not-hiding
+                                >
+                                {{ tag.getLabel() }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-3">
+                <div class="form-select d-flex justify-content-start"
                      data-action="click->question#showCheckboxes" id="questionTypes-input" data-checkboxes-for="questionTypes" data-filter-select>
                     <span class="placeholder" data-click-not-hiding>Types</span>
                 </div>
@@ -173,6 +215,7 @@
                         <th>Réponse</th>
                         <th>Types</th>
                         <th>Catégories</th>
+                        <th>Tags</th>
                         <th>Hardcore</th>
                         <th>Statut</th>
                         <th>Media</th>
@@ -251,6 +294,11 @@
                         </td>
                         <td>{% for category in question.getCategories() %}
                                 <span style="display: block">{{ category.getLabel() }}</span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for tag in question.getTags() %}
+                                <span style="display: block">{{ tag.getLabel() }}</span>
                             {% endfor %}
                         </td>
                         <td>{{ question.getIsHardcore()

@@ -1,0 +1,30 @@
+[
+  {
+    "model": "Tag",
+    "data": {
+      "name": "football",
+      "label": "Football"
+    }
+  },
+  {
+    "model": "Tag",
+    "data": {
+      "name": "mythologie",
+      "label": "Mythologie"
+    }
+  },
+  {
+    "model": "Tag",
+    "data": {
+      "name": "usa",
+      "label": "Etats-Unis d'Amérique"
+    }
+  },
+  {
+    "model": "Tag",
+    "data": {
+      "name": "grece",
+      "label": "Grèce"
+    }
+  }
+]
