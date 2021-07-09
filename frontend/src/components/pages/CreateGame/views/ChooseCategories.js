@@ -21,6 +21,7 @@ export default class ChooseCategories extends React.Component {
             categories: null,
             pickAllDisabled: false,
             unpickAllDisabled: true,
+            searchCategories: '',
             nextButtonDisabled: true,
         }
     }
@@ -115,6 +116,12 @@ export default class ChooseCategories extends React.Component {
         }
     };
 
+    onSearchCategoriesInputChange = (e) => {
+        this.setState({
+            searchCategories: e.target.value,
+        });
+    }
+
     submitCategories = () => {
         this.props.submit(this.getPickedCategories());
     };
@@ -134,7 +141,23 @@ export default class ChooseCategories extends React.Component {
                 </>
             );
         } else {
-            const { categories, pickAllDisabled, unpickAllDisabled, nextButtonDisabled } = this.state;
+            const { categories, pickAllDisabled, unpickAllDisabled, nextButtonDisabled, searchCategories } = this.state;
+
+            const filteredCategories = categories.filter((category) => {
+                if (!searchCategories) {
+                    return true;
+                }
+
+                if (category.label.toLowerCase().includes(searchCategories.toLowerCase())) {
+                    return true;
+                }
+
+                if (category.name.toLowerCase().includes(searchCategories.toLowerCase())) {
+                    return true;
+                }
+
+                return false;
+            });
 
             return (
                 <>
@@ -148,16 +171,23 @@ export default class ChooseCategories extends React.Component {
                             <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>
                             <input className="search-categories-input"
                                    type="text"
-                                   placeholder="TODO Rechercher une catégorie"
+                                   placeholder="Rechercher une catégorie"
                                    autoFocus={true}
+                                   value={searchCategories}
+                                   onChange={this.onSearchCategoriesInputChange}
                             />
                         </div>
                         <div className="category-list">
-                            {categories.map((category, index) => {
+                            {filteredCategories.map((category, index) => {
                                 return (
                                     <Category key={index} category={category} pickCategory={this.pickCategory} />
                                 );
                             })}
+                            {filteredCategories.length < 1 &&
+                                <div className="category-list-no-category-found">
+                                    Aucune catégorie ne correspond à votre recherche
+                                </div>
+                            }
                         </div>
                     </div>
 
