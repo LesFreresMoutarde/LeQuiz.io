@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}{{ context == 'show' ? 'Utilisateur' : 'Modifier un utilisateur' }}{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -24,7 +24,7 @@
             />
         </div>
         <div class="col-3">
-            <label for="user-updated-at" class="form-label lead">Mis à jour le</label>
+            <label for="user-updated-at" class="form-label lead">Modifié le</label>
             <input type="text"
                    id="user-updated-at"
                    class="form-control"
