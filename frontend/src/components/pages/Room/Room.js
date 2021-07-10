@@ -8,10 +8,9 @@ import GameUtil from "../../../util/GameUtil";
 import Question from "./views/Question";
 import Answer from "./views/Answer";
 import CreateGame from "../CreateGame/CreateGame";
-import Toastr from "toastr2";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../App";
 
 class Room extends React.Component {
 
@@ -85,11 +84,12 @@ class Room extends React.Component {
 
                 this.setState({socketOpen: true});
             } catch (error) {
-                toastr.error('Impossible de rejoindre cette room');
+                app.toastr.error('Impossible de rejoindre cette room');
                 this.props.history.replace('/');
             }
         })()
 
+        app.showBackArrow(false);
     }
 
 

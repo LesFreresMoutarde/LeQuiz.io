@@ -1,8 +1,9 @@
 import React from "react";
 import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
-import BackArrow from "../../misc/BackArrow";
+import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 import UserAccessUtil from "../../../util/UserAccessUtil";
+import {app} from "../../App";
 
 class Settings extends React.Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class Settings extends React.Component {
 
     componentDidMount() {
         this.showDesktopSection('email');
+        app.showBackArrow(true, ON_CLICK_GO_BACK);
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -71,10 +73,6 @@ class Settings extends React.Component {
 
     render = () => {
         return (
-            <>
-            <div className="mb2">
-                <BackArrow onClick={this.goBack}/>
-            </div>
             <div className="flex-container">
                 <nav id="page-lateral-navigation">
                     <ul>
@@ -98,7 +96,6 @@ class Settings extends React.Component {
                     </div>
                 </div>
             </div>
-        </>
         )
     }
 }

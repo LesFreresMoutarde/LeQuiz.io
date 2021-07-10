@@ -1,5 +1,5 @@
 import React from "react";
-import App from "../App";
+import {app} from "../App";
 import Loader from "./Loader";
 
 class LogoutButton extends React.Component {
@@ -29,14 +29,13 @@ class LogoutButton extends React.Component {
         } else {
 
             return (
-                <svg className="logout-button" width={width} onClick={this.onClick} xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px"
-                     y="0px"
-                     viewBox="0 0 36 24" xmlSpace="preserve">
-                    <path fill={color} className="logout-button-door" d="M11.2,23.9H6c-3.3,0-6-2.7-6-6v-12c0-3.3,2.7-6,6-6h5.2c0.4,0,0.8,0.3,0.8,0.8v2.5c0,0.4-0.4,0.7-0.8,0.7H6
-	            c-1.1,0-2,0.9-2,2v12c0,1.1,0.9,2,2,2h5.2c0.4,0,0.7,0.3,0.8,0.8v2.5C12,23.6,11.6,23.9,11.2,23.9z"/>
-                    <path fill={color} className="logout-button-arrow" d="M18.6,5l4.9,4.4h-12c-0.8,0-1.5,0.7-1.5,1.5v2c0,0.8,0.7,1.5,1.5,1.5h12l-4.9,4.4c-0.6,0.6-0.7,1.5-0.1,2.1l0,0l1.4,1.4
-                c0.6,0.6,1.5,0.6,2.1,0l9.5-9.4c0.6-0.6,0.6-1.5,0-2.1l0,0L22,1.4c-0.6-0.6-1.5-0.6-2.1,0l0,0l-1.4,1.4C18,3.4,17.9,4.3,18.6,5
-                C18.5,4.9,18.5,4.9,18.6,5L18.6,5z"/>
+                <svg className="logout-button" onClick={this.onClick} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1"
+                     x="0px" y="0px" viewBox="8 19 100 64" height="26" width="36" fill="white"
+                     xmlSpace="preserve">
+                    <path className="logout-button-arrow" strokeWidth="3" stroke="white"
+                          d="M90.4,51c0-1.1-0.4-2.1-1.2-2.8L74.4,33.3c-1.6-1.6-4.1-1.6-5.7,0c-1.6,1.6-1.6,4.1,0,5.7l8,8H37   c-2.2,0-4,1.8-4,4s1.8,4,4,4h39.8l-8,8c-1.6,1.6-1.6,4.1,0,5.7c0.8,0.8,1.8,1.2,2.8,1.2s2-0.4,2.8-1.2l14.8-14.8   C90,53.1,90.4,52.1,90.4,51z"/>
+                    <path className="logout-button-door" strokeWidth="3" stroke="white"
+                          d="M26.8,27H52c2.2,0,4-1.8,4-4s-1.8-4-4-4H26.8C18.7,19,12,25.7,12,33.8v34.3C12,76.3,18.7,83,26.8,83H52   c2.2,0,4-1.8,4-4s-1.8-4-4-4H26.8C23,75,20,71.9,20,68.2V33.8C20,30.1,23.1,27,26.8,27z"/>
                 </svg>
             )
         }
@@ -47,7 +46,7 @@ class LogoutButton extends React.Component {
             isLoading: true,
         });
 
-        if(!(await App.GLOBAL.logoutUser())) {
+        if(!(await app.logoutUser())) {
             this.setState({
                 isLoading: false,
             });

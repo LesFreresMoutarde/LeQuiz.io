@@ -1,13 +1,13 @@
 import React from "react";
+import '../../../css/pages/createGame.css';
 import Util from "../../../util/Util";
 import GameUtil from "../../../util/GameUtil";
 import ChooseGameMode from "./views/ChooseGameMode";
 import ChooseCategories from "./views/ChooseCategories";
 import ChooseOptions from "./views/ChooseOptions";
 import Loader from "../../misc/Loader";
-import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../App";
 
 export default class CreateGame extends React.Component {
 
@@ -41,6 +41,8 @@ export default class CreateGame extends React.Component {
             const gameConfiguration = this.createGameConfiguration();
             Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
         }
+
+        app.showBackArrow(true, this.goBack);
     }
 
     createGameConfiguration = () => {
@@ -155,70 +157,72 @@ export default class CreateGame extends React.Component {
                 this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
             }
         } catch (e) {
-            toastr.error('Impossible de créer un salon, réessayez ultérieurement')
+            app.toastr.error('Impossible de créer un salon, réessayez ultérieurement')
         }
 
     };
 
-    goBack = (page) => {
-        switch (page) {
-            case 'chooseGameMode':
+    goBack = () => {
+        const { display } = this.state;
 
-                if (!this.props.fromRoom) {
-                    this.props.history.replace('/');
-                } else {
-                    this.props.roomInstance.setState({
-                        display: {
-                            lobby: true,
-                            question: false,
-                            answer: false,
-                            gameOptions: false,
-                        }})
-                }
+        if (display.gameMode) {
+            if (!this.props.fromRoom) {
+                this.props.history.replace('/');
+            } else {
+                this.props.roomInstance.setState({
+                    display: {
+                        lobby: true,
+                        question: false,
+                        answer: false,
+                        gameOptions: false,
+                    }})
+            }
 
-                break;
-            case 'chooseCategories':
+            return;
+        }
 
-                if (!this.props.fromRoom) {
-                    this.setState({
-                        display: {
-                            gameMode: true,
-                            categories: false,
-                            options: false,
-                        }
+        if (display.categories) {
+            if (!this.props.fromRoom) {
+                this.setState({
+                    display: {
+                        gameMode: true,
+                        categories: false,
+                        options: false,
+                    }
 
-                    })
-                } else {
-                    this.props.roomInstance.setState({
-                        display: {
-                            lobby: true,
-                            question: false,
-                            answer: false,
-                            gameOptions: false,
-                        }})
-                }
-                break;
-            case 'chooseOptions':
+                })
+            } else {
+                this.props.roomInstance.setState({
+                    display: {
+                        lobby: true,
+                        question: false,
+                        answer: false,
+                        gameOptions: false,
+                    }})
+            }
 
-                if (!this.props.fromRoom) {
-                    this.setState({
-                        display: {
-                            gameMode: false,
-                            categories: true,
-                            options: false,
-                        }
+            return;
+        }
 
-                    })
-                } else {
-                    this.props.roomInstance.setState({
-                        display: {
-                            lobby: true,
-                            question: false,
-                            answer: false,
-                            gameOptions: false,
-                        }})
-                }
-                break;
+        if (display.options) {
+            if (!this.props.fromRoom) {
+                this.setState({
+                    display: {
+                        gameMode: false,
+                        categories: true,
+                        options: false,
+                    }
+
+                })
+            } else {
+                this.props.roomInstance.setState({
+                    display: {
+                        lobby: true,
+                        question: false,
+                        answer: false,
+                        gameOptions: false,
+                    }})
+            }
         }
     }
 
@@ -232,28 +236,26 @@ export default class CreateGame extends React.Component {
 
         if (isLoading) {
             return (
-                <>
-                    <div className="app loading">
-                        <div className="app-loader">
-                            <Loader width="max(6vw, 80px)"/>
-                        </div>
+                <div className="app loading">
+                    <div className="app-loader">
+                        <Loader width="max(6vw, 80px)"/>
                     </div>
-                </>
+                </div>
             );
         }
 
 
         if (display.gameMode) {
 
-            return(<ChooseGameMode submit={this.submitGameMode} goBack={this.goBack}/>)
+            return(<ChooseGameMode submit={this.submitGameMode} />)
 
         } else if (display.categories) {
 
-            return(<ChooseCategories submit={this.submitCategories} goBack={this.goBack}/>)
+            return(<ChooseCategories submit={this.submitCategories} />)
 
         } else if (display.options) {
 
-            return(<ChooseOptions submit={this.submitOptions} goBack={this.goBack}/>)
+            return(<ChooseOptions submit={this.submitOptions} />)
 
         }
     }

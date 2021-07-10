@@ -7,7 +7,6 @@ import '../css/toastr.override.css';
 import {Switch, Route, Redirect} from "react-router-dom";
 import Home from "./pages/Home/Home";
 import CreateGame from "./pages/CreateGame/CreateGame";
-import JoinRoom from "./pages/JoinRoom/JoinRoom";
 import Footer from "./Footer";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -26,25 +25,33 @@ import ApiUtil from "../util/ApiUtil";
 import FeedbackModal from "./pages/FeedbackModal/FeedbackModal";
 import Contact from "./pages/Contact/Contact";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
-const toastr = new Toastr();
+import {isMobileOnly} from "react-device-detect";
 
+let instance;
 
 class App extends React.Component {
 
-    static GLOBAL = null;
-
     constructor(props) {
         super(props);
+
+        if (instance) {
+            throw new Error('App has already been instanciated');
+        }
+
+        instance = this;
+
+        this.toastr = new Toastr();
+
         this.state = {
             redirect: false,
             isLoading: true,
             user: null,
             showFeedbackModal: false,
+            showBackArrow: false,
+            backArrowOnClick: null,
         };
 
         this.nextRedirect = null;
-
-        App.GLOBAL = this;
     }
 
     componentDidMount = async () => {
@@ -80,6 +87,19 @@ class App extends React.Component {
         this.setState({showFeedbackModal: false});
     }
 
+    /**
+     * Display or not the header Back Arrow. This function must be called in
+     * the componentDidMount of a main "page" component
+     * @param {boolean} show
+     * @param {string|function} onClick
+     */
+    showBackArrow = (show = true, onClick = () => {}) => {
+        this.setState({
+            showBackArrow: show,
+            backArrowOnClick: onClick,
+        });
+    }
+
     logoutUser = async () => {
         Util.verbose('User logout');
 
@@ -92,7 +112,7 @@ class App extends React.Component {
         });
 
         if(!response.ok) {
-            toastr.error('Une erreur inconnue est survenue');
+            this.toastr.error('Une erreur inconnue est survenue');
             return false;
         }
 
@@ -100,13 +120,13 @@ class App extends React.Component {
             await AuthUtil.getNewAccessToken();
         } catch(e) {
             console.error(e);
-            toastr.error('Une erreur inconnue est survenue');
+            this.toastr.error('Une erreur inconnue est survenue');
             return false;
         }
 
         this.setUser(null);
 
-        toastr.success("Vous n'êtes plus connecté");
+        this.toastr.success("Vous n'êtes plus connecté");
 
         this.redirectTo('/');
 
@@ -122,7 +142,7 @@ class App extends React.Component {
 
     render = () => {
 
-        const {redirect, isLoading, user, showFeedbackModal} = this.state;
+        const {redirect, isLoading, user, showFeedbackModal, showBackArrow, backArrowOnClick} = this.state;
 
         if (redirect) {
             const url = this.nextRedirect;
@@ -136,6 +156,8 @@ class App extends React.Component {
                 <Redirect to={url} />
             );
         }
+
+        const hideFooter = isMobileOnly
 
         if(isLoading) {
             return (
@@ -152,7 +174,7 @@ class App extends React.Component {
                         <FeedbackModal closeModal={this.closeFeedbackModal}/>
                     }
                     <div className="content-wrapper">
-                        <Header user={user} />
+                        <Header user={user} showBackArrow={showBackArrow} backArrowOnClick={backArrowOnClick} />
                         {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
 
@@ -164,7 +186,6 @@ class App extends React.Component {
                                 <Route exact path="/reset-password/:token" component={ResetPassword} />
                                 <Route exact path="/settings" component={Settings}/>
                                 <Route path="/create-room/" component={CreateGame}/>
-                                <Route exact path="/join-room" component={JoinRoom}/>
                                 <Route path="/room/:id" component={Room}/>
                                 <Route path="/contact" component={Contact}/>
                                 <Route path="/mentions-legales" component={LegalNotice}/>
@@ -172,11 +193,13 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer displayFeedbackModal={this.displayFeedbackModal}/>
+                    {!hideFooter && <Footer displayFeedbackModal={this.displayFeedbackModal}/>}
                 </div>
             );
         }
     }
 }
+
+export { instance as app }
 
 export default App;

@@ -2,11 +2,10 @@ import React from "react";
 import {Redirect} from "react-router-dom";
 import Util from "../../../util/Util";
 
-import Toastr from "toastr2";
 import Loader from "../../misc/Loader";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
-const toastr = new Toastr();
+import {app} from "../../App";
 
 /**
  * Component displayed when the user wants to receive an email to reset his/her password
@@ -44,6 +43,7 @@ class ResetPassword extends React.Component {
             })()
         }
 
+        app.showBackArrow(false);
     }
 
     render = () => {
@@ -74,8 +74,7 @@ class ResetPassword extends React.Component {
 
         return (
             <div className="text-center">
-                <h1 className="mb">Réinitialisez votre mot de passe</h1>
-                <p className="mb2">Veuillez choisir un nouveau mot de passe.</p>
+                <h1 className="mb">Nouveau mot de passe</h1>
                 <form id="reset-password-form" onSubmit={this.onResetPasswordFormSubmit}>
                     <div className="mb3 mt3">
                         <input className="full-width" id="new-password-input" type="password" name="newPassword" placeholder="Nouveau mot de passe" autoFocus autoComplete="new-password" required/>
@@ -107,7 +106,7 @@ class ResetPassword extends React.Component {
             case 204:
                 Util.verbose('Password reset successful');
 
-                toastr.success('Votre mot de passe a été réinitialisé.');
+                app.toastr.success('Votre mot de passe a été réinitialisé.');
 
                 this.setState({
                     isCompleted: true,
@@ -117,11 +116,11 @@ class ResetPassword extends React.Component {
                 const responseJson = await response.json();
 
                 for(const field in responseJson.errors) {
-                    toastr.error(responseJson.errors[field]);
+                    app.toastr.error(responseJson.errors[field]);
                 }
                 break;
             default:
-                toastr.error('Une erreur inconnue est survenue.');
+                app.toastr.error('Une erreur inconnue est survenue.');
         }
     }
 }

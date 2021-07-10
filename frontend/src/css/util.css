@@ -71,8 +71,9 @@
 }
 
 h1, .h1 {
-    font-size: 2.4em;
-    font-weight: 700;
+    font-family: 'Coolvetica Rg', sans-serif;
+    font-size: 5em;
+    font-weight: 400;
 }
 
 h2, .h2 {
@@ -188,4 +189,10 @@ h6.mb, .h6.mb {
 
 .centered-item {
     margin: auto;
+}
+
+@media screen and (max-width: 992px) {
+    h1, .h1 {
+        font-size: 3em;
+    }
 }

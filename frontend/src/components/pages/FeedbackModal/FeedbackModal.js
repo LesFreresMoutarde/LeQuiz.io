@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Toastr from "toastr2";
 import ApiUtil from "../../../util/ApiUtil";
+import {app} from "../../App";
 
 
 const overlayStyle = {
@@ -28,8 +28,6 @@ const modalStyle = {
 
 const FeedbackModal = ({closeModal}) => {
 
-    const toastr = new Toastr()
-
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
 
@@ -48,10 +46,10 @@ const FeedbackModal = ({closeModal}) => {
             if (!response.ok)
                 throw new Error('Impossible d\'envoyer votre message. Réessayez ultérieurement');
 
-            toastr.success('Votre message a été envoyé. Merci de nous aider à améliorer leQuiz.io');
+            app.toastr.success('Votre message a été envoyé. Merci de nous aider à améliorer leQuiz.io');
 
         } catch (error) {
-            toastr.error(error.message);
+            app.toastr.error(error.message);
         }
     }
 

@@ -7,10 +7,8 @@ import WinCriterion from "../components/WinCriterion";
 
 import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
-import BackArrow from "../../../misc/BackArrow";
-import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../../App";
 
 export default class ChooseOptions extends React.Component {
 
@@ -76,7 +74,7 @@ export default class ChooseOptions extends React.Component {
 
 
             } catch (error) {
-                toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
+                app.toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
             }
         })();
     }
@@ -98,7 +96,7 @@ export default class ChooseOptions extends React.Component {
             this.evaluateWinCriterionMaxValue()
 
         } catch (error) {
-            toastr.error('Ce type de question n\'existe pas')
+            app.toastr.error('Ce type de question n\'existe pas')
         }
     }
 
@@ -154,16 +152,11 @@ export default class ChooseOptions extends React.Component {
 
     };
 
-    goBack = () => {
-        this.props.goBack('chooseOptions')
-    }
-
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
                     <div className="app loading">
@@ -185,7 +178,6 @@ export default class ChooseOptions extends React.Component {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
                     <div className="game-options-container">

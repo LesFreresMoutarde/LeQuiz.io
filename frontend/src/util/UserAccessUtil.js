@@ -1,4 +1,4 @@
-import App from "../components/App";
+import {app} from "../components/App";
 
 class UserAccessUtil {
     /**
@@ -17,14 +17,14 @@ class UserAccessUtil {
     static componentRequiresRole = (role, redirect = '/') => {
         switch(role) {
             case UserAccessUtil.ROLES.GUEST_ONLY:
-                if(App.GLOBAL.state.user) {
-                    App.GLOBAL.redirectTo(redirect);
+                if(app.state.user) {
+                    app.redirectTo(redirect);
                     return false;
                 }
                 break;
             case UserAccessUtil.ROLES.LOGGED_IN:
-                if(!App.GLOBAL.state.user) {
-                    App.GLOBAL.redirectTo(redirect);
+                if(!app.state.user) {
+                    app.redirectTo(redirect);
                     return false;
                 }
                 break;

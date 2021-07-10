@@ -1,14 +1,12 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
 import Util from "../../../util/Util";
-import App from "../../App";
+import {app} from "../../App";
 
-import Toastr from "toastr2";
-import BackArrow from "../../misc/BackArrow";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
 import UserAccessUtil from "../../../util/UserAccessUtil";
-const toastr = new Toastr();
+import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 
 class Login extends React.Component {
     constructor(props) {
@@ -21,9 +19,9 @@ class Login extends React.Component {
         UserAccessUtil.componentRequiresRole(UserAccessUtil.ROLES.GUEST_ONLY);
     }
 
-    goBack = () => {
-        this.props.history.goBack();
-    };
+    componentDidMount() {
+        app.showBackArrow(true, ON_CLICK_GO_BACK);
+    }
 
     render = () => {
         if(this.state.redirect) {
@@ -33,11 +31,9 @@ class Login extends React.Component {
         }
 
         return(
-            <>
-                <BackArrow onClick={this.goBack}/>
                 <div className="text-center">
                     <h1 className="mb">Connexion</h1>
-                    <p className="mb2">Tu n'as pas encore de compte ? <Link to="/register">Inscription</Link></p>
+                    <p className="mb2">Vous n'avez pas encore de compte ? <Link to="/register">Inscrivez-vous</Link></p>
                     <form id="login-form" onSubmit={this.onLoginFormSubmit}>
                         <div className="mb3 mt3">
                             <input className="full-width" id="username-input" name="username" placeholder="Nom d'utilisateur ou adresse email" autoFocus autoComplete="username" required/>
@@ -53,9 +49,8 @@ class Login extends React.Component {
                         </div>
                         <button type="submit" className="button green mb2">Connexion</button>
                     </form>
-                    <small><Link to="/forgot-password">Mot de passe oublié</Link></small>
+                    <small><Link to="/forgot-password">Mot de passe oublié ?</Link></small>
                 </div>
-            </>
         )
     }
 
@@ -82,7 +77,7 @@ class Login extends React.Component {
                 AuthUtil.setAccesstoken(responseJson.accessToken);
                 AuthUtil.setRefreshToken(responseJson.refreshToken);
 
-                App.GLOBAL.setUser(AuthUtil.accessTokenPayload.user);
+                app.setUser(AuthUtil.accessTokenPayload.user);
 
                 this.setState({
                     redirect: true,
@@ -90,13 +85,13 @@ class Login extends React.Component {
                 break;
             case 403:
                 console.log(responseJson);
-                toastr.error("Vous avez été banni jusqu'à TODO");
+                app.toastr.error("Vous avez été banni jusqu'à TODO");
                 break;
             case 404:
-                toastr.error('Ces identifiants sont incorrects');
+                app.toastr.error('Ces identifiants sont incorrects');
                 break;
             default:
-                toastr.error('Une erreur inconnue est survenue');
+                app.toastr.error('Une erreur inconnue est survenue');
                 break;
         }
     }
