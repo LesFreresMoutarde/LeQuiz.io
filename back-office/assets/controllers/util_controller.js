@@ -2,7 +2,6 @@ import {validate} from "uuid";
 
 class Util {
 
-
     static getQueryStringParam = (paramName, defaultValue, type) => {
 
         const queryString = window.location.search;
@@ -107,7 +106,6 @@ class Util {
 
             // Database is waiting for a valid uuid, otherwise it crashes.
             if (filter === 'uuid' && !Util.isUuidValid(filters.uuid) && filters.uuid !== '') {
-                //TODO TOASTR WHEN BUG RESOLVED
                 clearTimeout(timer);
                 return;
             }
@@ -121,8 +119,8 @@ class Util {
                 document.querySelector(blockToReplaceSelector).innerHTML = filteredData;
 
             } catch (error) {
-                //TODO TOASTR WHEN BUG RESOLVED
-                console.error('Internal server error');
+                console.error(error);
+                toastr.error('Impossible de réaliser cette opération. Réessayez plus tard.');
             } finally {
                 Util.deletePageParam();
                 clearTimeout(timer);
@@ -152,8 +150,8 @@ class Util {
             document.querySelector(blockToReplaceSelector).innerHTML = filteredData;
 
         } catch (error) {
-            //TODO TOASTR WHEN BUG RESOLVED
-            console.error('Internal server error');
+            console.error(error);
+            toastr.error('Impossible de réaliser cette opération. Réessayez plus tard.');
         } finally {
             Util.deletePageParam();
         }
@@ -177,8 +175,8 @@ class Util {
 
             document.querySelector(blockToReplaceSelector).innerHTML = filteredData;
         } catch (error) {
-            //TODO TOASTR WHEN BUG RESOLVED
-            console.error('Internal server error');
+            console.error(error);
+            toastr.error('Impossible de réaliser cette opération. Réessayez plus tard.');
         } finally {
             Util.deletePageParam();
         }
@@ -239,8 +237,8 @@ class Util {
 
             document.querySelector(blockToReplaceSelector).innerHTML = filteredData;
         } catch (error) {
-            //TODO TOASTR WHEN BUG RESOLVED
-            console.error('Internal server error');
+            console.error(error);
+            toastr.error('Impossible de réaliser cette opération. Réessayez plus tard.');
         } finally {
             Util.deletePageParam();
         }
@@ -327,8 +325,8 @@ class Util {
             Util.handleResponseStatusFromDeleteRequest(response.status, `/${entity}/`);
 
         } catch (error) {
-            //TODO Quand Toastr pret
-            console.error(error)
+            console.error(error);
+            toastr.error('Impossible de réaliser cette opération. Réessayez plus tard.');
         }
     }
 

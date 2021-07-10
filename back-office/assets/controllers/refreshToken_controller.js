@@ -39,8 +39,8 @@ export default class extends Controller {
             Util.handleResponseStatusFromDeleteRequest(response.status, `/${this.ENTITY_NAME}/`);
 
         } catch (error) {
-            //TODO Quand Toastr pret
-            console.error(error)
+            console.error(error);
+            toastr.error('Impossible de réaliser cette opération. Réessayez plus tard.');
         }
     }
 

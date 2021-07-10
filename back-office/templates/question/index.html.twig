@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Question index{% endblock %}
+{% block title %}Questions{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -247,7 +247,6 @@
                                             <div style="height: 1px; width: 100%; background-color: #c2cad2"
                                                  class="my-1"></div>
                                         {% endfor %}
-    {#                                        TODO QUAND QUESTIONS SHOW SERA REFAIT#}
                                         {% if question.answer.additional is defined %}
                                             <a href="#">Infos supplémentaires</a>
                                         {% endif %}

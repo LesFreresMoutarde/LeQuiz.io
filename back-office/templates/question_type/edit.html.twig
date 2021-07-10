@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit QuestionType{% endblock %}
+{% block title %}{{ context == 'show' ? 'Type de question' : 'Modifier un type de question' }}{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -24,7 +24,7 @@
             />
         </div>
         <div class="col-3">
-            <label for="questionType-updated-at" class="form-label lead">Mis à jour le</label>
+            <label for="questionType-updated-at" class="form-label lead">Modifié le</label>
             <input type="text"
                    id="questionType-updated-at"
                    class="form-control"
