@@ -52,7 +52,6 @@ class GameController extends MainController {
 
         response.gameOptions.questionTypes = await this.getQuestionTypes(categories);
         response.gameOptions.winCriterion = this.getWinCriterion(gameMode);
-        // response.gameOptions.hardcore = this.hasHardcoreQuestions(categories)
         this.response = response;
     };
 
@@ -95,19 +94,19 @@ class GameController extends MainController {
         try {
             const categories = [];
 
-            const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label", 
-            COUNT(*) as "nbQuestions", "question_type"."name" as "type" 
-            FROM "category" 
-            INNER JOIN "category_question" 
+            const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label",
+            COUNT(*) as "nbQuestions", "question_type"."name" as "type", "question"."isHardcore"
+            FROM "category"
+            INNER JOIN "category_question"
             ON "category"."id" = "category_question"."categoryId"
-            INNER JOIN "question" 
+            INNER JOIN "question"
             ON "question"."id" = "category_question"."questionId"
-            INNER JOIN "question_type_question" 
+            INNER JOIN "question_type_question"
             ON "question_type_question"."questionId" = "category_question"."questionId"
-            INNER JOIN "question_type" 
+            INNER JOIN "question_type"
             ON "question_type"."id" = "question_type_question"."questionTypeId"
             WHERE "question"."status" = :status
-            GROUP BY "category"."id", "question_type"."name"
+            GROUP BY "category"."id", "type", "question"."isHardcore"
             ORDER BY "category"."name";`,
                 {
                     replacements: {
@@ -117,39 +116,43 @@ class GameController extends MainController {
                 }
             );
 
+            // On construit pour chaque catégorie un objet nbQuestions qui correspond au nombre de questions
+            // par type de question et niveau de difficulté
             for (let i = 0; i < records.length; i++) {
-                if (i === 0) {
-                    categories.push({
-                        id: records[i].id,
-                        name: records[i].name,
-                        label: records[i].label,
-                        nbQuestions : {
-                            [records[i].type]: records[i].nbQuestions
+
+                const key = records[i].isHardcore ? 'hardcore' : 'classic';
+
+                if (i !== 0 && records[i-1].id === records[i].id) {
+                    categories.forEach(categoryInArray => {
+                        if (categoryInArray.id === records[i].id) {
+                            categoryInArray['nbQuestions'][[records[i].type]] = {
+                                ...categoryInArray['nbQuestions'][[records[i].type]],
+                                ... {[key]: parseInt(records[i].nbQuestions)}
+                            }
                         }
                     })
-                } else if (records[i-1].id === records[i].id) {
-                    categories[i-1]['nbQuestions'][[records[i].type]] = records[i].nbQuestions
+
                 } else {
                     categories.push({
                         id: records[i].id,
                         name: records[i].name,
                         label: records[i].label,
                         nbQuestions : {
-                            [records[i].type]: records[i].nbQuestions
-                        }
+                            [records[i].type]: {[key]: parseInt(records[i].nbQuestions)}
+                        },
                     })
                 }
             }
 
             return categories;
         } catch (error) {
+            console.error(error);
             throw new DatabaseError();
         }
 
     };
 
     getQuestionTypes = async (categories) => {
-        console.log('categories from getQuestionTypes', categories);
         try {
             return await db.sequelize.query(`SELECT "question_type"."name", "question_type"."label",
             "question_type"."id", COUNT(*) as "nbQuestions"
@@ -188,27 +191,6 @@ class GameController extends MainController {
 
         return winCriterion;
     };
-
-    hasHardcoreQuestions = async (categories) => {
-        try {
-            // envoyer les uuids
-            const response = await db.sequelize.query(`SELECT COUNT(*) FROM "question" INNER JOIN "category_question"
-            ON "question"."id" = "category_question"."questionId" 
-            WHERE "question"."isHardcore" = true 
-            AND "category_question"."categoryId" IN (:categories)
-            AND "question"."status" = :status`,{
-                replacements: {
-                    status: db.Question.STATUS_APPROVED,
-                    categories: categories
-                },
-                type: db.sequelize.QueryTypes.SELECT
-            });)
-        } catch (error) {
-            console.error(error);
-            throw new DatabaseError();
-        }
-    }
-
 
 }
 
