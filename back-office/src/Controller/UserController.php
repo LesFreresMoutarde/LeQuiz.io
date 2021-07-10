@@ -100,7 +100,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    //TODO Password Reset
     #[Route('/edit/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, Security $security): Response
     {

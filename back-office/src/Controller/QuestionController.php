@@ -81,25 +81,34 @@ class QuestionController extends AbstractController
         $tags = $crudManager->getTags();
         $answersUniqueId = Util::getRandomIntAsUniqueId(4, 100, 999);
 
-        if ($request->getMethod() === 'POST') {
+        try {
+            if ($request->getMethod() === 'POST') {
 
-            if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
+                if (!$submittedToken = $request->request->get('token')) throw new \Exception('Token manquant.');
 
-            if (!$this->isCsrfTokenValid('question_new_token', $submittedToken)) throw new \Exception('Invalid token');
+                if (!$this->isCsrfTokenValid('question_new_token', $submittedToken))
+                    throw new \Exception('Token invalide.');
 
-            list($completePickedQuestionTypes,
-                $completePickedCategories, $completePickedTags) = $this->isFormValid($categories, $questionTypes, $tags);
+                list($completePickedQuestionTypes,
+                    $completePickedCategories, $completePickedTags) = $this->isFormValid($categories, $questionTypes, $tags);
 
-            $answersJson = $this->generateAnswersJson();
+                $answersJson = $this->generateAnswersJson();
 
-            $question = $this->setQuestionValues($question, $completePickedQuestionTypes, $completePickedCategories, $completePickedTags,$answersJson);
+                $question = $this->setQuestionValues($question, $completePickedQuestionTypes, $completePickedCategories, $completePickedTags,$answersJson);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($question);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($question);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('question_show', [
-                'id' => $question->getId()
+                return $this->redirectToRoute('question_show', [
+                    'id' => $question->getId()
+                ]);
+            }
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return $this->redirectToRoute('question_new', [
+                'id' => $question->getId(),
             ]);
         }
 
@@ -136,7 +145,6 @@ class QuestionController extends AbstractController
 
     //TODO : - QuestionPosition When CustomQuiz Implemented
     //       - JSON FOR MEDIA UPLOADING
-    //       - Try/Catch Handling when toastr Ready
 
     #[Route('/edit/{id}', name: 'question_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Question $question, CrudManager $crudManager): Response
@@ -145,16 +153,17 @@ class QuestionController extends AbstractController
         $questionStatuses = Enums::STATUSES;
         $categories = $crudManager->getCategories();
         $tags = $crudManager->getTags();
-
         $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
-//TODO END OF BACK OFFICE FIRST VERSION
-//        try {
+
+        try {
 
             if ($request->getMethod() === 'POST') {
 
-                if (!$submittedToken = $request->request->get('token')) throw new \Exception('Missing token');
+                if (!$submittedToken = $request->request->get('token'))
+                    throw new \Exception('Token manquant.');
 
-                if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken)) throw new \Exception('Invalid token');
+                if (!$this->isCsrfTokenValid('question_edit_token', $submittedToken))
+                    throw new \Exception('Token invalide.');
 
                 list($completePickedQuestionTypes,
                     $completePickedCategories, $completePickedTags) = $this->isFormValid($categories, $questionTypes, $tags);
@@ -177,20 +186,24 @@ class QuestionController extends AbstractController
                     'id' => $question->getId()
                 ]);
             }
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return $this->redirectToRoute('question_edit', [
+                'id' => $question->getId(),
+            ]);
+        }
 
         return $this->render('question/edit.html.twig', [
-                'question' => $question,
-                'questionTypes' => $questionTypes,
-                'questionStatuses' => $questionStatuses,
-                'categories' => $categories,
-                'tags' => $tags,
-                'answersUniqueId' => $answersUniqueId,
-                'context' => 'edit'
-            ]);
-//        } catch (\Exception $e) {
+            'question' => $question,
+            'questionTypes' => $questionTypes,
+            'questionStatuses' => $questionStatuses,
+            'categories' => $categories,
+            'tags' => $tags,
+            'answersUniqueId' => $answersUniqueId,
+            'context' => 'edit'
+        ]);
 
-//             return($e);
-//        }
     }
 
     #[Route('/{id}', name: 'question_delete', methods: ['DELETE'], format: 'json')]
@@ -371,13 +384,14 @@ class QuestionController extends AbstractController
         // Verify if questions types are valid
         if (count($completePickedQuestionTypes) !== count($pickedQuestionTypes)) {
 
-            throw new \Exception('Invalid question type');
+            throw new \Exception('Type de question invalide.');
 
         } else if (count($completePickedQuestionTypes) === 1) {
 
             $parentQuestionType = $completePickedQuestionTypes[0];
 
-            if ($completePickedQuestionTypes[0]->getIsChild()) throw new \Exception('A child type cannot be alone');
+            if ($completePickedQuestionTypes[0]->getIsChild())
+                throw new \Exception('Un type enfant ne peut être le seul type d\'une question.');
 
         } else if (count($completePickedQuestionTypes) === 2) {
 
@@ -395,11 +409,12 @@ class QuestionController extends AbstractController
                 }
             }
 
-            if (!$isParentPresent || !$isChildPresent) throw new \Exception('Invalid question types combination');
+            if (!$isParentPresent || !$isChildPresent)
+                throw new \Exception('Combinaison de types de questions invalide.');
 
         } else {
 
-            throw new \Exception('Too many question types');
+            throw new \Exception('Trop de types de questions.');
         }
 
         // Retrieving Category Models from user choices
@@ -419,11 +434,11 @@ class QuestionController extends AbstractController
         // Verify if categories are valid
         if (count($completePickedCategories) !== count($pickedCategories)) {
 
-            throw new \Exception('Invalid category');
+            throw new \Exception('Catégorie invalide.');
 
         } else if (count($completePickedCategories) > 2) {
 
-            throw new \Exception('Too many categories');
+            throw new \Exception('Trop de catégories.');
         }
 
         // Retrieving Tags Models from user choices
@@ -440,13 +455,13 @@ class QuestionController extends AbstractController
         // Verify if categories are valid
         if (count($completePickedTags) !== count($pickedTags)) {
 
-            throw new \Exception('Invalid tag');
+            throw new \Exception('Tag invalide.');
 
         }
 
 
         if (!in_array($_POST['question-status'], Enums::STATUSES))
-            throw new \Exception('Invalid status');
+            throw new \Exception('Statut invalide.');
 
         $answers = [];
         $goodAnswersCount = 0;
@@ -456,7 +471,8 @@ class QuestionController extends AbstractController
             if (preg_match('/^answers-is_good_answer-/', $formInputName)) {
 
                 $answerId = explode('-', $formInputName)[2];
-                if(!array_key_exists('answers-content-'.$answerId, $_POST)) throw new \Exception('Invalid Answer');
+                if(!array_key_exists('answers-content-'.$answerId, $_POST))
+                    throw new \Exception('Réponse invalide.');
 
                 if ($_POST['answers-content-'.$answerId]) {
 
@@ -470,12 +486,14 @@ class QuestionController extends AbstractController
         switch ($parentQuestionType->getName()) {
             // Only one good answer
             case Enums::QCM_QUESTION_TYPE:
-                if ($goodAnswersCount !== 1 || count($answers) !== 4) throw new \Exception('QCM Invalid Answers');
+                if ($goodAnswersCount !== 1 || count($answers) !== 4)
+                    throw new \Exception('Réponses pour QCM invalides.');
                 break;
 
             // Only good answers
             case Enums::INPUT_QUESTION_TYPE:
-                if ($goodAnswersCount !== count($answers)) throw new \Exception("Input Invalid Answers");
+                if ($goodAnswersCount !== count($answers))
+                    throw new \Exception("Réponses pour réponse libre invalides.");
                 break;
 
             default:
@@ -496,7 +514,7 @@ class QuestionController extends AbstractController
         $dynamicFieldsMatch = [];
 
         foreach (REQUIRED_FIELDS as $requiredField) {
-            if (!array_key_exists($requiredField, $_POST)) throw new \Exception('Invalid Form');
+            if (!array_key_exists($requiredField, $_POST)) throw new \Exception('Formulaire invalide.');
         }
 
         for ($i = 0 ; $i < count(DYNAMIC_REQUIRED_FIELDS) ; $i++) {
@@ -509,7 +527,7 @@ class QuestionController extends AbstractController
         }
 
         if (count($dynamicFieldsMatch) !== count(DYNAMIC_REQUIRED_FIELDS))
-            throw new \Exception('Invalid Form');
+            throw new \Exception('Formulaire invalide.');
     }
 
 
@@ -524,13 +542,13 @@ class QuestionController extends AbstractController
             if (preg_match('/^answers-content/', $formInputName) && $formInput !== '') {
 
                 foreach ($answers['answers'] as $answer) {
-                    if ($answer['content'] === $formInput) throw new \Exception('Value not unique');
+                    if ($answer['content'] === $formInput) throw new \Exception('Valeur non-unique.');
                 }
 
                 $answerId = $parsedFormInput[count($parsedFormInput) - 1];
 
                 if (!array_key_exists('answers-is_good_answer-'.$answerId, $_POST))
-                    throw new \Exception('Cannot add answer without value');
+                    throw new \Exception('Chaque réponse doit avoir une valeur.');
 
                 $answers['answers'][] = [
                     'content' => $formInput,
