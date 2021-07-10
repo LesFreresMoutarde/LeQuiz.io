@@ -48,8 +48,6 @@ export default class ChooseOptions extends React.Component {
                      questionType.checked = true;
                 });
 
-                console.log('questionTypes', questionTypes);
-
                 if (gameConfiguration.questionTypes.length > 0) {
 
                     const pickedQuestionTypes = gameConfiguration.questionTypes.map(questionType => questionType.name);
@@ -142,13 +140,15 @@ export default class ChooseOptions extends React.Component {
     submitGameOptions = async () => {
         const { questionTypes, winCriterionInputValue } = this.state;
 
+        const pickedQuestionTypes = [];
+
         questionTypes.forEach(questionType => {
             if (questionType.checked) {
-                delete questionType.checked;
+                pickedQuestionTypes.push(questionType);
             }
         });
 
-        this.props.submit(questionTypes, winCriterionInputValue)
+        this.props.submit(pickedQuestionTypes, winCriterionInputValue)
 
     };
 
