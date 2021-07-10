@@ -21,6 +21,9 @@ class GameController extends MainController {
         [db.User.PLAN_VIP]: [Serie, Ascension, Blitz, Survivant]
     };
 
+    static HARDCORE_DIFFICULTY = 'hardcore';
+    static CLASSIC_DIFFICULTY = 'classic';
+
     actionCategories = async () => {
         const response = {};
         response.categories = await this.getCategories();
@@ -120,7 +123,9 @@ class GameController extends MainController {
             // par type de question et niveau de difficulté
             for (let i = 0; i < records.length; i++) {
 
-                const key = records[i].isHardcore ? 'hardcore' : 'classic';
+                const key = records[i].isHardcore
+                    ? GameController.HARDCORE_DIFFICULTY
+                    : GameController.CLASSIC_DIFFICULTY;
 
                 if (i !== 0 && records[i-1].id === records[i].id) {
                     categories.forEach(categoryInArray => {
