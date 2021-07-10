@@ -52,6 +52,7 @@ class GameController extends MainController {
 
         response.gameOptions.questionTypes = await this.getQuestionTypes(categories);
         response.gameOptions.winCriterion = this.getWinCriterion(gameMode);
+        // response.gameOptions.hardcore = this.hasHardcoreQuestions(categories)
         this.response = response;
     };
 
@@ -148,7 +149,7 @@ class GameController extends MainController {
     };
 
     getQuestionTypes = async (categories) => {
-
+        console.log('categories from getQuestionTypes', categories);
         try {
             return await db.sequelize.query(`SELECT "question_type"."name", "question_type"."label",
             "question_type"."id", COUNT(*) as "nbQuestions"
@@ -187,6 +188,26 @@ class GameController extends MainController {
 
         return winCriterion;
     };
+
+    hasHardcoreQuestions = async (categories) => {
+        try {
+            // envoyer les uuids
+            const response = await db.sequelize.query(`SELECT COUNT(*) FROM "question" INNER JOIN "category_question"
+            ON "question"."id" = "category_question"."questionId" 
+            WHERE "question"."isHardcore" = true 
+            AND "category_question"."categoryId" IN (:categories)
+            AND "question"."status" = :status`,{
+                replacements: {
+                    status: db.Question.STATUS_APPROVED,
+                    categories: categories
+                },
+                type: db.sequelize.QueryTypes.SELECT
+            });)
+        } catch (error) {
+            console.error(error);
+            throw new DatabaseError();
+        }
+    }
 
 
 }
