@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Category{% endblock %}
+{% block title %}{{ context == 'show' ? 'Catégorie' : 'Modifier une catégorie'}}{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -24,7 +24,7 @@
             />
         </div>
         <div class="col-3">
-            <label for="category-updated-at" class="form-label lead">Mis à jour le</label>
+            <label for="category-updated-at" class="form-label lead">Modifié le</label>
             <input type="text"
                    id="category-updated-at"
                    class="form-control"
@@ -90,8 +90,4 @@
         </button>
     </div>
     {{ form_end(form) }}
-
-{#    <a href="{{ path('category_index') }}">back to list</a>#}
-
-{#    {{ include('category/_delete_form.html.twig') }}#}
 {% endblock %}
