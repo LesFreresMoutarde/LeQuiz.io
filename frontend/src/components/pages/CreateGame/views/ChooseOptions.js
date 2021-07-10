@@ -24,7 +24,9 @@ export default class ChooseOptions extends React.Component {
             nextButtonDisabled: true,
             winCriterionMaxValue: 0,
             winCriterionInputValue: 0,
-            questionTypes: []
+            questionTypes: [],
+            showHardcoreQuestionInput: false,
+            withHardcoreQuestions: false,
         };
 
     }
@@ -33,7 +35,7 @@ export default class ChooseOptions extends React.Component {
         (async () => {
             try {
 
-                let { winCriterionInputValue } = this.state;
+                let { winCriterionInputValue, withHardcoreQuestions } = this.state;
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                 const categoriesId = gameConfiguration.categories.map((category) => (category.id));
                 const gameMode = gameConfiguration.gameMode.classname;
@@ -50,8 +52,6 @@ export default class ChooseOptions extends React.Component {
                      questionType.checked = true;
                 });
 
-                console.log('questionTypes', questionTypes);
-
                 if (gameConfiguration.questionTypes.length > 0) {
 
                     const pickedQuestionTypes = gameConfiguration.questionTypes.map(questionType => questionType.name);
@@ -61,15 +61,17 @@ export default class ChooseOptions extends React.Component {
                             questionType.checked = false;
                     });
 
-                   winCriterionInputValue = gameConfiguration.winCriterion
-
+                   winCriterionInputValue = gameConfiguration.winCriterion;
+                   withHardcoreQuestions = gameConfiguration.withHardcoreQuestions;
                 }
 
                 this.setState({
                     isLoading: false,
                     gameOptions: responseData.gameOptions,
                     questionTypes,
-                    winCriterionInputValue
+                    winCriterionInputValue,
+                    withHardcoreQuestions,
+                    showHardcoreQuestionsInput: this.isHardcoreSettingsVisible(gameConfiguration.categories)
                 });
 
                 this.evaluateWinCriterionMaxValue();
@@ -102,17 +104,27 @@ export default class ChooseOptions extends React.Component {
         }
     }
 
+    onHardcoreQuestionsChange = (evt) => {
+        this.setState({withHardcoreQuestions: evt.currentTarget.checked});
+        setTimeout(() => {
+            this.evaluateWinCriterionMaxValue();
+        },0);
+    }
+
     evaluateWinCriterionMaxValue = () => {
 
         const questionTypesAvailable = this.state.gameOptions.questionTypes;
-        const { questionTypes } = this.state;
+        const { questionTypes, withHardcoreQuestions } = this.state;
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        const pickedQuestionTypes = questionTypes.filter(questionType => questionType.checked)
 
         const winCriterionMaxValue = GameUtil.getWinCriterionMaxValue
         (
             gameConfiguration.gameMode.classname,
+            gameConfiguration.categories,
             questionTypesAvailable,
-            questionTypes
+            pickedQuestionTypes,
+            withHardcoreQuestions
         );
 
         this.setState({winCriterionMaxValue});
@@ -140,9 +152,21 @@ export default class ChooseOptions extends React.Component {
 
     };
 
+    isHardcoreSettingsVisible = (categories) => {
+        let isHardcoreSettingsVisible = false;
+        categories.forEach(category => {
+            for (const type in category.nbQuestions) {
+                console.log("type",category.nbQuestions[type]);
+                if (category.nbQuestions[type].hasOwnProperty(GameUtil.HARDCORE_DIFFICULTY))
+                    isHardcoreSettingsVisible = true
+            }
+        })
+
+        return isHardcoreSettingsVisible;
+    }
 
     submitGameOptions = async () => {
-        const { questionTypes, winCriterionInputValue } = this.state;
+        const { questionTypes, winCriterionInputValue, withHardcoreQuestions } = this.state;
 
         questionTypes.forEach(questionType => {
             if (questionType.checked) {
@@ -150,7 +174,7 @@ export default class ChooseOptions extends React.Component {
             }
         });
 
-        this.props.submit(questionTypes, winCriterionInputValue)
+        this.props.submit(questionTypes, winCriterionInputValue, withHardcoreQuestions);
 
     };
 
@@ -179,7 +203,9 @@ export default class ChooseOptions extends React.Component {
                 winCriterionMaxValue,
                 nextButtonDisabled,
                 questionTypes,
-                winCriterionInputValue
+                winCriterionInputValue,
+                withHardcoreQuestions,
+                showHardcoreQuestionsInput
             } = this.state;
 
             return (
@@ -196,7 +222,18 @@ export default class ChooseOptions extends React.Component {
                             validateWinCriterionValue={this.validateWinCriterionValue}
                         />
                         <QuestionTypes questionTypes={questionTypes}
-                                       pickQuestionType={this.pickQuestionType}/>
+                                       pickQuestionType={this.pickQuestionType}
+                        />
+                        {showHardcoreQuestionsInput &&
+                            <>
+                                <p>Ajouter les questions "hardcore"</p>
+                                <input type="checkbox"
+                                       style={{opacity: 1}}
+                                       onChange={(e) => this.onHardcoreQuestionsChange(e)}
+                                       checked={withHardcoreQuestions}
+                                />
+                            </>
+                        }
                     </div>
                     <NextButton disabled={nextButtonDisabled}
                                 onClick={this.submitGameOptions}
