@@ -82,12 +82,11 @@ export default class extends Controller {
 
             if (response.status === 500) throw new Error(await response.json())
 
-            //Todo toastr quand debug
-            console.log('Success')
+            toastr.success('Mail de réinitialisation envoyé.')
 
         } catch (error) {
-            //TODO toastr quand debug
-            console.error(error.message)
+            console.error(error);
+            toastr.error('Impossible de réaliser cette opération. Réessayez plus tard.');
         }
     }
 }

@@ -3,6 +3,11 @@
 {% block title %}Ajouter une question{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="row">
         <h1 class="h2">Ajouter une question</h1>
         <hr>
