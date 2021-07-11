@@ -157,7 +157,8 @@ class App extends React.Component {
             );
         }
 
-        const hideFooter = isMobileOnly
+        // If user device is a smartphone, display footer only on homepage
+        const hideFooter = isMobileOnly && !isLoading && window.location.pathname !== '/';
 
         if(isLoading) {
             return (
@@ -169,15 +170,13 @@ class App extends React.Component {
             );
         } else {
             return (
-                <div className="app">
+                <div className={`app ${hideFooter ? 'no-footer' : ''}`}>
                     {showFeedbackModal &&
                         <FeedbackModal closeModal={this.closeFeedbackModal}/>
                     }
                     <div className="content-wrapper">
                         <Header user={user} showBackArrow={showBackArrow} backArrowOnClick={backArrowOnClick} />
-                        {/*<img src="http://localhost:8081/resources/toto.jpg" alt="Logo" />*/}
                         <div id="page-content">
-
                             <Switch>
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/login" component={Login} />
@@ -193,7 +192,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    {!hideFooter && <Footer displayFeedbackModal={this.displayFeedbackModal}/>}
+                    <Footer displayFeedbackModal={this.displayFeedbackModal}/>
                 </div>
             );
         }

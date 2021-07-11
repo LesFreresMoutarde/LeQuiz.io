@@ -45,13 +45,18 @@
     src: url("/webfonts/CooperHewitt-Medium.woff2") format("woff2");
 }
 
+html,
+body {
+    height: 100%;
+}
+
 body {
     position: relative;
 
     background-color: var(--app-background-color);
     background-image: url("/img/background.png");
     background-repeat: repeat;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     margin-bottom: -60px;
 
     font-family: 'Cooper Hewitt', sans-serif;
@@ -94,8 +99,12 @@ a:hover {
 }
 
 .content-wrapper {
-    min-height: calc(100vh - 60px);
+    height: calc(100% - 60px);
     font-size: 1.1em;
+}
+
+.app.no-footer .content-wrapper {
+    height: 100%;
 }
 
 .app-header {
@@ -201,11 +210,20 @@ a:hover {
     }
 }
 
+#root,
+.app {
+    height: 100%;
+}
+
 .app > footer {
     width: 100%;
     height: 60px;
 
     display: table;
+}
+
+.app.no-footer > footer {
+    display: none;
 }
 
 .app > footer .footer-text {
