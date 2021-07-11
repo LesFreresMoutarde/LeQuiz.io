@@ -1,4 +1,7 @@
 :root {
+    --app-header-height: 90px;
+    --app-footer-height: 60px;
+
     --app-background-color: #23C5EF;
 
     --element-primary-background-color: #24BFF0;
@@ -57,7 +60,7 @@ body {
     background-image: url("/img/background.png");
     background-repeat: repeat;
     /*min-height: 100vh;*/
-    margin-bottom: -60px;
+    margin-bottom: calc(var(--app-footer-height) * -1);
 
     font-family: 'Cooper Hewitt', sans-serif;
     letter-spacing: 0.03em;
@@ -99,7 +102,7 @@ a:hover {
 }
 
 .content-wrapper {
-    height: calc(100% - 60px);
+    height: calc(100% - var(--app-footer-height));
     font-size: 1.1em;
 }
 
@@ -109,7 +112,7 @@ a:hover {
 
 .app-header {
     padding: 20px;
-    height: 90px;
+    height: var(--app-header-height);
 
     display: flex;
     align-items: center;
@@ -217,7 +220,7 @@ a:hover {
 
 .app > footer {
     width: 100%;
-    height: 60px;
+    height: var(--app-footer-height);
 
     display: flex;
     align-items: center;
@@ -253,6 +256,10 @@ a:hover {
 #page-content {
     margin-left: 40px;
     margin-right: 40px;
+
+    height: calc(100% - var(--app-header-height));
+
+    padding-bottom: 20px;
 }
 
 input {
