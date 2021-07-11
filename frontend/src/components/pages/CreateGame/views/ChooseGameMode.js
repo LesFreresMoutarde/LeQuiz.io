@@ -76,7 +76,7 @@ export default class ChooseGameMode extends React.Component {
                     <div className="create-game-header">
                         <Title title={ChooseGameMode.TITLE}/>
                     </div>
-                    <div className="game-mode-container flex-item-full-space">
+                    <div className="game-mode-container">
                         {gameModes.map((gameMode, index) => {
                             return <GameMode gameMode={gameMode} key={index} pickGameMode={this.pickGameMode}/>
                         })}
