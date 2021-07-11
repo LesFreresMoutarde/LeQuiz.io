@@ -244,19 +244,18 @@ export default class CreateGame extends React.Component {
             );
         }
 
-
-        if (display.gameMode) {
-
-            return(<ChooseGameMode submit={this.submitGameMode} />)
-
-        } else if (display.categories) {
-
-            return(<ChooseCategories submit={this.submitCategories} />)
-
-        } else if (display.options) {
-
-            return(<ChooseOptions submit={this.submitOptions} />)
-
-        }
+        return (
+            <div className="flex-container-column" style={{height: '100%'}}>
+                {(() => {
+                    if (display.gameMode) {
+                        return(<ChooseGameMode submit={this.submitGameMode} />)
+                    } else if (display.categories) {
+                        return(<ChooseCategories submit={this.submitCategories} />)
+                    } else if (display.options) {
+                        return(<ChooseOptions submit={this.submitOptions} />)
+                    }
+                })()}
+            </div>
+        );
     }
 }
