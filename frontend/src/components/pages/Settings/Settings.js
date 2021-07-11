@@ -80,7 +80,7 @@ class Settings extends React.Component {
                         <li data-desktop-nav="password"><a onClick={this.onNavigate}>Mot de passe</a></li>
                     </ul>
                 </nav>
-                <div className="flex-item-full-width">
+                <div className="flex-item-full-space">
                     <h1 className="mb">Paramètres</h1>
 
                     <div id="desktop-variable-content">
