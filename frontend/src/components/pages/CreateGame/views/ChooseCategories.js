@@ -32,7 +32,7 @@ export default class ChooseCategories extends React.Component {
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                 const categories = await this.getCategories();
 
-                categories.map(category => {
+                categories.forEach(category => {
                     category.selected = false;
                 });
 
@@ -41,7 +41,7 @@ export default class ChooseCategories extends React.Component {
                     categories,
                 });
 
-                gameConfiguration.categories.map(gameConfigurationCategory => {
+                gameConfiguration.categories.forEach(gameConfigurationCategory => {
                     const category = categories.find(category => category.id === gameConfigurationCategory.id);
                     this.pickCategory(category);
                 });
@@ -70,7 +70,7 @@ export default class ChooseCategories extends React.Component {
     pickAll = () => {
         const { categories } = this.state;
 
-        categories.map((category) => {
+        categories.forEach((category) => {
             category.selected = true;
         });
 
@@ -80,7 +80,7 @@ export default class ChooseCategories extends React.Component {
     unpickAll = () => {
         const { categories } = this.state;
 
-        categories.map((category) => {
+        categories.forEach((category) => {
             category.selected = false;
         });
 
