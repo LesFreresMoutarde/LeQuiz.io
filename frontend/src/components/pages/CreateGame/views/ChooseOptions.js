@@ -156,9 +156,9 @@ export default class ChooseOptions extends React.Component {
         let isHardcoreSettingsVisible = false;
         categories.forEach(category => {
             for (const type in category.nbQuestions) {
-                console.log("type",category.nbQuestions[type]);
                 if (category.nbQuestions[type].hasOwnProperty(GameUtil.HARDCORE_DIFFICULTY))
                     isHardcoreSettingsVisible = true
+                    break;
             }
         })
 
