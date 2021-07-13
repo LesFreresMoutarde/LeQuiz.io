@@ -165,7 +165,7 @@ export default class ChooseCategories extends React.Component {
                         <Title title={ChooseCategories.TITLE}/>
                     </div>
 
-                    <div className="category-container">
+                    <div className="category-container flex-item-full-space flex-container-column">
                         <div className="category-container-header">
                             <PickAll pickAll={this.pickAll} disabled={pickAllDisabled}/>
                             <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>
@@ -191,39 +191,27 @@ export default class ChooseCategories extends React.Component {
                         </div>
                     </div>
 
-                    <div className="selected-categories-container">
-                        <div className="selected-categories-list">
-                            scrollable
-                        </div>
-                    </div>
 
-                    {/*<div className="category-container">*/}
-                    {/*   {categories.map((category, index) => {*/}
-                    {/*        if (index === 0) {*/}
-                    {/*           return (*/}
-                    {/*               <div key={index} className="category-wrapper">*/}
-                    {/*                   <div className="pick-buttons-wrapper">*/}
-                    {/*                       <PickAll id="pick-all" pickAll={this.pickAll} disabled={pickAllDisabled}/>*/}
-                    {/*                       <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>*/}
-                    {/*                   </div>*/}
-                    {/*                   <Category category={category} pickCategory={this.pickCategory}/>*/}
-                    {/*               </div>*/}
-                    {/*           )*/}
-                    {/*       } else {*/}
-                    {/*           return (*/}
-                    {/*               <div key={index} className="category-wrapper">*/}
-                    {/*                   <Category category={category} pickCategory={this.pickCategory}/>*/}
-                    {/*               </div>*/}
-                    {/*           )*/}
-                    {/*       }*/}
-                    {/*   })}*/}
-                    {/*</div>*/}
-                    <NextButton disabled={nextButtonDisabled}
-                                onClick={this.submitCategories}
-                                sizeClass="large-button"
-                                content="Suivant"
-                                displayClass="visible"
-                    />
+                    <div className="create-game-footer">
+                        <div className="create-game-footer-counterbalance" style={{visibility: 'hidden'}}>
+                            <NextButton disabled={true}
+                                        sizeClass="large-button"
+                                        content="Suivant"
+                                        displayClass="visible"
+                            />
+                        </div>
+                        <div className="selected-categories-container">
+                            <div className="selected-categories-list">
+                                scrollable
+                            </div>
+                        </div>
+                        <NextButton disabled={nextButtonDisabled}
+                                    onClick={this.submitCategories}
+                                    sizeClass="large-button"
+                                    content="Suivant"
+                                    displayClass="visible"
+                        />
+                    </div>
                 </>
             )
         }

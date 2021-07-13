@@ -259,8 +259,6 @@
 
     overflow-y: scroll;
     overflow-x: hidden;
-
-    height: 350px;
 }
 
 .category {
@@ -344,6 +342,13 @@
     border: 3px solid chartreuse;
 }
 
+.create-game-footer {
+    display: flex;
+    margin-top: 40px;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
 @media screen and (max-width: 1336px) {
     :root {
         --category-buttons-count-per-row: 3
@@ -353,6 +358,15 @@
 @media screen and (max-width: 1024px) {
     :root {
         --category-buttons-count-per-row: 2
+    }
+
+    .create-game-footer {
+        justify-content: flex-end;
+    }
+
+    .create-game-footer-counterbalance,
+    .selected-categories-container {
+        display: none;
     }
 }
 
