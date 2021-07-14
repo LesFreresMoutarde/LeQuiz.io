@@ -49,8 +49,8 @@ export default class CreateGame extends React.Component {
             categories: [],
             questionTypes: [],
             winCriterion: null,
-            difficulty: null,
             roomCode: false,
+            withHardcoreQuestions: null,
         }
     };
 
@@ -113,7 +113,7 @@ export default class CreateGame extends React.Component {
         }
     };
 
-    submitOptions = async (questionTypes, winCriterionValue) => {
+    submitOptions = async (questionTypes, winCriterionValue, withHardcoreQuestions) => {
 
         try {
             if (!this.props.fromRoom) {
@@ -129,6 +129,7 @@ export default class CreateGame extends React.Component {
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                 gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
                 gameConfiguration.questionTypes = questionTypes;
+                gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
                 gameConfiguration.roomCode = roomCode;
 
                 Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
@@ -140,6 +141,7 @@ export default class CreateGame extends React.Component {
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
                 gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
                 gameConfiguration.questionTypes = questionTypes;
+                gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
                 Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
                 this.props.roomInstance.setState({
