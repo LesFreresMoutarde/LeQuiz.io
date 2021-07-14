@@ -59,6 +59,7 @@ export default class CreateGame extends React.Component {
     submitGameMode = (gameMode) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.gameMode = gameMode;
+        GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
         if (!this.props.fromRoom) {
@@ -90,6 +91,7 @@ export default class CreateGame extends React.Component {
     submitCategories = (categories) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.categories = categories;
+        GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
         Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
         if (!this.props.fromRoom) {
@@ -134,6 +136,7 @@ export default class CreateGame extends React.Component {
                 gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
                 gameConfiguration.roomCode = roomCode;
 
+                GameUtil.validateInRoomModifiedGameConfiguration(gameConfiguration);
                 Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
                 this.props.history.push(`/room/${roomCode}`);
@@ -144,6 +147,8 @@ export default class CreateGame extends React.Component {
                 gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
                 gameConfiguration.questionTypes = questionTypes;
                 gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
+
+                GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
                 Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
                 this.props.roomInstance.setState({

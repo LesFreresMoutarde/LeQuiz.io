@@ -95,6 +95,33 @@ class GameUtil {
         return max;
     }
 
+    static validateInRoomModifiedGameConfiguration = (updatedGameConfiguration) => {
+        // Pour chaque catégorie, on a les type de questions choisis
+        console.log("updatedGameConfiguration", updatedGameConfiguration);
+
+        const questionTypesName = updatedGameConfiguration.questionTypes.map(questionType => questionType.name);
+
+        const questionTypesToRemove = [];
+
+        const categoriesQuestionsCount = updatedGameConfiguration.categories.map(category => category.nbQuestions);
+        console.log("catNbQ", categoriesQuestionsCount)
+
+        questionTypesName.forEach((questionTypeName, index) => {
+            if (!categoriesQuestionsCount.some(categoryQuestionCount => categoryQuestionCount.hasOwnProperty(questionTypeName))) {
+                questionTypesToRemove.push(index);
+            }
+        })
+
+        for (let i = questionTypesToRemove.length - 1; i >= 0; i--) {
+            updatedGameConfiguration.questionTypes.splice(i,1);
+        }
+        console.log('question Type after validation', updatedGameConfiguration);
+
+        // updatedGameConfiguration.categories.forEach(category => {
+        //     if (!category.nbQuestions.hasOwnProperty())
+        // })
+    }
+
 
     static verifyAnswer = (answer, question) => {
 
