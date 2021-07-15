@@ -10,6 +10,9 @@ class GameUtil {
 
     static SCORES_TIME = 5*1000;
 
+    static HARDCORE_DIFFICULTY = 'hardcore';
+
+    static CLASSIC_DIFFICULTY = 'classic';
 
     static GAME_CONFIGURATION = {
         key: 'gameConfiguration',
@@ -43,26 +46,38 @@ class GameUtil {
         return check;
     }
 
-    static getWinCriterionMaxValue = (gameMode, questionTypesAvailable, questionTypesInput) => {
+    static getWinCriterionMaxValue = (gameMode, pickedCategories,questionTypesAvailable, pickedQuestionTypes, withHardcoreQuestions) => {
 
-        const questionTypesAvailableLabel = questionTypesAvailable.map(questionType => (questionType.type));
-        const questionTypesInputLabel = questionTypesInput.map(questionTypeInput => (questionTypeInput.type));
+        const questionTypesAvailableName = questionTypesAvailable.map(questionType => (questionType.name));
+        const questionTypesInputName = pickedQuestionTypes.map(questionTypeInput => (questionTypeInput.name));
+
+        questionTypesInputName.forEach(questionTypeInputName => {
+            if (!questionTypesAvailableName.includes(questionTypeInputName)) throw new Error('Invalid question type')
+        });
 
         let max = 0;
 
-        questionTypesInputLabel.forEach(questionTypeInputLabel => {
-            if (!questionTypesAvailableLabel.includes(questionTypeInputLabel)) throw new Error('Invalid question type')
-        });
-
         switch (gameMode) {
             case 'Serie':
+                pickedCategories.forEach(category => {
 
-                for (const questionTypeInput of questionTypesInput) {
-                    if (questionTypeInput.checked) max += Number(questionTypeInput.nbQuestions);
-                }
+                    pickedQuestionTypes.forEach(questionType => {
+
+                        if (category.nbQuestions.hasOwnProperty(questionType.name)) {
+
+                            for (const difficulty in category.nbQuestions[questionType.name]) {
+
+                                if ((difficulty === GameUtil.HARDCORE_DIFFICULTY && withHardcoreQuestions)
+                                    || (difficulty === GameUtil.CLASSIC_DIFFICULTY))
+                                {
+                                    max += category.nbQuestions[questionType.name][difficulty];
+                                }
+                            }
+                        }
+                    })
+                })
 
                 if (max > 100) max = 100;
-
                 break;
             case 'Ascension':
                 break;
