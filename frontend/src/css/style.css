@@ -1119,11 +1119,6 @@ button {
         font-size: 1.8em;
     }
 
-    /* Create game cycle */
-    .create-game-header {
-        flex-direction: column;
-    }
-
     .pick-buttons {
         width: 30%;
     }
@@ -1260,4 +1255,14 @@ button {
 #logo {
     margin: 0 auto;
     display: block;
+}
+
+@media screen and (max-height: 768px) {
+    :root {
+        --app-header-height: 60px;
+    }
+
+    .app-header {
+        padding: 5px 20px;
+    }
 }

@@ -141,7 +141,8 @@ h6.mb, .h6.mb {
     display: none;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 992px),
+       screen and (max-height: 768px) {
     h1, .h1 {
         font-size: 3em;
     }

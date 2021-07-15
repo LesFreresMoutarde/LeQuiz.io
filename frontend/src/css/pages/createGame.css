@@ -401,3 +401,9 @@
         font-size: 1.2em;
     }
 }
+
+@media screen and (max-height: 768px) {
+    .create-game-header {
+        margin-bottom: 20px;
+    }
+}
