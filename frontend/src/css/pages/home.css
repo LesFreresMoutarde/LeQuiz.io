@@ -71,11 +71,18 @@
     background-color: var(--button-blue-color-lighter);
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 768px) {
     .home-create-room-button {
         font-size: 3em;
         padding: 50px;
         border-radius: 50px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .home-create-room-button {
+        font-size: 2.5em;
+        padding: 30px;
     }
 
     .home-join-room-form {
@@ -85,7 +92,7 @@
     }
 
     #home-join-room-input {
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
 
     #home-join-room-button {
@@ -98,13 +105,8 @@
     }
 }
 
-@media screen and (max-width: 375px) {
-    .home-create-room-button {
-        font-size: 2.5em;
-        padding: 30px;
-    }
-
-    #home-join-room-input {
-        font-size: 1.3em;
+@media screen and (max-height: 768px) {
+    .home-join-room-form {
+        margin-top: 50px;
     }
 }
