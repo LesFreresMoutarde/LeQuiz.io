@@ -406,4 +406,13 @@
     .create-game-header {
         margin-bottom: 20px;
     }
+    
+    .create-game-footer {
+        justify-content: flex-end;
+    }
+
+    .create-game-footer-counterbalance,
+    .selected-categories-container {
+        display: none;
+    }
 }
