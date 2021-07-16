@@ -12,17 +12,10 @@ class Lobby extends React.Component {
 
     static LOBBY_TITLE = "Salon de jeu";
 
-
     constructor(props) {
         super(props);
 
         this.roomCodeHoverTimeout = null;
-    }
-
-    componentDidMount() {
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        // console.log("gameConfig", gameConfiguration)
-        //TODO
     }
 
     onRoomCodeMouseEnter = () => {
