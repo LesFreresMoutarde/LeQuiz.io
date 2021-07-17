@@ -39,11 +39,11 @@ class GameUtil {
 
         const questionTypesId = gameConfiguration.questionTypes.map(questionType => questionType.id);
         const categoriesId = gameConfiguration.categories.map(category => category.id);
-        const limit = Number(gameConfiguration.winCriterion);
 
         //TODO Prendre les infos pertinentes concernant les catégories et les types
         // Revenir dessus quand edit de question (back office) fonctionnel
         if (hardcoreQuestionCount === 0) {
+            const classicLimit = Number(gameConfiguration.winCriterion);
             return {
                 query:`SELECT "question"."content", "question"."answer", "question"."media", 
                     "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
@@ -54,6 +54,7 @@ class GameUtil {
                     INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
                     INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
                     WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
+                    AND "question"."isHardcore" = false
                     AND "category_question"."categoryId" IN (:categories) 
                     ORDER BY random() LIMIT :limit;`
                 ,
@@ -61,14 +62,51 @@ class GameUtil {
                     replacements: {
                         questionTypes: questionTypesId,
                         categories: categoriesId,
-                        limit,
+                        limit: classicLimit,
 
                     },
                     type: db.sequelize.QueryTypes.SELECT
                 }
             };
         } else {
-
+            const classicLimit = Number(gameConfiguration.winCriterion) - hardcoreQuestionCount;
+            return {
+                query:`(SELECT "question"."content", "question"."answer", "question"."media", 
+                    "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
+                    "category"."name" as "category", "category"."label" as "categoryLabel"
+                    FROM "question"
+                    INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
+                    INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
+                    INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
+                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
+                    WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
+                    AND "question"."isHardcore" = false
+                    AND "category_question"."categoryId" IN (:categories) 
+                    ORDER BY random() LIMIT :classicLimit)
+                    UNION
+                    (SELECT "question"."content", "question"."answer", "question"."media", 
+                    "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
+                    "category"."name" as "category", "category"."label" as "categoryLabel"
+                    FROM "question"
+                    INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
+                    INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
+                    INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
+                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
+                    WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
+                    AND "question"."isHardcore" = true
+                    AND "category_question"."categoryId" IN (:categories) 
+                    ORDER BY random() LIMIT :hardcoreLimit); `
+                ,
+                options: {
+                    replacements: {
+                        questionTypes: questionTypesId,
+                        categories: categoriesId,
+                        classicLimit,
+                        hardcoreLimit: hardcoreQuestionCount
+                    },
+                    type: db.sequelize.QueryTypes.SELECT
+                }
+            };
         }
         //TODO V2
         /*let categoriesAndItsQuestionsNb = [];
@@ -111,25 +149,19 @@ class GameUtil {
         const minPercentage = 20;
         const percentagesPossible = [];
         const hardcoreQuestionCount = GameUtil.getHardcoreQuestionCount(gameConfiguration);
-        console.log("nb hardcore question",hardcoreQuestionCount);
 
         const hardcoreQuestionPercentage = (hardcoreQuestionCount * 100) / gameConfiguration.winCriterion;
-        console.log("pctage question hardcore", hardcoreQuestionPercentage)
-        const hardcoreQuestionMaxPercentagePossible = (parseInt(hardcoreQuestionPercentage / 10, 10)) * 10
-        console.log("max pct", hardcoreQuestionMaxPercentagePossible);
 
-        //TODO remettre
-        // if (hardcoreQuestionMaxPercentagePossible >= minPercentage) return hardcoreQuestionCount;
+        const hardcoreQuestionMaxPercentagePossible = (parseInt(hardcoreQuestionPercentage / 10, 10)) * 10
+
+        if (hardcoreQuestionMaxPercentagePossible >= minPercentage) return hardcoreQuestionCount;
 
         for (let i = minPercentage; i <= hardcoreQuestionMaxPercentagePossible; i+=10) {
             percentagesPossible.push(i);
         }
-        console.log("possible", percentagesPossible)
+
         const randomPercentage = percentagesPossible[RandomUtil.getRandomInt(percentagesPossible.length)];
 
-        console.log("random percantes", randomPercentage)
-
-        console.log('nb de questions hardcore', parseInt((randomPercentage * gameConfiguration.winCriterion) / 100))
         return parseInt((randomPercentage * gameConfiguration.winCriterion) / 100);
     }
 
