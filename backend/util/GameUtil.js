@@ -152,11 +152,11 @@ class GameUtil {
 
         const hardcoreQuestionPercentage = (hardcoreQuestionCount * 100) / gameConfiguration.winCriterion;
 
-        const hardcoreQuestionMaxPercentagePossible = (parseInt(hardcoreQuestionPercentage / 10, 10)) * 10
+        const hardcoreQuestionPercentageRounded = (parseInt(hardcoreQuestionPercentage / 10, 10)) * 10
 
-        if (hardcoreQuestionMaxPercentagePossible >= minPercentage) return hardcoreQuestionCount;
+        if (hardcoreQuestionPercentageRounded >= minPercentage) return hardcoreQuestionCount;
 
-        for (let i = minPercentage; i <= hardcoreQuestionMaxPercentagePossible; i+=10) {
+        for (let i = minPercentage; i <= hardcoreQuestionPercentageRounded; i+=10) {
             percentagesPossible.push(i);
         }
 
