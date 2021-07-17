@@ -21,7 +21,6 @@ const LegalNotice = () => {
                 <strong>Responsables de publication</strong> :<br/>
                 Alexis LEJEUNE<br/>
                 Emile CALIXTE<br/>
-                Jimmy MATHURIN<br/>
                 contact@lequiz.io<br/>
                 <strong>Hébergement</strong> :<br/>
                 GANDI SAS<br/>
