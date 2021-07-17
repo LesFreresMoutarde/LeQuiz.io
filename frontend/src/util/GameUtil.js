@@ -126,7 +126,7 @@ class GameUtil {
 
             // We ensure that the hardcore difficulty is available in at least one category
             updatedGameConfiguration.withHardcoreQuestions = categoriesQuestionsCount.some(categoryQuestionsCount => {
-                if (Object.values(Object.values(categoryQuestionsCount))
+                if (Object.values(categoryQuestionsCount)
                     .some(difficulties => difficulties.hasOwnProperty(GameUtil.HARDCORE_DIFFICULTY)))
                     return true;
             });
