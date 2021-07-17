@@ -1,3 +1,4 @@
+const RandomUtil = require("./RandomUtil");
 
 class GameUtil {
 
@@ -8,15 +9,16 @@ class GameUtil {
 
     static generateQuizQuery = (gameConfiguration) => {
         let query = ''
-        let hardcoreQuestionsPercentage = 0;
+        let hardcoreQuestionCount = 0;
 
         if (gameConfiguration.withHardcoreQuestions) {
-            GameUtil.getHardcoreQuestionsPercentageInQuiz(gameConfiguration)
+            console.log("temoin")
+            hardcoreQuestionCount = GameUtil.getHardcoreQuestionCountForQuery(gameConfiguration);
         }
 
         switch (gameConfiguration.gameMode.classname) {
             case 'Serie':
-                query = GameUtil.generateSerieQuizQuery(gameConfiguration);
+                query = GameUtil.generateSerieQuizQuery(gameConfiguration, hardcoreQuestionCount);
                 break;
 
             case 'Ascension':
@@ -33,7 +35,7 @@ class GameUtil {
 
     };
 
-    static generateSerieQuizQuery = (gameConfiguration) => {
+    static generateSerieQuizQuery = (gameConfiguration, hardcoreQuestionCount) => {
 
         const questionTypesId = gameConfiguration.questionTypes.map(questionType => questionType.id);
         const categoriesId = gameConfiguration.categories.map(category => category.id);
@@ -41,30 +43,33 @@ class GameUtil {
 
         //TODO Prendre les infos pertinentes concernant les catégories et les types
         // Revenir dessus quand edit de question (back office) fonctionnel
-        return {
-            query:`SELECT "question"."content", "question"."answer", "question"."media", 
-                "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
-                "category"."name" as "category", "category"."label" as "categoryLabel"
-                FROM "question"
-                INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
-                INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
-                INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
-                INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
-                WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
-                AND "category_question"."categoryId" IN (:categories) 
-                ORDER BY random() LIMIT :limit;`
-            ,
-            options: {
-                replacements: {
-                    questionTypes: questionTypesId,
-                    categories: categoriesId,
-                    limit,
+        if (hardcoreQuestionCount === 0) {
+            return {
+                query:`SELECT "question"."content", "question"."answer", "question"."media", 
+                    "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
+                    "category"."name" as "category", "category"."label" as "categoryLabel"
+                    FROM "question"
+                    INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
+                    INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
+                    INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
+                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
+                    WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
+                    AND "category_question"."categoryId" IN (:categories) 
+                    ORDER BY random() LIMIT :limit;`
+                ,
+                options: {
+                    replacements: {
+                        questionTypes: questionTypesId,
+                        categories: categoriesId,
+                        limit,
 
-                },
-                type: db.sequelize.QueryTypes.SELECT
-            }
-        };
+                    },
+                    type: db.sequelize.QueryTypes.SELECT
+                }
+            };
+        } else {
 
+        }
         //TODO V2
         /*let categoriesAndItsQuestionsNb = [];
         const nbQuestionsPerCategory = Math.floor(
@@ -102,9 +107,30 @@ class GameUtil {
         return quiz;
     }
 
-    static getHardcoreQuestionsPercentageInQuiz = (gameConfiguration) => {
+    static getHardcoreQuestionCountForQuery = (gameConfiguration) => {
+        const minPercentage = 20;
+        const percentagesPossible = [];
         const hardcoreQuestionCount = GameUtil.getHardcoreQuestionCount(gameConfiguration);
         console.log("nb hardcore question",hardcoreQuestionCount);
+
+        const hardcoreQuestionPercentage = (hardcoreQuestionCount * 100) / gameConfiguration.winCriterion;
+        console.log("pctage question hardcore", hardcoreQuestionPercentage)
+        const hardcoreQuestionMaxPercentagePossible = (parseInt(hardcoreQuestionPercentage / 10, 10)) * 10
+        console.log("max pct", hardcoreQuestionMaxPercentagePossible);
+
+        //TODO remettre
+        // if (hardcoreQuestionMaxPercentagePossible >= minPercentage) return hardcoreQuestionCount;
+
+        for (let i = minPercentage; i <= hardcoreQuestionMaxPercentagePossible; i+=10) {
+            percentagesPossible.push(i);
+        }
+        console.log("possible", percentagesPossible)
+        const randomPercentage = percentagesPossible[RandomUtil.getRandomInt(percentagesPossible.length)];
+
+        console.log("random percantes", randomPercentage)
+
+        console.log('nb de questions hardcore', parseInt((randomPercentage * gameConfiguration.winCriterion) / 100))
+        return parseInt((randomPercentage * gameConfiguration.winCriterion) / 100);
     }
 
     static getHardcoreQuestionCount = (gameConfiguration) => {
