@@ -4,8 +4,16 @@ class GameUtil {
     static ROUND_TIME = 12*1000;
     static SCORES_TIME = 5*1000;
 
+    static HARDCORE_DIFFICULTY = 'hardcore';
+
     static generateQuizQuery = (gameConfiguration) => {
         let query = ''
+        let hardcoreQuestionsPercentage = 0;
+
+        if (gameConfiguration.withHardcoreQuestions) {
+            GameUtil.getHardcoreQuestionsPercentageInQuiz(gameConfiguration)
+        }
+
         switch (gameConfiguration.gameMode.classname) {
             case 'Serie':
                 query = GameUtil.generateSerieQuizQuery(gameConfiguration);
@@ -92,6 +100,29 @@ class GameUtil {
         });
 
         return quiz;
+    }
+
+    static getHardcoreQuestionsPercentageInQuiz = (gameConfiguration) => {
+        const hardcoreQuestionCount = GameUtil.getHardcoreQuestionCount(gameConfiguration);
+        console.log("nb hardcore question",hardcoreQuestionCount);
+    }
+
+    static getHardcoreQuestionCount = (gameConfiguration) => {
+        const questionCountPerCategory = gameConfiguration.categories.map(category => category.nbQuestions);
+
+        let hardcoreQuestionCount = 0
+
+        questionCountPerCategory.forEach((questionCountForOneCategory) => {
+            Object.values(questionCountForOneCategory).forEach(questionCountPerType => {
+                for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
+                    if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
+                        hardcoreQuestionCount += countPerDifficulty;
+                    }
+                }
+            })
+        })
+
+        return hardcoreQuestionCount;
     }
 
 }
