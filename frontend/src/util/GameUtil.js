@@ -28,6 +28,10 @@ class GameUtil {
         }
     };
 
+    static MAX_QUESTIONS = {
+        'Serie': 100,
+    }
+
     static checkGameConfiguration = (history) => {
         const { pathname } = history.location;
         const slug = pathname.split('/')[pathname.split('/').length - 1];
@@ -77,7 +81,7 @@ class GameUtil {
                     })
                 })
 
-                if (max > 100) max = 100;
+                if (max > GameUtil.MAX_QUESTIONS[gameMode]) max = GameUtil.MAX_QUESTIONS[gameMode];
                 break;
             case 'Ascension':
                 break;
@@ -93,6 +97,69 @@ class GameUtil {
         }
 
         return max;
+    }
+
+    static validateInRoomModifiedGameConfiguration = (updatedGameConfiguration) => {
+
+        const questionTypesName = updatedGameConfiguration.questionTypes.map(questionType => questionType.name);
+
+        const questionTypesToRemove = [];
+
+        const categoriesQuestionsCount = updatedGameConfiguration.categories.map(category => category.nbQuestions);
+
+        // Verify if every picked question types is available in picked categories
+        questionTypesName.forEach((questionTypeName, index) => {
+            if (!categoriesQuestionsCount
+                .some(categoryQuestionCount => categoryQuestionCount.hasOwnProperty(questionTypeName)))
+            {
+                questionTypesToRemove.push(index);
+            }
+        })
+
+        // If not they are removed
+        for (let i = questionTypesToRemove.length - 1; i >= 0; i--) {
+            updatedGameConfiguration.questionTypes.splice(questionTypesToRemove[i],1);
+        }
+
+        // If configuration previously set withHardcoreQuestions at true
+        if (updatedGameConfiguration.withHardcoreQuestions) {
+
+            // We ensure that the hardcore difficulty is available in at least one category
+            updatedGameConfiguration.withHardcoreQuestions = categoriesQuestionsCount.some(categoryQuestionsCount => {
+                if (Object.values(categoryQuestionsCount)
+                    .some(difficulties => difficulties.hasOwnProperty(GameUtil.HARDCORE_DIFFICULTY)))
+                    return true;
+            });
+        }
+
+        let maxPossible = 0
+
+        // We calculate maximum number of questions possible with current configuration
+        categoriesQuestionsCount.forEach((categoryQuestionCount) => {
+            Object.values(categoryQuestionCount).forEach(typeQuestionCount => {
+                for (const [difficulty, countPerDifficulty] of Object.entries(typeQuestionCount)) {
+
+                    // We sum hardcore questions count only if the option has been picked
+                    if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
+                        maxPossible += updatedGameConfiguration.withHardcoreQuestions ? countPerDifficulty : 0
+                        continue;
+                    }
+
+                    maxPossible += countPerDifficulty
+                }
+            })
+        })
+
+        // If it's superior to the maximum set for the picked game mode, value is rectified
+        if (maxPossible > GameUtil.MAX_QUESTIONS[updatedGameConfiguration.gameMode.classname])
+            maxPossible = GameUtil.MAX_QUESTIONS[updatedGameConfiguration.gameMode.classname]
+
+        // If previous winCriterion is superior to the maximum possible, the winCriterion is updated
+        if (updatedGameConfiguration.winCriterion > maxPossible)
+            updatedGameConfiguration.winCriterion = maxPossible;
+
+        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, updatedGameConfiguration);
+        return updatedGameConfiguration;
     }
 
 

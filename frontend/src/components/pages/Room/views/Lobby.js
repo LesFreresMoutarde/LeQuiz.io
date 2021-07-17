@@ -10,7 +10,6 @@ class Lobby extends React.Component {
 
     static LOBBY_TITLE = "Salon de jeu";
 
-
     constructor(props) {
         super(props);
 

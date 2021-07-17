@@ -57,11 +57,12 @@ export default class CreateGame extends React.Component {
     };
 
     submitGameMode = (gameMode) => {
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.gameMode = gameMode;
-        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
         if (!this.props.fromRoom) {
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
             this.setState({
                 display: {
                     gameMode: false,
@@ -70,6 +71,7 @@ export default class CreateGame extends React.Component {
                 }
             })
         } else {
+            gameConfiguration = GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
 
             this.props.roomInstance.setState({
                 display: {
@@ -81,18 +83,17 @@ export default class CreateGame extends React.Component {
                 gameConfiguration
             });
 
-            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
+            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId);
         }
-
-
     };
 
     submitCategories = (categories) => {
-        const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+        let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         gameConfiguration.categories = categories;
-        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
         if (!this.props.fromRoom) {
+            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
             this.setState({
                 display: {
                     gameMode: false,
@@ -101,6 +102,8 @@ export default class CreateGame extends React.Component {
                 }
             })
         } else {
+            gameConfiguration = GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
+
             this.props.roomInstance.setState({
                 display: {
                     lobby: true,
@@ -111,13 +114,19 @@ export default class CreateGame extends React.Component {
                 gameConfiguration
             });
 
-            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
+            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId);
         }
     };
 
     submitOptions = async (questionTypes, winCriterionValue, withHardcoreQuestions) => {
 
         try {
+
+            let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+            gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
+            gameConfiguration.questionTypes = questionTypes;
+            gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
+
             if (!this.props.fromRoom) {
 
                 const response = await ApiUtil.performAPIRequest('game/rooms/create');
@@ -128,10 +137,6 @@ export default class CreateGame extends React.Component {
 
                 const roomCode = responseData.roomCode;
 
-                const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-                gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
-                gameConfiguration.questionTypes = questionTypes;
-                gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
                 gameConfiguration.roomCode = roomCode;
 
                 Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
@@ -139,12 +144,7 @@ export default class CreateGame extends React.Component {
                 this.props.history.push(`/room/${roomCode}`);
 
             } else {
-
-                const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-                gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
-                gameConfiguration.questionTypes = questionTypes;
-                gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
-                Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+                gameConfiguration = GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
 
                 this.props.roomInstance.setState({
                     display: {
