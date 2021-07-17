@@ -29,7 +29,8 @@ const LegalNotice = () => {
                 Pour plus d’informations, veuillez vous référer aux liens suivants :<br/>
                 <a href="https://www.microsoft.com/fr-fr/trust-center/privacy"
                    target="_blank"
-                >La confidentialité chez Microsoft
+                >
+                    La confidentialité chez Microsoft
                 </a>
                 <br/>
                 <a href="https://azure.microsoft.com/fr-fr/support/legal/"
