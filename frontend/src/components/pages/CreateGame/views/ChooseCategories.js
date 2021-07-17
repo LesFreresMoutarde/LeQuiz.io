@@ -197,9 +197,8 @@ export default class ChooseCategories extends React.Component {
                     <div className="create-game-footer">
                         <div className="create-game-footer-counterbalance" style={{visibility: 'hidden'}}>
                             <NextButton disabled={true}
-                                        sizeClass="large-button"
+                                        className="button large green"
                                         content="Suivant"
-                                        displayClass="visible"
                             />
                         </div>
                         <div className="selected-categories-container">
@@ -209,9 +208,8 @@ export default class ChooseCategories extends React.Component {
                         </div>
                         <NextButton disabled={nextButtonDisabled}
                                     onClick={this.submitCategories}
-                                    sizeClass="large-button"
+                                    className="button large green"
                                     content="Suivant"
-                                    displayClass="visible"
                         />
                     </div>
                 </>

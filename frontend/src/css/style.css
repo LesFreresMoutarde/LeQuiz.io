@@ -381,6 +381,18 @@ button {
     transition: background-color 0.1s ease-out;
 }
 
+.button.large {
+    font-size: 1.4rem;
+    padding: 20px 40px;
+    border-radius: 25px;
+}
+
+.button.small {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+
 .button:hover {
     cursor: pointer;
 }
@@ -493,18 +505,6 @@ button {
     margin-bottom: 50px;
 }
 
-.large-button {
-    border: none;
-    border-radius: 20px;
-    padding: 20px 60px;
-    font-size: 1.6em;
-    cursor: pointer;
-}
-
-.large-button:hover {
-    filter: brightness(1.05);
-}
-
 .game-options-container {
     display: flex;
     flex-direction: column;
@@ -563,15 +563,6 @@ button {
 .win-criterion-max {
     font-size: 1.2em;
     margin-bottom: 20px;
-}
-
-.next-button {
-    color: white;
-    background-color: #1E9B48;
-}
-
-.next-button:focus {
-    outline: none;
 }
 
 .cross-button {
