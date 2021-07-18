@@ -105,11 +105,11 @@ class GameUtil {
 
         const questionTypesToRemove = [];
 
-        const categoriesQuestionsCount = updatedGameConfiguration.categories.map(category => category.nbQuestions);
+        const questionCountPerCategory = updatedGameConfiguration.categories.map(category => category.nbQuestions);
 
         // Verify if every picked question types is available in picked categories
         questionTypesName.forEach((questionTypeName, index) => {
-            if (!categoriesQuestionsCount
+            if (!questionCountPerCategory
                 .some(categoryQuestionCount => categoryQuestionCount.hasOwnProperty(questionTypeName)))
             {
                 questionTypesToRemove.push(index);
@@ -125,7 +125,7 @@ class GameUtil {
         if (updatedGameConfiguration.withHardcoreQuestions) {
 
             // We ensure that the hardcore difficulty is available in at least one category
-            updatedGameConfiguration.withHardcoreQuestions = categoriesQuestionsCount.some(categoryQuestionsCount => {
+            updatedGameConfiguration.withHardcoreQuestions = questionCountPerCategory.some(categoryQuestionsCount => {
                 if (Object.values(categoryQuestionsCount)
                     .some(difficulties => difficulties.hasOwnProperty(GameUtil.HARDCORE_DIFFICULTY)))
                     return true;
@@ -135,9 +135,9 @@ class GameUtil {
         let maxPossible = 0
 
         // We calculate maximum number of questions possible with current configuration
-        categoriesQuestionsCount.forEach((categoryQuestionCount) => {
-            Object.values(categoryQuestionCount).forEach(typeQuestionCount => {
-                for (const [difficulty, countPerDifficulty] of Object.entries(typeQuestionCount)) {
+        questionCountPerCategory.forEach((questionCountForOneCategory) => {
+            Object.values(questionCountForOneCategory).forEach(questionCountPerType => {
+                for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
 
                     // We sum hardcore questions count only if the option has been picked
                     if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
