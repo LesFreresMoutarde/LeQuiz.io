@@ -21,12 +21,23 @@ const LegalNotice = () => {
                 <strong>Responsables de publication</strong> :<br/>
                 Alexis LEJEUNE<br/>
                 Emile CALIXTE<br/>
-                Jimmy MATHURIN<br/>
                 contact@lequiz.io<br/>
                 <strong>Hébergement</strong> :<br/>
-                GANDI SAS<br/>
-                63-65 boulevard Masséna Paris 75013 FRANCE<br/>
-                +33 (0) 1 70.37.76.61<br/>
+                Ce site est hébergé sur l'offre Cloud de Microsoft (Azure).<br/>
+                Il est géographiquement localisé dans le centre d'hébergement de
+                Microsoft en France (région Centre).<br/>
+                Pour plus d’informations, veuillez vous référer aux liens suivants :<br/>
+                <a href="https://www.microsoft.com/fr-fr/trust-center/privacy"
+                   target="_blank"
+                >
+                    La confidentialité chez Microsoft
+                </a>
+                <br/>
+                <a href="https://azure.microsoft.com/fr-fr/support/legal/"
+                   target="_blank"
+                >
+                    Mentions légales de Microsoft Azure
+                </a>
             </p>
             <p style={titleStyle}>Conditions d’utilisation</p>
             <p style={paraStyle}>
