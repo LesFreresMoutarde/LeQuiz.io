@@ -12,7 +12,6 @@ class GameUtil {
         let hardcoreQuestionCount = 0;
 
         if (gameConfiguration.withHardcoreQuestions) {
-            console.log("temoin")
             hardcoreQuestionCount = GameUtil.getHardcoreQuestionCountForQuery(gameConfiguration);
         }
 
@@ -154,7 +153,7 @@ class GameUtil {
 
         const hardcoreQuestionPercentageRounded = (parseInt(hardcoreQuestionPercentage / 10, 10)) * 10
 
-        if (hardcoreQuestionPercentageRounded >= minPercentage) return hardcoreQuestionCount;
+        if (hardcoreQuestionPercentageRounded <= minPercentage) return hardcoreQuestionCount;
 
         for (let i = minPercentage; i <= hardcoreQuestionPercentageRounded; i+=10) {
             percentagesPossible.push(i);
