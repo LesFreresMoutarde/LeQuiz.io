@@ -262,19 +262,38 @@
 }
 
 .category {
-    border: 3px solid var(--game-mode-border-color);
     background-color: var(--element-primary-background-color);
-    border-radius: 30px;
 
     transition: background-color 0.1s ease-out;
 
     color: #fff;
+}
+
+.category-list .category {
+    border: 3px solid var(--game-mode-border-color);
+    border-radius: 30px;
+
+    width: var(--category-button-width);
+
     font-size: 1.4em;
 
     margin: var(--category-button-vertical-margin) var(--category-button-horizontal-margin);
     padding: 25px 0;
+}
 
-    width: var(--category-button-width);
+.selected-categories-list .category {
+    border: 2px solid var(--game-mode-border-color);
+    border-radius: 10px;
+
+    width: 120px;
+
+    font-size: 0.82em;
+
+    padding: 5px 0;
+
+    margin-left: 30px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .category:hover {
@@ -339,11 +358,11 @@
 }
 
 .selected-categories-list {
-    border: 3px solid chartreuse;
-
     max-height: 150px;
     overflow-y: scroll;
     overflow-x: hidden;
+
+    margin-left: -30px;
 }
 
 .create-game-footer {
@@ -384,7 +403,7 @@
         padding-right: 50px;
     }
 
-    .category {
+    .category-list .category {
         width: 100%;
 
         border: 3.5px solid #fff;
@@ -400,7 +419,7 @@
         padding-right: 35px;
     }
 
-    .category {
+    .category-list .category {
         padding: 15px 25px;
         font-size: 1.2em;
     }
