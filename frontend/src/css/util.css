@@ -121,6 +121,10 @@ h6.mb, .h6.mb {
     flex: 1;
 }
 
+.zero-height {
+    height: 0;
+}
+
 .float-right {
     float: right;
 }

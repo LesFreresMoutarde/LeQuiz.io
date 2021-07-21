@@ -165,9 +165,7 @@ export default class ChooseCategories extends React.Component {
                         <Title title={ChooseCategories.TITLE}/>
                     </div>
 
-                    <div className="category-container flex-item-full-space flex-container-column" style={{
-                        height: 0, // Prevents div to take more than 100% height. 'flex-container-colum' class will force div to take all remaining height anyway
-                    }}>
+                    <div className="category-container flex-item-full-space zero-height flex-container-column">
                         <div className="category-container-header">
                             <PickAll pickAll={this.pickAll} disabled={pickAllDisabled}/>
                             <UnpickAll unpickAll={this.unpickAll} disabled={unpickAllDisabled}/>
@@ -194,7 +192,7 @@ export default class ChooseCategories extends React.Component {
                     </div>
 
 
-                    <div className="create-game-footer">
+                    <div className="create-game-footer select-categories-create-game-footer">
                         <div className="create-game-footer-counterbalance" style={{visibility: 'hidden'}}>
                             <NextButton disabled={true}
                                         className="button large green"

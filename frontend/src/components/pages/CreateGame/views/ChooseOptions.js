@@ -12,7 +12,7 @@ import {app} from "../../../App";
 
 export default class ChooseOptions extends React.Component {
 
-    static TITLE = 'Options de jeu';
+    static TITLE = 'Options';
 
     constructor(props) {
         super(props);
@@ -204,7 +204,7 @@ export default class ChooseOptions extends React.Component {
                     <div className="create-game-header">
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
-                    <div className="game-options-container">
+                    <div className="game-options-container flex-item-full-space zero-height flex-container-column">
                         <WinCriterion
                             winCriterion={gameOptions.winCriterion}
                             winCriterionMaxValue={winCriterionMaxValue}
@@ -225,11 +225,15 @@ export default class ChooseOptions extends React.Component {
                             </>
                         }
                     </div>
-                    <NextButton disabled={nextButtonDisabled}
-                                onClick={this.submitGameOptions}
-                                sizeClass="large-button"
-                                content="Suivant"
-                                displayClass="visible"/>
+
+                    <div className="create-game-footer">
+                        <NextButton disabled={nextButtonDisabled}
+                                    onClick={this.submitGameOptions}
+                                    sizeClass="large-button"
+                                    content="Suivant"
+                                    displayClass="visible"
+                        />
+                    </div>
                 </>
             )
         }

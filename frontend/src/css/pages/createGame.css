@@ -369,6 +369,10 @@
     display: flex;
     margin-top: 40px;
     align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.create-game-footer.select-categories-create-game-footer {
     justify-content: space-between;
 }
 
@@ -383,7 +387,7 @@
         --category-buttons-count-per-row: 2
     }
 
-    .create-game-footer {
+    .create-game-footer.select-categories-create-game-footer {
         justify-content: flex-end;
     }
 
@@ -426,9 +430,6 @@
 }
 
 @media screen and (max-height: 840px) {
-    .create-game-footer {
-        justify-content: flex-end;
-    }
 
     .create-game-footer-counterbalance,
     .selected-categories-container {
@@ -441,3 +442,6 @@
         margin-bottom: 20px;
     }
 }
+
+
+/** CHOOSE OPTIONS */
