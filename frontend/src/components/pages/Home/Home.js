@@ -41,7 +41,7 @@ const Home = () => {
 
     return (
         <>
-            <Logo height="200" width="300"/>
+            <Logo height="150" width="350"/>
             <div className="home-menu">
                 <Link to="/create-room" className="home-create-room-button">Créer un salon</Link>
 
