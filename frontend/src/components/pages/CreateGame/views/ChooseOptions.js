@@ -224,7 +224,7 @@ export default class ChooseOptions extends React.Component {
                             <div className="game-options-container-secondary-row">
                                 <label className="checkbox" data-children-count="1">
                                     <input type="checkbox"
-                                           {/*TODO*/}
+                                           
                                     />
                                     <span>Ajouter les questions "hardcore"</span>
                                 </label>
