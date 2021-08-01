@@ -458,3 +458,8 @@
     width: 100%;
     display: flex;
 }
+
+.game-options-container-secondary-row {
+    display: flex;
+    justify-content: space-evenly;
+}

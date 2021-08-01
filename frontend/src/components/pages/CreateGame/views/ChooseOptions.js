@@ -222,12 +222,12 @@ export default class ChooseOptions extends React.Component {
 
                         {showHardcoreQuestionsInput &&
                             <div className="game-options-container-secondary-row">
-                                <p>Ajouter les questions "hardcore"</p>
-                                {/*<input type="checkbox"*/}
-                                {/*       style={{opacity: 1}}*/}
-                                {/*       onChange={(e) => this.onHardcoreQuestionsChange(e)}*/}
-                                {/*       checked={withHardcoreQuestions}*/}
-                                {/*/>*/}
+                                <label className="checkbox" data-children-count="1">
+                                    <input type="checkbox"
+                                           {/*TODO*/}
+                                    />
+                                    <span>Ajouter les questions "hardcore"</span>
+                                </label>
                             </div>
                         }
 
