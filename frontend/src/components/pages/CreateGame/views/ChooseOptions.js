@@ -204,7 +204,24 @@ export default class ChooseOptions extends React.Component {
                     <div className="create-game-header">
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
+
                     <div className="game-options-container flex-item-full-space zero-height flex-container-column">
+
+                        <div className="gmae-options-container-main-row">
+
+                        </div>
+
+                        {showHardcoreQuestionsInput &&
+                            <div className="game-options-container-secondary-row">
+                                <p>Ajouter les questions "hardcore"</p>
+                                {/*<input type="checkbox"*/}
+                                {/*       style={{opacity: 1}}*/}
+                                {/*       onChange={(e) => this.onHardcoreQuestionsChange(e)}*/}
+                                {/*       checked={withHardcoreQuestions}*/}
+                                {/*/>*/}
+                            </div>
+                        }
+
                         <WinCriterion
                             winCriterion={gameOptions.winCriterion}
                             winCriterionMaxValue={winCriterionMaxValue}
@@ -214,16 +231,16 @@ export default class ChooseOptions extends React.Component {
                         <QuestionTypes questionTypes={questionTypes}
                                        pickQuestionType={this.pickQuestionType}
                         />
-                        {showHardcoreQuestionsInput &&
-                            <>
-                                <p>Ajouter les questions "hardcore"</p>
-                                <input type="checkbox"
-                                       style={{opacity: 1}}
-                                       onChange={(e) => this.onHardcoreQuestionsChange(e)}
-                                       checked={withHardcoreQuestions}
-                                />
-                            </>
-                        }
+                        {/*{showHardcoreQuestionsInput &&*/}
+                        {/*    <>*/}
+                        {/*        <p>Ajouter les questions "hardcore"</p>*/}
+                        {/*        <input type="checkbox"*/}
+                        {/*               style={{opacity: 1}}*/}
+                        {/*               onChange={(e) => this.onHardcoreQuestionsChange(e)}*/}
+                        {/*               checked={withHardcoreQuestions}*/}
+                        {/*        />*/}
+                        {/*    </>*/}
+                        {/*}*/}
                     </div>
 
                     <div className="create-game-footer">
