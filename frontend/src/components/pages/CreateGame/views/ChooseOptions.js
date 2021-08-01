@@ -207,8 +207,17 @@ export default class ChooseOptions extends React.Component {
 
                     <div className="game-options-container flex-item-full-space zero-height flex-container-column">
 
-                        <div className="gmae-options-container-main-row">
+                        <div className="game-options-container-main-row">
+                            <WinCriterion
+                                winCriterion={gameOptions.winCriterion}
+                                winCriterionMaxValue={winCriterionMaxValue}
+                                winCriterionInputValue={winCriterionInputValue}
+                                validateWinCriterionValue={this.validateWinCriterionValue}
+                            />
 
+                            <QuestionTypes questionTypes={questionTypes}
+                                           pickQuestionType={this.pickQuestionType}
+                            />
                         </div>
 
                         {showHardcoreQuestionsInput &&
@@ -222,15 +231,6 @@ export default class ChooseOptions extends React.Component {
                             </div>
                         }
 
-                        <WinCriterion
-                            winCriterion={gameOptions.winCriterion}
-                            winCriterionMaxValue={winCriterionMaxValue}
-                            winCriterionInputValue={winCriterionInputValue}
-                            validateWinCriterionValue={this.validateWinCriterionValue}
-                        />
-                        <QuestionTypes questionTypes={questionTypes}
-                                       pickQuestionType={this.pickQuestionType}
-                        />
                         {/*{showHardcoreQuestionsInput &&*/}
                         {/*    <>*/}
                         {/*        <p>Ajouter les questions "hardcore"</p>*/}
