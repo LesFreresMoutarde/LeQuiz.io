@@ -236,9 +236,8 @@ export default class ChooseOptions extends React.Component {
                     <div className="create-game-footer">
                         <NextButton disabled={nextButtonDisabled}
                                     onClick={this.submitGameOptions}
-                                    sizeClass="large-button"
+                                    className="button large green"
                                     content="Suivant"
-                                    displayClass="visible"
                         />
                     </div>
                 </>
