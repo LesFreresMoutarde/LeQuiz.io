@@ -3,7 +3,7 @@ import QuestionType from "../components/QuestionType";
 
 const QuestionTypes = ({questionTypes, pickQuestionType}) => {
     return (
-        <>
+        <div className="game-options-main-row-block">
             <p className="game-options-section-header">Types de questions</p>
             <div className="question-type-container">
                 {questionTypes.map((questionType, index) => {
@@ -18,7 +18,7 @@ const QuestionTypes = ({questionTypes, pickQuestionType}) => {
                     }
                 )}
             </div>
-        </>
+        </div>
     )
 };
 

@@ -3,7 +3,7 @@ import React from "react";
 const WinCriterion = ({ winCriterion, winCriterionMaxValue, winCriterionInputValue, validateWinCriterionValue }) => {
     const { label, type} = winCriterion;
     return (
-        <div className="win-criterion-wrapper">
+        <div className="win-criterion-wrapper game-options-main-row-block">
             <p className="game-options-section-header">{label}</p>
             <p className="win-criterion-max">Maximum : {winCriterionMaxValue}</p>
             <input className="win-criterion-input"

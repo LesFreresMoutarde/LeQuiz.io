@@ -208,15 +208,15 @@ export default class ChooseOptions extends React.Component {
                     <div className="game-options-container flex-item-full-space zero-height flex-container-column">
 
                         <div className="game-options-container-main-row">
+                            <QuestionTypes questionTypes={questionTypes}
+                                           pickQuestionType={this.pickQuestionType}
+                            />
+
                             <WinCriterion
                                 winCriterion={gameOptions.winCriterion}
                                 winCriterionMaxValue={winCriterionMaxValue}
                                 winCriterionInputValue={winCriterionInputValue}
                                 validateWinCriterionValue={this.validateWinCriterionValue}
-                            />
-
-                            <QuestionTypes questionTypes={questionTypes}
-                                           pickQuestionType={this.pickQuestionType}
                             />
                         </div>
 

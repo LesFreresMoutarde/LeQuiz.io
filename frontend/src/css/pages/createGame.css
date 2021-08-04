@@ -457,6 +457,24 @@
     border: 3px solid red;
     width: 100%;
     display: flex;
+    justify-content: center;
+}
+
+.game-options-main-row-block {
+    border: 3px solid #fff;
+    border-radius: 25px;
+    padding: 25px;
+    background-color: var(--element-primary-background-color);
+
+    width: 450px;
+}
+
+.game-options-main-row-block:not(:first-child) {
+    margin-left: 50px;
+}
+
+.game-options-main-row-block:not(:last-child) {
+    margin-right: 50px;
 }
 
 .game-options-container-secondary-row {
