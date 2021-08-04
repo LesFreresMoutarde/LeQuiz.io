@@ -4,7 +4,7 @@ const WinCriterion = ({ winCriterion, winCriterionMaxValue, winCriterionInputVal
     const { label, type} = winCriterion;
     return (
         <div className="win-criterion-wrapper game-options-main-row-block">
-            <p className="game-options-section-header">{label}</p>
+            <div className="game-options-main-block-title">{label}</div>
             <p className="win-criterion-max">Maximum : {winCriterionMaxValue}</p>
             <input className="win-criterion-input"
                    onChange={(event) => validateWinCriterionValue(winCriterionMaxValue, winCriterionInputValue, event)}

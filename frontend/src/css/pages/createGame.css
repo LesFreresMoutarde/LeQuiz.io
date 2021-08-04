@@ -477,6 +477,12 @@
     margin-right: 50px;
 }
 
+.game-options-main-block-title {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
 .game-options-container-secondary-row {
     display: flex;
     justify-content: space-evenly;
