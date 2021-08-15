@@ -220,8 +220,9 @@ export default class ChooseOptions extends React.Component {
                             />
                         </div>
 
+                        {/* TODO SEPARATED COMPONENT */}
                         {showHardcoreQuestionsInput &&
-                            <div className="game-options-container-secondary-row">
+                            <div className="game-options-container-secondary-row mt3">
                                 <label className="checkbox checkbox-solid" data-children-count="1">
                                     <input type="checkbox"
                                            onChange={this.onHardcoreQuestionsChange}

@@ -491,3 +491,18 @@
 .question-type-wrapper:not(:last-child) {
     margin-bottom: 20px;
 }
+
+.win-criterion-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-options-win-criterion-input-wrapper {
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+}
+
+.win-criterion-input {
+    width: 80px;
+}
