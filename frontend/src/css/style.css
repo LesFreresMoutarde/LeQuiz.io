@@ -351,10 +351,6 @@ label.checkbox.checkbox-solid > input + span::before {
     background-color: #fff;
 }
 
-label.checkbox.checkbox-solid {
-    border: 3px solid lightgreen;
-}
-
 label.checkbox > input:checked + span::after {
     opacity: 1;
 }
