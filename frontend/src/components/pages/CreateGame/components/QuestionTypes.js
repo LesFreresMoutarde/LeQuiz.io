@@ -8,12 +8,11 @@ const QuestionTypes = ({questionTypes, pickQuestionType}) => {
             <div className="question-type-container">
                 {questionTypes.map((questionType, index) => {
                         return(
-                            <div key={index}>
-                                <QuestionType pickQuestionType={pickQuestionType}
-                                              name={questionType.name}
-                                              label={questionType.label}
-                                              checked={questionType.checked}/>
-                            </div>
+                            <QuestionType key={index}
+                                          pickQuestionType={pickQuestionType}
+                                          name={questionType.name}
+                                          label={questionType.label}
+                                          checked={questionType.checked}/>
                         )
                     }
                 )}
