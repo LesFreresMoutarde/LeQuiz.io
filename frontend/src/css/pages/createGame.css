@@ -483,6 +483,10 @@
     margin-bottom: 20px;
 }
 
+.game-options-mobile-title {
+    display: none;
+}
+
 .game-options-container-secondary-row {
     display: flex;
     justify-content: space-evenly;
@@ -507,8 +511,13 @@
     width: 80px;
 }
 
+.game-options-mobile-section {
+    display: none;
+}
+
 @media screen and (max-width: 992px) {
-    .game-options-container-main-row {
+    .game-options-container-main-row,
+    .game-options-container-secondary-row {
         display: initial;
     }
 
@@ -516,6 +525,9 @@
         border: none;
         background-color: transparent;
         border-radius: 0;
+
+        padding-left: 0;
+        padding-right: 0;
 
         width: auto;
 
@@ -530,6 +542,10 @@
         padding: 5px;
     }
 
+    .game-options-mobile-title {
+        display: block;
+    }
+
     .question-type-container {
         text-align: center;
 
@@ -542,5 +558,13 @@
 
         margin-left: 15px;
         margin-right: 15px;
+    }
+
+    .game-options-desktop-section {
+        display: none;
+    }
+
+    .game-options-mobile-section {
+        display: initial;
     }
 }

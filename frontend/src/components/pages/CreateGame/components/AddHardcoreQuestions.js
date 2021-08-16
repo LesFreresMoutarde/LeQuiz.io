@@ -1,16 +1,31 @@
 import React from "react";
 
-// TODO Mobile view
 const AddHardcoreQuestions = ({withHardcoreQuestions, onHardcoreQuestionsChange}) => {
     return (
         <div className="game-options-container-secondary-row mt3">
-            <label className="checkbox checkbox-solid" data-children-count="1">
-                <input type="checkbox"
-                       onChange={onHardcoreQuestionsChange}
-                       checked={withHardcoreQuestions}
-                />
-                <span>Ajouter les questions "hardcore"</span>
-            </label>
+            <div className="game-options-main-block-title game-options-mobile-title">Questions "hardcore"</div>
+
+            <div className="game-options-desktop-section">
+                <label className="checkbox checkbox-solid" data-children-count="1">
+                    <input type="checkbox"
+                           onChange={onHardcoreQuestionsChange}
+                           checked={withHardcoreQuestions}
+                    />
+                    <span>Ajouter les questions "hardcore"</span>
+                </label>
+            </div>
+
+            <div className="game-options-mobile-section">
+                <label className="toggle" data-children-count="1">
+                    <input type="checkbox"
+                           onChange={onHardcoreQuestionsChange}
+                           checked={withHardcoreQuestions}
+                    />
+                    <span>
+                        {withHardcoreQuestions ? 'Avec' : 'Sans'}
+                    </span>
+                </label>
+            </div>
         </div>
     )
 };
