@@ -9,6 +9,7 @@ import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
 import ApiUtil from "../../../../util/ApiUtil";
 import {app} from "../../../App";
+import AddHardcoreQuestions from "../components/AddHardcoreQuestions";
 
 export default class ChooseOptions extends React.Component {
 
@@ -220,17 +221,10 @@ export default class ChooseOptions extends React.Component {
                             />
                         </div>
 
-                        {/* TODO SEPARATED COMPONENT */}
                         {showHardcoreQuestionsInput &&
-                            <div className="game-options-container-secondary-row mt3">
-                                <label className="checkbox checkbox-solid" data-children-count="1">
-                                    <input type="checkbox"
-                                           onChange={this.onHardcoreQuestionsChange}
-                                           checked={withHardcoreQuestions}
-                                    />
-                                    <span>Ajouter les questions "hardcore"</span>
-                                </label>
-                            </div>
+                            <AddHardcoreQuestions withHardcoreQuestions={withHardcoreQuestions}
+                                                  onHardcoreQuestionsChange={this.onHardcoreQuestionsChange}
+                            />
                         }
                     </div>
 
