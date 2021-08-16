@@ -506,3 +506,27 @@
 .win-criterion-input {
     width: 80px;
 }
+
+@media screen and (max-width: 992px) {
+    .game-options-container-main-row {
+        display: initial;
+    }
+
+    .game-options-main-row-block {
+        border: none;
+        background-color: transparent;
+        border-radius: 0;
+
+        width: auto;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .game-options-main-block-title {
+        border: 5px solid #fff;
+        background-color: var(--element-primary-background-color);
+        border-radius: 10px;
+        padding: 5px;
+    }
+}
