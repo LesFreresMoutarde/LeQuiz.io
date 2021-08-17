@@ -8,7 +8,7 @@ import LeaveButton from "../components/Lobby/LeaveButton";
 
 class Lobby extends React.Component {
 
-    static LOBBY_TITLE = "Salon de jeu";
+    static LOBBY_TITLE = "Salon";
 
     constructor(props) {
         super(props);

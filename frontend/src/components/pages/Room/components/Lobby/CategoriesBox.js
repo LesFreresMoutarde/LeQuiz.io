@@ -6,7 +6,7 @@ const CategoriesBox = ({categories, changeOptions, displayClass}) => {
     return (
         <div className="lobby-box">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Thèmes</p>
+                <p className="lobby-box-header-label">Catégories</p>
                 <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('categories')}>
                     <EditLobbyButton/>
                 </button>

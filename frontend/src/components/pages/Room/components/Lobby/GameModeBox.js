@@ -5,7 +5,7 @@ const GameModeBox = ({gameMode, changeOptions, displayClass}) => {
     return (
         <div className="lobby-box">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Mode de jeu</p>
+                <p className="lobby-box-header-label">Mode</p>
                 <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('gameMode')}>
                     <EditLobbyButton/>
                 </button>

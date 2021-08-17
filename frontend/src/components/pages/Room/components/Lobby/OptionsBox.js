@@ -6,7 +6,7 @@ const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) 
     return (
         <div className="lobby-box">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Options de jeu</p>
+                <p className="lobby-box-header-label">Options</p>
                 <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('options')}>
                     <EditLobbyButton/>
                 </button>
