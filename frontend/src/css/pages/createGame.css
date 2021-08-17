@@ -518,7 +518,7 @@
 @media screen and (max-width: 992px) {
     .game-options-container-main-row,
     .game-options-container-secondary-row {
-        display: initial;
+        display: block;
     }
 
     .game-options-main-row-block {
@@ -565,6 +565,6 @@
     }
 
     .game-options-mobile-section {
-        display: initial;
+        display: block;
     }
 }
