@@ -15,7 +15,7 @@ const AddHardcoreQuestions = ({withHardcoreQuestions, onHardcoreQuestionsChange}
                 </label>
             </div>
 
-            <div className="game-options-mobile-section">
+            <div className="game-options-mobile-section text-center">
                 <label className="toggle" data-children-count="1">
                     <input type="checkbox"
                            onChange={onHardcoreQuestionsChange}
