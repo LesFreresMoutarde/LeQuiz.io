@@ -552,6 +552,8 @@
 
     .game-options-mobile-title {
         display: block;
+
+        margin-top: 8px;
     }
 
     .question-type-container {
