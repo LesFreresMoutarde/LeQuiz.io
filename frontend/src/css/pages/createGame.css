@@ -492,6 +492,10 @@
     justify-content: space-evenly;
 }
 
+.question-type-wrapper {
+    font-size: 1.2em;
+}
+
 .question-type-wrapper:not(:last-child) {
     margin-bottom: 20px;
 }
@@ -509,6 +513,10 @@
 
 .win-criterion-input {
     width: 80px;
+}
+
+.game-options-hardcore-questions-wrapper {
+    font-size: 1.2em;
 }
 
 .game-options-mobile-section {

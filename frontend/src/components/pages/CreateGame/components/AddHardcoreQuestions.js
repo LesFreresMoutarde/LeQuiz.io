@@ -5,7 +5,7 @@ const AddHardcoreQuestions = ({withHardcoreQuestions, onHardcoreQuestionsChange}
         <div className="game-options-container-secondary-row mt3">
             <div className="game-options-main-block-title game-options-mobile-title">Questions "hardcore"</div>
 
-            <div className="game-options-desktop-section">
+            <div className="game-options-desktop-section game-options-hardcore-questions-wrapper">
                 <label className="checkbox checkbox-solid" data-children-count="1">
                     <input type="checkbox"
                            onChange={onHardcoreQuestionsChange}

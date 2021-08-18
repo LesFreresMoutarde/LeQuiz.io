@@ -299,15 +299,20 @@ input[type=checkbox] {
     opacity: 0;
 }
 
+label.checkbox > input[type=checkbox] {
+    width: 0;
+    height: 0;
+}
+
 label.checkbox > input + span {
-    margin-left: 8px;
+    margin-left: 1.5em;
     user-select: none;
 }
 
 label.checkbox > input + span::before {
     content: '';
-    width: 20px;
-    height: 20px;
+    width: 1.15em;
+    height: 1.15em;
     position: absolute;
     top: 0;
     left: 0;
@@ -329,14 +334,14 @@ label.checkbox > input:focus-visible + span::before {
 
 label.checkbox > input + span::after {
     content: '';
-    width: 8px;
-    height: 14px;
+    width: 0.45em;
+    height: 0.85em;
     position: absolute;
-    top: 2px;
-    left: 6px;
-    border-bottom: 3px solid #2FB0DD;
-    border-right: 3px solid #2FB0DD;
-    border-bottom-right-radius: 2px;
+    top: 0.1em;
+    left: 0.35em;
+    border-bottom: 0.2em solid #2FB0DD;
+    border-right: 0.2em solid #2FB0DD;
+    border-bottom-right-radius: 0.2em;
 
     transform: rotate(40deg);
 
