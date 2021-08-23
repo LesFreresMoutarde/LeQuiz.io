@@ -12,7 +12,26 @@
 }
 
 .lobby-data-container {
+    border: 4px solid blue;
+
+    height: 0;
     flex: 1;
+
+    display: flex;
+}
+
+.lobby-main-data {
+    flex: 1;
+}
+
+.lobby-secondary-data {
+    width: 280px;
+}
+
+.lobby-main-data,
+.lobby-secondary-data {
+    height: 100%;
+    overflow: auto;
 }
 
 .lobby-footer {
