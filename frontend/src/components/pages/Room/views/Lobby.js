@@ -5,6 +5,7 @@ import PlayersBox from "../components/Lobby/PlayersBox";
 import CategoriesBox from "../components/Lobby/CategoriesBox";
 import NextButton from "../../../misc/NextButton";
 import LeaveButton from "../components/Lobby/LeaveButton";
+import '../../../../css/pages/lobby.css';
 
 class Lobby extends React.Component {
 
