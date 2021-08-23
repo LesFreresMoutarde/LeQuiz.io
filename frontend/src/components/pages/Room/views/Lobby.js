@@ -51,6 +51,19 @@ class Lobby extends React.Component {
                     <h1>{Lobby.LOBBY_TITLE}</h1>
                 </div>
 
+                <div className="lobby-data-container">
+
+                </div>
+
+                <div className="lobby-footer">
+                    <LeaveButton onClick={leaveRoom}
+                                 className="button large-button red"
+                                 content="Quitter" />
+                    <NextButton onClick={startQuiz}
+                                        className="button large-button green"
+                                        content="Commencer" />
+                </div>
+
 
 
                 {/*<div className="lobby-info-container">*/}
