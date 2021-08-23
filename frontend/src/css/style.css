@@ -453,7 +453,7 @@ button {
     border-radius: 15px;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
     cursor: pointer;
 }
 
@@ -464,6 +464,10 @@ button {
 
 .button.green:hover {
     background-color: #1ad093;
+}
+
+.button:disabled {
+    background-color: #999999 !important;
 }
 
 #page-lateral-navigation {
