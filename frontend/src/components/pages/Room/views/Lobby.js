@@ -57,10 +57,10 @@ class Lobby extends React.Component {
 
                 <div className="lobby-footer">
                     <LeaveButton onClick={leaveRoom}
-                                 className="button large-button red"
+                                 className="button large red"
                                  content="Quitter" />
                     <NextButton onClick={startQuiz}
-                                        className="button large-button green"
+                                        className="button large green"
                                         content="Commencer" />
                 </div>
 

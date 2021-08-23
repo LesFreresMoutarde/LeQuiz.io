@@ -1010,11 +1010,6 @@ button {
         width: 30%;
     }
 
-    .large-button {
-        padding: 15px 40px;
-        font-size: 1.3em;
-    }
-
     /* Game Options */
     .win-criterion-input {
         width: 50%;
