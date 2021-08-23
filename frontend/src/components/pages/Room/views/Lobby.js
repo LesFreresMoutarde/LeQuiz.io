@@ -49,39 +49,45 @@ class Lobby extends React.Component {
                 <div className="lobby-title">
                     <h1>{Lobby.LOBBY_TITLE}</h1>
                 </div>
-                <div className="lobby-info-container">
-                    <div className="lobby-info-left-container">
-                        <GameModeBox gameMode={gameConfiguration.gameMode}
-                                     changeOptions={changeOptions}
-                                     displayClass={displayClass}/>
-                        <OptionsBox questionTypes={gameConfiguration.questionTypes}
-                                    winCriterion={gameConfiguration.winCriterion}
-                                    changeOptions={changeOptions}
-                                    displayClass={displayClass}
-                        />
-                        <LeaveButton onClick={leaveRoom} className="button large-button red" content="Quitter"/>
-                    </div>
-                    <div className="lobby-info-center-container">
-                        <PlayersBox players={roomData.players} host={roomData.host} currentPlayer={currentPlayer}/>
-                    </div>
-                    <div className="lobby-info-right-container">
-                        <CategoriesBox categories={gameConfiguration.categories}
-                                       changeOptions={changeOptions}
-                                       displayClass={displayClass}
-                        />
-                        <NextButton onClick={startQuiz}
-                                    className="button large-button green"
-                                    content="Commencer" />
-                    </div>
-                </div>
-                <div>
-                    <p className="lobby-room-code">
-                        <span id="lobby-hover-to-show-code" onMouseEnter={this.onRoomCodeMouseEnter} onMouseLeave={this.onRoomCodeMouseLeave}>
-                            <span id="lobby-hidden-code-message" className="visible">Survolez pour afficher le code du salon</span>
-                            <span id="lobby-room-code">{roomId}</span>
-                        </span>
-                    </p>
-                </div>
+
+
+
+                {/*<div className="lobby-info-container">*/}
+                {/*    <div className="lobby-info-left-container">*/}
+                {/*        <GameModeBox gameMode={gameConfiguration.gameMode}*/}
+                {/*                     changeOptions={changeOptions}*/}
+                {/*                     displayClass={displayClass}/>*/}
+                {/*        <OptionsBox questionTypes={gameConfiguration.questionTypes}*/}
+                {/*                    winCriterion={gameConfiguration.winCriterion}*/}
+                {/*                    changeOptions={changeOptions}*/}
+                {/*                    displayClass={displayClass}*/}
+                {/*        />*/}
+                {/*        <LeaveButton onClick={leaveRoom} className="button large-button red" content="Quitter"/>*/}
+                {/*    </div>*/}
+                {/*    <div className="lobby-info-center-container">*/}
+                {/*        <PlayersBox players={roomData.players} host={roomData.host} currentPlayer={currentPlayer}/>*/}
+                {/*    </div>*/}
+                {/*    <div className="lobby-info-right-container">*/}
+                {/*        <CategoriesBox categories={gameConfiguration.categories}*/}
+                {/*                       changeOptions={changeOptions}*/}
+                {/*                       displayClass={displayClass}*/}
+                {/*        />*/}
+                {/*        <NextButton onClick={startQuiz}*/}
+                {/*                    className="button large-button green"*/}
+                {/*                    content="Commencer" />*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+
+
+
+                {/*<div>*/}
+                {/*    <p className="lobby-room-code">*/}
+                {/*        <span id="lobby-hover-to-show-code" onMouseEnter={this.onRoomCodeMouseEnter} onMouseLeave={this.onRoomCodeMouseLeave}>*/}
+                {/*            <span id="lobby-hidden-code-message" className="visible">Survolez pour afficher le code du salon</span>*/}
+                {/*            <span id="lobby-room-code">{roomId}</span>*/}
+                {/*        </span>*/}
+                {/*    </p>*/}
+                {/*</div>*/}
             </div>
         );
     }
