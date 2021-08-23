@@ -59,7 +59,7 @@ class Lobby extends React.Component {
                                     changeOptions={changeOptions}
                                     displayClass={displayClass}
                         />
-                        <LeaveButton leaveRoom={leaveRoom}/>
+                        <LeaveButton onClick={leaveRoom} className="button large-button red" content="Quitter"/>
                     </div>
                     <div className="lobby-info-center-container">
                         <PlayersBox players={roomData.players} host={roomData.host} currentPlayer={currentPlayer}/>
@@ -70,9 +70,8 @@ class Lobby extends React.Component {
                                        displayClass={displayClass}
                         />
                         <NextButton onClick={startQuiz}
-                                    sizeClass="large-button"
-                                    content="Commencer"
-                                    displayClass={displayClass}/>
+                                    className="button large-button green"
+                                    content="Commencer" />
                     </div>
                 </div>
                 <div>

@@ -466,6 +466,15 @@ button {
     background-color: #1ad093;
 }
 
+.button.red {
+    background-color: #b91414;
+    color: #f8f8f8;
+}
+
+.button.red:hover {
+    background-color: #d01a1a;
+}
+
 .button:disabled {
     background-color: #999999 !important;
 }
@@ -889,15 +898,6 @@ button {
 #lobby-hidden-code-message:not(.visible),
 #lobby-room-code:not(.visible) {
     opacity: 0;
-}
-
-.leave-button {
-    color: white;
-    background-color: #DE2D48;
-}
-
-.leave-button:focus {
-    outline: none;
 }
 
 .player-line-wrapper {
