@@ -12,6 +12,14 @@
     text-align: center;
 }
 
+.lobby-data-mobile-scrollable-container {
+    border: 3px solid mediumpurple;
+
+    height: 100%;
+
+    overflow: auto;
+}
+
 .lobby-data-container {
     border: 4px solid blue;
 
@@ -45,6 +53,13 @@
     justify-content: space-between;
 }
 
+@media screen and (min-width: 993px) {
+    .lobby-data-mobile-scrollable-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 @media screen and (max-width: 1200px) {
     .lobby-secondary-data {
         width: 230px;
@@ -54,6 +69,8 @@
 @media screen and (max-width: 992px) {
     .lobby-data-container {
         flex-direction: column;
+
+        height: auto;
     }
 
     .lobby-main-data {
