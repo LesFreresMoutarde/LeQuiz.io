@@ -46,6 +46,13 @@
 @font-face {
     font-family: "Cooper Hewitt";
     src: url("/webfonts/CooperHewitt-Medium.woff2") format("woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Cooper Hewitt";
+    src: url("/webfonts/CooperHewitt-Semibold.woff2") format("woff2");
+    font-weight: 500;
 }
 
 html,
@@ -799,18 +806,6 @@ button {
     opacity: 0;
 }
 
-.player-line-wrapper {
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.player-line {
-    color: #232323;
-    font-size: 1.1em;
-}
-
 .lobby-room-code {
     text-align: center;
     font-size: 2.4em;
@@ -836,18 +831,6 @@ button {
     .question-header-info-box {
         padding: 5px 40px;
     }
-
-    /* Lobby */
-    .lobby-value-container {
-        display: flex;
-        flex-flow: column wrap;
-        align-items: center;
-    }
-
-    .lobby-value-wrapper {
-        width: 60%;
-    }
-
 }
 
 /* Medium */
@@ -877,17 +860,6 @@ button {
     .good-answer {
         font-size: 1.8em;
     }
-
-    /* Lobby */
-    .lobby-value-wrapper {
-        width: 70%;
-    }
-
-    .lobby-info-center-container {
-        margin: 0 20px;
-    }
-
-
 }
 
 /* Small */
@@ -945,57 +917,6 @@ button {
         font-size: 1.5em;
     }
 
-    /* Lobby */
-    .lobby-info-container {
-        flex-direction: column;
-    }
-
-    .lobby-box {
-        flex: 1;
-        margin-right: 40px;
-    }
-
-    .lobby-info-left-container {
-        margin-right: 20px;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: flex-start;
-        order: 1;
-    }
-
-    .lobby-info-left-container > :not(.lobby-box) {
-        align-self: center;
-    }
-
-    .lobby-info-right-container {
-        margin-left: 20px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-        order: 2;
-    }
-
-    .lobby-info-right-container > :not(.lobby-box) {
-        align-self: center;
-    }
-
-    .lobby-info-center-container {
-        width: 100%;
-        order: 3;
-    }
-
-    .lobby-value {
-        font-size: 1em;
-    }
-
-    .lobby-game-mode {
-        font-size: 1.3em;
-    }
-
-    .player-line {
-        font-size: 1em;
-    }
-
 }
 
 /* X-Small */
@@ -1047,50 +968,6 @@ button {
     .good-answer {
         font-size: 1.3em;
     }
-
-    /* Lobby */
-    .lobby-info-container {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .lobby-info-left-container {
-        margin-right: 0;
-        width: 100%;
-        margin-bottom: 15px;
-        order: 1;
-        flex-direction: column;
-    }
-
-    .lobby-info-right-container {
-        margin-left: 0;
-        width: 100%;
-        margin-bottom: 30px;
-        flex-direction: column;
-        order: 2;
-    }
-
-    .lobby-info-center-container {
-        order: 3;
-        width: 100%;
-    }
-
-    .lobby-info-left-container > :not(.lobby-box) {
-        order: 1
-    }
-
-    .lobby-info-left-container > .lobby-box {
-        display: none;
-    }
-
-    .lobby-info-right-container > :not(.lobby-box) {
-        order: 1;
-    }
-
-    .lobby-info-right-container > .lobby-box {
-        display: none;
-    }
-
 }
 
 .join-room-div {

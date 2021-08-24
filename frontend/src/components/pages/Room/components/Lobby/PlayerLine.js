@@ -2,8 +2,8 @@ import React from "react";
 
 const PlayerLine = ({player}) => {
     return (
-      <div className="player-line-wrapper">
-          <p className="player-line">{player}</p>
+      <div className="lobby-player-line-wrapper">
+          <span className="lobby-player-line-name">{player.username}</span>
       </div>
     );
 };
