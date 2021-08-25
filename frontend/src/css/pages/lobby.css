@@ -97,6 +97,11 @@
     padding: 15px 20px;
 }
 
+.lobby-player-line-wrapper.current-player {
+    background-color: var(--button-pink-color);
+    color: #fff;
+}
+
 .lobby-player-line-wrapper:not(:last-child) {
     margin-bottom: 30px;
 }

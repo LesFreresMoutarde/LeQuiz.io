@@ -18,7 +18,10 @@ const PlayersBox = ({players, host, currentPlayer}) => {
                         if (player.socketId === currentPlayer.socketId) playerData += ' (Vous)';
                         if (host.socketId === player.socketId) playerData += ' (Host)';
                         return (
-                            <PlayerLine key={index} player={player}/>
+                            <PlayerLine key={index}
+                                        player={player}
+                                        isCurrentPlayer={player.socketId === currentPlayer.socketId}
+                            />
                         )
                     })}
                 </div>
