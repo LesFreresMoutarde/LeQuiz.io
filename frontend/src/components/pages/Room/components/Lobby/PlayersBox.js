@@ -12,6 +12,7 @@ const PlayersBox = ({players, host, currentPlayer}) => {
                 <span className="lobby-box-header-label">Joueurs</span>
             </div>
             <div className="lobby-box-content wide-borders">
+                <div className="lobby-box-scrollable-content">
                     {players.map((player, index) => {
                         let playerData = player.username;
                         if (player.socketId === currentPlayer.socketId) playerData += ' (Vous)';
@@ -19,8 +20,8 @@ const PlayersBox = ({players, host, currentPlayer}) => {
                         return (
                             <PlayerLine key={index} player={player}/>
                         )
-
                     })}
+                </div>
             </div>
         </div>
     )
