@@ -136,6 +136,14 @@
     top: 1px;
 }
 
+.lobby-box-gamemode .lobby-box-content {
+    font-size: 1.7em;
+
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
 @media screen and (min-width: 993px) {
     .lobby-data-mobile-scrollable-container {
         display: flex;

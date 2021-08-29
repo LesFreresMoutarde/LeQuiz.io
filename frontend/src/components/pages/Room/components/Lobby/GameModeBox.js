@@ -3,7 +3,7 @@ import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
 
 const GameModeBox = ({gameMode, changeOptions, userCanEdit}) => {
     return (
-        <div className="lobby-box">
+        <div className="lobby-box lobby-box-gamemode">
             <div className="lobby-box-header">
                 {userCanEdit &&
                 <LobbyEditSettingsButton onClick={() => changeOptions('gameMode')}/>
@@ -11,7 +11,7 @@ const GameModeBox = ({gameMode, changeOptions, userCanEdit}) => {
                 <span className="lobby-box-header-label">Mode</span>
             </div>
             <div className="lobby-box-content">
-                <p className="lobby-game-mode">{gameMode.label}</p>
+                <span>{gameMode.label}</span>
             </div>
 
         </div>
