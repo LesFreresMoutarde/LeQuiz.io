@@ -7,7 +7,7 @@ const PlayersBox = ({players, host, currentPlayer}) => {
     }
 
     return (
-        <div className="lobby-box lobby-players-box">
+        <div className="lobby-box lobby-box-players">
             <div className="lobby-box-header">
                 <span className="lobby-box-header-label">Joueurs</span>
             </div>

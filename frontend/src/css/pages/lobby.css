@@ -58,6 +58,7 @@
 .lobby-box-header {
     font-weight: 500;
     font-size: 1.7em;
+    margin-bottom: 20px;
 
     text-align: center;
 }
@@ -82,12 +83,12 @@
     padding-right: 15px;
 }
 
-.lobby-players-box {
+.lobby-box-players {
     height: 100%;
 }
 
-.lobby-players-box .lobby-box-content {
-    height: calc(100% - 40px);
+.lobby-box-players .lobby-box-content {
+    height: calc(100% - 60px);
 }
 
 .lobby-player-line-wrapper {
