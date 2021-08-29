@@ -1,5 +1,5 @@
 import React from "react";
-import EditLobbyButton from "./EditLobbyButton";
+import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
 import LobbyValue from "./LobbyValue";
 
 const CategoriesBox = ({categories, changeOptions, displayClass}) => {
@@ -8,7 +8,7 @@ const CategoriesBox = ({categories, changeOptions, displayClass}) => {
             <div className="lobby-box-header">
                 <p className="lobby-box-header-label">Catégories</p>
                 <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('categories')}>
-                    <EditLobbyButton/>
+                    <LobbyEditSettingsButton/>
                 </button>
             </div>
             <div className="lobby-box-content">

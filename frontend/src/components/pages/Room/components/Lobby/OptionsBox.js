@@ -1,5 +1,5 @@
 import React from "react";
-import EditLobbyButton from "./EditLobbyButton";
+import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
 import LobbyValue from "./LobbyValue";
 
 const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) => {
@@ -8,7 +8,7 @@ const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) 
             <div className="lobby-box-header">
                 <p className="lobby-box-header-label">Options</p>
                 <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('options')}>
-                    <EditLobbyButton/>
+                    <LobbyEditSettingsButton/>
                 </button>
             </div>
             <div className="lobby-box-content">
