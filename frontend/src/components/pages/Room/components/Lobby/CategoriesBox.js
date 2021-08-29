@@ -2,24 +2,20 @@ import React from "react";
 import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
 import LobbyValue from "./LobbyValue";
 
-const CategoriesBox = ({categories, changeOptions, displayClass}) => {
+const CategoriesBox = ({categories, changeOptions, userCanEdit}) => {
     return (
-        <div className="lobby-box">
+        <div className="lobby-box lobby-box-categories">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Catégories</p>
-                <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('categories')}>
-                    <LobbyEditSettingsButton/>
-                </button>
+                {userCanEdit &&
+                    <LobbyEditSettingsButton onClick={() => changeOptions('categories')}/>
+                }
+                <span className="lobby-box-header-label">Catégories</span>
             </div>
             <div className="lobby-box-content">
-                <div className="lobby-value-container">
-                    {categories.map((category, index) =>  (
-                        <LobbyValue key={index} value={category.label}/>
-                    ))}
-                </div>
-
+                {categories.map((category, index) =>  (
+                    <LobbyValue key={index} value={category.label}/>
+                ))}
             </div>
-
         </div>
     )
 };

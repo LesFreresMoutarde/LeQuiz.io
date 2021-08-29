@@ -144,6 +144,10 @@
     padding: 10px;
 }
 
+.lobby-box-categories {
+    margin-top: 50px;
+}
+
 @media screen and (min-width: 993px) {
     .lobby-data-mobile-scrollable-container {
         display: flex;

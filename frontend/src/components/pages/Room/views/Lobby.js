@@ -54,6 +54,10 @@ class Lobby extends React.Component {
                             <GameModeBox gameMode={gameConfiguration.gameMode}
                                          changeOptions={changeOptions}
                                          userCanEdit={isHost} />
+                            <CategoriesBox categories={gameConfiguration.categories}
+                                           changeOptions={changeOptions}
+                                           userCanEdit={isHost}
+                            />
                         </aside>
                         <div className="lobby-main-data">
                             <PlayersBox players={roomData.players} host={roomData.host} currentPlayer={currentPlayer}/>
