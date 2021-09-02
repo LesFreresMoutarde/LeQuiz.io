@@ -35,10 +35,6 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             allowNull: false
         },
-        isChild: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        }
     }, {
         sequelize,
         modelName: 'QuestionType',
