@@ -12,7 +12,7 @@ class GameUtil {
 
     static HARDCORE_DIFFICULTY = 'hardcore';
 
-    static CLASSIC_DIFFICULTY = 'classic';
+    static STANDARD_DIFFICULTY = 'standard';
 
     static GAME_CONFIGURATION = {
         key: 'gameConfiguration',
@@ -72,7 +72,7 @@ class GameUtil {
                             for (const difficulty in category.nbQuestions[questionType.name]) {
 
                                 if ((difficulty === GameUtil.HARDCORE_DIFFICULTY && withHardcoreQuestions)
-                                    || (difficulty === GameUtil.CLASSIC_DIFFICULTY))
+                                    || (difficulty === GameUtil.STANDARD_DIFFICULTY))
                                 {
                                     max += category.nbQuestions[questionType.name][difficulty];
                                 }
