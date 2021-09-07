@@ -301,7 +301,7 @@
             },
             {
               "content":"Iena",
-              "is_good_answer": true
+              "is_good_answer": false
             },
             {
               "content":"Midway",
@@ -309,7 +309,7 @@
             },
             {
               "content":"Waterloo",
-              "is_good_answer": false
+              "is_good_answer": true
             }
           ],
           "input": [
