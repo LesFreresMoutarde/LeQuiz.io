@@ -37,7 +37,8 @@ class Room extends React.Component {
             gameConfiguration: false,
             currentPlayer: false,
             currentQuestion: false,
-            questionInputDisabled: false
+            questionInputDisabled: false,
+            isQcmEnabled: false
         }
     }
 
@@ -118,17 +119,18 @@ class Room extends React.Component {
                 answer: false,
                 gameOptions: false,
             },
-            currentQuestion
+            currentQuestion,
         });
     };
 
     submitAnswer = (answer = null) => {
+        const { isQcmEnabled } = this.state;
         let isGoodAnswer = false;
 
         if (answer) {
             this.setState({questionInputDisabled: true});
             const { currentQuestion } = this.state;
-            isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion);
+            isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion, isQcmEnabled);
         }
 
         this.clientSocket.sendResult({result: isGoodAnswer, roomId: this.roomId})
@@ -145,6 +147,7 @@ class Room extends React.Component {
                 },
                 roomData,
                 questionInputDisabled: false,
+                isQcmEnabled: false
             }
         );
     };
@@ -220,6 +223,10 @@ class Room extends React.Component {
         return generatedState;
     };
 
+    enableQcm = () => {
+        this.setState({isQcmEnabled: true});
+    }
+
 
     componentWillUnmount() {
         Util.clearSessionStorage();
@@ -235,7 +242,7 @@ class Room extends React.Component {
         const {
             isLoading, display, roomData, gameConfiguration,
             currentPlayer, isHost, currentQuestion, timeLeft,
-            questionInputDisabled
+            questionInputDisabled, isQcmEnabled
         } = this.state;
         if (isLoading) {
             return (
@@ -281,6 +288,8 @@ class Room extends React.Component {
                               timeLeft={timeLeft}
                               questionInputDisabled={questionInputDisabled}
                               leaveRoom={this.leaveRoom}
+                              isQcmEnabled={isQcmEnabled}
+                              enableQcm={this.enableQcm}
                     />
                 </>
             )

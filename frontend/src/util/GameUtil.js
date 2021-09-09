@@ -163,28 +163,15 @@ class GameUtil {
     }
 
 
-    static verifyAnswer = (answer, question) => {
+    static verifyAnswer = (answer, question, isQcmEnabled) => {
 
-        const { type } = question
+        if (isQcmEnabled) return answer['is_good_answer'];
 
-        let isGoodAnswer = false;
+        return question.answer.answers.input.findIndex(validAnswer => GameUtil.verifyInputAnswer(answer, validAnswer)) >= 0;
+    }
 
-        switch (type) {
-            case 'qcm':
-                isGoodAnswer = answer['is_good_answer'];
-                break;
-
-            case 'input':
-                for (let i = 0; i < question.answer.answers.length; i++) {
-
-                    if (distance(latinize(answer.toLowerCase()), latinize(question.answer.answers[i].content.toLowerCase())) < 2)
-                        isGoodAnswer = true;
-                }
-                break;
-        }
-
-        return isGoodAnswer;
-
+    static verifyInputAnswer =  (proposition, answer) => {
+        return distance(latinize(proposition.toLowerCase()), latinize(answer.content.toLowerCase())) < 2
     }
 
 }
