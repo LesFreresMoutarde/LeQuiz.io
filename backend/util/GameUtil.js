@@ -147,7 +147,9 @@ class GameUtil {
     static getHardcoreQuestionCountForQuery = (gameConfiguration) => {
         const minPercentage = 20;
         const percentagesPossible = [];
-        const hardcoreQuestionCount = GameUtil.getHardcoreQuestionCount(gameConfiguration);
+        const {hardcoreQuestionCount, standardQuestionCount} = GameUtil.getQuestionCountPerDifficulty(gameConfiguration);
+
+        if (hardcoreQuestionCount + standardQuestionCount === gameConfiguration.winCriterion) return hardcoreQuestionCount;
 
         const hardcoreQuestionPercentage = (hardcoreQuestionCount * 100) / gameConfiguration.winCriterion;
 
@@ -164,22 +166,25 @@ class GameUtil {
         return parseInt((randomPercentage * gameConfiguration.winCriterion) / 100);
     }
 
-    static getHardcoreQuestionCount = (gameConfiguration) => {
+    static getQuestionCountPerDifficulty = (gameConfiguration) => {
         const questionCountPerCategory = gameConfiguration.categories.map(category => category.nbQuestions);
 
         let hardcoreQuestionCount = 0
+        let standardQuestionCount = 0
 
         questionCountPerCategory.forEach((questionCountForOneCategory) => {
             Object.values(questionCountForOneCategory).forEach(questionCountPerType => {
                 for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
                     if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
                         hardcoreQuestionCount += countPerDifficulty;
+                        break;
                     }
+                    standardQuestionCount += countPerDifficulty;
                 }
             })
         })
 
-        return hardcoreQuestionCount;
+        return {hardcoreQuestionCount, standardQuestionCount};
     }
 
 }
