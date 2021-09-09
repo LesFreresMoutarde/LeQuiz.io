@@ -252,7 +252,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                            {% elseif 'qcm' in question.getTypes() %}
+                            {% elseif 'classic' in question.getTypes() %}
                                 <div style="white-space: nowrap; display: flex" class="mb-2">
                                     <i class="bi bi-plus-square pointer-cursor text-primary me-2"
                                        data-full-answer-button="{{ loop.index }}"
@@ -260,7 +260,7 @@
                                        mouseenter->question#onFullAnswerMouseEvent
                                        mouseleave->question#onFullAnswerMouseEvent">
                                     </i>
-                                    {% for answer in question.answer.answers %}
+                                    {% for answer in question.answer.answers.qcm %}
                                         {% if answer.is_good_answer %}
                                             <span style="white-space: normal;">{{ answer.content }}</span>
                                         {% endif %}
@@ -268,7 +268,7 @@
                                 </div>
                                 <div data-full-answer="{{ loop.index }}" class="d-none card bg-light">
                                     <div class="card-body">
-                                        {% for answer in question.answer.answers %}
+                                        {% for answer in question.answer.answers.qcm %}
                                             <span style="display: block">
                                                 {{ answer.content }}
                                                 {% if answer.is_good_answer  %}

@@ -130,7 +130,8 @@ class QuestionController extends AbstractController
         $questionStatuses = Enums::STATUSES;
         $categories = $crudManager->getCategories();
         $tags = $crudManager->getTags();
-        $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
+        $answersUniqueId['qcm'] = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']['qcm']), 100, 199);
+        $answersUniqueId['input'] = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']['input']), 200, 299);
 
         return $this->render('question/edit.html.twig', [
             'question' => $question,
@@ -153,7 +154,8 @@ class QuestionController extends AbstractController
         $questionStatuses = Enums::STATUSES;
         $categories = $crudManager->getCategories();
         $tags = $crudManager->getTags();
-        $answersUniqueId = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']), 100, 999);
+        $answersUniqueId['qcm'] = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']['qcm']), 100, 199);
+        $answersUniqueId['input'] = Util::getRandomIntAsUniqueId(count($question->getAnswer()['answers']['input']), 200, 299);
 
         try {
 

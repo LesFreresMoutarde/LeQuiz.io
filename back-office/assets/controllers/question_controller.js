@@ -90,10 +90,15 @@ export default class extends Controller {
         }
     }
 
-    onAddAnswer = () => {
-        const answersElt = document.querySelectorAll('.question-answers');
+    onAddAnswer = (e) => {
+        // console.log(e.currentTarget);
+        const questionFormat = e.currentTarget.getAttribute('data-question-format');
+        console.log('questionFormat', questionFormat);
 
-        const answerMainDivElt = document.querySelector('#answers');
+        const answersElt = document.querySelectorAll('.question-answers');
+        console.log("all answers elt", answersElt);
+
+        // const answerMainDivElt = document.querySelector('#answers');
 
         const duplicatedAnswer = answersElt[0].cloneNode(true);
 
@@ -104,8 +109,13 @@ export default class extends Controller {
         textareaElt.textContent = '';
 
         radiosInputElt.forEach((radioInputElt) => {
-            radioInputElt.removeAttribute('checked');
+            questionFormat === 'qcm' ? radioInputElt.removeAttribute('checked') : radioInputElt.remove();
         })
+
+        if (questionFormat === 'input') {
+            const radioLabelsContainer = duplicatedAnswer.querySelector('.radio-labels-container');
+            radioLabelsContainer.remove();
+        }
 
         const answersId = Array.from(answersElt)
             .map(answerElt => answerElt.id.replace('answer-', ''));
@@ -115,6 +125,11 @@ export default class extends Controller {
         const regex = new RegExp(answersElt[0].id.replace('answer-', ''),'ig')
 
         const newAnswerDOMString = duplicatedAnswer.outerHTML.replaceAll(regex, newAnswerId)
+
+        const answerMainDivElt = questionFormat === 'qcm'
+            ? document.querySelector('#qcm-answers')
+            : document.querySelector('#input-answers')
+        ;
 
         answerMainDivElt.insertAdjacentHTML("beforeend", newAnswerDOMString);
     }
