@@ -14,6 +14,8 @@ class GameUtil {
 
     static STANDARD_DIFFICULTY = 'standard';
 
+    static ERRORS_ALLOWED_COUNT_PROPERTY_NAME = 'errorAllowedCount';
+
     static GAME_CONFIGURATION = {
         key: 'gameConfiguration',
         optionsNeeded: {
@@ -162,6 +164,15 @@ class GameUtil {
         return updatedGameConfiguration;
     }
 
+    static getRoundPoints = (answer, question, isQcmEnabled) => {
+        const isGoodAnswer = GameUtil.verifyAnswer(answer, question, isQcmEnabled);
+
+        if (isGoodAnswer) {
+            return isQcmEnabled ? 1 : 2;
+        }
+
+        return 0;
+    }
 
     static verifyAnswer = (answer, question, isQcmEnabled) => {
 
@@ -171,7 +182,12 @@ class GameUtil {
     }
 
     static verifyInputAnswer =  (proposition, answer) => {
-        return distance(latinize(proposition.toLowerCase()), latinize(answer.content.toLowerCase())) < 2
+
+        const errorAllowedCount = answer.hasOwnProperty(GameUtil.ERRORS_ALLOWED_COUNT_PROPERTY_NAME)
+            ? answer[GameUtil.ERRORS_ALLOWED_COUNT_PROPERTY_NAME]
+            : 1;
+
+        return distance(latinize(proposition.toLowerCase()), latinize(answer.content.toLowerCase())) <= errorAllowedCount;
     }
 
 }

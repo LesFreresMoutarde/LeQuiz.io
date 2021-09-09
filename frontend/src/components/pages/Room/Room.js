@@ -125,15 +125,15 @@ class Room extends React.Component {
 
     submitAnswer = (answer = null) => {
         const { isQcmEnabled } = this.state;
-        let isGoodAnswer = false;
+        let roundPoints = 0;
 
         if (answer) {
             this.setState({questionInputDisabled: true});
             const { currentQuestion } = this.state;
-            isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion, isQcmEnabled);
+            roundPoints = GameUtil.getRoundPoints(answer, currentQuestion, isQcmEnabled);
         }
 
-        this.clientSocket.sendResult({result: isGoodAnswer, roomId: this.roomId})
+        this.clientSocket.sendResult({roundPoints: roundPoints, roomId: this.roomId})
     };
 
     displayScores = (roomData) => {

@@ -115,10 +115,10 @@ module.exports = (server) => {
             }
         });
 
-        socket.on('send-player-result', ({result}) => {
+        socket.on('send-player-result', ({roundPoints}) => {
 
             try {
-                const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, result);
+                const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, roundPoints);
 
                 if (receivedAllAnswers) {
                     room.state = RoomManager.ANSWER_ROOM_STATE;
