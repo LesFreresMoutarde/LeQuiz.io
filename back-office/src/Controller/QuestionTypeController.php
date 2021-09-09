@@ -18,7 +18,7 @@ use Twig\Environment;
 #[Route('/question-types')]
 class QuestionTypeController extends AbstractController
 {
-    private const POSSIBLE_FILTERS = ['search', 'uuid', 'isChild'];
+    private const POSSIBLE_FILTERS = ['search', 'uuid'];
 
     #[Route('/', name: 'question_type_index', methods: ['GET'])]
     public function index(
@@ -140,9 +140,6 @@ class QuestionTypeController extends AbstractController
                             $whereParts[] = 't.id = :uuid';
                             $paramsReplacements['uuid'] = $value;
                         }
-                        break;
-                    case 'isChild':
-                        $whereParts[] = 't.isChild = true';
                         break;
                 }
             }
