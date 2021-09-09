@@ -29,33 +29,12 @@ class Answer extends React.Component {
         const { currentQuestion, currentPlayer, roomData, timeLeft, leaveRoom } = this.props;
         const { scores, round, quizLength} = roomData;
 
-        let goodAnswers = [];
-        let goodAnswer = null;
-
         // We display the right QCM answer as preferred one for the round.
-        currentQuestion.answer.answers.qcm.map((answer) => {
-            if (answer['is_good_answer']) goodAnswer = answer.content;
-                //goodAnswers.push(answer.content);
-        });
-
-        // let header = {text: 'Mauvaise réponse', colorClass: 'text-red'};
+        const goodAnswer = currentQuestion.answer.answers.qcm.find(answer => answer['is_good_answer']).content
 
         const header = this.generateHeader(scores, currentPlayer)
 
-        // if (scores.findIndex(playerScoreLine => {
-        //     return playerScoreLine.player.socketId === currentPlayer.socketId && playerScoreLine.lastAnswer
-        // }) >= 0) {
-        //
-        // }
-        //
-        // scores.forEach(scoreLine => {
-        //    if (scoreLine.player.socketId === currentPlayer.socketId && scoreLine.lastAnswer)
-        //        header = {text:'Bonne réponse', colorClass: 'text-green'}
-        // });
-
-        let roundInfo = `Question ${round} sur ${quizLength}`;
-
-        if (round === quizLength) roundInfo = 'Partie terminée';
+        const roundInfo = round === quizLength ? 'Partie terminée' : `Question ${round} sur ${quizLength}`;
 
         //TODO V2 ADD MEDIA DISPLAYING
         return (
@@ -74,9 +53,7 @@ class Answer extends React.Component {
                     </div>
 
                     <div className="answer-content-container">
-                        {/*{goodAnswers.map((goodAnswer, index) =>*/}
-                            <p /*key={index}*/ className="good-answer">{goodAnswer}</p>
-                        {/*)}*/}
+                        <p className="good-answer">{goodAnswer}</p>
                         <div className="scores-container">
                             {scores.map((scoreLine, index) => (
                                 <PlayerScore key={index} scoreLine={scoreLine} currentPlayer={currentPlayer}/>
