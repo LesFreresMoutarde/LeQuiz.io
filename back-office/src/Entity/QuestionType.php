@@ -37,13 +37,6 @@ class QuestionType extends EntityBase
      */
     private $label;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="`isChild`", type="boolean", nullable=false)
-     */
-    private $isChild;
-
 
     public function getId(): ?string
     {
@@ -70,18 +63,6 @@ class QuestionType extends EntityBase
     public function setLabel(string $label): self
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    public function getIsChild(): ?bool
-    {
-        return $this->isChild;
-    }
-
-    public function setIsChild(bool $isChild): self
-    {
-        $this->isChild = $isChild;
 
         return $this;
     }
