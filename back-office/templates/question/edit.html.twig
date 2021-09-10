@@ -302,6 +302,9 @@
                                                id="answers-error-allowed-count-{{ answersUniqueId.input[loop.index0] }}"
                                                name="answers-error-allowed-count-{{ answersUniqueId.input[loop.index0] }}"
                                                class="form-control"
+                                                {% if context == 'show' %}
+                                                    disabled
+                                                {% endif %}
                                                value="{{ answer['errorAllowedCount'] is defined ? answer['errorAllowedCount'] : 1 }}">
                                     </div>
                                 </div>

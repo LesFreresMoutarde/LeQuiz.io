@@ -79,7 +79,8 @@ class QuestionController extends AbstractController
         $questionStatuses = Enums::STATUSES;
         $categories = $crudManager->getCategories();
         $tags = $crudManager->getTags();
-        $answersUniqueId = Util::getRandomIntAsUniqueId(4, 100, 999);
+        $answersUniqueId['qcm'] = Util::getRandomIntAsUniqueId(4, 100, 199);
+        $answersUniqueId['input'] = Util::getRandomIntAsUniqueId(1, 200, 299);
 
         try {
             if ($request->getMethod() === 'POST') {
@@ -528,7 +529,8 @@ class QuestionController extends AbstractController
 
                 if (array_key_exists('answers-error-allowed-count-'.$answerId, $_POST)
                     && (is_numeric($_POST['answers-error-allowed-count-'.$answerId]))
-                    && (int) ($_POST['answers-error-allowed-count-'.$answerId]) !== 1)
+                    && (int) ($_POST['answers-error-allowed-count-'.$answerId]) !== 1
+                    && (int) ($_POST['answers-error-allowed-count-'.$answerId]) >= 0)
                 {
                     $answers['answers']['input'][] = [
                         'content' => $formInput,
