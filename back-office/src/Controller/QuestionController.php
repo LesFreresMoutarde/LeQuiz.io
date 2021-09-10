@@ -387,6 +387,8 @@ class QuestionController extends AbstractController
 
             throw new \Exception('Type de question invalide.');
 
+        } else if (count($completePickedQuestionTypes) > 1) {
+            throw new \Exception('Un seul type de question');
         }
 
         // Retrieving Category Models from user choices
@@ -536,7 +538,7 @@ class QuestionController extends AbstractController
                         'content' => $formInput,
                         'errorAllowedCount' => $_POST['answers-error-allowed-count-'.$answerId]
                     ];
-                } else {
+                } else if (array_key_exists('answers-error-allowed-count-'.$answerId, $_POST)) {
                     $answers['answers']['input'][] = ['content' => $formInput];
                 }
             }
