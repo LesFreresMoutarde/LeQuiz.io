@@ -426,61 +426,44 @@ class QuestionController extends AbstractController
                 }
             }
         }
+
         // Verify if categories are valid
         if (count($completePickedTags) !== count($pickedTags)) {
-
             throw new \Exception('Tag invalide.');
-
         }
 
 
-        if (!in_array($_POST['question-status'], Enums::STATUSES))
+        if (!in_array($_POST['question-status'], Enums::STATUSES)) {
             throw new \Exception('Statut invalide.');
+        }
 
         $answers = [];
         $goodAnswersCount = 0;
 
         // Push each answers and its value (true or false) into answers array
-//        dd($_POST);
+
         foreach ($_POST as $formInputName => $formInput) {
             if (preg_match('/^answers-content-/', $formInputName)) {
 
                 $answerId = explode('-', $formInputName)[2];
                 if (array_key_exists('answers-is_good_answer-'.$answerId, $_POST)) {
-//                    throw new \Exception('Réponse invalide.');
+
                     $answers[Enums::QCM_QUESTION_TYPE][] = $formInput;
                     if ((boolean) $_POST['answers-is_good_answer-'.$answerId]) $goodAnswersCount++;
                     continue;
                 }
 
                 $answers[Enums::INPUT_QUESTION_TYPE][] = $formInput;
-                //TODO VERIF FACTOR (OU NON)
-
-//                if ($_POST['answers-content-'.$answerId]) {
-//
-//                    $answers[$formInputName] = $formInput;
-//                    if ((boolean) $formInput) $goodAnswersCount++;
-//                }
             }
         }
-        // Based on the parent question type picked by the user, check if answers array have valid count of answers and
-        // goodAnswers
-//        switch ($parentQuestionType->getName()) {
-            // Only one good answer
-//            case Enums::QCM_QUESTION_TYPE:
-                if ($goodAnswersCount !== 1 || count($answers[Enums::QCM_QUESTION_TYPE]) !== 4)
-                    throw new \Exception('Réponses pour QCM invalides.');
-//                break;
 
-            // Only good answers
-//            case Enums::INPUT_QUESTION_TYPE:
-                if (count($answers[Enums::INPUT_QUESTION_TYPE]) > 15)
-                    throw new \Exception("Le nombre de réponses libres est limité à 15");
-//                break;
+        if ($goodAnswersCount !== 1 || count($answers[Enums::QCM_QUESTION_TYPE]) !== 4) {
+            throw new \Exception('Réponses pour QCM invalides.');
+        }
 
-//            default:
-//                break;
-//        }
+        if (count($answers[Enums::INPUT_QUESTION_TYPE]) > 15) {
+            throw new \Exception("Le nombre de réponses libres est limité à 15");
+        }
 
         return [$completePickedQuestionTypes, $completePickedCategories, $completePickedTags];
     }
