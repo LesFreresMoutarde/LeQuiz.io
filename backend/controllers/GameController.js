@@ -22,7 +22,7 @@ class GameController extends MainController {
     };
 
     static HARDCORE_DIFFICULTY = 'hardcore';
-    static CLASSIC_DIFFICULTY = 'classic';
+    static STANDARD_DIFFICULTY = 'standard';
 
     actionCategories = async () => {
         const response = {};
@@ -125,7 +125,7 @@ class GameController extends MainController {
 
                 const key = records[i].isHardcore
                     ? GameController.HARDCORE_DIFFICULTY
-                    : GameController.CLASSIC_DIFFICULTY;
+                    : GameController.STANDARD_DIFFICULTY;
 
                 if (i !== 0 && records[i-1].id === records[i].id) {
                     categories.forEach(categoryInArray => {

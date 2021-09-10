@@ -11,7 +11,6 @@ export default class extends Controller {
     filters = {
         search: '',
         uuid: '',
-        isChild: false,
     }
 
     initialize = () => {

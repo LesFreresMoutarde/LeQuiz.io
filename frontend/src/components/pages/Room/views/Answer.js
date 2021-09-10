@@ -9,26 +9,32 @@ class Answer extends React.Component {
         super(props);
     }
 
+    generateHeader = (scores, currentPlayer) => {
+        if (this.hasPlayerGoodAnswer(scores, currentPlayer)) {
+            return {text:'Bonne réponse', colorClass: 'text-green'};
+        }
+
+        return {text: 'Mauvaise réponse', colorClass: 'text-red'};
+    }
+
+    hasPlayerGoodAnswer = (scores, currentPlayer) => {
+        return scores.findIndex(playerScoreLine => this.checkPlayerScoreLine(playerScoreLine, currentPlayer)) >= 0
+    }
+
+    checkPlayerScoreLine = (playerScoreLine, currentPlayer) => {
+        return playerScoreLine.player.socketId === currentPlayer.socketId && playerScoreLine.lastAnswer;
+    }
+
     render() {
         const { currentQuestion, currentPlayer, roomData, timeLeft, leaveRoom } = this.props;
         const { scores, round, quizLength} = roomData;
 
-        let goodAnswers = [];
+        // We display the right QCM answer as preferred one for the round.
+        const goodAnswer = currentQuestion.answer.answers.qcm.find(answer => answer['is_good_answer']).content
 
-        currentQuestion.answer.answers.map((answer) => {
-            if (answer['is_good_answer']) goodAnswers.push(answer.content);
-        });
+        const header = this.generateHeader(scores, currentPlayer)
 
-        let header = {text: 'Mauvaise réponse', colorClass: 'text-red'};
-
-        scores.forEach(scoreLine => {
-           if (scoreLine.player.socketId === currentPlayer.socketId && scoreLine.lastAnswer)
-               header = {text:'Bonne réponse', colorClass: 'text-green'}
-        });
-
-        let roundInfo = `Question ${round} sur ${quizLength}`;
-
-        if (round === quizLength) roundInfo = 'Partie terminée';
+        const roundInfo = round === quizLength ? 'Partie terminée' : `Question ${round} sur ${quizLength}`;
 
         //TODO V2 ADD MEDIA DISPLAYING
         return (
@@ -47,9 +53,7 @@ class Answer extends React.Component {
                     </div>
 
                     <div className="answer-content-container">
-                        {goodAnswers.map((goodAnswer, index) =>
-                            <p key={index} className="good-answer">{goodAnswer}</p>
-                        )}
+                        <p className="good-answer">{goodAnswer}</p>
                         <div className="scores-container">
                             {scores.map((scoreLine, index) => (
                                 <PlayerScore key={index} scoreLine={scoreLine} currentPlayer={currentPlayer}/>

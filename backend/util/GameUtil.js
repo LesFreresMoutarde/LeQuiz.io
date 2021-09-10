@@ -42,7 +42,7 @@ class GameUtil {
         //TODO Prendre les infos pertinentes concernant les catégories et les types
         // Revenir dessus quand edit de question (back office) fonctionnel
         if (hardcoreQuestionCount === 0) {
-            const classicLimit = Number(gameConfiguration.winCriterion);
+            const standardLimit = Number(gameConfiguration.winCriterion);
             return {
                 query:`SELECT "question"."content", "question"."answer", "question"."media", 
                     "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
@@ -61,14 +61,14 @@ class GameUtil {
                     replacements: {
                         questionTypes: questionTypesId,
                         categories: categoriesId,
-                        limit: classicLimit,
+                        limit: standardLimit,
 
                     },
                     type: db.sequelize.QueryTypes.SELECT
                 }
             };
         } else {
-            const classicLimit = Number(gameConfiguration.winCriterion) - hardcoreQuestionCount;
+            const standardLimit = Number(gameConfiguration.winCriterion) - hardcoreQuestionCount;
             return {
                 query:`(SELECT "question"."content", "question"."answer", "question"."media", 
                     "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
@@ -81,7 +81,7 @@ class GameUtil {
                     WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
                     AND "question"."isHardcore" = false
                     AND "category_question"."categoryId" IN (:categories) 
-                    ORDER BY random() LIMIT :classicLimit)
+                    ORDER BY random() LIMIT :standardLimit)
                     UNION
                     (SELECT "question"."content", "question"."answer", "question"."media", 
                     "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
@@ -100,7 +100,7 @@ class GameUtil {
                     replacements: {
                         questionTypes: questionTypesId,
                         categories: categoriesId,
-                        classicLimit,
+                        standardLimit: standardLimit,
                         hardcoreLimit: hardcoreQuestionCount
                     },
                     type: db.sequelize.QueryTypes.SELECT
@@ -147,7 +147,9 @@ class GameUtil {
     static getHardcoreQuestionCountForQuery = (gameConfiguration) => {
         const minPercentage = 20;
         const percentagesPossible = [];
-        const hardcoreQuestionCount = GameUtil.getHardcoreQuestionCount(gameConfiguration);
+        const {hardcoreQuestionCount, standardQuestionCount} = GameUtil.getQuestionCountPerDifficulty(gameConfiguration);
+
+        if (hardcoreQuestionCount + standardQuestionCount === gameConfiguration.winCriterion) return hardcoreQuestionCount;
 
         const hardcoreQuestionPercentage = (hardcoreQuestionCount * 100) / gameConfiguration.winCriterion;
 
@@ -164,22 +166,25 @@ class GameUtil {
         return parseInt((randomPercentage * gameConfiguration.winCriterion) / 100);
     }
 
-    static getHardcoreQuestionCount = (gameConfiguration) => {
+    static getQuestionCountPerDifficulty = (gameConfiguration) => {
         const questionCountPerCategory = gameConfiguration.categories.map(category => category.nbQuestions);
 
         let hardcoreQuestionCount = 0
+        let standardQuestionCount = 0
 
         questionCountPerCategory.forEach((questionCountForOneCategory) => {
             Object.values(questionCountForOneCategory).forEach(questionCountPerType => {
                 for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
                     if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
                         hardcoreQuestionCount += countPerDifficulty;
+                        break;
                     }
+                    standardQuestionCount += countPerDifficulty;
                 }
             })
         })
 
-        return hardcoreQuestionCount;
+        return {hardcoreQuestionCount, standardQuestionCount};
     }
 
 }

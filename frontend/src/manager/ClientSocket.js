@@ -181,8 +181,8 @@ class ClientSocket {
         this.socket.emit('generate-quiz', {gameConfiguration, roomId})
     };
 
-    sendResult = ({result, roomId}) => {
-        this.socket.emit('send-player-result', {result, roomId});
+    sendResult = ({roundPoints, roomId}) => {
+        this.socket.emit('send-player-result', {roundPoints, roomId});
     };
 
     updateGameConfiguration = (roomId) => {

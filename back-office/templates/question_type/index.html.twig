@@ -26,15 +26,6 @@
                        class="form-control"/>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-2">
-                <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" id="isChild-input"
-                           data-checkbox="isChild" data-action="change->questionType#onUniqueCheckboxChange"/>
-                    <span>Type enfant</span>
-                </label>
-            </div>
-        </div>
     </div>
     {% block questionTypes %}
         <div id="questionTypes-block" data-controller="questionType" class="mb-3">
@@ -48,7 +39,6 @@
                         <th>Uuid</th>
                         <th>Nom</th>
                         <th>Label</th>
-                        <th>Type enfant</th>
                         <th>Crée le</th>
                         <th>Modifié le</th>
                         <th>Actions</th>
@@ -60,9 +50,6 @@
                         <td>{{ questionType.getId() }}</td>
                         <td>{{ questionType.getName() }}</td>
                         <td>{{ questionType.getLabel() }}</td>
-                        <td>{{ questionType.getIsChild()
-                            ? '<i class="bi bi-check-lg text-success"></i>'
-                            : '<i class="bi bi-x-lg text-danger"></i>'}}</td>
                         <td>{{ questionType.getCreatedAt() ? questionType.getCreatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
                         <td>{{ questionType.getUpdatedAt() ? questionType.getUpdatedAt()|date('d-m-Y H:i:s', 'Europe/Paris') : '' }}</td>
                         <td style="display: flex; flex-direction: column">

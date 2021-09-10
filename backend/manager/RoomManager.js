@@ -242,15 +242,15 @@ class RoomManager {
         delete RoomManager.players[player.socketId];
     };
 
-    static handlePlayerResult = (socketId, result) => {
+    static handlePlayerResult = (socketId, roundPoints) => {
         const player = RoomManager.findPlayer(socketId);
 
         const room = RoomManager.findRoom(player.roomId);
 
             room.game.scores.forEach((scoreLine) => {
                 if (scoreLine.player.socketId === player.socketId) {
-                    scoreLine.value += Number(result);
-                    scoreLine.lastAnswer = result;
+                    scoreLine.value += roundPoints;
+                    scoreLine.lastAnswer = Boolean(roundPoints);
                 }
             });
 

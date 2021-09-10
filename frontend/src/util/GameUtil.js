@@ -12,7 +12,9 @@ class GameUtil {
 
     static HARDCORE_DIFFICULTY = 'hardcore';
 
-    static CLASSIC_DIFFICULTY = 'classic';
+    static STANDARD_DIFFICULTY = 'standard';
+
+    static ERRORS_ALLOWED_COUNT_PROPERTY_NAME = 'errorAllowedCount';
 
     static GAME_CONFIGURATION = {
         key: 'gameConfiguration',
@@ -72,7 +74,7 @@ class GameUtil {
                             for (const difficulty in category.nbQuestions[questionType.name]) {
 
                                 if ((difficulty === GameUtil.HARDCORE_DIFFICULTY && withHardcoreQuestions)
-                                    || (difficulty === GameUtil.CLASSIC_DIFFICULTY))
+                                    || (difficulty === GameUtil.STANDARD_DIFFICULTY))
                                 {
                                     max += category.nbQuestions[questionType.name][difficulty];
                                 }
@@ -162,29 +164,30 @@ class GameUtil {
         return updatedGameConfiguration;
     }
 
+    static getRoundPoints = (answer, question, isQcmEnabled) => {
+        const isGoodAnswer = GameUtil.verifyAnswer(answer, question, isQcmEnabled);
 
-    static verifyAnswer = (answer, question) => {
-
-        const { type } = question
-
-        let isGoodAnswer = false;
-
-        switch (type) {
-            case 'qcm':
-                isGoodAnswer = answer['is_good_answer'];
-                break;
-
-            case 'input':
-                for (let i = 0; i < question.answer.answers.length; i++) {
-
-                    if (distance(latinize(answer.toLowerCase()), latinize(question.answer.answers[i].content.toLowerCase())) < 2)
-                        isGoodAnswer = true;
-                }
-                break;
+        if (isGoodAnswer) {
+            return isQcmEnabled ? 1 : 2;
         }
 
-        return isGoodAnswer;
+        return 0;
+    }
 
+    static verifyAnswer = (answer, question, isQcmEnabled) => {
+
+        if (isQcmEnabled) return answer['is_good_answer'];
+
+        return question.answer.answers.input.findIndex(validAnswer => GameUtil.verifyInputAnswer(answer, validAnswer)) >= 0;
+    }
+
+    static verifyInputAnswer =  (proposition, answer) => {
+
+        const errorAllowedCount = answer.hasOwnProperty(GameUtil.ERRORS_ALLOWED_COUNT_PROPERTY_NAME)
+            ? answer[GameUtil.ERRORS_ALLOWED_COUNT_PROPERTY_NAME]
+            : 1;
+
+        return distance(latinize(proposition.toLowerCase()), latinize(answer.content.toLowerCase())) <= errorAllowedCount;
     }
 
 }
