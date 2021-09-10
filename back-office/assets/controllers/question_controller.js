@@ -95,26 +95,28 @@ export default class extends Controller {
         const questionFormat = e.currentTarget.getAttribute('data-question-format');
         console.log('questionFormat', questionFormat);
 
-        const answersElt = document.querySelectorAll('.question-answers');
+        const answersElt = questionFormat === 'qcm'
+            ? document.querySelectorAll('.question-qcm-answers')
+            : document.querySelectorAll('.question-input-answers')
+        ;
         console.log("all answers elt", answersElt);
 
         // const answerMainDivElt = document.querySelector('#answers');
 
         const duplicatedAnswer = answersElt[0].cloneNode(true);
 
-        const radiosInputElt = duplicatedAnswer.querySelectorAll('input[type="radio"]');
-
         const textareaElt = duplicatedAnswer.querySelector('textarea');
 
         textareaElt.textContent = '';
 
-        radiosInputElt.forEach((radioInputElt) => {
-            questionFormat === 'qcm' ? radioInputElt.removeAttribute('checked') : radioInputElt.remove();
-        })
-
-        if (questionFormat === 'input') {
-            const radioLabelsContainer = duplicatedAnswer.querySelector('.radio-labels-container');
-            radioLabelsContainer.remove();
+        if (questionFormat === 'qcm') {
+            const radiosInputElt = duplicatedAnswer.querySelectorAll('input[type="radio"]');
+            radiosInputElt.forEach((radioInputElt) => {
+                radioInputElt.removeAttribute('checked');
+            })
+        } else if (questionFormat === 'input') {
+            const errorAllowedCountInputElt = duplicatedAnswer.querySelector('input[type="number"]');
+            errorAllowedCountInputElt.defaultValue = 1;
         }
 
         const answersId = Array.from(answersElt)

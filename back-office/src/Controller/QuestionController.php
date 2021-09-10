@@ -381,42 +381,11 @@ class QuestionController extends AbstractController
             }
         }
 
-        $parentQuestionType = null;
-
         // Verify if questions types are valid
         if (count($completePickedQuestionTypes) !== count($pickedQuestionTypes)) {
 
             throw new \Exception('Type de question invalide.');
 
-        } else if (count($completePickedQuestionTypes) === 1) {
-
-            $parentQuestionType = $completePickedQuestionTypes[0];
-
-            if ($completePickedQuestionTypes[0]->getIsChild())
-                throw new \Exception('Un type enfant ne peut être le seul type d\'une question.');
-
-        } else if (count($completePickedQuestionTypes) === 2) {
-
-            $isParentPresent = false;
-            $isChildPresent = false;
-
-            foreach ($completePickedQuestionTypes as $completePickedQuestionType) {
-
-                if ($completePickedQuestionType->getIsChild())  {
-                    $isChildPresent = true;
-                }
-                else {
-                    $parentQuestionType = $completePickedQuestionType;
-                    $isParentPresent = true;
-                }
-            }
-
-            if (!$isParentPresent || !$isChildPresent)
-                throw new \Exception('Combinaison de types de questions invalide.');
-
-        } else {
-
-            throw new \Exception('Trop de types de questions.');
         }
 
         // Retrieving Category Models from user choices
@@ -469,38 +438,46 @@ class QuestionController extends AbstractController
         $goodAnswersCount = 0;
 
         // Push each answers and its value (true or false) into answers array
+//        dd($_POST);
         foreach ($_POST as $formInputName => $formInput) {
-            if (preg_match('/^answers-is_good_answer-/', $formInputName)) {
+            if (preg_match('/^answers-content-/', $formInputName)) {
 
                 $answerId = explode('-', $formInputName)[2];
-                if(!array_key_exists('answers-content-'.$answerId, $_POST))
-                    throw new \Exception('Réponse invalide.');
-
-                if ($_POST['answers-content-'.$answerId]) {
-
-                    $answers[$formInputName] = $formInput;
-                    if ((boolean) $formInput) $goodAnswersCount++;
+                if (array_key_exists('answers-is_good_answer-'.$answerId, $_POST)) {
+//                    throw new \Exception('Réponse invalide.');
+                    $answers[Enums::QCM_QUESTION_TYPE][] = $formInput;
+                    if ((boolean) $_POST['answers-is_good_answer-'.$answerId]) $goodAnswersCount++;
+                    continue;
                 }
+
+                $answers[Enums::INPUT_QUESTION_TYPE][] = $formInput;
+                //TODO VERIF FACTOR (OU NON)
+
+//                if ($_POST['answers-content-'.$answerId]) {
+//
+//                    $answers[$formInputName] = $formInput;
+//                    if ((boolean) $formInput) $goodAnswersCount++;
+//                }
             }
         }
         // Based on the parent question type picked by the user, check if answers array have valid count of answers and
         // goodAnswers
-        switch ($parentQuestionType->getName()) {
+//        switch ($parentQuestionType->getName()) {
             // Only one good answer
-            case Enums::QCM_QUESTION_TYPE:
-                if ($goodAnswersCount !== 1 || count($answers) !== 4)
+//            case Enums::QCM_QUESTION_TYPE:
+                if ($goodAnswersCount !== 1 || count($answers[Enums::QCM_QUESTION_TYPE]) !== 4)
                     throw new \Exception('Réponses pour QCM invalides.');
-                break;
+//                break;
 
             // Only good answers
-            case Enums::INPUT_QUESTION_TYPE:
-                if ($goodAnswersCount !== count($answers))
-                    throw new \Exception("Réponses pour réponse libre invalides.");
-                break;
+//            case Enums::INPUT_QUESTION_TYPE:
+                if (count($answers[Enums::INPUT_QUESTION_TYPE]) > 15)
+                    throw new \Exception("Le nombre de réponses libres est limité à 15");
+//                break;
 
-            default:
-                break;
-        }
+//            default:
+//                break;
+//        }
 
         return [$completePickedQuestionTypes, $completePickedCategories, $completePickedTags];
     }
@@ -512,7 +489,7 @@ class QuestionController extends AbstractController
      */
     private function hasFormRequiredFields() {
         define('REQUIRED_FIELDS', array('question-content', 'question-status'));
-        define('DYNAMIC_REQUIRED_FIELDS', array('cbx-type', 'cbx-category', 'answers-content', 'answers-is_good_answer'));
+        define('DYNAMIC_REQUIRED_FIELDS', array('cbx-type', 'cbx-category', 'answers-content', 'answers-is_good_answer', 'answers-error-allowed-count'));
         $dynamicFieldsMatch = [];
 
         foreach (REQUIRED_FIELDS as $requiredField) {
@@ -542,21 +519,24 @@ class QuestionController extends AbstractController
             $parsedFormInput = explode('-', $formInputName);
 
             if (preg_match('/^answers-content/', $formInputName) && $formInput !== '') {
-
-                foreach ($answers['answers'] as $answer) {
-                    if ($answer['content'] === $formInput) throw new \Exception('Valeur non-unique.');
-                }
-
                 $answerId = $parsedFormInput[count($parsedFormInput) - 1];
 
-                if (!array_key_exists('answers-is_good_answer-'.$answerId, $_POST))
-                    throw new \Exception('Chaque réponse doit avoir une valeur.');
+                if (array_key_exists('answers-is_good_answer-'.$answerId, $_POST)) {
+                    $answers['answers']['qcm'][] = ['content' => $formInput, 'is_good_answer' => $_POST['answers-is_good_answer-'.$answerId]];
+                    continue;
+                }
 
-                $answers['answers'][] = [
-                    'content' => $formInput,
-                    'is_good_answer' => (boolean) $_POST['answers-is_good_answer-'.$answerId]
-                ];
-
+                if (array_key_exists('answers-error-allowed-count-'.$answerId, $_POST)
+                    && (is_numeric($_POST['answers-error-allowed-count-'.$answerId]))
+                    && (int) ($_POST['answers-error-allowed-count-'.$answerId]) !== 1)
+                {
+                    $answers['answers']['input'][] = [
+                        'content' => $formInput,
+                        'errorAllowedCount' => $_POST['answers-error-allowed-count-'.$answerId]
+                    ];
+                } else {
+                    $answers['answers']['input'][] = ['content' => $formInput];
+                }
             }
 
             if (preg_match('/^additional-/', $formInputName)) {
@@ -566,7 +546,6 @@ class QuestionController extends AbstractController
                 if ($formInput !== '') $answers[$firstKey][$midKey][$lastKey] = $formInput;
             }
         }
-
         return $answers;
     }
 
