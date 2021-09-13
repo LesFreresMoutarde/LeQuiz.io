@@ -1,6 +1,5 @@
 import React from "react";
 import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
-import LobbyValue from "./LobbyValue";
 
 const OptionsBox = ({questionTypes, winCriterion, withHardcoreQuestions, changeOptions, userCanEdit}) => {
     return (
@@ -16,7 +15,9 @@ const OptionsBox = ({questionTypes, winCriterion, withHardcoreQuestions, changeO
                     <div className="lobby-options-label">Types de questions</div>
                     <div className="lobby-value-container">
                         {questionTypes.map((questionType, index) => (
-                                <LobbyValue key={index} value={questionType.label}/>
+                            <div className="lobby-options-question-type" key={index}>
+                                {questionType.label}
+                            </div>
                             )
                         )}
                     </div>

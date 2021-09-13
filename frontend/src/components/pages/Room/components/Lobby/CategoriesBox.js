@@ -1,6 +1,5 @@
 import React from "react";
 import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
-import LobbyValue from "./LobbyValue";
 
 const CategoriesBox = ({categories, changeOptions, userCanEdit}) => {
     return (
@@ -13,7 +12,9 @@ const CategoriesBox = ({categories, changeOptions, userCanEdit}) => {
             </div>
             <div className="lobby-box-content">
                 {categories.map((category, index) =>  (
-                    <LobbyValue key={index} value={category.label}/>
+                    <div className="lobby-categories-category" key={index}>
+                        {category.label}
+                    </div>
                 ))}
             </div>
         </div>
