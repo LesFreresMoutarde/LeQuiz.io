@@ -149,6 +149,20 @@
     margin-top: 50px;
 }
 
+.lobby-box-options .lobby-box-content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.lobby-options-label {
+    text-align: center;
+}
+
+.lobby-options-win-criterion {
+    font-size: 2em;
+    text-align: center;
+}
+
 @media screen and (min-width: 993px) {
     .lobby-data-mobile-scrollable-container {
         display: flex;

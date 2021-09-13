@@ -35,7 +35,12 @@ const OptionsBox = ({questionTypes, winCriterion, withHardcoreQuestions, changeO
                     </div>
                 </section>
 
-                <p className="lobby-options-label">Nombre de questions <span className="lobby-win-criterion">{winCriterion}</span></p>
+                <section>
+                    <div className="lobby-options-label">Nombre de questions</div>
+                    <div className="lobby-value-container lobby-options-win-criterion">
+                        {winCriterion}
+                    </div>
+                </section>
 
             </div>
         </div>
