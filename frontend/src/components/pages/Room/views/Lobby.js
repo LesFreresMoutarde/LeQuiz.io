@@ -53,7 +53,8 @@ class Lobby extends React.Component {
                         <aside className="lobby-secondary-data">
                             <GameModeBox gameMode={gameConfiguration.gameMode}
                                          changeOptions={changeOptions}
-                                         userCanEdit={isHost} />
+                                         userCanEdit={isHost}
+                            />
                             <CategoriesBox categories={gameConfiguration.categories}
                                            changeOptions={changeOptions}
                                            userCanEdit={isHost}
@@ -65,6 +66,7 @@ class Lobby extends React.Component {
                         <aside className="lobby-secondary-data">
                             <OptionsBox questionTypes={gameConfiguration.questionTypes}
                                         winCriterion={gameConfiguration.winCriterion}
+                                        withHardcoreQuestions={gameConfiguration.withHardcoreQuestions}
                                         changeOptions={changeOptions}
                                         userCanEdit={isHost}
                             />
