@@ -2,14 +2,14 @@ import React from "react";
 import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
 import LobbyValue from "./LobbyValue";
 
-const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) => {
+const OptionsBox = ({questionTypes, winCriterion, changeOptions, userCanEdit}) => {
     return (
-        <div className="lobby-box">
+        <div className="lobby-box lobby-box-options">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Options</p>
-                <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('options')}>
-                    <LobbyEditSettingsButton/>
-                </button>
+                {userCanEdit &&
+                    <LobbyEditSettingsButton onClick={() => changeOptions('options')} />
+                }
+                <span className="lobby-box-header-label">Options</span>
             </div>
             <div className="lobby-box-content">
                 <p className="lobby-options-label">Nombre de questions <span className="lobby-win-criterion">{winCriterion}</span></p>
