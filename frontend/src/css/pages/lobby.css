@@ -211,6 +211,8 @@
     .lobby-data-mobile-scrollable-container {
         display: flex;
         flex-direction: column;
+        
+        overflow-y: auto;
     }
 
     .lobby-main-data,
