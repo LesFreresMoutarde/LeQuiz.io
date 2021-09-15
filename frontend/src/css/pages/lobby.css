@@ -1,6 +1,4 @@
 .lobby-container {
-    border: 3px solid red;
-
     height: 100%;
     overflow: auto;
 
@@ -13,16 +11,12 @@
 }
 
 .lobby-data-mobile-scrollable-container {
-    border: 3px solid mediumpurple;
-
     height: 100%;
 
     overflow: auto;
 }
 
 .lobby-data-container {
-    border: 4px solid blue;
-
     height: 0;
     flex: 1;
 
@@ -47,8 +41,6 @@
 }
 
 .lobby-footer {
-    border: 3px solid greenyellow;
-
     display: flex;
     justify-content: space-between;
 
