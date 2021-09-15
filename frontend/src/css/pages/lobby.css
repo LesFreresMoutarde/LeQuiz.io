@@ -149,6 +149,30 @@
     margin-top: 50px;
 }
 
+.lobby-box-categories .lobby-box-content {
+    padding: 30px 25px;
+    height: 250px;
+}
+
+.lobby-box-categories-scrollable-container {
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.lobby-categories-category {
+    border: 3px solid #fff;
+    background-color: var(--button-pink-color);
+    border-radius: 10px;
+    text-align: center;
+    padding: 6px 3px;
+    font-size: 1.2em;
+}
+
+.lobby-categories-category:not(:last-child) {
+    margin-bottom: 10px;
+}
+
 .lobby-box-options .lobby-box-content {
     padding-top: 15px;
     padding-bottom: 15px;
