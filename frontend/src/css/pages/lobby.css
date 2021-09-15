@@ -245,4 +245,8 @@
         width: 100%;
         flex: 1;
     }
+
+    .lobby-box-players .lobby-box-content {
+        margin-bottom: 50px;
+    }
 }
