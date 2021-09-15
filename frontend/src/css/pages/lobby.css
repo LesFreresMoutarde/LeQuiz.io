@@ -255,5 +255,6 @@
 
     .lobby-box-categories .lobby-box-content {
         height: auto;
+        margin-bottom: 50px;
     }
 }
