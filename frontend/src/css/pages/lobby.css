@@ -150,8 +150,12 @@
 }
 
 .lobby-box-categories .lobby-box-content {
-    padding: 30px 25px;
     height: 250px;
+}
+
+.lobby-box-categories .lobby-box-content,
+.lobby-box-options .lobby-box-content {
+    padding: 30px 25px;
 }
 
 .lobby-box-categories-scrollable-container {
@@ -160,7 +164,9 @@
     padding-right: 10px;
 }
 
-.lobby-categories-category {
+.lobby-categories-category,
+.lobby-options-question-type,
+.lobby-options-with-hardcore-questions-value {
     border: 3px solid #fff;
     background-color: var(--button-pink-color);
     border-radius: 10px;
@@ -180,6 +186,27 @@
 
 .lobby-options-label {
     text-align: center;
+}
+
+.lobby-options-question-types-container,
+.lobby-options-with-hardcore-questions-value-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.lobby-options-question-type {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.lobby-options-with-hardcore-questions-value-container {
+    display: flex;
+    justify-content: center;
+}
+
+.lobby-options-with-hardcore-questions-value {
+    display: inline-block;
+    padding: 6px 6px;
 }
 
 .lobby-options-win-criterion {
