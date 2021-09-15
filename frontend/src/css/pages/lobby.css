@@ -252,4 +252,8 @@
     .lobby-box-players .lobby-box-content {
         margin-bottom: 50px;
     }
+
+    .lobby-box-categories .lobby-box-content {
+        height: auto;
+    }
 }
