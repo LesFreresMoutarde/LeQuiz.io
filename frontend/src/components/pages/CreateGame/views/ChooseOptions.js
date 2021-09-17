@@ -73,8 +73,9 @@ export default class ChooseOptions extends React.Component {
                     showHardcoreQuestionsInput: this.isHardcoreSettingsVisible(gameConfiguration.categories)
                 });
 
-                this.evaluateWinCriterionMaxValue();
+                const winCriterionMaxValue = this.evaluateWinCriterionMaxValue();
 
+                this.updateWinCriterionValue(Math.min(20, winCriterionMaxValue));
 
             } catch (error) {
                 app.toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
@@ -130,6 +131,7 @@ export default class ChooseOptions extends React.Component {
 
         this.validateWinCriterionValue(winCriterionMaxValue);
 
+        return winCriterionMaxValue;
     };
 
 
@@ -147,9 +149,16 @@ export default class ChooseOptions extends React.Component {
 
         if (winCriterionInputValue > 0)  nextButtonDisabled = false;
 
-        this.setState({winCriterionInputValue, nextButtonDisabled})
+        this.updateWinCriterionValue(winCriterionInputValue);
 
     };
+
+    updateWinCriterionValue = (newValue) => {
+        this.setState({
+            winCriterionInputValue: newValue,
+            nextButtonDisabled: newValue <= 0,
+        })
+    }
 
     isHardcoreSettingsVisible = (categories) => {
         return categories.some(category => {
