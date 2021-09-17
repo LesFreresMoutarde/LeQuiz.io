@@ -1,4 +1,5 @@
 import React from "react";
+import ClassicQuestion from "../components/Question/ClassicQuestion";
 import QcmPick from "../components/Question/QcmPick";
 import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 import Util from "../../../../util/Util";
@@ -7,7 +8,6 @@ import InputValue from "../components/Question/InputValue";
 
 const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
 
-    // When we will have multiple question types, make
     return (
         <div className="question-screen-container">
             <div className="question-screen-desktop-header">
@@ -18,7 +18,14 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
                     Chrono
                 </div>
                 <div className="question-screen-center">
-
+                    {(() => {
+                        switch(currentQuestion.type) {
+                            case 'classic':
+                                return <ClassicQuestion />
+                            default:
+                                throw new Error('Unknown question type');
+                        }
+                    })()}
                 </div>
                 <div className="question-screen-right"/>
             </div>
