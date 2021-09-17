@@ -15,13 +15,20 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
             </div>
             <div className="question-screen-main-data-container">
                 <div className="question-screen-left">
-                    Chrono
+                    Chrono {timeLeft}
                 </div>
                 <div className="question-screen-center">
                     {(() => {
                         switch(currentQuestion.type) {
                             case 'classic':
-                                return <ClassicQuestion />
+                                return (
+                                    <ClassicQuestion question={currentQuestion}
+                                                     submitAnswer={submitAnswer}
+                                                     userCanSubmit={questionInputDisabled}
+                                                     isQcmEnabled={isQcmEnabled}
+                                                     enableQcm={enableQcm}
+                                    />
+                                )
                             default:
                                 throw new Error('Unknown question type');
                         }

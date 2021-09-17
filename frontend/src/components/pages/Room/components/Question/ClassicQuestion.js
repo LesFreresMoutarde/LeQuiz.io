@@ -1,8 +1,10 @@
 import React from "react";
 
-const ClassicQuestion = () => {
+const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, enableQcm}) => {
     return (
-        'Classic question'
+        <div className="classic-question-container">
+            Classic question
+        </div>
     )
 }
 
