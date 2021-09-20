@@ -16,7 +16,7 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
             </div>
             <div className="question-screen-main-data-container">
                 <div className="question-screen-left">
-                    Chrono {timeLeft}
+                    <Clock timeLeft={timeLeft} />
                 </div>
                 <div className="question-screen-center">
                     {(() => {
