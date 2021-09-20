@@ -5,6 +5,7 @@ import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 import Util from "../../../../util/Util";
 import Clock from "../components/Shared/Clock";
 import InputValue from "../components/Question/InputValue";
+import '../../../../css/pages/question.css';
 
 const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
 

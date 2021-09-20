@@ -1,0 +1,36 @@
+.question-screen-container {
+    border: 3px solid red;
+
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.question-screen-desktop-header {
+    border: 3px solid chartreuse;
+}
+
+.question-screen-main-data-container {
+    border: 3px solid orange;
+
+    flex: 1;
+
+    display: flex;
+}
+
+.question-screen-left,
+.question-screen-right {
+    border: 3px solid magenta;
+
+    flex: 1;
+}
+
+.question-screen-center {
+    border: 3px solid red;
+
+    width: 1024px;
+}
+
+.question-screen-desktop-footer {
+    border: 3px solid purple;
+}
