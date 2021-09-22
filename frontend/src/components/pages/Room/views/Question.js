@@ -8,7 +8,7 @@ import InputValue from "../components/Question/InputValue";
 import '../../../../css/pages/question.css';
 
 const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
-
+    console.log("currentQuest", currentQuestion);
     return (
         <div className="question-screen-container">
             <div className="question-screen-desktop-header">

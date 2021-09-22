@@ -36,6 +36,7 @@ export default class ChooseOptions extends React.Component {
 
                 let { winCriterionInputValue, withHardcoreQuestions } = this.state;
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+                console.log("gameCo", gameConfiguration);
                 const categoriesId = gameConfiguration.categories.map((category) => (category.id));
                 const gameMode = gameConfiguration.gameMode.classname;
 

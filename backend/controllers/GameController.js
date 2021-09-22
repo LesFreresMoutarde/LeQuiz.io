@@ -118,7 +118,7 @@ class GameController extends MainController {
                     type: db.sequelize.QueryTypes.SELECT
                 }
             );
-
+            console.log(records);
             // On construit pour chaque catégorie un objet nbQuestions qui correspond au nombre de questions
             // par type de question et niveau de difficulté
             for (let i = 0; i < records.length; i++) {
@@ -148,7 +148,6 @@ class GameController extends MainController {
                     })
                 }
             }
-
             return categories;
         } catch (error) {
             console.error(error);
