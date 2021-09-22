@@ -474,17 +474,32 @@ button {
     background-color: #1ad093;
 }
 
-.button.red {
+.button.red,
+.quit-cross-button {
     background-color: #b91414;
     color: #f8f8f8;
 }
 
-.button.red:hover {
+.button.red:hover,
+.quit-cross-button:hover {
     background-color: #d01a1a;
 }
 
 .button:disabled {
     background-color: #999999 !important;
+}
+
+.quit-cross-button {
+    border: 0;
+    padding: 15px;
+    line-height: 0;
+    border-radius: 8px;
+
+    transition: background-color 0.1s ease-out;
+}
+
+.quit-cross-button:hover {
+    cursor: pointer;
 }
 
 #page-lateral-navigation {
