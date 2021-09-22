@@ -8,11 +8,17 @@ import InputValue from "../components/Question/InputValue";
 import '../../../../css/pages/question.css';
 
 const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
+    console.log(currentQuestion);
 
     return (
         <div className="question-screen-container">
             <div className="question-screen-desktop-header">
-                Catégorie
+                <div className="question-screen-desktop-header-item">
+                    Catégorie 1
+                </div>
+                <div className="question-screen-desktop-header-item">
+                    Catégorie 2
+                </div>
             </div>
             <div className="question-screen-main-data-container">
                 <div className="question-screen-left">
