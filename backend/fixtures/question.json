@@ -2283,8 +2283,14 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
-
+      "categories": [
+        {
+          "name": "cinema"
+        },
+        {
+          "name": "jeu-video"
+        }
+      ]
     }
   },
   {
@@ -2325,7 +2331,14 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        },
+        {
+          "name": "automobile"
+        }
+      ]
 
     }
   },
@@ -2367,7 +2380,14 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        },
+        {
+          "name": "musique"
+        }
+      ]
 
     }
   },
@@ -2409,7 +2429,14 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        },
+        {
+          "name": "jeu-video"
+        }
+      ]
     }
   },
   {
@@ -2462,6 +2489,9 @@
       "categories": [
         {
           "name": "cinema"
+        },
+        {
+          "name": "sport"
         }
       ]
     }
@@ -2517,6 +2547,9 @@
       "categories": [
         {
           "name": "cinema"
+        },
+        {
+          "name": "histoire"
         }
       ]
     }
@@ -2577,6 +2610,9 @@
       "categories": [
         {
           "name": "cinema"
+        },
+        {
+          "name": "automobile"
         }
       ]
     }
