@@ -1,5 +1,5 @@
 import React from "react";
-import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
+// import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 import Clock from "../components/Shared/Clock";
 import PlayerScore from "../components/Answer/PlayerScore";
 
@@ -42,7 +42,7 @@ class Answer extends React.Component {
 
                 <div className="answer-screen-left">
                     <Clock timeLeft={timeLeft}/>
-                    <LeaveRoomCross leaveRoom={leaveRoom}/>
+                    {/*<LeaveRoomCross leaveRoom={leaveRoom}/>*/}
                 </div>
 
                 <div className="answer-screen-right">

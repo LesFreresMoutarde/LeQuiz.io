@@ -1,11 +1,11 @@
 import React from "react";
 import ClassicQuestion from "../components/Question/ClassicQuestion";
 import QcmPick from "../components/Question/QcmPick";
-import LeaveRoomCross from "../components/Shared/LeaveRoomCross";
 import Util from "../../../../util/Util";
 import Clock from "../components/Shared/Clock";
 import InputValue from "../components/Question/InputValue";
 import '../../../../css/pages/question.css';
+import QuitCross from "../../../misc/QuitCross";
 
 const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
     console.log(currentQuestion);
@@ -46,7 +46,7 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
                 <div className="question-screen-right"/>
             </div>
             <div className="question-screen-desktop-footer">
-                Croix pour quitter
+                <QuitCross onClick={leaveRoom} />
             </div>
         </div>
     );
