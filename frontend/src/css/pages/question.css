@@ -73,4 +73,13 @@
     border: 3px solid yellow;
 
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.question-answers {
+    border: 3px solid red;
+
+    max-height: 100%;
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import QuestionAnswerField from "./QuestionAnswerField";
+import QuestionAnswerQCM from "./QuestionAnswerQCM";
 
 const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, enableQcm}) => {
     console.log(question);
@@ -15,10 +17,16 @@ const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, e
             </div>
 
             <div className="question-answers-container">
-                Answers
+                <div className="question-answers">
+                    {!isQcmEnabled &&
+                    <QuestionAnswerField />
+                    }
+
+                    {isQcmEnabled &&
+                    <QuestionAnswerQCM />
+                    }
+                </div>
             </div>
-
-
         </div>
     )
 }
