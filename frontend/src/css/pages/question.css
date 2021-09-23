@@ -1,14 +1,10 @@
 .question-screen-container {
-    border: 3px solid red;
-
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .question-screen-desktop-header {
-    border: 3px solid chartreuse;
-
     display: flex;
     justify-content: center;
 }
@@ -26,8 +22,6 @@
 }
 
 .question-screen-main-data-container {
-    border: 3px solid orange;
-
     flex: 1;
 
     display: flex;
@@ -41,8 +35,6 @@
 }
 
 .question-screen-center {
-    border: 3px solid red;
-
     width: 1024px;
 }
 
@@ -50,6 +42,35 @@
     width: 120px;
 }
 
-.question-screen-desktop-footer {
-    border: 3px solid purple;
+.classic-question-container {
+    border: 3px solid chartreuse;
+
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.question-content-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    border: 3px solid red;
+}
+
+.question-content-container .question-content {
+    text-align: center;
+    font-size: 3em;
+    font-family: "Coolvetica Rg", sans-serif;
+}
+
+.question-content-container .question-counter {
+    text-align: center;
+
+    margin-top: 10px;
+}
+
+.question-answers-container {
+    border: 3px solid yellow;
+
+    flex: 1;
 }
