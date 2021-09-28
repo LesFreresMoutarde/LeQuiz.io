@@ -161,7 +161,15 @@ class GameUtil {
                 updatedGameConfiguration.withHardcoreQuestions
             )
         })
-        //TODO couple Categories
+
+        const categoriesCoupleQuestionCount = GameUtil.getCategoriesCoupleQuestionCount
+        (
+            updatedGameConfiguration.categories,
+            updatedGameConfiguration.categoriesCouple,
+            updatedGameConfiguration.withHardcoreQuestions
+        );
+
+        maxPossible -= categoriesCoupleQuestionCount;
 
         // If it's superior to the maximum set for the picked game mode, value is rectified
         if (maxPossible > GameUtil.MAX_QUESTIONS[updatedGameConfiguration.gameMode.classname])
