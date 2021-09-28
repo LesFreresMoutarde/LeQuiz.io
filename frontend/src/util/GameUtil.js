@@ -52,7 +52,15 @@ class GameUtil {
         return check;
     }
 
-    static getWinCriterionMaxValue = (gameMode, pickedCategories,questionTypesAvailable, pickedQuestionTypes, withHardcoreQuestions) => {
+    static getWinCriterionMaxValue =
+    (
+            gameMode,
+            pickedCategories,
+            coupleCategories,
+            questionTypesAvailable,
+            pickedQuestionTypes,
+            withHardcoreQuestions
+    ) => {
 
         const questionTypesAvailableName = questionTypesAvailable.map(questionType => (questionType.name));
         const questionTypesInputName = pickedQuestionTypes.map(questionTypeInput => (questionTypeInput.name));
@@ -82,6 +90,15 @@ class GameUtil {
                         }
                     })
                 })
+
+                const coupleCategoriesQuestionCount = GameUtil.getCategoriesCoupleQuestionCount
+                (
+                    pickedCategories,
+                    coupleCategories,
+                    withHardcoreQuestions
+                );
+                console.log(max, coupleCategoriesQuestionCount);
+                max -= coupleCategoriesQuestionCount;
 
                 if (max > GameUtil.MAX_QUESTIONS[gameMode]) max = GameUtil.MAX_QUESTIONS[gameMode];
                 break;
@@ -138,18 +155,11 @@ class GameUtil {
 
         // We calculate maximum number of questions possible with current configuration
         questionCountPerCategory.forEach((questionCountForOneCategory) => {
-            Object.values(questionCountForOneCategory).forEach(questionCountPerType => {
-                for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
-
-                    // We sum hardcore questions count only if the option has been picked
-                    if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
-                        maxPossible += updatedGameConfiguration.withHardcoreQuestions ? countPerDifficulty : 0
-                        continue;
-                    }
-
-                    maxPossible += countPerDifficulty
-                }
-            })
+            maxPossible += GameUtil.getQuestionCountTotalThroughCategory
+            (
+                questionCountForOneCategory,
+                updatedGameConfiguration.withHardcoreQuestions
+            )
         })
 
         // If it's superior to the maximum set for the picked game mode, value is rectified
@@ -188,6 +198,45 @@ class GameUtil {
             : 1;
 
         return distance(latinize(proposition.toLowerCase()), latinize(answer.content.toLowerCase())) <= errorAllowedCount;
+    }
+
+    static getCategoriesCoupleQuestionCount = (pickedCategories, categoriesCouples, withHardcoreQuestions) => {
+        let questionInCoupleCount = 0;
+
+        const pickedCategoriesName = pickedCategories.map(category => category.name).sort();
+        console.log("catCoup", categoriesCouples);
+        console.log('pickedCate', pickedCategoriesName);
+        categoriesCouples.forEach(couple => {
+            const [firstCategory, secondCategory] = couple.name.split('|');
+
+            if (pickedCategoriesName.includes(firstCategory) && pickedCategoriesName.includes(secondCategory)) {
+                questionInCoupleCount += GameUtil.getQuestionCountTotalThroughCategory
+                (
+                    couple.nbQuestions,
+                    withHardcoreQuestions
+                )
+            }
+        })
+        console.log("return", questionInCoupleCount);
+        return questionInCoupleCount;
+    }
+
+    static getQuestionCountTotalThroughCategory = (categoryQuestionCount, withHardcoreQuestions) => {
+        let count = 0;
+        Object.values(categoryQuestionCount).forEach(questionCountPerType => {
+            for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
+
+                // We sum hardcore questions count only if the option has been picked
+                if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
+                    count += withHardcoreQuestions ? countPerDifficulty : 0
+                    continue;
+                }
+
+                count += countPerDifficulty
+            }
+        })
+        console.log("count", count);
+        return count;
     }
 
 }
