@@ -76,7 +76,9 @@ export default class ChooseOptions extends React.Component {
 
                 const winCriterionMaxValue = this.evaluateWinCriterionMaxValue();
 
-                this.updateWinCriterionValue(Math.min(20, winCriterionMaxValue));
+                if (winCriterionInputValue === 0) {
+                    this.updateWinCriterionValue(Math.min(20, winCriterionMaxValue));
+                }
 
             } catch (error) {
                 app.toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
@@ -123,6 +125,7 @@ export default class ChooseOptions extends React.Component {
         (
             gameConfiguration.gameMode.classname,
             gameConfiguration.categories,
+            gameConfiguration.coupleCategories,
             questionTypesAvailable,
             pickedQuestionTypes,
             withHardcoreQuestions
