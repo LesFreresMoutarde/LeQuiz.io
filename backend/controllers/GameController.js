@@ -25,8 +25,8 @@ class GameController extends MainController {
     static STANDARD_DIFFICULTY = 'standard';
 
     actionCategories = async () => {
-        const response = {};
-        response.categories = await this.getCategories();
+        const response = await this.getCategories();
+
         this.response = response;
     };
 
