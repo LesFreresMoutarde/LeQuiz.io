@@ -46,7 +46,7 @@ export default class ChooseCategories extends React.Component {
                     this.pickCategory(category);
                 });
 
-                gameConfiguration.coupleCategories = categoriesCouple;
+                gameConfiguration.categoriesCouple = categoriesCouple;
 
                 Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
             } catch (error) {

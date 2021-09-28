@@ -125,7 +125,7 @@ export default class ChooseOptions extends React.Component {
         (
             gameConfiguration.gameMode.classname,
             gameConfiguration.categories,
-            gameConfiguration.coupleCategories,
+            gameConfiguration.categoriesCouple,
             questionTypesAvailable,
             pickedQuestionTypes,
             withHardcoreQuestions

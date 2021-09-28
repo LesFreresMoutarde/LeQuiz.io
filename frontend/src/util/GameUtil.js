@@ -56,7 +56,7 @@ class GameUtil {
     (
             gameMode,
             pickedCategories,
-            coupleCategories,
+            categoriesCouple,
             questionTypesAvailable,
             pickedQuestionTypes,
             withHardcoreQuestions
@@ -91,14 +91,14 @@ class GameUtil {
                     })
                 })
 
-                const coupleCategoriesQuestionCount = GameUtil.getCategoriesCoupleQuestionCount
+                const categoriesCoupleQuestionCount = GameUtil.getCategoriesCoupleQuestionCount
                 (
                     pickedCategories,
-                    coupleCategories,
+                    categoriesCouple,
                     withHardcoreQuestions
                 );
-                console.log(max, coupleCategoriesQuestionCount);
-                max -= coupleCategoriesQuestionCount;
+                console.log(max, categoriesCoupleQuestionCount);
+                max -= categoriesCoupleQuestionCount;
 
                 if (max > GameUtil.MAX_QUESTIONS[gameMode]) max = GameUtil.MAX_QUESTIONS[gameMode];
                 break;
@@ -161,6 +161,7 @@ class GameUtil {
                 updatedGameConfiguration.withHardcoreQuestions
             )
         })
+        //TODO couple Categories
 
         // If it's superior to the maximum set for the picked game mode, value is rectified
         if (maxPossible > GameUtil.MAX_QUESTIONS[updatedGameConfiguration.gameMode.classname])
