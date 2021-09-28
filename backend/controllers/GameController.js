@@ -95,9 +95,7 @@ class GameController extends MainController {
     getCategories = async () => {
 
         try {
-            const categories = [];
-
-            const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label",
+            const categoriesRecords = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label",
             COUNT(*) as "nbQuestions", "question_type"."name" as "type", "question"."isHardcore"
             FROM "category"
             INNER JOIN "category_question"
@@ -118,41 +116,13 @@ class GameController extends MainController {
                     type: db.sequelize.QueryTypes.SELECT
                 }
             );
-            // console.log(records);
+
             // On construit pour chaque catégorie un objet nbQuestions qui correspond au nombre de questions
             // par type de question et niveau de difficulté
-            for (let i = 0; i < records.length; i++) {
-
-                const key = records[i].isHardcore
-                    ? GameController.HARDCORE_DIFFICULTY
-                    : GameController.STANDARD_DIFFICULTY;
-
-                if (i !== 0 && records[i-1].id === records[i].id) {
-                    categories.forEach(categoryInArray => {
-                        if (categoryInArray.id === records[i].id) {
-                            categoryInArray['nbQuestions'][[records[i].type]] = {
-                                ...categoryInArray['nbQuestions'][[records[i].type]],
-                                ... {[key]: parseInt(records[i].nbQuestions)}
-                            }
-                        }
-                    })
-
-                } else {
-                    categories.push({
-                        id: records[i].id,
-                        name: records[i].name,
-                        label: records[i].label,
-                        nbQuestions : {
-                            [records[i].type]: {[key]: parseInt(records[i].nbQuestions)}
-                        },
-                    })
-                }
-            }
-           // return categories;
-
+            const categories = this.formatCategoriesRecords(categoriesRecords);
 
             // Second query
-            const records2 = await db.sequelize.query(`SELECT COUNT("category_question_1"."questionId") AS "nbQuestions", CONCAT("cat_1"."id",'|', "cat_2"."id") AS "categories_id",
+            const categoriesCoupleRecords = await db.sequelize.query(`SELECT COUNT("category_question_1"."questionId") AS "nbQuestions", CONCAT("cat_1"."id",'|', "cat_2"."id") AS "categories_id",
                 CONCAT("cat_1"."name",'|', "cat_2"."name") AS "categories_name",
                 "question_type"."name" AS "type", "question"."isHardcore"
                 FROM category_question AS "category_question_1"
@@ -175,36 +145,9 @@ class GameController extends MainController {
                 }
             );
 
-            console.log(records2);
-            const cate = [];
-            for (let i = 0; i < records2.length; i++) {
+            const categoriesCouple = this.formatCategoriesRecords(categoriesCoupleRecords, true);
 
-                const key = records2[i].isHardcore
-                    ? GameController.HARDCORE_DIFFICULTY
-                    : GameController.STANDARD_DIFFICULTY;
-
-                if (i !== 0 && records2[i-1]['categories_id'] === records2[i]['categories_id']) {
-                    cate.forEach(categoryInArray => {
-                        if (categoryInArray.id === records2[i]['categories_id']) {
-                            categoryInArray['nbQuestions'][[records2[i].type]] = {
-                                ...categoryInArray['nbQuestions'][[records2[i].type]],
-                                ... {[key]: parseInt(records2[i].nbQuestions)}
-                            }
-                        }
-                    })
-                } else {
-                    cate.push({
-                        id: records2[i]['categories_id'],
-                        name: records2[i]['categories_name'],
-                        nbQuestions : {
-                            [records2[i].type]: {[key]: parseInt(records2[i].nbQuestions)}
-                        },
-                    })
-                }
-            }
-            console.log(cate);
-
-            return cate;
+            return {categories,categoriesCouple};
         } catch (error) {
             console.error(error);
             throw new DatabaseError();
@@ -251,6 +194,57 @@ class GameController extends MainController {
 
         return winCriterion;
     };
+
+    formatCategoriesRecords = (records, forCategoriesCouple = false) => {
+        const categories = [];
+        const categoriesCouple = [];
+
+        for (let i = 0; i < records.length; i++) {
+
+            const key = records[i].isHardcore
+                ? GameController.HARDCORE_DIFFICULTY
+                : GameController.STANDARD_DIFFICULTY;
+
+            const idProperty = forCategoriesCouple ? 'categories_id' : 'id';
+            const nameProperty = forCategoriesCouple ? 'categories_name' : 'name';
+
+            const objectStructure = {
+                id: records[i][idProperty],
+                name: records[i][nameProperty],
+                label: records[i].label,
+                nbQuestions : {
+                    [records[i].type]: {[key]: parseInt(records[i].nbQuestions)}
+                },
+            }
+
+            if (i !== 0 && records[i-1][idProperty] === records[i][idProperty]) {
+                categories.forEach(categoryInArray => {
+                    if (categoryInArray.id === records[i][idProperty]) {
+                        categoryInArray['nbQuestions'][[records[i].type]] = {
+                            ...categoryInArray['nbQuestions'][[records[i].type]],
+                            ... {[key]: parseInt(records[i].nbQuestions)}
+                        }
+                    }
+                })
+            } else {
+                if (forCategoriesCouple) {
+                    const sortedCategories = records[i][idProperty].split('|').sort().join('|');
+                    if (!categoriesCouple.includes(sortedCategories)) {
+                        categoriesCouple.push(sortedCategories);
+                    }
+
+                    delete objectStructure.label;
+                }
+
+                categories.push(objectStructure);
+            }
+        }
+
+        return forCategoriesCouple
+            ? categories.filter((category) => categoriesCouple.includes(category.id))
+            : categories
+        ;
+    }
 
 }
 
