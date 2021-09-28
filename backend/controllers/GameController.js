@@ -118,7 +118,7 @@ class GameController extends MainController {
                     type: db.sequelize.QueryTypes.SELECT
                 }
             );
-            console.log(records);
+            // console.log(records);
             // On construit pour chaque catégorie un objet nbQuestions qui correspond au nombre de questions
             // par type de question et niveau de difficulté
             for (let i = 0; i < records.length; i++) {
@@ -148,7 +148,63 @@ class GameController extends MainController {
                     })
                 }
             }
-            return categories;
+           // return categories;
+
+
+            // Second query
+            const records2 = await db.sequelize.query(`SELECT COUNT("category_question_1"."questionId") AS "nbQuestions", CONCAT("cat_1"."id",'|', "cat_2"."id") AS "categories_id",
+                CONCAT("cat_1"."name",'|', "cat_2"."name") AS "categories_name",
+                "question_type"."name" AS "type", "question"."isHardcore"
+                FROM category_question AS "category_question_1"
+                INNER JOIN category_question AS "category_question_2" ON "category_question_1"."questionId" = "category_question_2"."questionId"
+                INNER JOIN category AS "cat_1" ON "category_question_2"."categoryId" = "cat_1"."id"
+                INNER JOIN category AS "cat_2" ON "category_question_1"."categoryId" = "cat_2"."id"
+                INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "category_question_1"."questionId"
+                INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId"
+                INNER JOIN "question" ON "question"."id" = "category_question_1"."questionId"
+                WHERE "category_question_1"."questionId" =  "category_question_2"."questionId"
+                AND "category_question_1"."categoryId" != "category_question_2"."categoryId"
+                AND "question"."status" = :status
+                GROUP BY "categories_id", "categories_name", "type", "question"."isHardcore"
+                ORDER BY "nbQuestions" DESC, "categories_name" ASC`,
+                {
+                    replacements: {
+                        status: db.Question.STATUS_APPROVED
+                    },
+                    type: db.sequelize.QueryTypes.SELECT
+                }
+            );
+
+            console.log(records2);
+            const cate = [];
+            for (let i = 0; i < records2.length; i++) {
+
+                const key = records2[i].isHardcore
+                    ? GameController.HARDCORE_DIFFICULTY
+                    : GameController.STANDARD_DIFFICULTY;
+
+                if (i !== 0 && records2[i-1]['categories_id'] === records2[i]['categories_id']) {
+                    cate.forEach(categoryInArray => {
+                        if (categoryInArray.id === records2[i]['categories_id']) {
+                            categoryInArray['nbQuestions'][[records2[i].type]] = {
+                                ...categoryInArray['nbQuestions'][[records2[i].type]],
+                                ... {[key]: parseInt(records2[i].nbQuestions)}
+                            }
+                        }
+                    })
+                } else {
+                    cate.push({
+                        id: records2[i]['categories_id'],
+                        name: records2[i]['categories_name'],
+                        nbQuestions : {
+                            [records2[i].type]: {[key]: parseInt(records2[i].nbQuestions)}
+                        },
+                    })
+                }
+            }
+            console.log(cate);
+
+            return cate;
         } catch (error) {
             console.error(error);
             throw new DatabaseError();
