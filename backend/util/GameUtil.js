@@ -147,6 +147,7 @@ class GameUtil {
     static getHardcoreQuestionCountForQuery = (gameConfiguration) => {
         const minPercentage = 20;
         const percentagesPossible = [];
+
         const {hardcoreQuestionCount, standardQuestionCount} = GameUtil.getQuestionCountPerDifficulty(gameConfiguration);
 
         if (hardcoreQuestionCount + standardQuestionCount === gameConfiguration.winCriterion) return hardcoreQuestionCount;
@@ -168,20 +169,47 @@ class GameUtil {
 
     static getQuestionCountPerDifficulty = (gameConfiguration) => {
         const questionCountPerCategory = gameConfiguration.categories.map(category => category.nbQuestions);
+        const questionCountPerCategoryCouple = gameConfiguration.categoriesCouple.map(couple => couple.nbQuestions);
 
+        let hardcoreQuestionCount = 0;
+        let standardQuestionCount = 0;
+
+        let hardcoreCategoriesCoupleQuestionCount = 0;
+        let standardCategoriesCoupleQuestionCount = 0;
+
+        questionCountPerCategory.forEach((categoryQuestionCount) => {
+            const questionCounts = GameUtil.getQuestionCountTotalThroughCategory(categoryQuestionCount);
+            standardQuestionCount += questionCounts.standardQuestionCount;
+            hardcoreQuestionCount += questionCounts.hardcoreQuestionCount;
+        })
+
+        questionCountPerCategoryCouple.forEach(categoryCoupleQuestionType => {
+            const questionCounts = GameUtil.getQuestionCountTotalThroughCategory(categoryCoupleQuestionType)
+            hardcoreCategoriesCoupleQuestionCount += questionCounts.hardcoreQuestionCount;
+            standardCategoriesCoupleQuestionCount += questionCounts.standardQuestionCount;
+        })
+
+        console.log("classic", standardQuestionCount, hardcoreQuestionCount);
+        console.log("couple", standardCategoriesCoupleQuestionCount, hardcoreCategoriesCoupleQuestionCount);
+
+        hardcoreQuestionCount -= hardcoreCategoriesCoupleQuestionCount;
+        standardQuestionCount -= standardCategoriesCoupleQuestionCount;
+
+        return {hardcoreQuestionCount, standardQuestionCount};
+    }
+
+    static getQuestionCountTotalThroughCategory = (categoryQuestionCount) => {
         let hardcoreQuestionCount = 0
         let standardQuestionCount = 0
 
-        questionCountPerCategory.forEach((questionCountForOneCategory) => {
-            Object.values(questionCountForOneCategory).forEach(questionCountPerType => {
-                for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
-                    if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
-                        hardcoreQuestionCount += countPerDifficulty;
-                        break;
-                    }
-                    standardQuestionCount += countPerDifficulty;
+        Object.values(categoryQuestionCount).forEach(questionCountPerType => {
+            for (const [difficulty, countPerDifficulty] of Object.entries(questionCountPerType)) {
+                if (difficulty === GameUtil.HARDCORE_DIFFICULTY ) {
+                    hardcoreQuestionCount += countPerDifficulty;
+                    break;
                 }
-            })
+                standardQuestionCount += countPerDifficulty;
+            }
         })
 
         return {hardcoreQuestionCount, standardQuestionCount};

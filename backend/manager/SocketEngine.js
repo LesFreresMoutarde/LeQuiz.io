@@ -77,8 +77,7 @@ module.exports = (server) => {
             try {
                 const room = RoomManager.findRoom(roomId);
 
-                const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
-                const quiz = await GameUtil.executeQuizQuery(quizQuery);
+                const quiz = await GameUtil.generateQuiz(gameConfiguration);
 
                 room.game.quiz = quiz;
                 room.game.quizLength = quiz.length;
