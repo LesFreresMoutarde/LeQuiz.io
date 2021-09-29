@@ -83,3 +83,25 @@
 
     max-height: 100%;
 }
+
+.question-answer-input {
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 50px;
+
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.question-answer-input-validate-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.question-answer-input-display-qcm-button-container {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 50px;
+}

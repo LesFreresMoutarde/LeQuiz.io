@@ -19,7 +19,7 @@ const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, e
             <div className="question-answers-container">
                 <div className="question-answers">
                     {!isQcmEnabled &&
-                    <QuestionAnswerField />
+                    <QuestionAnswerField enableQcm={enableQcm} submitAnswer={submitAnswer} />
                     }
 
                     {isQcmEnabled &&
