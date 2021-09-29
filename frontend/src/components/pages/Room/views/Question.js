@@ -13,12 +13,13 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
     return (
         <div className="question-screen-container">
             <div className="question-screen-desktop-header">
-                <div className="question-screen-desktop-header-item">
-                    Catégorie 1
-                </div>
-                <div className="question-screen-desktop-header-item">
-                    Catégorie 2
-                </div>
+                {currentQuestion.categories.map(categoryLabel => {
+                    return (
+                        <div className="question-screen-desktop-header-item">
+                            {categoryLabel}
+                        </div>
+                    )
+                })}
             </div>
             <div className="question-screen-main-data-container">
                 <div className="question-screen-left">
