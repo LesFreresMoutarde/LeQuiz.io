@@ -25,8 +25,8 @@ class GameController extends MainController {
     static STANDARD_DIFFICULTY = 'standard';
 
     actionCategories = async () => {
-        const response = {};
-        response.categories = await this.getCategories();
+        const response = await this.getCategories();
+
         this.response = response;
     };
 
@@ -95,9 +95,7 @@ class GameController extends MainController {
     getCategories = async () => {
 
         try {
-            const categories = [];
-
-            const records = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label",
+            const categoriesRecords = await db.sequelize.query(`SELECT "category"."id", "category"."name", "category"."label",
             COUNT(*) as "nbQuestions", "question_type"."name" as "type", "question"."isHardcore"
             FROM "category"
             INNER JOIN "category_question"
@@ -121,35 +119,35 @@ class GameController extends MainController {
 
             // On construit pour chaque catégorie un objet nbQuestions qui correspond au nombre de questions
             // par type de question et niveau de difficulté
-            for (let i = 0; i < records.length; i++) {
+            const categories = this.formatCategoriesRecords(categoriesRecords);
 
-                const key = records[i].isHardcore
-                    ? GameController.HARDCORE_DIFFICULTY
-                    : GameController.STANDARD_DIFFICULTY;
-
-                if (i !== 0 && records[i-1].id === records[i].id) {
-                    categories.forEach(categoryInArray => {
-                        if (categoryInArray.id === records[i].id) {
-                            categoryInArray['nbQuestions'][[records[i].type]] = {
-                                ...categoryInArray['nbQuestions'][[records[i].type]],
-                                ... {[key]: parseInt(records[i].nbQuestions)}
-                            }
-                        }
-                    })
-
-                } else {
-                    categories.push({
-                        id: records[i].id,
-                        name: records[i].name,
-                        label: records[i].label,
-                        nbQuestions : {
-                            [records[i].type]: {[key]: parseInt(records[i].nbQuestions)}
-                        },
-                    })
+            // Second query
+            const categoriesCoupleRecords = await db.sequelize.query(`SELECT COUNT("category_question_1"."questionId") AS "nbQuestions", CONCAT("cat_1"."id",'|', "cat_2"."id") AS "categories_id",
+                CONCAT("cat_1"."name",'|', "cat_2"."name") AS "categories_name",
+                "question_type"."name" AS "type", "question"."isHardcore"
+                FROM category_question AS "category_question_1"
+                INNER JOIN category_question AS "category_question_2" ON "category_question_1"."questionId" = "category_question_2"."questionId"
+                INNER JOIN category AS "cat_1" ON "category_question_2"."categoryId" = "cat_1"."id"
+                INNER JOIN category AS "cat_2" ON "category_question_1"."categoryId" = "cat_2"."id"
+                INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "category_question_1"."questionId"
+                INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId"
+                INNER JOIN "question" ON "question"."id" = "category_question_1"."questionId"
+                WHERE "category_question_1"."questionId" =  "category_question_2"."questionId"
+                AND "category_question_1"."categoryId" != "category_question_2"."categoryId"
+                AND "question"."status" = :status
+                GROUP BY "categories_id", "categories_name", "type", "question"."isHardcore"
+                ORDER BY "nbQuestions" DESC, "categories_name" ASC`,
+                {
+                    replacements: {
+                        status: db.Question.STATUS_APPROVED
+                    },
+                    type: db.sequelize.QueryTypes.SELECT
                 }
-            }
+            );
 
-            return categories;
+            const categoriesCouple = this.formatCategoriesRecords(categoriesCoupleRecords, true);
+
+            return {categories,categoriesCouple};
         } catch (error) {
             console.error(error);
             throw new DatabaseError();
@@ -196,6 +194,57 @@ class GameController extends MainController {
 
         return winCriterion;
     };
+
+    formatCategoriesRecords = (records, forCategoriesCouple = false) => {
+        const categories = [];
+        const categoriesCouple = [];
+
+        for (let i = 0; i < records.length; i++) {
+
+            const key = records[i].isHardcore
+                ? GameController.HARDCORE_DIFFICULTY
+                : GameController.STANDARD_DIFFICULTY;
+
+            const idProperty = forCategoriesCouple ? 'categories_id' : 'id';
+            const nameProperty = forCategoriesCouple ? 'categories_name' : 'name';
+
+            const objectStructure = {
+                id: records[i][idProperty],
+                name: records[i][nameProperty],
+                label: records[i].label,
+                nbQuestions : {
+                    [records[i].type]: {[key]: parseInt(records[i].nbQuestions)}
+                },
+            }
+
+            if (i !== 0 && records[i-1][idProperty] === records[i][idProperty]) {
+                categories.forEach(categoryInArray => {
+                    if (categoryInArray.id === records[i][idProperty]) {
+                        categoryInArray['nbQuestions'][[records[i].type]] = {
+                            ...categoryInArray['nbQuestions'][[records[i].type]],
+                            ... {[key]: parseInt(records[i].nbQuestions)}
+                        }
+                    }
+                })
+            } else {
+                if (forCategoriesCouple) {
+                    const sortedCategories = records[i][idProperty].split('|').sort().join('|');
+                    if (!categoriesCouple.includes(sortedCategories)) {
+                        categoriesCouple.push(sortedCategories);
+                    }
+
+                    delete objectStructure.label;
+                }
+
+                categories.push(objectStructure);
+            }
+        }
+
+        return forCategoriesCouple
+            ? categories.filter((category) => categoriesCouple.includes(category.id))
+            : categories
+        ;
+    }
 
 }
 

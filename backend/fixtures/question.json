@@ -49,7 +49,7 @@
         "type": "image/png",
         "url": "http://example.com/calculatrice.png"
       },
-      "categories": [{"name": "histoire"}]
+      "categories": [{"name": "histoire"}, {"name": "automobile"}]
     }
   },
   {
@@ -91,7 +91,7 @@
       "media": {
 
       },
-      "categories": [{"name": "histoire"}]
+      "categories": [{"name": "histoire"}, {"name": "automobile"}]
     }
   },
   {
@@ -133,7 +133,7 @@
       "media": {
 
       },
-      "categories": [{"name": "histoire"}]
+      "categories": [{"name": "histoire"}, {"name": "sport"}]
     }
   },
   {
@@ -1418,7 +1418,14 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [
+        {
+          "name": "automobile"
+        },
+        {
+          "name": "sport"
+        }
+      ]
 
     }
   },
@@ -1460,7 +1467,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1505,7 +1515,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1550,7 +1563,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1593,7 +1609,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1646,7 +1665,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1688,7 +1710,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1731,7 +1756,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1773,7 +1801,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
@@ -1815,8 +1846,10 @@
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
-
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
     }
   },
   {
@@ -2283,8 +2316,11 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
-
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
     }
   },
   {
@@ -2325,7 +2361,11 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
 
     }
   },
@@ -2367,7 +2407,11 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
 
     }
   },
@@ -2409,7 +2453,11 @@
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
     }
   },
   {

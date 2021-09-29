@@ -35,8 +35,11 @@ export default class ChooseOptions extends React.Component {
             try {
 
                 let { winCriterionInputValue, withHardcoreQuestions } = this.state;
+
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+
                 const categoriesId = gameConfiguration.categories.map((category) => (category.id));
+
                 const gameMode = gameConfiguration.gameMode.classname;
 
                 const response = await ApiUtil.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
@@ -75,7 +78,9 @@ export default class ChooseOptions extends React.Component {
 
                 const winCriterionMaxValue = this.evaluateWinCriterionMaxValue();
 
-                this.updateWinCriterionValue(Math.min(20, winCriterionMaxValue));
+                if (winCriterionInputValue === 0) {
+                    this.updateWinCriterionValue(Math.min(20, winCriterionMaxValue));
+                }
 
             } catch (error) {
                 app.toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
@@ -122,6 +127,7 @@ export default class ChooseOptions extends React.Component {
         (
             gameConfiguration.gameMode.classname,
             gameConfiguration.categories,
+            gameConfiguration.categoriesCouple,
             questionTypesAvailable,
             pickedQuestionTypes,
             withHardcoreQuestions

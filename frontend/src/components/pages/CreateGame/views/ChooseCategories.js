@@ -30,7 +30,7 @@ export default class ChooseCategories extends React.Component {
         (async () => {
             try {
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-                const categories = await this.getCategories();
+                const {categories, categoriesCouple} = await this.getCategories();
 
                 categories.forEach(category => {
                     category.selected = false;
@@ -45,6 +45,10 @@ export default class ChooseCategories extends React.Component {
                     const category = categories.find(category => category.id === gameConfigurationCategory.id);
                     this.pickCategory(category);
                 });
+
+                gameConfiguration.categoriesCouple = categoriesCouple;
+
+                Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
             } catch (error) {
                 app.toastr.error('Impossible d\'afficher les catégories, réessayez ultérieurement')
             }
@@ -56,9 +60,8 @@ export default class ChooseCategories extends React.Component {
 
         if (!response.ok) throw 'error';
 
-        const responseData = await response.json();
+        return await response.json();
 
-        return responseData.categories;
     };
 
     pickCategory = (category) => {
