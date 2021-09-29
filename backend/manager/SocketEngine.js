@@ -73,7 +73,6 @@ module.exports = (server) => {
 
 
         socket.on('generate-quiz', async ({gameConfiguration, roomId}) => {
-
             try {
                 const room = RoomManager.findRoom(roomId);
 
@@ -82,7 +81,6 @@ module.exports = (server) => {
                 room.game.quiz = quiz;
                 room.game.quizLength = quiz.length;
                 io.to(room.id).emit('receive-quiz', quiz);
-
             } catch (error) {
                 socket.emit('force-disconnection');
             }

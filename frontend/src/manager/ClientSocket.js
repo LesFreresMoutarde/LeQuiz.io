@@ -175,7 +175,6 @@ class ClientSocket {
 
     };
 
-
     generateQuiz = (roomId) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         this.socket.emit('generate-quiz', {gameConfiguration, roomId})
