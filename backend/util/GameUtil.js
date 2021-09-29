@@ -7,8 +7,10 @@ class GameUtil {
 
     static HARDCORE_DIFFICULTY = 'hardcore';
 
-    static generateQuizQuery = (gameConfiguration) => {
-        let query = ''
+    static generateQuiz = async (gameConfiguration) => {
+        let questions = null
+        let questionsCategories = null;
+        let quiz = null;
         let hardcoreQuestionCount = 0;
 
         if (gameConfiguration.withHardcoreQuestions) {
@@ -17,7 +19,9 @@ class GameUtil {
 
         switch (gameConfiguration.gameMode.classname) {
             case 'Serie':
-                query = GameUtil.generateSerieQuizQuery(gameConfiguration, hardcoreQuestionCount);
+                questions = await GameUtil.generateQuestions(gameConfiguration, hardcoreQuestionCount);
+                questionsCategories = await GameUtil.getCategoriesFromGeneratedQuestions(questions);
+                quiz = GameUtil.mergeQuestionsAndCategories(questions, questionsCategories);
                 break;
 
             case 'Ascension':
@@ -30,12 +34,12 @@ class GameUtil {
                 break;
         }
 
-        return query;
+        return quiz;
 
     };
 
-    static generateSerieQuizQuery = (gameConfiguration, hardcoreQuestionCount) => {
-
+    static generateQuestions = async (gameConfiguration, hardcoreQuestionCount) => {
+        let queryObject;
         const questionTypesId = gameConfiguration.questionTypes.map(questionType => questionType.id);
         const categoriesId = gameConfiguration.categories.map(category => category.id);
 
@@ -43,70 +47,83 @@ class GameUtil {
         // Revenir dessus quand edit de question (back office) fonctionnel
         if (hardcoreQuestionCount === 0) {
             const standardLimit = Number(gameConfiguration.winCriterion);
-            return {
-                query:`SELECT "question"."content", "question"."answer", "question"."media", 
-                    "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
-                    "category"."name" as "category", "category"."label" as "categoryLabel"
+            queryObject = {
+                query:`SELECT * FROM (
+                    (SELECT * FROM (SELECT DISTINCT "question"."id", "question"."isHardcore", "question"."content", "question"."answer", "question"."media",
+                    "question_type"."label" as "typeLabel", "question_type"."name" as "type"
                     FROM "question"
                     INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
-                    INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
                     INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
-                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
-                    WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
+                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId"
+                    WHERE "question"."status" = :status AND "question_type"."id" IN (:questionTypes)
                     AND "question"."isHardcore" = false
-                    AND "category_question"."categoryId" IN (:categories) 
-                    ORDER BY random() LIMIT :limit;`
+                    AND "category_question"."categoryId" IN (:categories)
+                    ) distinct_part
+                    ORDER BY random()
+                    LIMIT :limit)) random_part;`
                 ,
                 options: {
                     replacements: {
                         questionTypes: questionTypesId,
                         categories: categoriesId,
                         limit: standardLimit,
-
+                        status: db.Question.STATUS_APPROVED
                     },
                     type: db.sequelize.QueryTypes.SELECT
                 }
             };
         } else {
             const standardLimit = Number(gameConfiguration.winCriterion) - hardcoreQuestionCount;
-            return {
-                query:`(SELECT "question"."content", "question"."answer", "question"."media", 
-                    "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
-                    "category"."name" as "category", "category"."label" as "categoryLabel"
+            queryObject = {
+                query:`SELECT * FROM (
+                    (SELECT * FROM (SELECT DISTINCT "question"."id", "question"."isHardcore", "question"."content", "question"."answer", "question"."media",
+                    "question_type"."label" as "typeLabel", "question_type"."name" as "type"
                     FROM "question"
                     INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
-                    INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
                     INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
-                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
-                    WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
+                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId"
+                    WHERE "question"."status" = :status AND "question_type"."id" IN (:questionTypes)
                     AND "question"."isHardcore" = false
-                    AND "category_question"."categoryId" IN (:categories) 
-                    ORDER BY random() LIMIT :standardLimit)
+                    AND "category_question"."categoryId" IN (:categories)
+                    ) standard
+                    ORDER BY random()
+                    LIMIT :standardLimit)
                     UNION
-                    (SELECT "question"."content", "question"."answer", "question"."media", 
-                    "question_type"."label" as "typeLabel", "question_type"."name" as "type", 
-                    "category"."name" as "category", "category"."label" as "categoryLabel"
+                    (SELECT * FROM (SELECT DISTINCT "question"."id", "question"."isHardcore", "question"."content", "question"."answer", "question"."media",
+                    "question_type"."label" as "typeLabel", "question_type"."name" as "type"
                     FROM "question"
                     INNER JOIN "category_question" ON "question"."id" = "category_question"."questionId"
-                    INNER JOIN "category" ON "category_question"."categoryId" = "category"."id"
                     INNER JOIN "question_type_question" ON "question_type_question"."questionId" = "question"."id"
-                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId" 
-                    WHERE "question"."status" = 'approved' AND "question_type"."id" IN (:questionTypes)
+                    INNER JOIN "question_type" ON "question_type"."id" = "question_type_question"."questionTypeId"
+                    WHERE "question"."status" = :status AND "question_type"."id" IN (:questionTypes)
                     AND "question"."isHardcore" = true
-                    AND "category_question"."categoryId" IN (:categories) 
-                    ORDER BY random() LIMIT :hardcoreLimit); `
+                    AND "category_question"."categoryId" IN (:categories)
+                    ) hardcore
+                    ORDER BY random()
+                    LIMIT :hardcoreLimit)) total
+                    ORDER BY random();`
                 ,
                 options: {
                     replacements: {
                         questionTypes: questionTypesId,
                         categories: categoriesId,
                         standardLimit: standardLimit,
-                        hardcoreLimit: hardcoreQuestionCount
+                        hardcoreLimit: hardcoreQuestionCount,
+                        status: db.Question.STATUS_APPROVED
                     },
                     type: db.sequelize.QueryTypes.SELECT
                 }
             };
         }
+
+        const questions = await db.sequelize.query(queryObject.query, queryObject.options)
+
+        questions.forEach((question, index) => {
+            question.round = index+1;
+        })
+
+        return questions;
+
         //TODO V2
         /*let categoriesAndItsQuestionsNb = [];
         const nbQuestionsPerCategory = Math.floor(
@@ -134,14 +151,42 @@ class GameUtil {
         }*/
     };
 
-    static executeQuizQuery = async (queryObject) => {
-        const quiz =  await db.sequelize.query(queryObject.query, queryObject.options);
+    static getCategoriesFromGeneratedQuestions = async (questions) => {
+        const questionsId = questions.map(question => question.id);
 
-        quiz.forEach((question, index) => {
-            question.round = index+1;
-        });
+        const queryObject = {
+            query: `SELECT "cq"."questionId", "c"."label"
+                FROM "category_question" cq
+                INNER JOIN "category" c ON "c"."id" = "cq"."categoryId"
+                WHERE "cq"."questionId" IN (:questions)`,
+            options: {
+                replacements: {
+                    questions: questionsId
+                },
+                type: db.sequelize.QueryTypes.SELECT
+            }
+        }
 
-        return quiz;
+        return await db.sequelize.query(queryObject.query, queryObject.options);
+    }
+
+    static mergeQuestionsAndCategories = (questions, categories) => {
+        const categoriesPerQuestion = {};
+
+        categories.forEach(category => {
+            if (!categoriesPerQuestion[category.questionId]) {
+                categoriesPerQuestion[category.questionId] = [category.label]
+                return;
+            }
+
+            categoriesPerQuestion[category.questionId].push(category.label);
+        })
+
+        questions.forEach(question => {
+            question.categories = categoriesPerQuestion[question.id];
+        })
+
+        return questions
     }
 
     static getHardcoreQuestionCountForQuery = (gameConfiguration) => {
