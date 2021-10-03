@@ -105,3 +105,18 @@
 
     margin-top: 50px;
 }
+
+.question-answer-input-display-qcm-button {
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    transition: color 0.1s ease-out;
+
+    font-family: "Coolvetica Rg", sans-serif;
+    font-size: 2rem;
+}
+
+.question-answer-input-display-qcm-button:hover {
+    cursor: pointer;
+    color: var(--a-hover-color);
+}

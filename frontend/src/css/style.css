@@ -16,6 +16,8 @@
 
     --button-pink-color: #DC71C7;
     --button-pink-color-lighter: #e898d8;
+
+    --a-hover-color: #b1e7fa;
 }
 
 * {
@@ -87,7 +89,7 @@ a.no-underline {
 }
 
 a:hover {
-    color: #b1e7fa;
+    color: var(--a-hover-color);
     cursor: pointer;
 }
 
