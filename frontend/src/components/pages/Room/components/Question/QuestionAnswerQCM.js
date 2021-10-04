@@ -1,6 +1,7 @@
 import React from "react";
+import QcmPick from "./QcmPick";
 
-const QuestionAnswerQCM = ({question}) => {
+const QuestionAnswerQCM = ({question, userCanSubmit, submitAnswer}) => {
     const answers = question.answer.answers.qcm;
 
     console.log(answers);
@@ -9,9 +10,11 @@ const QuestionAnswerQCM = ({question}) => {
         <div className="question-answer-qcm-container">
             {answers.map((answer, index) => {
                 return (
-                    <div key={index} className="question-answer-qcm-answer">
-                        {answer.content}
-                    </div>
+                    <QcmPick key={index}
+                             answer={answer}
+                             disabled={!userCanSubmit}
+                             submitAnswer={submitAnswer}
+                    />
                 )
             })}
         </div>

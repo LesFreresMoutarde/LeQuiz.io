@@ -29,7 +29,7 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
                                 return (
                                     <ClassicQuestion question={currentQuestion}
                                                      submitAnswer={submitAnswer}
-                                                     userCanSubmit={questionInputDisabled}
+                                                     userCanSubmit={!questionInputDisabled}
                                                      isQcmEnabled={isQcmEnabled}
                                                      enableQcm={enableQcm}
                                     />

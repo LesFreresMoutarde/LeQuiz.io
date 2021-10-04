@@ -23,7 +23,7 @@ const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, e
                     }
 
                     {isQcmEnabled &&
-                    <QuestionAnswerQCM question={question} />
+                    <QuestionAnswerQCM question={question} submitAnswer={submitAnswer} userCanSubmit={userCanSubmit} />
                     }
                 </div>
             </div>
