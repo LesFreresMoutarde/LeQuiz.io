@@ -1,15 +1,10 @@
 import React from "react";
 import ClassicQuestion from "../components/Question/ClassicQuestion";
-import QcmPick from "../components/Question/QcmPick";
-import Util from "../../../../util/Util";
 import Clock from "../components/Shared/Clock";
-import InputValue from "../components/Question/InputValue";
 import '../../../../css/pages/question.css';
 import QuitCross from "../../../misc/QuitCross";
 
 const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
-    console.log(currentQuestion);
-
     return (
         <div className="question-screen-container">
             <div className="question-screen-desktop-header">
