@@ -10,7 +10,7 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
             <div className="question-screen-desktop-header">
                 {currentQuestion.categories.map(categoryLabel => {
                     return (
-                        <div className="question-screen-desktop-header-item">
+                        <div key={categoryLabel} className="question-screen-desktop-header-item">
                             {categoryLabel}
                         </div>
                     )
