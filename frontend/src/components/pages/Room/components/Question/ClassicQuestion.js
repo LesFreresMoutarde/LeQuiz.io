@@ -3,8 +3,6 @@ import QuestionAnswerField from "./QuestionAnswerField";
 import QuestionAnswerQCM from "./QuestionAnswerQCM";
 
 const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, enableQcm}) => {
-    console.log(question);
-
     return (
         <div className="classic-question-container">
             <div className="question-content-container">

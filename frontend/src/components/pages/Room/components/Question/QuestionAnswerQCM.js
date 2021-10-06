@@ -1,10 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import QcmPick from "./QcmPick";
 
 const QuestionAnswerQCM = ({question, userCanSubmit, submitAnswer}) => {
     const answers = question.answer.answers.qcm;
-
-    console.log(answers);
 
     return (
         <div className="question-answer-qcm-container">

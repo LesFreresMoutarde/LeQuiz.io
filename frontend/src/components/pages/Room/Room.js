@@ -110,6 +110,8 @@ class Room extends React.Component {
 
         const currentQuestion = quiz.shift();
 
+        Util.randomizeArray(currentQuestion.answer.answers.qcm)
+
         Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
 
         this.setState({
