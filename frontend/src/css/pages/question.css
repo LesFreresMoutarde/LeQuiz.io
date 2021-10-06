@@ -142,6 +142,8 @@
     border: 4px solid #fff;
     border-radius: 15px;
 
+    transition: background-color 0.1s ease-out;
+
     width: 100%;
     height: 100%;
 
@@ -150,4 +152,41 @@
     align-items: center;
 
     font-size: 1.9em;
+    color: #fff;
+}
+
+.question-answer-qcm-answer:hover {
+    cursor: pointer;
+}
+
+.qcm-answer-color-1 {
+    background-color: #F03C70;
+}
+
+.qcm-answer-color-1:hover {
+    background-color: #ff7fa3;
+}
+
+.qcm-answer-color-2 {
+    background-color: #15CCC6;
+}
+
+.qcm-answer-color-2:hover {
+    background-color: #35e8e2;
+}
+
+.qcm-answer-color-3 {
+    background-color: #305EF0;
+}
+
+.qcm-answer-color-3:hover {
+    background-color: #5c81f6;
+}
+
+.qcm-answer-color-4 {
+    background-color: #F0613C;
+}
+
+.qcm-answer-color-4:hover {
+    background-color: #f19b85;
 }
