@@ -214,6 +214,14 @@
         flex: 1;
     }
 
+    .question-content-container .question-content {
+        font-size: 2em;
+    }
+
+    .question-content-container .question-counter {
+        display: none;
+    }
+
     .question-answer-qcm-answer-container {
         width: 100%;
         padding-top: 5px;
