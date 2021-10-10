@@ -35,7 +35,7 @@
 }
 
 .question-screen-center {
-    width: 1024px;
+    max-width: 1024px;
 }
 
 .question-screen-desktop-clock-container {
@@ -189,4 +189,19 @@
 
 .qcm-answer-color-4:hover {
     background-color: #f19b85;
+}
+
+@media screen and (max-width: 992px) {
+    .question-screen-desktop-header {
+        display: none;
+    }
+
+    .question-screen-main-data-container {
+        flex-direction: column;
+    }
+
+    .question-screen-left {
+        display: flex;
+        justify-content: center;
+    }
 }
