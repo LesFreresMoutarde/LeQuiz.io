@@ -224,8 +224,8 @@
 
     .question-answer-qcm-answer-container {
         width: 100%;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         padding-left: 0;
         padding-right: 0;
     }
