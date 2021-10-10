@@ -200,8 +200,29 @@
         flex-direction: column;
     }
 
+    .question-screen-left,
+    .question-screen-right {
+        flex: 0;
+    }
+
     .question-screen-left {
         display: flex;
         justify-content: center;
+    }
+
+    .question-screen-center {
+        flex: 1;
+    }
+
+    .question-answer-qcm-answer-container {
+        width: 100%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .question-answer-qcm-answer {
+        font-size: 1.4em;
     }
 }
