@@ -4,7 +4,9 @@ import Clock from "../components/Shared/Clock";
 import '../../../../css/pages/question.css';
 import QuitCross from "../../../misc/QuitCross";
 
-const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
+const Question = ({currentQuestion, quizLength, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
+    console.log(currentQuestion)
+
     return (
         <div className="question-screen-container">
             <div className="question-screen-desktop-header">
@@ -28,6 +30,7 @@ const Question = ({currentQuestion, submitAnswer, timeLeft, questionInputDisable
                             case 'classic':
                                 return (
                                     <ClassicQuestion question={currentQuestion}
+                                                     quizLength={quizLength}
                                                      submitAnswer={submitAnswer}
                                                      userCanSubmit={!questionInputDisabled}
                                                      isQcmEnabled={isQcmEnabled}

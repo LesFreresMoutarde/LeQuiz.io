@@ -2,7 +2,7 @@ import React from "react";
 import QuestionAnswerField from "./QuestionAnswerField";
 import QuestionAnswerQCM from "./QuestionAnswerQCM";
 
-const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, enableQcm}) => {
+const ClassicQuestion = ({question, quizLength, submitAnswer, userCanSubmit, isQcmEnabled, enableQcm}) => {
     return (
         <div className="classic-question-container">
             <div className="question-content-container">
@@ -10,7 +10,7 @@ const ClassicQuestion = ({question, submitAnswer, userCanSubmit, isQcmEnabled, e
                     {question.content}
                 </div>
                 <div className="question-counter">
-                    Question X sur Y
+                    Question {question.round} sur {quizLength}
                 </div>
             </div>
 

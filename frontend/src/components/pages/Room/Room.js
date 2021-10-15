@@ -284,6 +284,7 @@ class Room extends React.Component {
             return (
                 <>
                     <Question currentQuestion={currentQuestion}
+                              quizLength={roomData.quizLength}
                               submitAnswer={this.submitAnswer}
                               timeLeft={timeLeft}
                               questionInputDisabled={questionInputDisabled}
