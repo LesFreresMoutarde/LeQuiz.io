@@ -36,6 +36,7 @@
 
 .question-screen-center {
     max-width: 1024px;
+    flex:999999;
 }
 
 .question-screen-desktop-clock-container {
