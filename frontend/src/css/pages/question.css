@@ -60,8 +60,20 @@
 
 .question-content-container .question-content {
     text-align: center;
-    font-size: 3em;
     font-family: "Coolvetica Rg", sans-serif;
+
+    max-height: 20vh;
+
+    position: relative;
+}
+
+.question-content-container .question-content .question-content-resizer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    visibility: hidden;
 }
 
 .question-content-container .question-counter {

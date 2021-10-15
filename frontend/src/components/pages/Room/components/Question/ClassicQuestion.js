@@ -1,14 +1,13 @@
 import React from "react";
 import QuestionAnswerField from "./QuestionAnswerField";
 import QuestionAnswerQCM from "./QuestionAnswerQCM";
+import QuestionContent from "./QuestionContent";
 
 const ClassicQuestion = ({question, quizLength, submitAnswer, userCanSubmit, isQcmEnabled, enableQcm}) => {
     return (
         <div className="classic-question-container">
             <div className="question-content-container">
-                <div className="question-content">
-                    {question.content}
-                </div>
+                <QuestionContent content={question.content} />
                 <div className="question-counter">
                     Question {question.round} sur {quizLength}
                 </div>
