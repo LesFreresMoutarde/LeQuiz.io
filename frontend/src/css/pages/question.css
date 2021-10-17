@@ -205,7 +205,8 @@
 }
 
 @media screen and (max-width: 992px) {
-    .question-screen-desktop-header {
+    .question-screen-desktop-header,
+    .question-screen-desktop-footer{
         display: none;
     }
 
