@@ -1,10 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ClassicQuestion from "../components/Question/ClassicQuestion";
 import Clock from "../components/Shared/Clock";
 import '../../../../css/pages/question.css';
 import QuitCross from "../../../misc/QuitCross";
+import {app} from "../../../App";
 
 const Question = ({currentQuestion, quizLength, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
+    useEffect(() => {
+        app.showQuitCross(true, leaveRoom);
+
+        return () => {
+            app.showQuitCross(false);
+        };
+    }, []);
+
     return (
         <div className="question-screen-container">
             <div className="question-screen-desktop-header">

@@ -3,8 +3,9 @@ import {Link} from "react-router-dom";
 import LogoutButton from "./misc/LogoutButton";
 import BackArrow from "./misc/BackArrow";
 import SettingsButton from "./misc/SettingsButton";
+import QuitCross from "./misc/QuitCross";
 
-const Header = ({user, showBackArrow, backArrowOnClick}) => {
+const Header = ({user, showBackArrow, backArrowOnClick, showResponsiveQuitCross, responsiveQuitCrossOnClick}) => {
     const getHeaderUserSection = () => {
         if(user) {
             return(
@@ -33,6 +34,7 @@ const Header = ({user, showBackArrow, backArrowOnClick}) => {
         <header className="app-header">
             <div className="header-left">
                 {showBackArrow && <BackArrow onClick={backArrowOnClick} />}
+                {showResponsiveQuitCross && <QuitCross onClick={responsiveQuitCrossOnClick} responsive={true} />}
             </div>
             <div className="header-right">
                 {getHeaderUserSection()}

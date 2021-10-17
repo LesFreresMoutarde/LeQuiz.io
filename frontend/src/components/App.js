@@ -49,6 +49,8 @@ class App extends React.Component {
             showFeedbackModal: false,
             showBackArrow: false,
             backArrowOnClick: null,
+            showQuitCross: false,
+            quitCrossOnClick: null,
         };
 
         this.nextRedirect = null;
@@ -100,6 +102,19 @@ class App extends React.Component {
         });
     }
 
+    /**
+     * Display or not the header responsive Quit Cross. This function must be caled in
+     * the componentDidMount of a main "page" component
+     * @param show
+     * @param onClick
+     */
+    showQuitCross = (show = true, onClick = () => {}) => {
+        this.setState({
+            showQuitCross: show,
+            quitCrossOnClick: onClick,
+        });
+    }
+
     logoutUser = async () => {
         Util.verbose('User logout');
 
@@ -142,7 +157,7 @@ class App extends React.Component {
 
     render = () => {
 
-        const {redirect, isLoading, user, showFeedbackModal, showBackArrow, backArrowOnClick} = this.state;
+        const {redirect, isLoading, user, showFeedbackModal, showBackArrow, backArrowOnClick, showQuitCross, quitCrossOnClick} = this.state;
 
         if (redirect) {
             const url = this.nextRedirect;
@@ -175,7 +190,12 @@ class App extends React.Component {
                         <FeedbackModal closeModal={this.closeFeedbackModal}/>
                     }
                     <div className="content-wrapper">
-                        <Header user={user} showBackArrow={showBackArrow} backArrowOnClick={backArrowOnClick} />
+                        <Header user={user}
+                                showBackArrow={showBackArrow}
+                                backArrowOnClick={backArrowOnClick}
+                                showResponsiveQuitCross={showQuitCross}
+                                responsiveQuitCrossOnClick={quitCrossOnClick}
+                        />
                         <div id="page-content">
                             <Switch>
                                 <Route exact path="/" component={Home}/>

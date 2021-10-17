@@ -500,6 +500,11 @@ button {
     transition: background-color 0.1s ease-out;
 }
 
+.quit-cross-button.responsive {
+    transform-origin: top left;
+    transform: scale(0.6) translateY(20px);
+}
+
 .quit-cross-button:hover {
     cursor: pointer;
 }
@@ -886,5 +891,11 @@ button {
 
     .app-header {
         padding: 5px 20px;
+    }
+}
+
+@media screen and (min-width: 993px) {
+    .quit-cross-button.responsive {
+        display: none;
     }
 }
