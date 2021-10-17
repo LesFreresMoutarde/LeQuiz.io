@@ -27,7 +27,7 @@ const Question = ({currentQuestion, quizLength, submitAnswer, timeLeft, question
             </div>
             <div className="question-screen-main-data-container">
                 <div className="question-screen-left">
-                    <div className="question-screen-desktop-clock-container">
+                    <div className="question-screen-clock-container">
                         <Clock timeLeft={timeLeft} />
                     </div>
                 </div>

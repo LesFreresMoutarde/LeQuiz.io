@@ -18,7 +18,7 @@ const QuestionContent = ({content}) => {
      */
     const getMaxContentHeight = () => {
         if (clientDimensions.width <= 576) {
-            return 0.4;
+            return 0.3;
         }
 
         return 0.2;
