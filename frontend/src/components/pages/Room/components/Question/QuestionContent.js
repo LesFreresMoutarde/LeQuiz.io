@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 
 const BASE_FONT_SIZE = '3rem';
-const MAX_CONTENT_HEIGHT = 0.2; // In % of window height
 
 const QuestionContent = ({content}) => {
     const [fontSize, setFontSize] = useState(BASE_FONT_SIZE);
@@ -13,10 +12,22 @@ const QuestionContent = ({content}) => {
     let questionContentRef = null;
     let questionContentResizerRef = null;
 
+    /**
+     * Returns max content height
+     * @returns {number} % of window height
+     */
+    const getMaxContentHeight = () => {
+        if (clientDimensions.width <= 576) {
+            return 0.4;
+        }
+
+        return 0.2;
+    }
+
     const onClientDimensionsChange = () => {
         const baseFontSize = parseInt(window.getComputedStyle(questionContentResizerRef)['font-size']);
         const resizerHeight = parseInt(window.getComputedStyle(questionContentResizerRef)['height']);
-        const maxContentHeight = clientDimensions.height * MAX_CONTENT_HEIGHT;
+        const maxContentHeight = clientDimensions.height * getMaxContentHeight();
 
         if (resizerHeight <= maxContentHeight) {
             setFontSize(BASE_FONT_SIZE);

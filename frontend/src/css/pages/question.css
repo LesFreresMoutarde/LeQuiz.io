@@ -247,3 +247,28 @@
         font-size: 1.4em;
     }
 }
+
+@media screen and (max-width: 576px) {
+    .question-content-container .question-content {
+        max-height: 40vh;
+    }
+
+    .question-answer-input {
+        margin-bottom: 25px;
+    }
+
+    .question-answer-input-display-qcm-button-container {
+        margin-top: 25px;
+    }
+}
+
+@media screen and (max-width: 576px),
+       screen and (max-height: 840px) {
+    .question-answer-input {
+        margin-bottom: 25px;
+    }
+
+    .question-answer-input-display-qcm-button-container {
+        margin-top: 25px;
+    }
+}
