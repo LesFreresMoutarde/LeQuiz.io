@@ -2,6 +2,7 @@ import React from "react";
 import QuestionDesktopHeader from "../components/Shared/QuestionDesktopHeader";
 import Clock from "../components/Shared/Clock";
 import QuitCross from "../../../misc/QuitCross";
+import QuestionContent from "../components/Question/QuestionContent";
 
 const Answer = ({currentQuestion, quizLength, timeLeft, leaveRoom}) => {
 
@@ -15,7 +16,18 @@ const Answer = ({currentQuestion, quizLength, timeLeft, leaveRoom}) => {
                     </div>
                 </div>
                 <div className="question-screen-center">
-
+                    {/*TODO switch regarding currentQuestion.type */}
+                    <div className="question-scores-container">
+                        <div className="question-content-container">
+                            <QuestionContent content={currentQuestion.content} />
+                            <div className="question-counter">
+                                Question {currentQuestion.round} sur {quizLength}
+                            </div>
+                        </div>
+                        <div className="classic-question-good-answer">
+                            {currentQuestion.answer.answers.qcm.find(answer => answer['is_good_answer']).content}
+                        </div>
+                    </div>
                 </div>
                 <div className="question-screen-right"/>
             </div>

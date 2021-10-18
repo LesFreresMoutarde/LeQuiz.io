@@ -301,6 +301,7 @@ class Room extends React.Component {
                 <>
                     <Answer roomData={roomData}
                             currentQuestion={currentQuestion}
+                            quizLength={roomData.quizLength}
                             currentPlayer={currentPlayer}
                             timeLeft={timeLeft}
                             leaveRoom={this.leaveRoom}
