@@ -3,7 +3,7 @@ const RandomUtil = require("./RandomUtil");
 class GameUtil {
 
     static ROUND_TIME = 12*1000*100;
-    static SCORES_TIME = 5*1000;
+    static SCORES_TIME = 5*1000*100;
 
     static HARDCORE_DIFFICULTY = 'hardcore';
 
