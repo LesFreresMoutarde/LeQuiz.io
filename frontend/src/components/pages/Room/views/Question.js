@@ -4,6 +4,7 @@ import Clock from "../components/Shared/Clock";
 import '../../../../css/pages/question.css';
 import QuitCross from "../../../misc/QuitCross";
 import {app} from "../../../App";
+import QuestionDesktopHeader from "../components/Shared/QuestionDesktopHeader";
 
 const Question = ({currentQuestion, quizLength, submitAnswer, timeLeft, questionInputDisabled, leaveRoom, isQcmEnabled, enableQcm}) => {
     useEffect(() => {
@@ -16,15 +17,7 @@ const Question = ({currentQuestion, quizLength, submitAnswer, timeLeft, question
 
     return (
         <div className="question-screen-container">
-            <div className="question-screen-desktop-header">
-                {currentQuestion.categories.map(categoryLabel => {
-                    return (
-                        <div key={categoryLabel} className="question-screen-desktop-header-item">
-                            {categoryLabel}
-                        </div>
-                    )
-                })}
-            </div>
+            <QuestionDesktopHeader question={currentQuestion} />
             <div className="question-screen-main-data-container">
                 <div className="question-screen-left">
                     <div className="question-screen-clock-container">
