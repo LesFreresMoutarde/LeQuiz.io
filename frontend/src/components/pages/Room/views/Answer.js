@@ -27,6 +27,10 @@ const Answer = ({currentQuestion, quizLength, timeLeft, leaveRoom}) => {
                         <div className="classic-question-good-answer">
                             {currentQuestion.answer.answers.qcm.find(answer => answer['is_good_answer']).content}
                         </div>
+                        <div className="classic-question-player-answer">
+                            Vous avez répondu&nbsp;:&nbsp;
+                            <span className="player-wrong-answer">Toto</span>
+                        </div>
                     </div>
                 </div>
                 <div className="question-screen-right"/>

@@ -223,6 +223,27 @@
     font-size: 2.5em;
 }
 
+.classic-question-player-answer {
+    border: 3px solid orange;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    display: flex;
+    justify-content: center;
+
+    font-size: 1.4em;
+}
+
+.player-good-answer {
+    color: #0a910a;
+    font-weight: 700;
+}
+
+.player-wrong-answer {
+    color: #e30f0f;
+    font-weight: 700;
+}
+
 @media screen and (max-width: 992px) {
     .question-screen-desktop-header,
     .question-screen-desktop-footer{
