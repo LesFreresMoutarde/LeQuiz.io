@@ -244,6 +244,10 @@
     font-weight: 700;
 }
 
+.question-scores-table-container {
+    border: 3px solid chartreuse;
+}
+
 @media screen and (max-width: 992px) {
     .question-screen-desktop-header,
     .question-screen-desktop-footer{

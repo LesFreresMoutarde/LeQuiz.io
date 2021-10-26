@@ -4,7 +4,7 @@ import Clock from "../components/Shared/Clock";
 import QuitCross from "../../../misc/QuitCross";
 import QuestionContent from "../components/Question/QuestionContent";
 
-const Answer = ({currentQuestion, quizLength, timeLeft, leaveRoom}) => {
+const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}) => {
 
     return (
         <div className="question-screen-container">
@@ -29,7 +29,12 @@ const Answer = ({currentQuestion, quizLength, timeLeft, leaveRoom}) => {
                         </div>
                         <div className="classic-question-player-answer">
                             Vous avez répondu&nbsp;:&nbsp;
-                            <span className="player-wrong-answer">Toto</span>
+                            <span className={playerAnswer.wasCorrect ? 'player-good-answer' : 'player-wrong-answer'}>
+                                {playerAnswer.answer}
+                            </span>
+                        </div>
+                        <div className="question-scores-table-container">
+                            Scores
                         </div>
                     </div>
                 </div>

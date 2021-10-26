@@ -37,6 +37,11 @@ class Room extends React.Component {
             gameConfiguration: false,
             currentPlayer: false,
             currentQuestion: false,
+            lastQuestionAnswer: {
+                answer: null,
+                wasCorrect: false,
+                wasQcm: false,
+            },
             questionInputDisabled: false,
             isQcmEnabled: false
         }
@@ -120,6 +125,11 @@ class Room extends React.Component {
                 gameOptions: false,
             },
             currentQuestion,
+            lastQuestionAnswer: {
+                answer: null,
+                wasCorrect: false,
+                wasQcm: false,
+            },
         });
     };
 
@@ -128,28 +138,33 @@ class Room extends React.Component {
         let roundPoints = 0;
 
         if (answer) {
-            this.setState({questionInputDisabled: true});
             const { currentQuestion } = this.state;
             roundPoints = GameUtil.getRoundPoints(answer, currentQuestion, isQcmEnabled);
+            this.setState({
+                questionInputDisabled: true,
+                lastQuestionAnswer: {
+                    answer: isQcmEnabled ? answer.content : answer,
+                    wasCorrect: roundPoints > 0,
+                    wasQcm: isQcmEnabled,
+                },
+            });
         }
 
         this.clientSocket.sendResult({roundPoints: roundPoints, roomId: this.roomId})
     };
 
     displayScores = (roomData) => {
-        this.setState(
-            {
-                display: {
-                    lobby: false,
-                    question: false,
-                    answer: true,
-                    gameOptions: false,
-                },
-                roomData,
-                questionInputDisabled: false,
-                isQcmEnabled: false
-            }
-        );
+        this.setState({
+            display: {
+                lobby: false,
+                question: false,
+                answer: true,
+                gameOptions: false,
+            },
+            roomData,
+            questionInputDisabled: false,
+            isQcmEnabled: false
+        });
     };
 
     endGame = (roomData) => {
@@ -297,12 +312,15 @@ class Room extends React.Component {
 
         } else if (display.answer) {
 
+            const {lastQuestionAnswer} = this.state;
+
             return (
                 <>
                     <Answer roomData={roomData}
                             currentQuestion={currentQuestion}
                             quizLength={roomData.quizLength}
                             currentPlayer={currentPlayer}
+                            playerAnswer={lastQuestionAnswer}
                             timeLeft={timeLeft}
                             leaveRoom={this.leaveRoom}
                     />
