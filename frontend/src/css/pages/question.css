@@ -260,6 +260,29 @@
 
 .question-scores-table-container {
     flex: 1;
+
+    overflow-y: auto;
+
+    display: flex;
+    justify-content: center;
+}
+
+.question-scores-table {
+    border: 3px solid blue;
+
+    height: 100%;
+    width: 800px;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.question-scores-table-item-container {
+    border: 3px solid red;
+
+    height: 20%;
+    width: 50%;
 }
 
 @media screen and (max-width: 992px) {

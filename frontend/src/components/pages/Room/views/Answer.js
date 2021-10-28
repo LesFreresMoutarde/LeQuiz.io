@@ -38,7 +38,29 @@ const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}
                                 <h2>Scores</h2>
                             </div>
                             <div className="question-scores-table-container">
-                                Toto
+                                <div className="question-scores-table">
+                                    <div className="question-scores-table-item-container">
+
+                                    </div>
+                                    <div className="question-scores-table-item-container">
+
+                                    </div>
+                                    <div className="question-scores-table-item-container">
+
+                                    </div>
+                                    <div className="question-scores-table-item-container">
+
+                                    </div>
+                                    <div className="question-scores-table-item-container">
+
+                                    </div>
+                                    <div className="question-scores-table-item-container">
+
+                                    </div>
+                                    <div className="question-scores-table-item-container">
+
+                                    </div>
+                                </div>
                             </div>
                         </section>
                     </div>
