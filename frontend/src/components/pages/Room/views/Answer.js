@@ -33,9 +33,14 @@ const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}
                                 {playerAnswer.answer}
                             </span>
                         </div>
-                        <div className="question-scores-table-container">
-                            Scores
-                        </div>
+                        <section className="question-scores-table-section">
+                            <div className="question-scores-table-title">
+                                <h2>Scores</h2>
+                            </div>
+                            <div className="question-scores-table-container">
+                                Toto
+                            </div>
+                        </section>
                     </div>
                 </div>
                 <div className="question-screen-right"/>
