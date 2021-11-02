@@ -28,10 +28,18 @@ const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}
                             {currentQuestion.answer.answers.qcm.find(answer => answer['is_good_answer']).content}
                         </div>
                         <div className="classic-question-player-answer">
-                            Vous avez répondu&nbsp;:&nbsp;
-                            <span className={playerAnswer.wasCorrect ? 'player-good-answer' : 'player-wrong-answer'}>
-                                {playerAnswer.answer}
-                            </span>
+                            {playerAnswer.answer !== null ?
+                                <>
+                                    Vous avez répondu&nbsp;:&nbsp;
+                                    <span className={playerAnswer.wasCorrect ? 'player-good-answer' : 'player-wrong-answer'}>
+                                        {playerAnswer.answer}
+                                    </span>
+                                </>
+                                :
+                                <>
+                                    Vous n'avez pas répondu
+                                </>
+                            }
                         </div>
                         <section className="question-scores-table-section">
                             <div className="question-scores-table-title">
