@@ -1,29 +1,12 @@
 import React from "react";
+import ScoresTableLine from "./ScoresTableLine";
 
-const ScoresTable = () => {
+const ScoresTable = ({scores, currentPlayer}) => {
     return (
         <div className="question-scores-table">
-            <div className="question-scores-table-item-container">
-
-            </div>
-            <div className="question-scores-table-item-container">
-
-            </div>
-            <div className="question-scores-table-item-container">
-
-            </div>
-            <div className="question-scores-table-item-container">
-
-            </div>
-            <div className="question-scores-table-item-container">
-
-            </div>
-            <div className="question-scores-table-item-container">
-
-            </div>
-            <div className="question-scores-table-item-container">
-
-            </div>
+                {scores.map((scoreLineData, index) => (
+                    <ScoresTableLine key={index} scoreLineData={scoreLineData} currentPlayer={currentPlayer}/>
+                ))}
         </div>
     )
 }

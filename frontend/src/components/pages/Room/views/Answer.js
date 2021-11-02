@@ -5,7 +5,7 @@ import QuitCross from "../../../misc/QuitCross";
 import QuestionContent from "../components/Question/QuestionContent";
 import ScoresTable from "../components/Answer/ScoresTable";
 
-const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}) => {
+const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}) => {
 
     return (
         <div className="question-screen-container">
@@ -47,7 +47,7 @@ const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}
                                 <h2>Scores</h2>
                             </div>
                             <div className="question-scores-table-container">
-                                <ScoresTable />
+                                <ScoresTable scores={roomData.scores} currentPlayer={currentPlayer} />
                             </div>
                         </section>
                     </div>
