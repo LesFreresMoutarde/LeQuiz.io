@@ -3,6 +3,7 @@ import QuestionDesktopHeader from "../components/Shared/QuestionDesktopHeader";
 import Clock from "../components/Shared/Clock";
 import QuitCross from "../../../misc/QuitCross";
 import QuestionContent from "../components/Question/QuestionContent";
+import ScoresTable from "../components/Answer/ScoresTable";
 
 const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}) => {
 
@@ -46,29 +47,7 @@ const Answer = ({currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}
                                 <h2>Scores</h2>
                             </div>
                             <div className="question-scores-table-container">
-                                <div className="question-scores-table">
-                                    <div className="question-scores-table-item-container">
-
-                                    </div>
-                                    <div className="question-scores-table-item-container">
-
-                                    </div>
-                                    <div className="question-scores-table-item-container">
-
-                                    </div>
-                                    <div className="question-scores-table-item-container">
-
-                                    </div>
-                                    <div className="question-scores-table-item-container">
-
-                                    </div>
-                                    <div className="question-scores-table-item-container">
-
-                                    </div>
-                                    <div className="question-scores-table-item-container">
-
-                                    </div>
-                                </div>
+                                <ScoresTable />
                             </div>
                         </section>
                     </div>
