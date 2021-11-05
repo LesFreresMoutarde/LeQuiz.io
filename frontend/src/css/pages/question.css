@@ -322,12 +322,20 @@
 
 .question-scores-table-item-line-player-username {
     flex: 1;
+    width: 0; /* Prevent width to be enlarged by inside text if text is too large */
 
     display: flex;
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.question-scores-table-item-line-player-username span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .question-scores-table-item-line-player-score {
     display: flex;
     align-items: center;

@@ -10,7 +10,11 @@ const ScoresTableLine = ({scoreLineData, isCurrentPlayer}) => {
             </div>
             <div className="question-scores-table-item-line">
                 <div className="question-scores-table-item-line-player-username">
-                    {scoreLineData.player.username}
+                    <span>
+                        {scoreLineData.player.username}
+                        {scoreLineData.player.username}
+                        {scoreLineData.player.username}
+                    </span>
                 </div>
                 <div className="question-scores-table-item-line-player-score">
                     {scoreLineData.value}
