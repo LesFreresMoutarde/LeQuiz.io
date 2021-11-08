@@ -405,8 +405,27 @@
     }
 }
 
+@media screen and (max-width: 992px),
+       screen and (max-height: 860px) {
+    .classic-question-good-answer {
+        font-size: 1.5em;
+    }
+
+    .classic-question-player-answer {
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (max-width: 992px) and (max-height: 840px),
+       screen and (max-width: 640px) {
+    .question-screen-clock-container {
+        width: 60px;
+    }
+}
+
 @media screen and (max-width: 576px),
        screen and (max-height: 840px) {
+
     .question-answer-input {
         margin-bottom: 25px;
     }
@@ -418,9 +437,6 @@
 
 @media screen and (max-width: 400px),
        screen and (max-height: 640px) {
-    .question-screen-clock-container {
-        width: 80px;
-    }
 
     .question-answer-input {
         margin-bottom: 15px;
