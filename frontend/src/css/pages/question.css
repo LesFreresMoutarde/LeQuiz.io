@@ -388,9 +388,6 @@
 }
 
 @media screen and (max-width: 576px) {
-    .question-content-container .question-content {
-        max-height: 30vh;
-    }
 
     .question-answer-input {
         margin-bottom: 25px;
@@ -398,6 +395,13 @@
 
     .question-answer-input-display-qcm-button-container {
         margin-top: 25px;
+    }
+}
+
+@media screen and (max-width: 992px),
+       screen and (max-height: 980px) {
+    .question-scores-table-title {
+        display: none;
     }
 }
 
@@ -428,5 +432,16 @@
 
     .question-answer-input-display-qcm-button {
         font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 360px),
+       screen and (max-height: 720px) {
+    .question-scores-container .question-content-container {
+        display: none;
+    }
+
+    .question-scores-container .classic-question-good-answer {
+        display: none;
     }
 }

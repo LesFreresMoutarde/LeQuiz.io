@@ -30,12 +30,12 @@ const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLen
                         </div>
                         <div className="classic-question-player-answer">
                             {playerAnswer.answer !== null ?
-                                <>
+                                <span>
                                     Vous avez répondu&nbsp;:&nbsp;
                                     <span className={playerAnswer.wasCorrect ? 'player-good-answer' : 'player-wrong-answer'}>
                                         {playerAnswer.answer}
                                     </span>
-                                </>
+                                </span>
                                 :
                                 <>
                                     Vous n'avez pas répondu
