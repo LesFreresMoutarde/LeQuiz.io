@@ -416,8 +416,8 @@
     }
 }
 
-@media screen and (max-width: 992px) and (max-height: 840px),
-       screen and (max-width: 640px) {
+@media screen and (max-width: 992px),
+       screen and (max-height: 840px) {
     .question-screen-clock-container {
         width: 60px;
     }
