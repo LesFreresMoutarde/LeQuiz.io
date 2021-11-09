@@ -7,24 +7,6 @@ const ScoresTable = ({scores, currentPlayer}) => {
             {scores.map((scoreLineData, index) => (
                 <ScoresTableLine key={index} scoreLineData={scoreLineData} isCurrentPlayer={scoreLineData.player.socketId === currentPlayer.socketId}/>
             ))}
-            {scores.map((scoreLineData, index) => (
-                <ScoresTableLine key={index} scoreLineData={scoreLineData} isCurrentPlayer={scoreLineData.player.socketId === currentPlayer.socketId}/>
-            ))}
-            {scores.map((scoreLineData, index) => (
-                <ScoresTableLine key={index} scoreLineData={scoreLineData} isCurrentPlayer={scoreLineData.player.socketId === currentPlayer.socketId}/>
-            ))}
-            {scores.map((scoreLineData, index) => (
-                <ScoresTableLine key={index} scoreLineData={scoreLineData} isCurrentPlayer={scoreLineData.player.socketId === currentPlayer.socketId}/>
-            ))}
-            {scores.map((scoreLineData, index) => (
-                <ScoresTableLine key={index} scoreLineData={scoreLineData} isCurrentPlayer={scoreLineData.player.socketId === currentPlayer.socketId}/>
-            ))}
-            {scores.map((scoreLineData, index) => (
-                <ScoresTableLine key={index} scoreLineData={scoreLineData} isCurrentPlayer={scoreLineData.player.socketId === currentPlayer.socketId}/>
-            ))}
-            {scores.map((scoreLineData, index) => (
-                <ScoresTableLine key={index} scoreLineData={scoreLineData} isCurrentPlayer={scoreLineData.player.socketId === currentPlayer.socketId}/>
-            ))}
         </div>
     )
 }
