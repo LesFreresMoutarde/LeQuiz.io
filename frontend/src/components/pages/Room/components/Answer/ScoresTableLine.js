@@ -13,6 +13,12 @@ const ScoresTableLine = ({scoreLineData, isCurrentPlayer}) => {
                     <span>
                         {scoreLineData.player.username}
                     </span>
+                    {true &&
+                        <span className="question-scores-table-item-line-player-host-crown">
+                            <img src="/img/icons/host.svg" alt="Host"/>
+                        </span>
+                    }
+
                 </div>
                 <div className="question-scores-table-item-line-player-score">
                     {scoreLineData.value}

@@ -324,6 +324,22 @@
     padding-right: 15px;
 }
 
+.question-scores-table-item-line-player-host-crown {
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    margin: 0 5px;
+}
+
+.question-scores-table-item-line-player-host-crown img {
+    height: 1.2em;
+    position: relative;
+    bottom: 0.1em;
+}
+
 @media screen and (max-width: 992px) {
     .question-screen-desktop-header,
     .question-screen-desktop-footer{
