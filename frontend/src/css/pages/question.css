@@ -385,6 +385,16 @@
     .question-answer-qcm-answer {
         font-size: 1.4em;
     }
+
+    .question-scores-table {
+        font-size: 0.9em;
+    }
+
+    .question-scores-table-item-container {
+        margin: 5px 10px;
+        width: calc(50% - 20px);
+        height: calc(20% - 10px);
+    }
 }
 
 @media screen and (max-width: 576px) {
@@ -395,6 +405,16 @@
 
     .question-answer-input-display-qcm-button-container {
         margin-top: 25px;
+    }
+
+    .question-scores-table {
+        flex-wrap: nowrap;
+        font-size: 0.8em;
+    }
+
+    .question-scores-table-item-container {
+        width: 100%;
+        margin: 5px 0;
     }
 }
 
