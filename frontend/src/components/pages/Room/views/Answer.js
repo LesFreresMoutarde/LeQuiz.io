@@ -47,7 +47,7 @@ const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLen
                                 <h2>Scores</h2>
                             </div>
                             <div className="question-scores-table-container">
-                                <ScoresTable scores={roomData.scores} currentPlayer={currentPlayer} />
+                                <ScoresTable scores={roomData.scores} currentPlayer={currentPlayer} hostPlayer={roomData.host} />
                             </div>
                         </section>
                     </div>

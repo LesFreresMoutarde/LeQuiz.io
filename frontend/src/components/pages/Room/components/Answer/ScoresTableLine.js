@@ -1,6 +1,6 @@
 import React from "react";
 
-const ScoresTableLine = ({scoreLineData, isCurrentPlayer}) => {
+const ScoresTableLine = ({scoreLineData, isCurrentPlayer, isHost}) => {
     return (
         <div className={`question-scores-table-item-container ${isCurrentPlayer ? 'current-player' : ''}`}>
             <div className="question-scores-table-item-rank-container">
@@ -13,7 +13,7 @@ const ScoresTableLine = ({scoreLineData, isCurrentPlayer}) => {
                     <span>
                         {scoreLineData.player.username}
                     </span>
-                    {true &&
+                    {isHost &&
                         <span className="question-scores-table-item-line-player-host-crown">
                             <img src="/img/icons/host.svg" alt="Host"/>
                         </span>
