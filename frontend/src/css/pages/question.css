@@ -29,8 +29,6 @@
 
 .question-screen-left,
 .question-screen-right {
-    border: 3px solid magenta;
-
     flex: 1;
 }
 
@@ -44,8 +42,6 @@
 }
 
 .classic-question-container {
-    border: 3px solid chartreuse;
-
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -54,8 +50,6 @@
 .question-content-container {
     padding-top: 20px;
     padding-bottom: 20px;
-
-    border: 3px solid red;
 }
 
 .question-content-container .question-content {
@@ -83,8 +77,6 @@
 }
 
 .question-answers-container {
-    border: 3px solid yellow;
-
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -92,8 +84,6 @@
 }
 
 .question-answers {
-    border: 3px solid red;
-
     max-height: 100%;
 }
 
@@ -205,15 +195,12 @@
 }
 
 .question-scores-container {
-    border: 3px solid chartreuse;
-
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .classic-question-good-answer {
-    border: 3px solid blue;
     padding-top: 5px;
     padding-bottom: 5px;
 
@@ -224,7 +211,6 @@
 }
 
 .classic-question-player-answer {
-    border: 3px solid orange;
     padding-top: 5px;
     padding-bottom: 5px;
 
@@ -245,8 +231,6 @@
 }
 
 .question-scores-table-section {
-    border: 3px solid chartreuse;
-
     flex: 1;
 
     display: flex;
@@ -268,8 +252,6 @@
 }
 
 .question-scores-table {
-    border: 3px solid blue;
-
     height: 100%;
     width: 800px;
 
@@ -281,8 +263,6 @@
 }
 
 .question-scores-table-item-container {
-    border: 3px solid red;
-
     height: calc(20% - 20px);
     width: calc(50% - 40px);
 
