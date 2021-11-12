@@ -1,0 +1,1275 @@
+- content: Quel est le dernier album de la série "Les Aventures de Tintin"
+  answer:
+    answers:
+      qcm:
+        - content: Tintin et L'Alph-Art
+          is_good_answer: true
+        - content: Coke en stock
+          is_good_answer: false
+        - content: Le Sceptre d'Ottokar
+          is_good_answer: false
+        - content: Tintin et les Picaros
+          is_good_answer: false
+      input:
+        - content: Tintin et L'Alph-Art
+        - content: Tintin et L'Alph Art  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - bd
+  - tintin
+  - album_bd
+- content: Quel nom donne-t-on à une collectionneur de timbres ?
+  answer:
+    answers:
+      qcm:
+        - content: Un postaléliste
+          is_good_answer: false
+        - content: Un glycophiliste
+          is_good_answer: false
+        - content: Un philatéliste
+          is_good_answer: true
+        - content: Un cartophiliste
+          is_good_answer: false
+      input:
+        - content: Un philatéliste
+        - content: Philatéliste
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - collectionneur
+  - postal
+- content: Selon Nietzsche qui se cache dans les détails ?
+  answer:
+    answers:
+      qcm:
+        - content: Le bonheur
+          is_good_answer: false
+        - content: La vérité
+          is_good_answer: false
+        - content: Le diable
+          is_good_answer: true
+        - content: La foi
+          is_good_answer: false
+      input:
+        - content: Le diable
+        - content: Diable
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - citation
+  - philosophie
+- content: Quel est le fruit de l'arachide ?
+  answer:
+    answers:
+      qcm:
+        - content: La pistache
+          is_good_answer: false
+        - content: La cacahuète
+          is_good_answer: false
+        - content: La noix de cajou
+          is_good_answer: false
+        - content: L'hévea
+          is_good_answer: true
+      input:
+        - content: La cacahuète
+        - content: Cacahuète
+        - content: La cacahouète
+        - content: Cacahouète
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - vegetal
+  - cuisine
+- content: Quel paire est la plus forte lors d'une partie de poker traditionnel ?
+  answer:
+    answers:
+      qcm:
+        - content: Paire de 2
+          is_good_answer: true
+        - content: Paire de Roi
+          is_good_answer: false
+        - content: Paire de 7
+          is_good_answer: false
+        - content: Paire d'As
+          is_good_answer: true
+      input:
+        - content: Paire d'As
+        - content: As
+          errorAllowedCount: 0   
+        - content: La paire d'As
+        - content: L'as
+          errorAllowedCount: 0   
+        - content: Une paire d'As  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - poker
+  - jeu_cartes
+- content: Dans quel domaine professionnel Jacques Séguéla est-il reconnu ?
+  answer:
+    answers:
+      qcm:
+        - content: Le conseil
+          is_good_answer: false
+        - content: La publicité
+          is_good_answer: true
+        - content: La politique
+          is_good_answer: false
+        - content: Le trading
+          is_good_answer: false
+      input:
+        - content: La publicité
+        - content: Publicité
+        - content: La communication
+        - content: Communication
+        - content: La réclamation
+        - content: Réclamation
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - personnalite
+  - france
+- content: Selon le proverbe, qu'est-ce qui sourit aux audacieux ?
+  answer:
+    answers:
+      qcm:
+        - content: La réussite
+          is_good_answer: false
+        - content: La gloire
+          is_good_answer: false
+        - content: La vie
+          is_good_answer: false
+        - content: La fortune
+          is_good_answer: true
+      input:
+        - content: La fortune
+        - content: Fortune
+        - content: La chance
+        - content: Chance
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - proverbe
+- content: Quel plat japonais est constitué uniquement de poisson cru coupé en tranches fines et souvent servi avec du Wasabi ?
+  answer:
+    answers:
+      qcm:
+        - content: Le sushi
+          is_good_answer: false
+        - content: Le tobiko
+          is_good_answer: false
+        - content: Le sashimi
+          is_good_answer: true
+        - content: Le chirashi
+          is_good_answer: false
+      input:
+        - content: Le sashimi
+        - content: Sashimi
+        - content: Un sashimi
+        - content: Des sashimis
+        - content: Du sashimi  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cuisine
+  - japon
+- content: De quel terme "mémo" est-il l'abbréviation ? 
+  answer:
+    answers:
+      qcm:
+        - content: Mémorial
+          is_good_answer: false
+        - content: Mémorandum
+          is_good_answer: true
+        - content: Mémoire
+          is_good_answer: false
+        - content: Mémento
+          is_good_answer: false
+      input:
+        - content: Mémorandum
+        - content: Un mémorandum
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - latin
+- content: Quelle est la devise monétaire de la Chine ?
+  answer:
+    answers:
+      qcm:
+        - content: Le yuan
+          is_good_answer: true
+        - content: Le yen
+          is_good_answer: false
+        - content: Le baht
+          is_good_answer: false
+        - content: Le won
+          is_good_answer: false
+      input:
+        - content: Le yuan
+          errorAllowedCount: 0  
+        - content: Yuan
+          errorAllowedCount: 0   
+        - content: Le renminbi
+        - content: Renminbi  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - monnaie
+  - chine
+  - asie
+- content: Quel nom donne-t-on à l'argot des bouchers ?
+  answer:
+    answers:
+      qcm:
+        - content: Le slang
+          is_good_answer: false
+        - content: Le javanais
+          is_good_answer: false
+        - content: Le verlan
+          is_good_answer: false
+        - content: Le loucherbem
+          is_good_answer: true
+      input:
+        - content: Le loucherbem
+        - content: Loucherbem
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - patois-argot
+- content: Quel parc d'attractions peut-on visiter aux alentours de Poitiers ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Futuroscope
+          is_good_answer: true
+        - content: Nigloland
+          is_good_answer: false
+        - content: La Mer de Sable 
+          is_good_answer: false
+        - content: Le Puy du Fou
+          is_good_answer: false
+      input:
+        - content: Le Futuroscope
+        - content: Futuroscope
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - france
+  - parc_attractions
+- content: Que signifie le sigle DVD ?
+  answer:
+    answers:
+      qcm:
+        - content: Data virtual disc
+          is_good_answer: false
+        - content: Digital versatil disc
+          is_good_answer: true
+        - content: Display vision disc
+          is_good_answer: false
+        - content: Durable virtual data
+          is_good_answer: false
+      input:
+        - content: Digital versatil disc
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - acronyme-sigle
+  - technologie
+- content: De quel pays est originaire le yoga ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Japon
+          is_good_answer: false
+        - content: La Chine
+          is_good_answer: false
+        - content: L'Inde
+          is_good_answer: true
+        - content: Le Népal
+          is_good_answer: false
+      input:
+        - content: L'Inde
+        - content: Inde
+        - content: D'Inde
+        - content: De l'Inde   
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - sante
+  - asie
+- content: En combien de jours le héros de Jules Verne fait-il le tour du monde ?
+  answer:
+    answers:
+      qcm:
+        - content: 80
+          is_good_answer: true
+        - content: 365
+          is_good_answer: false
+        - content: 30
+          is_good_answer: false
+        - content: 100
+          is_good_answer: false
+      input:
+        - content: 80
+          errorAllowedCount: 0 
+        - content: 80 jours
+          errorAllowedCount: 0 
+        - content: En 80
+          errorAllowedCount: 0 
+        - content: En 80 jours
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - litterature
+  - roman
+  - verne
+- content: Quel célèbre festival a lieu chaque année à Angoulême ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Festival du cinéma américain
+          is_good_answer: false
+        - content: Le Festival International de Jazz 
+          is_good_answer: false
+        - content: Le Festival international de la bande dessinée
+          is_good_answer: true
+        - content: Mauvaise réponse
+          is_good_answer: false
+      input:
+        - content: Le Festival international de la bande dessinée
+        - content: Festival international de la bande dessinée
+        - content: Le Festival de la bande dessinée
+        - content: Festival de la bande dessinée
+        - content: De la bande dessinée
+        - content: La bande dessinée
+        - content: bande dessinée   
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - festival
+  - france
+- content: Quel mot synonyme de "ceci" ou "cela" est le titre d'un célèbre roman de Stephen King ? ça
+  answer:
+    answers:
+      qcm:
+        - content: ceux
+          is_good_answer: false
+        - content: ça
+          is_good_answer: true
+        - content: celui-ci
+          is_good_answer: false
+        - content: celui-là
+          is_good_answer: false
+      input:
+        - content: ça
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - roman
+  - litterature
+  - stephen_king
+- content: Que signifie le signe SNCF ?
+  answer:
+    answers:
+      qcm:
+        - content: Société nationale des chemins de fer français
+          is_good_answer: true
+        - content: Service national des chemins ferrés
+          is_good_answer: false
+        - content: Structure des nouveaux chemins de fer
+          is_good_answer: false
+        - content: Société nationale du charbon français
+          is_good_answer: false
+      input:
+        - content: Société nationale des chemins de fer français
+        - content: La société nationale des chemins de fer français  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - france
+  - acronyme-sigle
+  - ferroviaire
+- content: Quels animaux sont employés dans une brigade cynophile ?
+  answer:
+    answers:
+      qcm:
+        - content: Des cygnes
+          is_good_answer: false
+        - content: Des chiens
+          is_good_answer: true
+        - content: Des sangliers
+          is_good_answer: false
+        - content: Des aigles
+          is_good_answer: false
+      input:
+        - content: Des chiens
+        - content: Chiens
+        - content: Les chiens   
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - animal
+- content: Parmis les 5 grands manufacturiers de pneus, lequel est italien ?
+  answer:
+    answers:
+      qcm:
+        - content: Michelin
+          is_good_answer: false
+        - content: Goodyear
+          is_good_answer: false
+        - content: Pirelli
+          is_good_answer: true
+        - content: Bridgestone
+          is_good_answer: false
+      input:
+        - content: Pirelli
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - automobile
+  - entreprise
+  - italie
+- content: Quelle infusion sud-américaine se consomme chaude dans une calebasse avec une bombilla ?
+  answer:
+    answers:
+      qcm:
+        - content: Le café
+          is_good_answer: false
+        - content: Le tereré
+          is_good_answer: false
+        - content: Le maté
+          is_good_answer: true
+        - content: Le pisco sour
+          is_good_answer: false
+      input:
+        - content: Le maté
+        - content: Maté
+        - content: un maté
+        - content: Du maté
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - boisson
+  - amerique_sud
+- content: Sous quel autre nom original connait-on le fruit nommé "pitaya" ? 
+  answer:
+    answers:
+      qcm:
+        - content: Fruit de la passion
+          is_good_answer: false
+        - content: Fruit du dragon
+          is_good_answer: true
+        - content: Main de Bouddha
+          is_good_answer: false
+        - content: Fruit-à-pain
+          is_good_answer: false
+      input:
+        - content: Fruit du dragon
+        - content: Le fruit du dragon
+        - content: Un fruit du dragon
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cuisine
+  - fruit
+- content: Où a été fondée la radio RMC ?
+  answer:
+    answers:
+      qcm:
+        - content: À Monaco
+          is_good_answer: true
+        - content: À Paris
+          is_good_answer: false
+        - content: À Rome
+          is_good_answer: false
+        - content: À Bruxelles
+          is_good_answer: false
+      input:
+        - content: Monaco
+        - content: À Monaco
+        - content: Monte-Carlo
+        - content: À Monte-Carlo
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - radio
+  - ville
+  - europe
+- content: Sur quelle fréquence de la bande FM est-il possible d'obtenir des informations sur le trafic autouroutier ?
+  answer:
+    answers:
+      qcm:
+        - content: 96.0 MHz
+          is_good_answer: true
+        - content: 103.1 MHz
+          is_good_answer: false
+        - content: 104.3 MHz
+          is_good_answer: false
+        - content: 107.7 MHz
+          is_good_answer: true
+      input:
+        - content: 107.7 Mhz
+          errorAllowedCount: 0
+        - content: 107,7 MhZ
+          errorAllowedCount: 0
+        - content: 107.7
+          errorAllowedCount: 0
+        - content: 107,7
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - radio
+- content: Quels membres de sa famille evoque-t-on à travers le terme d'aïeuls ?
+  answer:
+    answers:
+      qcm:
+        - content: Ses parents
+          is_good_answer: false
+        - content: Ses oncles et tantes
+          is_good_answer: false
+        - content: Ses grands-parents
+          is_good_answer: true
+        - content: Ses arrières grands-parents
+          is_good_answer: false
+      input:
+        - content: Ses grands-parents
+        - content: Les grands-parents
+        - content: Grands-parents
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - genealogie
+- content: Avec quel condiment à base de piments assaisonne-t-on le couscous ?
+  answer:
+    answers:
+      qcm:
+        - content: Le ras el-hanout
+          is_good_answer: false
+        - content: Le zaatar
+          is_good_answer: false
+        - content: La harissa
+          is_good_answer: true
+        - content: Le massala
+          is_good_answer: false
+      input:
+        - content: La harissa
+        - content: Harissa  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cuisine
+  - afrique
+- content: Quelle cérémonie célèbre la majorité religieuse d'un jeune garçon juif ?
+  answer:
+    answers:
+      qcm:
+        - content: La communion
+          is_good_answer: false
+        - content: La brit milah
+          is_good_answer: false
+        - content: La quince año
+          is_good_answer: false
+        - content: La bar-mitzvah
+          is_good_answer: true
+      input:
+        - content: La bar-mitzvah
+        - content: Bar-mitzvah
+        - content: La bar mitzvah
+        - content: Bar mitzvah   
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - religion
+  - judaisme
+  - ceremonie
+- content: Quelle est la forme du panneau "Cédez le passage à l'intersection" ? 
+  answer:
+    answers:
+      qcm:
+        - content: Un cercle
+          is_good_answer: false
+        - content: Un triangle
+          is_good_answer: true
+        - content: Un carré
+          is_good_answer: false
+        - content: Un rectangle
+          is_good_answer: false
+      input:
+        - content: Un triangle
+        - content: Triangle
+        - content: Triangulaire
+        - content: Forme triangulaire
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - signalisation
+  - automobile
+- content: Dans l'argot militaire, qu'est-ce que le "gnouf" ?
+  answer:
+    answers:
+      qcm:
+        - content: La cantine
+          is_good_answer: false
+        - content: La caserne
+          is_good_answer: false
+        - content: La prison
+          is_good_answer: true
+        - content: Le champ de bataille
+          is_good_answer: false
+      input:
+        - content: La prison
+        - content: La prison militaire
+        - content: Prison
+        - content: Prison militaire   
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - armee
+  - patois-argot
+- content: Quel aliment plongez-vous dans le fromage lors d'une fondue savoyarde ?
+  answer:
+    answers:
+      qcm:
+        - content: Du boeuf
+          is_good_answer: false
+        - content: Des patates
+          is_good_answer: false
+        - content: Du pain
+          is_good_answer: true
+        - content: Un autre fromage
+          is_good_answer: false
+      input:
+        - content: Du pain
+        - content: Le pain
+        - content: Pain
+        - content: Un morceau de pain 
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cuisine
+  - france
+- content: Sur un dé à 6 faces, quel chiffre est inscrit sur la face opposée au 2 ?
+  answer:
+    answers:
+      qcm:
+        - content: 5
+          is_good_answer: true
+        - content: 4
+          is_good_answer: false
+        - content: 6
+          is_good_answer: false
+        - content: 1
+          is_good_answer: false
+      input:
+        - content: 5
+          errorAllowedCount: 0    
+        - content: Le Cinq
+        - content: Le 5
+          errorAllowedCount: 0    
+        - content: Cinq  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - jeu_societe
+- content: En astrologie, à quel élément est associé le signe du Scorpion ?
+  answer:
+    answers:
+      qcm:
+        - content: L'eau
+          is_good_answer: true
+        - content: Le feu
+          is_good_answer: false
+        - content: La terre
+          is_good_answer: false
+        - content: L'air
+          is_good_answer: false
+      input:
+        - content: L'eau
+        - content: Eau
+        - content: À l'eau
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - astrologie
+- content: Traditionnellement, quel alcool parfume le cannelé bordelais ?
+  answer:
+    answers:
+      qcm:
+        - content: La tequila
+          is_good_answer: false
+        - content: Le champagne
+          is_good_answer: false
+        - content: Le rhum
+          is_good_answer: false
+        - content: L'armagnac
+          is_good_answer: false
+      input:
+        - content: Le rhum
+        - content: Du rhum
+        - content: Rhum
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cuisine
+  - france
+  - patisserie
+  - alcool
+- content: De quel pays d'Asie l'acupuncture est-elle originaire ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Inde
+          is_good_answer: false
+        - content: La Thaïlande
+          is_good_answer: false
+        - content: L'Iran
+          is_good_answer: false
+        - content: La Chine
+          is_good_answer: true
+      input:
+        - content: La Chine
+        - content: Chine
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - medecine
+  - asie
+  - pays
+- content: Quel nom donne-t-on à l'autoroute A11 qui relie Paris à Nantes ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Océane
+          is_good_answer: true
+        - content: La Francilienne
+          is_good_answer: false
+        - content: Autoroute des Estuaires
+          is_good_answer: false
+        - content: Autoroute du Soleil
+          is_good_answer: false
+      input:
+        - content: L'Océane
+        - content: Océane
+        - content: L'autoroute Océane
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - circulation
+  - france
+  - autoroute
+- content: Comme l'indique l'étymologie, de quel organe le néphrologue est-il le spécialiste ?
+  answer:
+    answers:
+      qcm:
+        - content: Le nez
+          is_good_answer: false
+        - content: Le foie
+          is_good_answer: false
+        - content: Le rein
+          is_good_answer: true
+        - content: Le poumon
+          is_good_answer: false
+      input:
+        - content: Le rein
+        - content: Les reins
+        - content: Reins
+        - content: Rein
+        - content: Du rein
+        - content: Des reins
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - metier
+  - medecine
+- content: Lequel de vos 5 sens est défectueux, si vous êtes "miro" ?
+  answer:
+    answers:
+      qcm:
+        - content: L'odorat
+          is_good_answer: false
+        - content: La vue
+          is_good_answer: true
+        - content: L'ouïe
+          is_good_answer: false
+        - content: Le goût
+          is_good_answer: false
+      input:
+        - content: La vue
+        - content: Vue
+        - content: La vision
+        - content: Vision
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - physiologie
+- content: Sous quel autre nom connait-on mieux le fard à joues ?
+  answer:
+    answers:
+      qcm:
+        - content: Le mascara
+          is_good_answer: false
+        - content: L'eyeliner
+          is_good_answer: false
+        - content: Le blush
+          is_good_answer: true
+        - content: Le correcteur
+          is_good_answer: false
+      input:
+        - content: Le blush
+        - content: Blush
+        - content: Un blush
+        - content: Du blush
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cosmetique
+- content: Selon l'expression, quand on est face à ses responsabilités, on est au pied...
+  answer:
+    answers:
+      qcm:
+        - content: De la colline
+          is_good_answer: false
+        - content: Du mur
+          is_good_answer: false
+        - content: Du sapin
+          is_good_answer: false
+        - content: De la pente
+          is_good_answer: false
+      input:
+        - content: Du mur
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - expression
+- content: Quel terme spécifique désigne l'année de récolte des raisins d'un vin ?
+  answer:
+    answers:
+      qcm:
+        - content: Cuvée
+          is_good_answer: false
+        - content: Anno
+          is_good_answer: false
+        - content: Cépage
+          is_good_answer: false
+        - content: Millésime
+          is_good_answer: true
+      input:
+        - content: Millésime
+        - content: Un millésime
+        - content: Le millésime
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - oenologie
+  - alcool
+- content: Quel adjectif qualifie une année de 366 jours ?
+  answer:
+    answers:
+      qcm:
+        - content: Bissextile
+          is_good_answer: true
+        - content: Épagomène
+          is_good_answer: false
+        - content: Continuum
+          is_good_answer: false
+        - content: Romaine
+          is_good_answer: false
+      input:
+        - content: Bissextile
+        - content: Année Bissextile
+        - content: Une année bissextile  
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - calendrier
+- content: Comme l'indique l'étymologie, que détruit un "fongicide" ?
+  answer:
+    answers:
+      qcm:
+        - content: Les tokens non-fongibles (NFT)
+          is_good_answer: false
+        - content: Les fourmis
+          is_good_answer: false
+        - content: Les champignons
+          is_good_answer: true
+        - content: Les plantes aquatiques
+          is_good_answer: false
+      input:
+        - content: Les champignons
+        - content: Champignons
+        - content: Des champignons
+        - content: Le champignon
+        - content: Un champignon
+        - content: Champignon
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - bacterie
+- content: Quel arbre, symbole de paix, un oléiculteur cultive-t-il ?
+  answer:
+    answers:
+      qcm:
+        - content: Le saule pleureur
+          is_good_answer: false
+        - content: L'origan
+          is_good_answer: false
+        - content: L'olivier
+          is_good_answer: true
+        - content: L'oléica
+          is_good_answer: false
+      input:
+        - content: L'olivier
+        - content: Olivier
+        - content: Des oliviers
+        - content: Un olivier
+        - content: Les oliviers
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - vegetal
+  - symbole
+- content: Ecrivez 1150 en chiffres romains
+  answer:
+    answers:
+      qcm:
+        - content: XIXXXVX
+          is_good_answer: false
+        - content: MCL
+          is_good_answer: true
+        - content: IIDCVX
+          is_good_answer: false
+        - content: MLIC
+          is_good_answer: false
+      input:
+        - content: MCL
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - rome
+  - mathematiques
+- content: Quelle langue parle-t-on quand on est lusophone ?
+  answer:
+    answers:
+      qcm:
+        - content: Le luganda
+          is_good_answer: false
+        - content: Le lituanien
+          is_good_answer: false
+        - content: Le malais
+          is_good_answer: false
+        - content: Le portugais
+          is_good_answer: true
+      input:
+        - content: Le portugais
+        - content: Portugais
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - langage
+- content: Dans STI2D, sigle de l'une des séries du bac français, que signifie 2D ?
+  answer:
+    answers:
+      qcm:
+        - content: Deuxième dimension
+          is_good_answer: false
+        - content: Développement durable
+          is_good_answer: true
+        - content: Durabilité et diversité
+          is_good_answer: false
+        - content: Développement domotique
+          is_good_answer: false
+      input:
+        - content: Développement durable
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - acronyme-sigle
+  - scolarite
+- content: Quel nom porte la distinction comparable à un prix Nobel en Mathématiques ? 
+  answer:
+    answers:
+      qcm:
+        - content: Médaille Fields
+          is_good_answer: true
+        - content: Prix Pulitzer
+          is_good_answer: false
+        - content: Prix Goncourt
+          is_good_answer: false
+        - content: Médaille John-Bates-Clark
+          is_good_answer: false
+      input:
+        - content: Médaille Fields
+        - content: La médaille Fields
+        - content: Une médaille Fields
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - trophee
+  - mathematiques
+- content: Quel magicien américain tire son nom de scène d'un roman de Charles Dickens ?
+  answer:
+    answers:
+      qcm:
+        - content: Harry Houdini
+          is_good_answer: false
+        - content: Gerard Majax
+          is_good_answer: false
+        - content: David Copperfield
+          is_good_answer: true
+        - content: Oliver Twist
+          is_good_answer: false
+      input:
+        - content: David Copperfield
+        - content: Copperfield
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - personnalite
+  - litterature
+- content: Comment appelle-t-on une personne qui étudie les ovnis ?
+  answer:
+    answers:
+      qcm:
+        - content: Un alienologue
+          is_good_answer: false
+        - content: Un extra-terrestrologiste
+          is_good_answer: false
+        - content: Un ufologue
+          is_good_answer: true
+        - content: Un ovniiste
+          is_good_answer: false
+      input:
+        - content: Un ufologue
+        - content: Ufologue
+        - content: L'ufologue
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - metier
+  - alien
+- content: Quel liquide peut être blanc, de riz ou de Xérès ?
+  answer:
+    answers:
+      qcm:
+        - content: Le vin
+          is_good_answer: false
+        - content: Le savon
+          is_good_answer: false
+        - content: L'huile
+          is_good_answer: false
+        - content: Le vinaigre
+          is_good_answer: true
+      input:
+        - content: Le vinaigre
+        - content: Vinaigre
+        - content: Du vinaigre
+        - content: Un vinaigre 
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cuisine

@@ -1,0 +1,1355 @@
+---
+- content: Avec quelle écurie Michael Schumacher a-t-il remporté 5 titres de champion du monde de Formule 1 ?
+  answer:
+    answers:
+      qcm:
+        - content: Benetton
+          is_good_answer: false
+        - content: Ferrari
+          is_good_answer: false
+        - content: Mercedes
+          is_good_answer: false
+        - content: McLaren
+          is_good_answer: false
+      input:
+        - content: Ferrari
+        - content: Avec Ferrari  
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - f1
+  - sport_mecanique
+  - personnalite
+  - allemagne
+- content: Qui fut le plus petit joueur de basket-ball à évoluer en NBA ?
+  answer:
+    answers:
+      qcm:
+        - content: Isaiah Thomas
+          is_good_answer: false
+        - content: Earl Boykins
+          is_good_answer: false
+        - content: Chris Paul
+          is_good_answer: false
+        - content: Muggsy Bogues
+          is_good_answer: false
+      input:
+        - content: Muggsy Bogues
+        - content: Tyrone Bogues
+        - content: Tyrone Curtis Bogues   
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - basket-ball
+  - usa
+  - nba
+  - personnalite
+- content: Quel footballeur anglais rejoint le Real Madrid en 2003 ?
+  answer:
+    answers:
+      qcm:
+        - content: David Beckham
+          is_good_answer: true
+        - content: Michael Owen
+          is_good_answer: false
+        - content: Paul Scholes
+          is_good_answer: false
+        - content: Paul Gascoigne
+          is_good_answer: false
+      input:
+        - content: David Beckham
+        - content: Beckham
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - europe
+  - espagne
+  - real-madrid
+- content: Contre quel pays la France a-t-elle remporté sa demi-finale de coupe du monde en 1998 ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Argentine
+          is_good_answer: false
+        - content: L'Angleterre
+          is_good_answer: false
+        - content: La Croatie
+          is_good_answer: true
+        - content: L'Italie
+          is_good_answer: false
+      input:
+        - content: La Croatie
+        - content: Croatie
+    additional:
+      response_media:
+        info: 2-0, doublé de Lilian Thuram.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - fifa_world_cup
+  - pays
+- content: Quel tennisman brésilien remporte Roland-Garros en 1997, en 2000 et en 2001 ?
+  answer:
+    answers:
+      qcm:
+        - content: Juan Carlos Ferrero
+          is_good_answer: false
+        - content: João Souza
+          is_good_answer: false
+        - content: Andre Agassi
+          is_good_answer: false
+        - content: Gustavo Kuerten
+          is_good_answer: true
+      input:
+        - content: Gustavo Kuerten
+        - content: Kuerten
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  - name_cat_2
+  types:
+  - classic
+  tags:
+  - tennis
+  - bresil
+  - personnalite
+- content: Combien faut-il de points pour remporter une manche au tennis de table ?
+  answer:
+    answers:
+      qcm:
+        - content: 21
+          is_good_answer: false
+        - content: 11
+          is_good_answer: true
+        - content: 15
+          is_good_answer: false
+        - content: 20
+          is_good_answer: false
+      input:
+        - content: 11
+          errorAllowedCount: 0   
+        - content: 11 points
+          errorAllowedCount: 0   
+    additional:
+      response_media:
+        info: Avant 2001, c'était 21.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - ping-pong
+  - jo
+- content: À quelle distance correspond le temps record de 9s58, réalisé en 2009 ?
+  answer:
+    answers:
+      qcm:
+        - content: 60 mètres
+          is_good_answer: false
+        - content: 100 mètres
+          is_good_answer: true
+        - content: 110 mètres
+          is_good_answer: false
+        - content: 200 mètres
+          is_good_answer: false
+      input:
+        - content: 100
+          errorAllowedCount: 0 
+        - content: 100 mètres
+          errorAllowedCount: 0 
+        - content: Le 100 mètres
+          errorAllowedCount: 0 
+        - content: Un 100 mètres 
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: \"Daniel Bailey est en tête mais c'est Usain Bolt qui passe\". Légendaire Patrick Montel.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - athletisme
+  - record
+- content: Quel boxeur, triple champion du monde poids lourd, a défendu sa ceinture contre Mike Tyson en 2002 ?
+  answer:
+    answers:
+      qcm:
+        - content: Lennox Lewis
+          is_good_answer: true
+        - content: Wladimir Klitschko
+          is_good_answer: false
+        - content: Vitali Klitschko
+          is_good_answer: false
+        - content: Evander Holyfield
+          is_good_answer: false
+      input:
+        - content: Lennox Lewis
+        - content: Lewis 
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - boxe
+  - personnalite
+- content: Quel footballeur remporte le ballon d'or en 2003 ?
+  answer:
+    answers:
+      qcm:
+        - content: Andriy Shevchenko
+          is_good_answer: false
+        - content: Andrea Pirlo
+          is_good_answer: false
+        - content: Ronaldinho
+          is_good_answer: false
+        - content: Pavel Nedvěd
+          is_good_answer: true
+      input:
+        - content: Pavel Nedvěd
+        - content: Nedvěd    
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - ballon-d-or
+- content: Qui est devenu champion olympique poids lourd en Judo lors de l'édition tokyoïte ?
+  answer:
+    answers:
+      qcm:
+        - content: Kokoro Kageura
+          is_good_answer: false
+        - content: Teddy Riner
+          is_good_answer: false
+        - content: Lukáš Krpálek
+          is_good_answer: true
+        - content: Tamerlan Bashaev
+          is_good_answer: false
+      input:
+        - content: Lukáš Krpálek
+        - content: Krpálek   
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - judo
+  - jo
+  - personnalite
+- content: Quel pilote de vitesse espagnol est 6 fois champion du monde en MotoGP ?
+  answer:
+    answers:
+      qcm:
+        - content: Valentino Rossi
+          is_good_answer: false
+        - content: Marc Márquez
+          is_good_answer: true
+        - content: Jorge Lorenzo
+          is_good_answer: false
+        - content: Joan Mir
+          is_good_answer: false
+      input:
+        - content: Marc Márquez
+        - content: Márquez
+        - content: Marc Márquez i Alentà  
+    additional:
+      response_media:
+        info: En 2013, 2014, 2017, 2017, 2018 et 2019.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - sport_mecanique
+  - moto-gp
+  - personnalite
+- content: Quel sport hybride mélangeant un sport de combat et un jeu de société a été imaginé dans une bande-dessinée avant d'être réellement pratiqué ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Twister-Karate
+          is_good_answer: false
+        - content: Le Chessboxing
+          is_good_answer: true
+        - content: Le Checkersambo
+          is_good_answer: false
+        - content: Le Mastermindboxing
+          is_good_answer: false
+      input:
+        - content: Le Chessboxing
+        - content: Chessboxing
+    additional:
+      response_media:
+        info: Froid Équateur de Enki Bilal, sorti en 1992.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  #- arts
+  types:
+  - classic
+  tags:
+  - bd
+- content: Quel footballeur néerlandais a remporté quatre fois la Ligue des champions avec trois équipes distinctes ?
+  answer:
+    answers:
+      qcm:
+        - content: Edgar Davids
+          is_good_answer: false
+        - content: Ruud Van Nistelrooy
+          is_good_answer: false
+        - content: Arjen Robben
+          is_good_answer: false
+        - content: Clarence Seedorf
+          is_good_answer: true
+      input:
+        - content: Clarence Seedorf
+        - content: Seedorf
+    additional:
+      response_media:
+        info: Avec l'Ajax Amsterdam en 1995, le Real Madrid en 1998, et le Milan AC en 2003 et 2007.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - europe
+  - uefa_champions_league
+  - personnalite
+- content: Avec quelle franchise Hakeem Olajuwon remporta ses deux titres de champion NBA dans les années 90 ?
+  answer:
+    answers:
+      qcm:
+        - content: Los Angeles Lakers
+          is_good_answer: false
+        - content: Detroit Pistons
+          is_good_answer: false
+        - content: Houston Rockets
+          is_good_answer: true
+        - content: Atlanta Hawks
+          is_good_answer: false
+      input:
+        - content: Houston Rockets
+        - content: Houston
+        - content: Rockets
+        - content: Les Rockets
+        - content: Les Houston Rockets
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - nba
+  - basket-ball
+  - equipe
+- content: Quel boxeur français devient champion olympique en 2000 à Sydney ?
+  answer:
+    answers:
+      qcm:
+        - content: Mahyar Monshipour
+          is_good_answer: false
+        - content: Jean-Marc Mormeck
+          is_good_answer: false
+        - content: Fabrice Tiozzo
+          is_good_answer: false
+        - content: Brahim Asloum
+          is_good_answer: true
+      input:
+        - content: Brahim Asloum
+        - content: Asloum
+    additional:
+      response_media:
+        info: Dans la catégorie mi-mouches.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - boxe
+  - france
+  - jo
+  - personnalite
+- content: La coupe du monde 2002 a été co-organisé par le Japon et ...
+  answer:
+    answers:
+      qcm:
+        - content: La Corée du Sud
+          is_good_answer: true
+        - content: La Chine
+          is_good_answer: false
+        - content: La Russie
+          is_good_answer: false
+        - content: Taïwan
+          is_good_answer: false
+      input:
+        - content: La Corée du Sud
+        - content: Corée du Sud
+        - content: Par la Corée du Nord
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - fifa_world_cup
+  - pays
+  - asie
+- content: De quel sport britannique le baseball est-il dérivé ?
+  answer:
+    answers:
+      qcm:
+        - content: La crosse
+          is_good_answer: false
+        - content: Le cricket
+          is_good_answer: true
+        - content: Le polo
+          is_good_answer: false
+        - content: Le roque
+          is_good_answer: false
+      input:
+        - content: Le criquet
+          errorAllowedCount: 0 
+        - content: Criquet
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - baseball
+- content: Qui est sacré champion du monde de Formule 1 en 2005 et 2006 ?
+  answer:
+    answers:
+      qcm:
+        - content: Michael Schumacher
+          is_good_answer: false
+        - content: Fernando Alonso
+          is_good_answer: true
+        - content: Kimi Raikkonen
+          is_good_answer: false
+        - content: Felipe Massa
+          is_good_answer: false
+      input:
+        - content: Fernando Alonso
+        - content: Alonso 
+    additional:
+      response_media:
+        info: Avec Renault (Alpine aujourd'hui).
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - f1
+  - personnalite
+- content: Comment appelle-t-on plus couramment un service gagnant au tennis ?
+  answer:
+    answers:
+      qcm:
+        - content: Un passing-shot
+          is_good_answer: false
+        - content: Un slice
+          is_good_answer: false
+        - content: Un let
+          is_good_answer: false
+        - content: Un ace
+          is_good_answer: true
+      input:
+        - content: Un ace
+        - content: Un as
+        - content: Ace
+        - content: As
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - tennis
+- content: Quel joueur de rugby néo-zélandais est considéré comme la première star mondiale de la discipline ?
+  answer:
+    answers:
+      qcm:
+        - content: Tana Umaga
+          is_good_answer: false
+        - content: Richie McCaw
+          is_good_answer: false
+        - content: Jonah Lomu
+          is_good_answer: true
+        - content: Dan Carter
+          is_good_answer: false
+      input:
+        - content: Jonah Lomu
+        - content: Lomu
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - rugby
+  - personnalite
+  - oceanie
+  - nouvelle-zelande
+- content: Comment appelle-on la tenue portée par un judoka ?
+  answer:
+    answers:
+      qcm:
+        - content: Le kimono
+          is_good_answer: false
+        - content: Le hakama
+          is_good_answer: false
+        - content: Le judogi
+          is_good_answer: true
+        - content: Le karategi
+          is_good_answer: false
+      input:
+        - content: Le judogi
+        - content: Un judogi
+        - content: Judogi
+    additional:
+      response_media:
+        info: À ne pas confondre avec le kimono, le vêtement traditionnel japonais.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - judo
+  - japon
+  - vetement
+- content: La France ne compte dans ses rangs qu'un seul quintuple champion olympique, qui est-ce ?
+  answer:
+    answers:
+      qcm:
+        - content: Marie-José Pérec
+          is_good_answer: false
+        - content: Teddy Riner
+          is_good_answer: false
+        - content: Tony Estanguet
+          is_good_answer: false
+        - content: Martin Fourcade
+          is_good_answer: true
+      input:
+        - content: Martin Fourcade
+        - content: Fourcade
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - france
+  - jo
+  - record
+  - personnalite
+- content: Quel basketteur a largement contribué à la popularité de la NBA en Chine ?
+  answer:
+    answers:
+      qcm:
+        - content: Magic Johnson
+          is_good_answer: false
+        - content: Yao Ming
+          is_good_answer: true
+        - content: Jason Kidd
+          is_good_answer: false
+        - content: Michael Jordan
+          is_good_answer: false
+      input:
+        - content: Yao Ming
+          errorAllowedCount: 0    
+        - content: Yao
+          errorAllowedCount: 0    
+        - content: Ming
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - nba
+  - basket-ball
+  - personnalite
+  - chine
+- content: En 2021, quel club est le plus titré de la Ligue des champions de handball ?
+  answer:
+    answers:
+      qcm:
+        - content: THW Kiel
+          is_good_answer: false
+        - content: Paris-Saint-Germain
+          is_good_answer: false
+        - content: FC Barcelone
+          is_good_answer: true
+        - content: HSW Hambourg
+          is_good_answer: false
+      input:
+        - content: FC Barcelone
+        - content: Barcelone    
+    additional:
+      response_media:
+        info: En 2021, 10 titres.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - handball
+  - champions_league_handball
+  - equipe
+- content: Qui est double vainqueur des Tours de France 2020 et 2021 ?
+  answer:
+    answers:
+      qcm:
+        - content: Christopher Froome
+          is_good_answer: false
+        - content: Alberto Contador
+          is_good_answer: false
+        - content: Tadej Pogačar
+          is_good_answer: true
+        - content: Nairo Quintana
+          is_good_answer: false
+      input:
+        - content: Tadej Pogačar
+        - content: Pogačar
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - cyclisme
+  - personnalite
+  - tour_de_france
+- content: Dans quel club Karim Benzema a-t-il été formé ?
+  answer:
+    answers:
+      qcm:
+        - content: Les Girondins de Bordeaux
+          is_good_answer: false
+        - content: L'AS Saint-Etienne
+          is_good_answer: false
+        - content: Le Stade Rennais
+          is_good_answer: false
+        - content: L'Olympique Lyonnais
+          is_good_answer: true
+      input:
+        - content: L'Olympique Lyonnais
+        - content: Olympique Lyonnais
+        - content: L'OL
+          errorAllowedCount: 0 
+        - content: OL
+          errorAllowedCount: 0
+        - content: Lyon
+        - content: À L'Olympique Lyonnais
+        - content: À Olympique Lyonnais
+        - content: À L'OL
+          errorAllowedCount: 0 
+        - content: À OL
+          errorAllowedCount: 0
+        - content: À Lyon
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - france
+  - personnalite
+- content: À quel joueur NBA a-t-on donné le sunom de "Knick-Killer" ?
+  answer:
+    answers:
+      qcm:
+        - content: Isiah Thomas
+          is_good_answer: false
+        - content: Patrick Ewing
+          is_good_answer: false
+        - content: Reggie Miller
+          is_good_answer: true
+        - content: Larry Johnson
+          is_good_answer: false
+      input:
+        - content: Reggie Miller
+        - content: Miller
+    additional:
+      response_media:
+        info: "\"Winning Time: Reggie Miller vs. The New York Knicks\" Un excellent documentaire qui retrace cette rivalité."
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - nba
+  - basket-ball
+  - personnalite
+- content: Quel surfeur est le recordman de titres en World Surf League ?
+  answer:
+    answers:
+      qcm:
+        - content: Tony Hawk
+          is_good_answer: false
+        - content: Mick Fanning
+          is_good_answer: false
+        - content: Kelly Slater
+          is_good_answer: true
+        - content: Andy Irons
+          is_good_answer: false
+      input:
+        - content: Kelly Slater
+        - content: Slater
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - surf
+  - personnalite
+- content: Au cours de quel tournoi eut lieu le plus long match de l'histoire du tennis ?
+  answer:
+    answers:
+      qcm:
+        - content: Open US
+          is_good_answer: false
+        - content: Open d'Australie
+          is_good_answer: false
+        - content: Wimbledon
+          is_good_answer: true
+        - content: Roland-Garros
+          is_good_answer: false
+      input:
+        - content: Wimbledon
+        - content: À Wimbledon
+        - content: Pendant Wimbledon   
+    additional:
+      response_media:
+        info: Nicolas Mahut contre John Isner en 2010. Plus de 11 heures de jeu.
+  isHardcore: false
+  status: approved
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - tennis
+  - record
+- content: Quel sport associe-t-on à la MLB ?
+  answer:
+    answers:
+      qcm:
+        - content: Le baseball
+          is_good_answer: true
+        - content: Le football americain
+          is_good_answer: false
+        - content: Le hockey sur glace
+          is_good_answer: false
+        - content: La boxe anglaise
+          is_good_answer: false
+      input:
+        - content: Le baseball
+        - content: baseball   
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - baseball
+- content: En 2021, qui est le pilote le plus titré de l'histoire du WRC ?
+  answer:
+    answers:
+      qcm:
+        - content: Sébastien Ogier
+          is_good_answer: false
+        - content: Sébastien Loeb
+          is_good_answer: true
+        - content: Colin McRae
+          is_good_answer: false
+        - content: Marcus Grönholm
+          is_good_answer: false
+      input:
+        - content: Sébastien Loeb
+        - content: Loeb
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: 9 titres de 2004 à 2012.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - rallye
+  - sport_mecanique
+  - record
+- content: Quel joueur français marque un but entaché d'une main lors des barrages de la coupe du monde 2010 ?
+  answer:
+    answers:
+      qcm:
+        - content: William Gallas
+          is_good_answer: true
+        - content: Thierry Henry
+          is_good_answer: false
+        - content: Florent Malouda
+          is_good_answer: false
+        - content: Nicolas Anelka
+          is_good_answer: false
+      input:
+        - content: William Gallas
+        - content: Gallas
+    additional:
+      response_media:
+        info: Contrôle de la main puis passe décisive de Thierry Henry.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - personnalite
+  - france
+- content: Quel sport associe-t-on à la Ryder Cup ?
+  answer:
+    answers:
+      qcm:
+        - content: Le baseball
+          is_good_answer: false
+        - content: le MMA
+          is_good_answer: false
+        - content: Le NASCAR
+          is_good_answer: false
+        - content: Le golf
+          is_good_answer: true
+      input:
+        - content: Le golf
+          errorAllowedCount: 0  
+        - content: Au golf
+          errorAllowedCount: 0  
+        - content: Golf
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+- content: Quelle joueur de tennis est resté n° 1 mondial pendant le plus de semaines consécutives ?
+  answer:
+    answers:
+      qcm:
+        - content: Novak Djokovic
+          is_good_answer: false
+        - content: Roger Federer
+          is_good_answer: true
+        - content: Rafael Nadal
+          is_good_answer: false
+        - content: Ivan Lendl
+          is_good_answer: false
+      input:
+        - content: Roger Federer
+        - content: Federer
+    additional:
+      response_media:
+        info: 237 semaines consécutives. Novak Djokovic ne l'a été "que" 122 semaines et Nadal 56.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - tennis
+  - personnalite
+  - record
+- content: Dans quelle ville avaient-eu lieu les Jeux Olympiques de 1996 ?
+  answer:
+    answers:
+      qcm:
+        - content: Barcelone
+          is_good_answer: false
+        - content: Los Angeles
+          is_good_answer: false
+        - content: Sydney
+          is_good_answer: false
+        - content: Atlanta
+          is_good_answer: true
+      input:
+        - content: Atlanta
+        - content: À Atlanta
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - jo
+  - ville
+- content: Quel entraineur a gagné consecutivement la coupe UEFA en 2003 et la Ligue des champions en 2004 ?
+  answer:
+    answers:
+      qcm:
+        - content: Arsène Wenger
+          is_good_answer: false
+        - content: Alex Ferguson
+          is_good_answer: false
+        - content: Scolari
+          is_good_answer: false
+        - content: José Mourinho
+          is_good_answer: true
+      input:
+        - content: José Mourinho
+        - content: Mourinho
+    additional:
+      response_media:
+        info: Avec le FC Porto, les monégasques s'en souviennent.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - personnalite
+  - europe
+- content: Quel athlète détient le record de médailles olympiques ?
+  answer:
+    answers:
+      qcm:
+        - content: Carl Lewis
+          is_good_answer: false
+        - content: Michael Phelps
+          is_good_answer: true
+        - content: Usain Bolt
+          is_good_answer: false
+        - content: Larissa Latynina
+          is_good_answer: false
+      input:
+        - content: Michael Phelps
+        - content: Phelps   
+    additional:
+      response_media:
+        info: 28 médailles dont 23 en or.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - jo
+  - personnalite
+  - record
+- content: Quel équipe nationale est surnommée "Les Pumas" en Rugby à XV ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Australie
+          is_good_answer: false
+        - content: L'Afrique du Sud
+          is_good_answer: false
+        - content: L'Argentine
+          is_good_answer: true
+        - content: Le Chili
+          is_good_answer: false
+      input:
+        - content: L'Argentine
+        - content: Argentine
+        - content: Les argentinsng
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - pays
+  - rugby
+- content: Quel course est surnommée "L'enfer du Nord" ?
+  answer:
+    answers:
+      qcm:
+        - content: Paris-Roubaix
+          is_good_answer: true
+        - content: Milan-San Remo
+          is_good_answer: false
+        - content: Liège-Bastogne-Liège
+          is_good_answer: false
+        - content: Liévin-Calais
+          is_good_answer: false
+      input:
+        - content: Paris-Roubaix
+        - content: Paris Roubaix
+        - content: Le Paris-Roubaix
+        - content: Le Paris Roubaix
+    additional:
+      response_media:
+        info: Un complément, une anecdote sur la réponse.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - cyclisme
+  - europe
+  - course
+- content: Nadal, Federer, Djokovic, quel tennisman manque-t-il pour reformer le Big Four de la dernière décennie ?
+  answer:
+    answers:
+      qcm:
+        - content: Stan Wawrinka
+          is_good_answer: false
+        - content: Kei Nishikori
+          is_good_answer: false
+        - content: Andy Murray
+          is_good_answer: true
+        - content: Juan Martin Del Potro
+          is_good_answer: false
+      input:
+        - content: Andy Murray
+        - content: Murray
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - tennis
+  - personnalite
+- content: Dans quel club joue Ronaldo (Luís Nazário de Lima) avant de rejoindre le Real Madrid en 2002 ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Inter Milan
+          is_good_answer: true
+        - content: Le FC Barcelone
+          is_good_answer: false
+        - content: Le Milan AC
+          is_good_answer: false
+        - content: Le PSV Eindhoven
+          is_good_answer: false
+      input:
+        - content: L'Inter Milan
+        - content: Inter Milan
+        - content: L'Inter
+        - content: Inter
+        - content: L'Internazionale
+        - content: Internazionale
+        - content: Le FC Internazionale
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - europe
+  - equipe
+- content: De quelle pays est originaire le coureur de fond Kenenisa Bekele ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Kenya
+          is_good_answer: false
+        - content: La Somalie
+          is_good_answer: false
+        - content: L'Erythrée
+          is_good_answer: false
+        - content: L'Éthiopie
+          is_good_answer: false
+      input:
+        - content: L'Éthiopie
+        - content: Éthiopie
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - athletisme
+  - personnalite
+- content: Quelle course hippique française est considéré comme étant une des trois plus grandes épreuves de la discipline ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Grand Prix de Paris
+          is_good_answer: false
+        - content: Le Prix d'Europe
+          is_good_answer: false
+        - content: Le Grand Prix d'Amérique
+          is_good_answer: true
+        - content: Le Grand Prix de France
+          is_good_answer: false
+      input:
+        - content: Prix d'Amérique
+        - content: Le Prix d'Amérique
+        - content: Prix d'Amérique Legend Race
+        - content: Le Prix d'Amérique Legend Race
+        - content: Grand Prix d'Amérique
+        - content: Le Grand Prix d'Amérique
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - sport_hippique
+  - course
+  - europe
+  - france
+- content: Qui remporte le Ballon d'Or en 2018 ?
+  answer:
+    answers:
+      qcm:
+        - content: Lionel Messi
+          is_good_answer: false
+        - content: Luka Modrić
+          is_good_answer: true
+        - content: Antoine Griezmann
+          is_good_answer: false
+        - content: Cristiano Ronaldo
+          is_good_answer: false
+      input:
+        - content: Luka Modrić
+        - content: Modrić  
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - europe
+  - football
+  - personnalite
+  - ballon-d-or
+- content: Quel joueur a son numéro retiré chez toutes les équipes de la NHL ?
+  answer:
+    answers:
+      qcm:
+        - content: Sidney Crosby
+          is_good_answer: false
+        - content: Mario Lemieux
+          is_good_answer: false
+        - content: Wayne Gretzky
+          is_good_answer: true
+        - content: Jaromír Jágr
+          is_good_answer: false
+      input:
+        - content: Wayne Gretzky
+        - content: Gretzky  
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - amerique_nord
+  - nhl
+  - hockey_sur_glace
+  - personnalite
+- content: Quel combattant brésilien de l'UFC est surnommé "The Spider"
+  answer:
+    answers:
+      qcm:
+        - content: Lyoto Machida
+          is_good_answer: false
+        - content: Demian Maia
+          is_good_answer: false
+        - content: Wanderlei Silva
+          is_good_answer: false
+        - content: Anderson Silva
+          is_good_answer: true
+      input:
+        - content: Anderson Silva
+        - content: Anderson da Silva
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - mma
+  - ufc
+  - bresil
+  - amerique_sud
+  - personnalite
+- content: Quel joueur français est élu meilleur joueur du Tournoi des Six Nations en 2020 ?
+  answer:
+    answers:
+      qcm:
+        - content: Antoine Dupont
+          is_good_answer: true
+        - content: Romain Ntamack
+          is_good_answer: false
+        - content: Gaël Fickou
+          is_good_answer: false
+        - content: Camille Chat
+          is_good_answer: false
+      input:
+        - content: Antoine Dupont
+        - content: Dupont
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - france
+  - personnalite
+  - rugby
+  - six_nations
+- content: En 2021, qui possède le record du monde du saut à la perche ? 
+  answer:
+    answers:
+      qcm:
+        - content: Renaud Lavillenie
+          is_good_answer: false
+        - content: Sergueï Bubka
+          is_good_answer: false
+        - content: Armand Duplantis
+          is_good_answer: true
+        - content: Thiago Braz da Silva
+          is_good_answer: false
+      input:
+        - content: Armand Duplantis
+        - content: Duplantis
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - athletisme
+  - personnalite
+  - record
+- content: En 2021, qui est le recordman de victoires sur le Vendée Globe ?
+  answer:
+    answers:
+      qcm:
+        - content: Armel Le Cléac'h
+          is_good_answer: false
+        - content: François Gabart
+          is_good_answer: false
+        - content: Michel Desjoyeaux
+          is_good_answer: true
+        - content: Yannick Bestaven
+          is_good_answer: false
+      input:
+        - content: Michel Desjoyeaux
+        - content: Desjoyeaux
+    additional:
+      response_media:
+        info: 2 victoires en 2001 et en 2009.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - personnalite
+  - voile
+  - nautisme
+- content: Quelle skieuse remporte le 8 mars 2021 le titre de championne du monde de bosses en simple ?
+  answer:
+    answers:
+      qcm:
+        - content: Perrine Laffont
+          is_good_answer: true
+        - content: Yuliya Galysheva
+          is_good_answer: false
+        - content: Sandra Laoura
+          is_good_answer: false
+        - content: Alizée Baron
+          is_good_answer: false
+      input:
+        - content: Perrine Laffont
+        - content: Laffont 
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - ski
+  - personnalite

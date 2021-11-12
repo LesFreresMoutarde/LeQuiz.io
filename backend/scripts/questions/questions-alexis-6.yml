@@ -1,0 +1,1248 @@
+- content: Quel accessoire de la Wiimote permet au joueur de se déplacer avec un stick analogique ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Wii Zapper
+          is_good_answer: false
+        - content: Le Nunchuk
+          is_good_answer: true
+        - content: Le Dualshock
+          is_good_answer: false
+        - content: Le Wii MotionPlus
+          is_good_answer: false
+      input:
+        - content: Le Nunchuk
+        - content: Nunchuk
+        - content: Un Nunchuk
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - nintendo
+  - wii
+  - accessoire_jv
+- content: Quel personnage fut la première mascotte de Sony et de la Playstation ?
+  answer:
+    answers:
+      qcm:
+        - content: Crash Bandicoot
+          is_good_answer: true
+        - content: Spyro
+          is_good_answer: false
+        - content: Solid Snake
+          is_good_answer: false
+        - content: Lara Croft
+          is_good_answer: false
+      input:
+        - content: Crash Bandicoot
+        - content: Crash
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - personnage_jv
+  - mascotte
+  - psx
+  - sony
+- content: Quelle extension de World of Warcraft propose un monde d'Azeroth totalement ravagé par la fureur d'un Dragon ? 
+  answer:
+    answers:
+      qcm:
+        - content: Burning Crusade
+          is_good_answer: false
+        - content: Cataclysm
+          is_good_answer: true
+        - content: Wrath of the Lich King
+          is_good_answer: false
+        - content: Legion
+          is_good_answer: false
+      input:
+        - content: Cataclysm
+        - content: WoW Cataclysm
+        - content: "WoW : Cataclysm"
+        - content: World of Warcraft Cataclysm
+        - content: "World of Warcraft : Cataclysm"
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - dlc
+  - wow
+  - mmorpg
+- content: Quel jeu était pour son créateur, la dernière chance de relancer sa carrière, d'où son nom évocateur ?
+  answer:
+    answers:
+      qcm:
+        - content: Zone of the Enders
+          is_good_answer: false
+        - content: Final Fantasy
+          is_good_answer: true
+        - content: The Last of Us
+          is_good_answer: false
+        - content: Super Smash Bros Ultimate
+          is_good_answer: false
+      input:
+        - content: Final Fantasy
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - rpg
+  - jeu_video
+- content: Quel jeu mobile propose de construire et de développer son village fortifié dans le but d'attaquer les autres ?
+  answer:
+    answers:
+      qcm:
+        - content: Clash Royale
+          is_good_answer: false
+        - content: Mount & Blade
+          is_good_answer: false
+        - content: Clash of Clans
+          is_good_answer: true
+        - content: Boom Beach
+          is_good_answer: false
+      input:
+        - content: Clash of Clans
+        - content: COC
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - smartphone
+  - mmorts
+- content: Quel jeu très populaire sur Twitch en 2020, propose une version spatiale des "Loups-garous de Thiercelieux" ?
+  answer:
+    answers:
+      qcm:
+        - content: Phasmophobia
+          is_good_answer: false
+        - content: Among Us
+          is_good_answer: true
+        - content: Star Citizen
+          is_good_answer: false
+        - content: Space Dandy
+          is_good_answer: false
+      input:
+        - content: Among Us
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu_video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - buzz
+  - twitch
+- content: Quel jeu mobile, véritable phénomène de l'année 2014 a été retiré des stores par son créateur, lassé de son succès ?
+  answer:
+    answers:
+      qcm:
+        - content: Angry Bird
+          is_good_answer: false
+        - content: Doodle Jump
+          is_good_answer: false
+        - content: Subway Surfers
+          is_good_answer: false
+        - content: Flappy Bird
+          is_good_answer: true
+      input:
+        - content: Flappy Bird
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  #- societe
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - smartphone
+  - jeu_plateforme
+  - buzz
+- content: Dans Minecraft, quel bloc est construit lorsque de l'eau en mouvement rencontre de la lave immobile ?
+  answer:
+    answers:
+      qcm:
+        - content: De la bedrock
+          is_good_answer: false
+        - content: De l'obsidienne
+          is_good_answer: true
+        - content: Du lapis-lazuli
+          is_good_answer: false
+        - content: De la diorite
+          is_good_answer: false
+      input:
+        - content: De l'obsidienne
+        - content: L'obsidienne
+        - content: Obsidienne
+        - content: Bloc d'obsidienne
+        - content: Un bloc d'obsidienne
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - minecraft
+  - sandbox
+- content: Comment s'appelle le protagoniste de "Red Dead Redemption" ?
+  answer:
+    answers:
+      qcm:
+        - content: Arthur Morgan
+          is_good_answer: false
+        - content: Trevor Philips
+          is_good_answer: false
+        - content: John Marston
+          is_good_answer: true
+        - content: Max Payne
+          is_good_answer: false
+      input:
+        - content: John Marston
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - rockstar_games
+  - open_world
+  - personnage_jv
+- content: Quel est le nom du personnage principal de la série "Splinter Cell" ?
+  answer:
+    answers:
+      qcm:
+        - content: Tom Clancy
+          is_good_answer: false
+        - content: Sam Fisher
+          is_good_answer: true
+        - content: Ezio Auditore 
+          is_good_answer: false
+        - content: Dante
+          is_good_answer: false
+      input:
+        - content: Sam Fisher
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - personnage_jv
+  - jeu_infiltration
+- content: Quel opus de la série "Call of Duty" est le premier à introduire le mode zombies ?
+  answer:
+    answers:
+      qcm:
+        - content: Modern Warfare
+          is_good_answer: false
+        - content: World at War
+          is_good_answer: true
+        - content: Black Ops
+          is_good_answer: false
+        - content: Modern Warfare 2
+          is_good_answer: false
+      input:
+        - content: World at War
+        - content: "Call of Duty: World at War"
+        - content: Call of Duty World at War
+        - content: COD World at War
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - fps
+  - cod
+  - zombie
+- content: Quel jeu de la Nintendo DS permettait de devenir le maître d'un chien et d'interagir avec lui via l'écran tactile ? 
+  answer:
+    answers:
+      qcm:
+        - content: Monster Hunter
+          is_good_answer: false
+        - content: Little Friends
+          is_good_answer: false
+        - content: "Animal Crossing: Wild Word"
+          is_good_answer: false
+        - content: Nintendogs
+          is_good_answer: true
+      input:
+        - content: Nintendogs 
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - nintendo
+  - nintendo_ds
+  - animal
+- content: Quelle série de jeux de combat nous propose de participer au "King of Iron Fist Tournament" ?
+  answer:
+    answers:
+      qcm:
+        - content: Street Fighter
+          is_good_answer: false
+        - content: Tekken
+          is_good_answer: true
+        - content: Soul Calibur
+          is_good_answer: false
+        - content: Mortal Kombat
+          is_good_answer: false
+      input:
+        - content: Tekken  
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - vs_fighting
+  - jeu_video
+- content: Quelle série jouable sur bornes d'arcade permet aux joueurs d'utiliser un pistolet généralement bleu ou rose ?
+  answer:
+    answers:
+      qcm:
+        - content: The King of Fighters
+          is_good_answer: false
+        - content: Metal Slug 
+          is_good_answer: false
+        - content: The House of the Dead
+          is_good_answer: false
+        - content: Time Crisis
+          is_good_answer: true
+      input:
+        - content: Time Crisis
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - arcade
+  - fps
+- content: Quelle console avait pour nom de code "Project Café" ?
+  answer:
+    answers:
+      qcm:
+        - content: La Gamecube
+          is_good_answer: false
+        - content: La Nintendo 3DS
+          is_good_answer: false
+        - content: La Wii
+          is_good_answer: false
+        - content: La Wii U
+          is_good_answer: true
+      input:
+        - content: Wii U
+          errorAllowedCount: 0
+        - content: La Wii U
+          errorAllowedCount: 0
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - console
+  - nintendo
+- content: Quel ordre religeux les protagonistes d'Assassin's Creed combattent-ils ?
+  answer:
+    answers:
+      qcm:
+        - content: Les Hospitaliers
+          is_good_answer: false
+        - content: L'ordre Teutonique
+          is_good_answer: false
+        - content: Les Templiers
+          is_good_answer: true
+        - content: L'ordre de Livonie
+          is_good_answer: false
+      input:
+        - content: Les Templiers
+        - content: Templiers
+        - content: L'ordre du Temple
+        - content: Ordre du Temple
+        - content: L'ordre des Templiers
+        - content: Ordre des Templiers
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_aventure
+  - assassins_creed
+  - religion
+  - christianisme
+- content: Quelle franchise nous propose de sauver ou de tuer les "Petites Sœurs" ?
+  answer:
+    answers:
+      qcm:
+        - content: BioShock
+          is_good_answer: true
+        - content: Mass Effect
+          is_good_answer: false
+        - content: Dead Space
+          is_good_answer: false
+        - content: Deus Ex
+          is_good_answer: false
+      input:
+        - content: BioShock
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - fps
+  - steampunk
+  - jeu_video
+- content: Quelle pratique consiste à terminer un jeu vidéo le plus rapidement possible ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Speedrun
+          is_good_answer: true
+        - content: Le Modding
+          is_good_answer: false
+        - content: Le Fastshot
+          is_good_answer: false
+        - content: Le Looting
+          is_good_answer: false
+      input:
+        - content: Le Speedrun
+        - content: Speedrun
+        - content: Un Speedrun
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+- content: Quel jeu propose d'incarner une coursière adepte de parkour dans une société dystopique en 2008 ?
+  answer:
+    answers:
+      qcm:
+        - content: Ghostrunner
+          is_good_answer: false
+        - content: Beyond Good & Evil
+          is_good_answer: false
+        - content: Mirror's Edge
+          is_good_answer: true
+        - content: Dishonored
+          is_good_answer: false
+      input:
+        - content: Mirror's Edge 
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_aventure
+  - dystopie
+  - jeu_video
+- content: Que signifie la A de MOBA ?
+  answer:
+    answers:
+      qcm:
+        - content: Action
+          is_good_answer: false
+        - content: Arena
+          is_good_answer: true
+        - content: Assault
+          is_good_answer: false
+        - content: Attackers
+          is_good_answer: false
+      input:
+        - content: Arena
+        - content: Arène
+    additional:
+      response_media:
+        info: Multiplayer Online Battle Arena.
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - moba
+  - acronyme-sigle
+- content: Quelle ville du Maryland (USA) a donné son nom à un studio de jeu vidéo ?
+  answer:
+    answers:
+      qcm:
+        - content: Treyarch
+          is_good_answer: false
+        - content: Arkane
+          is_good_answer: false
+        - content: Bethesda
+          is_good_answer: true
+        - content: Blizzard
+          is_good_answer: false
+      input:
+        - content: Bethesda   
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - studio_jv
+  - entreprise
+  - usa
+  - amerique_nord
+- content: Quel était le premier métier de Mario ?
+  answer:
+    answers:
+      qcm:
+        - content: Charpentier
+          is_good_answer: true
+        - content: Plombier
+          is_good_answer: false
+        - content: Pizzaïolo
+          is_good_answer: false
+        - content: Chauffeur
+          is_good_answer: false
+      input:
+        - content: Charpentier
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - nintendo
+  - metier
+  - mario
+- content: Comment s'appelle l'intelligence artificielle, principal antagoniste de la série "Portal" ?
+  answer:
+    answers:
+      qcm:
+        - content: Wheatley
+          is_good_answer: false
+        - content: HAL 9000
+          is_good_answer: false
+        - content: GLaDOS
+          is_good_answer: true
+        - content: SHODAN
+          is_good_answer: false
+      input:
+        - content: GLaDOS  
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_plateforme
+  - valve
+  - antagoniste
+- content: Quel accessoire de la Xbox 360 permettait au système de détecter les mouvements du joueur ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Oculus Rift
+          is_good_answer: false
+        - content: La Kinect
+          is_good_answer: true
+        - content: L'EyeToy
+          is_good_answer: false
+        - content: Le Leap Motion
+          is_good_answer: false
+      input:
+        - content: La Kinect
+        - content: Kinect   
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - accessoire_jv
+  - microsoft
+  - xbox360
+- content: Sous quel nom trouve-t-on les opus de la série "Pro Evolution Soccer" au Japon ?
+  answer:
+    answers:
+      qcm:
+        - content: Winning Eleven
+          is_good_answer: true
+        - content: International Superstar Soccer
+          is_good_answer: false
+        - content: Kick Off
+          is_good_answer: false
+        - content: Virtua Striker
+          is_good_answer: false
+      input:
+        - content: Winning Eleven
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_sport
+  - football
+- content: Quel jeu sorti en 2019 fut le troisième opus d'une série, très attendue depuis 18 ans ? 
+  answer:
+    answers:
+      qcm:
+        - content: Borderlands 3
+          is_good_answer: false
+        - content: Luigi's Mansion 3
+          is_good_answer: false
+        - content: Shenmue III
+          is_good_answer: true
+        - content: Kingdom Hearts III
+          is_good_answer: false
+      input:
+        - content: Shenmue III
+          errorAllowedCount: 0   
+        - content: Shenmue 3
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_aventure
+  - sega
+- content: Quelle est la signification du sigle du jeu-vidéo FTL ?
+  answer:
+    answers:
+      qcm:
+        - content: Faster Than Light
+          is_good_answer: true
+        - content: Freedom To Liberty
+          is_good_answer: false
+        - content: For The Lord
+          is_good_answer: false
+        - content: Fighting The Light
+          is_good_answer: false
+      input:
+        - content: Faster Than Light
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - acronyme-sigle
+  - rts
+  - indy_game
+- content: En tant que mod de quel jeu le premier "Counter-Strike" est-il sorti ?
+  answer:
+    answers:
+      qcm:
+        - content: Halo
+          is_good_answer: false
+        - content: Operation Flashpoint
+          is_good_answer: false
+        - content: Half-Life
+          is_good_answer: true
+        - content: Delta Force
+          is_good_answer: false
+      input:
+        - content: Half-Life
+        - content: Half Life
+        - content: De Half-Life
+        - content: De Half Life
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - fps
+  - valve
+- content: Quel opus de la série "Metal Gear" troque son habituelle infiltration contre un beat them all très nerveux ?
+  answer:
+    answers:
+      qcm:
+        - content: Metal Gear Acid
+          is_good_answer: false
+        - content: Metal Gear Rising
+          is_good_answer: true
+        - content: Metal Gear Survive
+          is_good_answer: false
+        - content: Metal Gear Arcade
+          is_good_answer: false
+      input:
+        - content: Metal Gear Rising
+        - content: "Metal Gear Rising: Revengeance"
+        - content: Metal Gear Rising Revengeance
+        - content: Rising
+        - content: "Rising: Revengeance"
+        - content: Rising Revengeance   
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - beat_them_all
+  - japon
+  - mgs
+- content: Quel jeu développé par la Team Ico est sortie en 2016 ?
+  answer:
+    answers:
+      qcm:
+        - content: Ico
+          is_good_answer: false
+        - content: The Last Guardian
+          is_good_answer: true
+        - content: Shadow of the Colossus
+          is_good_answer: false
+        - content: Mafia III
+          is_good_answer: false
+      input:
+        - content: The Last Guardian  
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_aventure
+  - japon
+  - ps4
+- content: Comment s'appelle le protagoniste de la série "Ace Attorney" ?
+  answer:
+    answers:
+      qcm:
+        - content: Mia Fey
+          is_good_answer: false
+        - content: Godot
+          is_good_answer: false
+        - content: Benjamin Hunter
+          is_good_answer: false
+        - content: Phoenix Wright
+          is_good_answer: true
+      input:
+        - content: Phoenix Wright   
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - personnage_jv
+  - protagoniste
+- content: Une distribution de quelle famille de système d'exploitation était-il possible d'installer sur la playstation 2 ?
+  answer:
+    answers:
+      qcm:
+        - content: Windows
+          is_good_answer: false
+        - content: MacOS
+          is_good_answer: false
+        - content: Linux
+          is_good_answer: true
+        - content: MS-DOS
+          is_good_answer: false
+      input:
+        - content: Linux
+        - content: De Linux
+        - content: Un Linux
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - console
+  - informatique
+  - ps2
+- content: De simple cellule à empire galactique. Quel jeu d'EA Games propose une telle ascension ?
+  answer:
+    answers:
+      qcm:
+        - content: Spore
+          is_good_answer: true
+        - content: No Man's Sky
+          is_good_answer: false
+        - content: SimCity 3000
+          is_good_answer: false
+        - content: Ancestors
+          is_good_answer: false
+      input:
+        - content: Spore
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_gestion
+  - ea_games
+- content: Complétez ce trio de pokemons starters des éditions Or, Argent et Crystal. "Germignon, Héricendre, ..."
+  answer:
+    answers:
+      qcm:
+        - content: Gobou
+          is_good_answer: false
+        - content: Tiplouf
+          is_good_answer: false
+        - content: Kaiminus
+          is_good_answer: true
+        - content: Carapuce
+          is_good_answer: false
+      input:
+        - content: Kaiminus
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - pokemon
+  - gameboy
+- content: Quel jeu sorti en 2000 a démocratisé dans le jeu vidéo, l'usage du "cel-shading" ?
+  answer:
+    answers:
+      qcm:
+        - content: Sunset Overdrive
+          is_good_answer: false
+        - content: Shenmue II
+          is_good_answer: false
+        - content: Jet Set Radio
+          is_good_answer: true
+        - content: Perfect Dark
+          is_good_answer: false
+      input:
+        - content: Jet Set Radio
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - dreamcast
+  - sega
+  - jeu_video
+- content: Dans quelle ville fictive les évènements de Resident Evil ont-ils lieu ?
+  answer:
+    answers:
+      qcm:
+        - content: Silent Hill
+          is_good_answer: false
+        - content: Rivet City
+          is_good_answer: false
+        - content: Rapture
+          is_good_answer: false
+        - content: Raccoon City
+          is_good_answer: true
+      input:
+        - content: Raccoon City
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - ville_fictive
+  - resident_evil
+- content: Dans le premier opus de quelle série, le capitaine Olimar fait la rencontre de minuscules formes de vies ?
+  answer:
+    answers:
+      qcm:
+        - content: Pikmin
+          is_good_answer: true
+        - content: Pokemon
+          is_good_answer: false
+        - content: Animal Crossing
+          is_good_answer: false
+        - content: OddWorld
+          is_good_answer: false
+      input:
+        - content: Pikmin
+        - content: Pikmins
+        - content: Les Pikmins  
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - nintendo
+  - gamecube
+- content: Comment appelle-t-on la NES au Japon ?
+  answer:
+    answers:
+      qcm:
+        - content: La Super Nintendo
+          is_good_answer: false
+        - content: La Neo Geo
+          is_good_answer: false
+        - content: La Famicom
+          is_good_answer: true
+        - content: La SNES
+          is_good_answer: false
+      input:
+        - content: La Famicom
+        - content: Famicom
+        - content: La Family Computer
+        - content: Family Computer
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - console
+  - nintendo
+- content: Quel jeu sorti en 2006 propulse le joueur dans un conflit entre humains et locustes ?
+  answer:
+    answers:
+      qcm:
+        - content: Halo
+          is_good_answer: false
+        - content: Gears of War
+          is_good_answer: true
+        - content: Bulletstorm
+          is_good_answer: false
+        - content: Destiny
+          is_good_answer: false
+      input:
+        - content: Gears of War
+          errorAllowedCount: 0 
+        - content: Gears of War 1
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - tps
+  - xbox360
+- content: Dans quelle série incarne-t-on les ninjas du clan Azuma ?
+  answer:
+    answers:
+      qcm:
+        - content: Ninja Gaiden
+          is_good_answer: false
+        - content: Tenchu
+          is_good_answer: true
+        - content: The Way of Samurai
+          is_good_answer: false
+        - content: Shenmue
+          is_good_answer: false
+      input:
+        - content: Tenchu  
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - ninja
+  - jeu_infiltration
+- content: Quel accessoire est requis pour jouer aux Donkey Konga ?
+  answer:
+    answers:
+      qcm:
+        - content: Bongo DK
+          is_good_answer: true
+        - content: Jungle Paddle
+          is_good_answer: false
+        - content: Green Trackball
+          is_good_answer: false
+        - content: Forrest Sticks
+          is_good_answer: false
+      input:
+        - content: Bongo DK
+        - content: Les Bongo DK
+        - content: Des Bongo DK
+        - content: TaruKonga  
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - accessoire_jv
+  - nintendo
+  - gamecube
+- content: Sous quel nom connait-on mieux la série des "Ryû Ga Gotoku" ?
+  answer:
+    answers:
+      qcm:
+        - content: Dynasty Warriors
+          is_good_answer: false
+        - content: Persona
+          is_good_answer: false
+        - content: Yakuza
+          is_good_answer: true
+        - content: Xenoblade Chronicles
+          is_good_answer: false
+      input:
+        - content: Yakuza
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - beat_them_all
+  - japon
+  - jeu_video
+- content: Dans quel jeu incarne-t-on Amaterasu, déesse du Soleil et de la Lumière réincarné en loup ?
+  answer:
+    answers:
+      qcm:
+        - content: Ico
+          is_good_answer: false
+        - content: Nioh
+          is_good_answer: false
+        - content: Okami
+          is_good_answer: true
+        - content: Bayonetta
+          is_good_answer: false
+      input:
+        - content: Okami
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - ps2
+  - jeu_aventure
+- content: Quel FPS a grandement contribué aux ventes de la Xbox à son lancement ?
+  answer:
+    answers:
+      qcm:
+        - content: Quake 2
+          is_good_answer: false
+        - content: Halo
+          is_good_answer: true
+        - content: "007: Nightfire"
+          is_good_answer: false
+        - content: "Medal of Honor: En première ligne"
+          is_good_answer: false
+      input:
+        - content: Halo
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - fps
+  - xbox  
+- content: Quelle édition de FIFA a subit une refonte totale du gameplay et a posé les bases de son hémégonie actuelle ?
+  answer:
+    answers:
+      qcm:
+        - content: FIFA 10
+          is_good_answer: false
+        - content: FIFA Football 2005
+          is_good_answer: false
+        - content: FIFA 11
+          is_good_answer: false
+        - content: FIFA 08
+          is_good_answer: true
+      input:
+        - content: FIFA 08
+          errorAllowedCount: 0  
+        - content: FIFA 2008
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_sport
+  - football
+- content: Maxine Caulfield est une étudiante en photographie. Dans quel jeu peut-on la retrouver ?
+  answer:
+    answers:
+      qcm:
+        - content: Until Dawn
+          is_good_answer: false
+        - content: "Detroit: Become Humans"
+          is_good_answer: false
+        - content: Life is Strange
+          is_good_answer: true
+        - content: The Last of Us
+          is_good_answer: false
+      input:
+        - content: Life is Strange
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - point_and_click
+- content: Quel jeu fut le plus vendu de la Nintendo 64 ?
+  answer:
+    answers:
+      qcm:
+        - content: Mario Kart 64
+          is_good_answer: false
+        - content: Pokemon Stadium
+          is_good_answer: false
+        - content: "The Legend of Zelda: Ocarina of Time"
+          is_good_answer: false
+        - content: Super Mario 64
+          is_good_answer: true
+      input:
+        - content: Super Mario 64   
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - n64
+  - record
+- content: Quel nom porte le quatrième opus de la série "The Elder Scrolls" ?
+  answer:
+    answers:
+      qcm:
+        - content: Morrowing
+          is_good_answer: false
+        - content: Oblivion
+          is_good_answer: true
+        - content: Skyrim
+          is_good_answer: false
+        - content: Daggerfall
+          is_good_answer: false
+      input:
+        - content: Oblivion
+        - content: "The Elder Scrolls IV: Oblivion"
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - rpg
+  - jeu_video
+  - the_elder_scrolls
+- content: \"Permis de sortir\" et \"Les Urbz\" sont les déclinaisons sur console de quelle licence ?
+  answer:
+    answers:
+      qcm:
+        - content: Les Sims
+          is_good_answer: true
+        - content: SimCity
+          is_good_answer: false
+        - content: Zoo Tycoon
+          is_good_answer: false
+        - content: Animal Crossing
+          is_good_answer: false
+      input:
+        - content: Les Sims
+        - content: Sims
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - jeu_video
+  - jeu_gestion
+- content: Dans quel jeu de la Playstation 3 peut-on retrouver le dénommé Sackboy ?
+  answer:
+    answers:
+      qcm:
+        - content: Little Big Planet
+          is_good_answer: true
+        - content: Buzz! Quiz TV
+          is_good_answer: false
+        - content: inFamous
+          is_good_answer: false
+        - content: ModNation Racers
+          is_good_answer: false
+      input:
+        - content: Little Big Planet
+        - content: LittleBiGPlanet  
+  status: approved
+  isHardcore: false
+  categories:
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - sandbox
+  - ps3
+  - jeu_video

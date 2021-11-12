@@ -1,0 +1,1270 @@
+---
+- content: Quelle célébrité de la télévision a pris le selfie le plus « retweeté » de l'histoire ?
+  answer:
+    answers:
+      qcm:
+        - content: Jenny McCarthy
+          is_good_answer: false
+        - content: Ellen DeGeneres
+          is_good_answer: true
+        - content: Kim Kardashian
+          is_good_answer: false
+        - content: Oprah Winfrey
+          is_good_answer: false
+      input:
+        - content: Ellen DeGeneres
+        - content: DeGeneres 
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - television
+  - reseau_social
+  - personnalite
+  - twitter
+- content: Quelle application de Twitter hébergeait des vidéos de 6 secondes tournant en boucle ?
+  answer:
+    answers:
+      qcm:
+        - content: Viber
+          is_good_answer: false
+        - content: Instagram
+          is_good_answer: false
+        - content: Snapchat
+          is_good_answer: false
+        - content: Vine
+          is_good_answer: true
+      input:
+        - content: Vine
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - application
+  - reseau_social
+  - twitter
+- content: Quel site Web de réseautage social russe a été racheté par un proche de Vladimir Poutine ?
+  answer:
+    answers:
+      qcm:
+        - content: VK
+          is_good_answer: true
+        - content: Yammer
+          is_good_answer: false
+        - content: Soup
+          is_good_answer: false
+        - content: Plaxo
+          is_good_answer: false
+      input:
+        - content: VK
+          errorAllowedCount: 0  
+        - content: VKontakte  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - reseau_social
+  - russie
+  - application
+- content: Quelle chaîne Youtube a récolté plus d'un million d'euros pour transformer un fiat multipla en un bolide de plus de 1000 chevaux ?
+  answer:
+    answers:
+      qcm:
+        - content: AKRAMJUNIOR DAILY
+          is_good_answer: false
+        - content: Vilbrequin
+          is_good_answer: true
+        - content: GMK
+          is_good_answer: false
+        - content: Le Vendeur Automobiles
+          is_good_answer: false
+      input:
+        - content: Vilbrequin
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - youtube
+  - personnalite
+  - automobile
+- content: Quel site a créé Twitch afin de déménager sa branche jeux vidéo ?
+  answer:
+    answers:
+      qcm:
+        - content: Amazon
+          is_good_answer: false
+        - content: blog-video.tv 
+          is_good_answer: false
+        - content: Ustream.tv
+          is_good_answer: false
+        - content: Justin.tv
+          is_good_answer: true
+      input:
+        - content: Justin.tv
+        - content: Justin TV
+        - content: Justin
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+  - twitch
+- content: Quel streamer organise ponctuellement des "Nuits de la Culture" avec Samuel Etienne sur "Questions pour un Champion" ?
+  answer:
+    answers:
+      qcm:
+        - content: Etoiles
+          is_good_answer: true
+        - content: Antoine Daniel
+          is_good_answer: false
+        - content: DFG
+          is_good_answer: false
+        - content: Laink
+          is_good_answer: false
+      input:
+        - content: Etoiles
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - twitch
+  - personnalite
+  - france
+- content: Quel protocole est utilisé pour faire communiquer un serveur et un client dans le cadre du web ?
+  answer:
+    answers:
+      qcm:
+        - content: IRC
+          is_good_answer: false
+        - content: HTTP
+          is_good_answer: true
+        - content: SSH
+          is_good_answer: false
+        - content: HTML
+          is_good_answer: false
+      input:
+        - content: HTTP
+          errorAllowedCount: 0    
+        - content: HTTPS
+          errorAllowedCount: 0    
+        - content: Le HTTP
+          errorAllowedCount: 0
+        - content: L'HTTP
+          errorAllowedCount: 0
+        - content: Le HTTPS
+          errorAllowedCount: 0
+        - content: L'HTTPS
+          errorAllowedCount: 0
+        - content: Le protocole HTTP
+          errorAllowedCount: 0
+        - content: Le protocole HTTPS
+          errorAllowedCount: 0
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  - divers
+  types:
+  - classic
+  tags:
+  - technologie
+  - informatique
+- content: En quelle année est sortie la première vidéo du Joueur du Grenier ?
+  answer:
+    answers:
+      qcm:
+        - content: 2007
+          is_good_answer: false
+        - content: 2009
+          is_good_answer: true
+        - content: 2011
+          is_good_answer: false
+        - content: 2013
+          is_good_answer: false
+      input:
+        - content: 2009
+          errorAllowedCount: 0   
+        - content: En 2009
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - youtube
+- content: Quel fournisseur d'accès à internet s'est distingué en distribuant massivement des CDs offrant du temps de connexion ?
+  answer:
+    answers:
+      qcm:
+        - content: AOL
+          is_good_answer: true
+        - content: Free
+          is_good_answer: false
+        - content: SFR
+          is_good_answer: false
+        - content: Alice
+          is_good_answer: false
+      input:
+        - content: AOL
+          errorAllowedCount: 0
+        - content: America Online 
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - publicite
+- content: Comment s'appelle le moteur de recherche de Microsoft ?
+  answer:
+    answers:
+      qcm:
+        - content: Qwant
+          is_good_answer: false
+        - content: Ask.com
+          is_good_answer: false
+        - content: Lycos
+          is_good_answer: false
+        - content: Bing
+          is_good_answer: true
+      input:
+        - content: Bing
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+- content: Quel site français apparu au début du siècle permet à quiconque de créer son propre forum phpBB ?
+  answer:
+    answers:
+      qcm:
+        - content: Overblog
+          is_good_answer: true
+        - content: MySpace
+          is_good_answer: false
+        - content: Forumactif
+          is_good_answer: true
+        - content: ActiveBoard
+          is_good_answer: false
+      input:
+        - content: Forumactif
+        - content: Xooit   
+    additional:
+      response_media:
+        info: Le leader Forumactif, Le challenger, Xooit.
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+  - france
+- content: Quel nom de domaine spécifique trouve-t-on dans les adresses URL du réseau Tor ?
+  answer:
+    answers:
+      qcm:
+        - content: .localhost
+          is_good_answer: false
+        - content: .onion
+          is_good_answer: true
+        - content: .tk
+          is_good_answer: false
+        - content: .dark
+          is_good_answer: false
+      input:
+        - content: .onion
+          errorAllowedCount: 0  
+        - content: onion
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - informatique
+- content: Sur quel site populaire le sujet du bac S de Mathématiques avait-il fuité en 2011 ?
+  answer:
+    answers:
+      qcm:
+        - content: jeuxvideo.com
+          is_good_answer: true
+        - content: reddit
+          is_good_answer: false
+        - content: twitter
+          is_good_answer: false
+        - content: youtube
+          is_good_answer: false
+      input:
+        - content: jeuxvideo.com 
+        - content: jvc
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - site_web
+  - scolarite
+- content: Quel politicien s'est fait remarqué par sa campagne numérique lors de la présidentielle de 2017 ?
+  answer:
+    answers:
+      qcm:
+        - content: Emmanuel Macron
+          is_good_answer: false
+        - content: Jean-Luc Mélenchon
+          is_good_answer: true
+        - content: François Asselineau
+          is_good_answer: false
+        - content: Benoit Hamon
+          is_good_answer: false
+      input:
+        - content: Jean-Luc Mélenchon
+        - content: Mélenchon
+        - content: Jean Luc Mélenchon
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- politique-citoyennete
+  types:
+  - classic
+  tags:
+  - personnalite
+  - campagne_politique
+- content: Quel célébre chat d'Internet est aussi connu sous le nom de Pop Tart Cat ?
+  answer:
+    answers:
+      qcm:
+        - content: Nyan Cat
+          is_good_answer: true
+        - content: Nekomamushi
+          is_good_answer: false
+        - content: Doraemon
+          is_good_answer: false
+        - content: Garfield
+          is_good_answer: false
+      input:
+        - content: Nyan Cat
+        - content: Le Nyan Cat
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - meme_internet
+  - animal
+- content: Avant l'émergence d'Internet Explorer, quel navigateur web était hégémonique dans les années 90 ?
+  answer:
+    answers:
+      qcm:
+        - content: AOL Explorer
+          is_good_answer: false
+        - content: Netscape
+          is_good_answer: true
+        - content: Mosaic
+          is_good_answer: false
+        - content: Camino
+          is_good_answer: false
+      input:
+        - content: Netscape
+        - content: Netscape Navigator
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - informatique
+  - retro
+- content: Quelle plateforme de vidéo est rachetée par Tik-Tok en 2017 pour près d'un milliard de dollars ?
+  answer:
+    answers:
+      qcm:
+        - content: Vine
+          is_good_answer: false
+        - content: Musical.ly
+          is_good_answer: true
+        - content: Triller
+          is_good_answer: false
+        - content: Bitstrips
+          is_good_answer: false
+      input:
+        - content: Musical.ly
+        - content: Musically
+        - content: Musical ly
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - application
+  - reseau_social
+  - tik-tok
+- content: Quel société a démarré par la location de DVD livrés à domicile avant de devenir un pionnier  de la VOD par abonnement ?
+  answer:
+    answers:
+      qcm:
+        - content: Amazon
+          is_good_answer: false
+        - content: Molotov
+          is_good_answer: false
+        - content: Netflix
+          is_good_answer: true
+        - content: Crunchyroll
+          is_good_answer: false
+      input:
+        - content: Netflix
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  - divers
+  types:
+  - classic
+  tags:
+  - site_web
+  - entreprise
+- content: Quel site propose à ses membres d'échanger, de partager des liens autour de thématiques appelé "communautés" ?
+  answer:
+    answers:
+      qcm:
+        - content: Reddit
+          is_good_answer: true
+        - content: Pinterest
+          is_good_answer: false
+        - content: Quora
+          is_good_answer: false
+        - content: Google Groups 
+          is_good_answer: false
+      input:
+        - content: Reddit
+        - content: Reddit.com   
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+  - reseau_social
+- content: Quel autre nom donne-t-on à un email indésirable ?
+  answer:
+    answers:
+      qcm:
+        - content: Un spam
+          is_good_answer: true
+        - content: Un cookie
+          is_good_answer: false
+        - content: Un malware
+          is_good_answer: false
+        - content: Un DDOS
+          is_good_answer: false
+      input:
+        - content: Un spam
+        - content: Spam
+        - content: Du spam    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  - divers
+  types:
+  - classic
+  tags:
+  - informatique
+- content: Quel nom de domaine est réservé au Royaume-Uni
+  answer:
+    answers:
+      qcm:
+        - content: .en
+          is_good_answer: false
+        - content: .gb
+          is_good_answer: false
+        - content: .com
+          is_good_answer: false
+        - content: .uk
+          is_good_answer: true
+      input:
+        - content: .uk
+        - content: uk   
+    additional:
+      response_media:
+        info: Avant 2014, il était obligatoire de réserver un nom dans des sous-domaines comme co.uk, me.uk etc.
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - nom_de_domaine
+- content: Quel site utilisant Google Street View et Google Map met au défi le sens de l'orientation de ses joueurs ?
+  answer:
+    answers:
+      qcm:
+        - content: jeux-geographiques.com
+          is_good_answer: false
+        - content: Seterra
+          is_good_answer: false
+        - content: GeoGuessr
+          is_good_answer: true
+        - content: The Higher Lower Game
+          is_good_answer: false
+      input:
+        - content: GeoGuessr
+        - content: geoguessr.com   
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - site_web
+  - browser_game
+- content: Comment appelait-on ces jeux qui s'exécutaient dans un navigateur web et ayant connu leur apogée dans les années 2000 ?
+  answer:
+    answers:
+      qcm:
+        - content: Les ActiveX
+          is_good_answer: false
+        - content: Les applets
+          is_good_answer: false
+        - content: Les jeux AJAX
+          is_good_answer: false
+        - content: Les jeux Flash
+          is_good_answer: true
+      input:
+        - content: Les jeux Flash
+        - content: jeux flash
+        - content: jeu flash
+        - content: Flash
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  - jeu-video
+  types:
+  - classic
+  tags:
+  - technologie
+- content: Quel challenge de l'été 2014 avait pour but de sensibiliser à la maladie de Charcot ?
+  answer:
+    answers:
+      qcm:
+        - content: Ice and Salt Challenge 
+          is_good_answer: false
+        - content: Rice Bucket Challenge
+          is_good_answer: false
+        - content: Ice Bucket Challenge
+          is_good_answer: true
+        - content: Cinnamon challenge
+          is_good_answer: false
+      input:
+        - content: Ice Bucket Challenge
+        - content: L'Ice Bucket Challenge
+        - content: Le Ice Bucket Challenge
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - sante
+  - buzz
+- content: Comment appelle-t-on un site qui permet la création et la modification de ses pages à quiconque ?
+  answer:
+    answers:
+      qcm:
+        - content: Un forum
+          is_good_answer: false
+        - content: Un wiki
+          is_good_answer: true
+        - content: Un blog
+          is_good_answer: false
+        - content: Un newsgroup
+          is_good_answer: false
+      input:
+        - content: Un wiki
+        - content: Wiki    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+- content: \"Mais c'était sur en fait !\" Quel streamer est l'auteur de cette célèbre réaction ?
+  answer:
+    answers:
+      qcm:
+        - content: Kameto
+          is_good_answer: false
+        - content: Locklear
+          is_good_answer: false
+        - content: Sardoche
+          is_good_answer: true
+        - content: Ponce
+          is_good_answer: false
+      input:
+        - content: Sardoche
+        - content: Sard
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - twitch
+  - personnalite
+- content: Avant de changer de nom, comment s'appelait OpenClassrooms ?
+  answer:
+    answers:
+      qcm:
+        - content: Le repaire du codeur
+          is_good_answer: false
+        - content: Le code pour les nazes
+          is_good_answer: false
+        - content: Le site du zéro
+          is_good_answer: true
+        - content: Code Wars
+          is_good_answer: false
+      input:
+        - content: Le site du zero
+        - content: Site du Zero
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+  - france
+  - entreprise
+- content: Quel réseau social professionnel français a tenté de rivaliser avec LinkedIn à ses débuts ? 
+  answer:
+    answers:
+      qcm:
+        - content: Viadeo
+          is_good_answer: true
+        - content: Xing
+          is_good_answer: false
+        - content: Indeed
+          is_good_answer: false
+        - content: Wizbii
+          is_good_answer: false
+      input:
+        - content: Viadeo
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - reseau_social
+  - france
+  - entreprise
+- content: Avant d'être en monopole, par quelle plateforme française était concurrencée Youtube ?
+  answer:
+    answers:
+      qcm:
+        - content: Dailymotion
+          is_good_answer: true
+        - content: Vimeo
+          is_good_answer: false
+        - content: Veoh
+          is_good_answer: false
+        - content: Koreus
+          is_good_answer: false
+      input:
+        - content: Dailymotion   
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+  - france
+- content: Quel film retrace le parcours de la création de Facebook ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Loup de Wall Street
+          is_good_answer: false
+        - content: Le Fondateur
+          is_good_answer: false
+        - content: The Social Network
+          is_good_answer: true
+        - content: Too Big to Fail
+          is_good_answer: false
+      input:
+        - content: The Social Network  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- cinema
+  types:
+  - classic
+  tags:
+  - reseau_social
+  - facebook
+  - biopic
+  - film
+  - usa
+- content: Sur Internet, que signifie le sigle "WWW" ?
+  answer:
+    answers:
+      qcm:
+        - content: Washington Web Wire
+          is_good_answer: false
+        - content: Wireless World Web
+          is_good_answer: false
+        - content: We Winnipeg Web
+          is_good_answer: false
+        - content: World Wide Web
+          is_good_answer: true
+      input:
+        - content: World Wide Web
+        - content: WorldWideWeb
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - informatique
+  - acronyme-sigle
+- content: Quel service de paiement en ligne à été créé par Elon Musk ?
+  answer:
+    answers:
+      qcm:
+        - content: Moneo
+          is_good_answer: false
+        - content: Paylib
+          is_good_answer: false
+        - content: Paypal
+          is_good_answer: true
+        - content: MoneyGram
+          is_good_answer: false
+      input:
+        - content: Paypal  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - entreprise
+  - site_web
+  - economie
+- content: Quel site a démocratisé le concept d'enchères en ligne ?
+  answer:
+    answers:
+      qcm:
+        - content: Amazon
+          is_good_answer: false
+        - content: eBay
+          is_good_answer: true
+        - content: Aliexpress
+          is_good_answer: false
+        - content: Rakuten
+          is_good_answer: false
+      input:
+        - content: eBay 
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+  - entreprise
+- content: Quel site d'hébergement de fichiers a été fermé par la justice américaine en 2012 ?
+  answer:
+    answers:
+      qcm:
+        - content: Megaupload
+          is_good_answer: true
+        - content: Rapidshare
+          is_good_answer: false
+        - content: Noelshack
+          is_good_answer: false
+        - content: MediaFire
+          is_good_answer: false
+      input:
+        - content: Megaupload
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - site_web
+  - droit
+  - usa
+- content: Quelle pratique consiste à sous-titrer de manière amateur un anime ou une série et a le diffuser sur Internet ?
+  answer:
+    answers:
+      qcm:
+        - content: Scantrad
+          is_good_answer: false
+        - content: Fandom
+          is_good_answer: false
+        - content: Fansub
+          is_good_answer: true
+        - content: SpeedSubbing
+          is_good_answer: false
+      input:
+        - content: Fansub
+        - content: Le Fansub
+        - content: Fansubbing
+        - content: Le Fansubbing  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- manga
+  types:
+  - classic
+  tags:
+  - piratage
+- content: Quel client peer-to-peer a pour logo un animal issu du croisement entre un âne et une jument ?
+  answer:
+    answers:
+      qcm:
+        - content: eDonkey2000
+          is_good_answer: false
+        - content: Kazaa
+          is_good_answer: false
+        - content: Limewire
+          is_good_answer: false
+        - content: eMule
+          is_good_answer: true
+      input:
+        - content: eMule  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - application
+  - piratage
+- content: Par quelle fondation a été créé Firefox ?
+  answer:
+    answers:
+      qcm:
+        - content: Apache
+          is_good_answer: false
+        - content: Wikimedia
+          is_good_answer: false
+        - content: Mozilla
+          is_good_answer: true
+        - content: Eclipse
+          is_good_answer: false
+      input:
+        - content: Mozilla
+        - content: Par Mozilla
+        - content: Mozilla Fondation
+        - content: Par Mozilla Fondation
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - organisme
+- content: La supériorité fantasmée de quel acteur est gentiment moqué sur Internet autour de "facts" ?
+  answer:
+    answers:
+      qcm:
+        - content: Sylvester Stallone 
+          is_good_answer: false
+        - content: Chuck Norris
+          is_good_answer: true
+        - content: Jackie Chan
+          is_good_answer: false
+        - content: Arnold Schwarzenegger
+          is_good_answer: false
+      input:
+        - content: Chuck Norris
+        - content: Norris  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  - societe
+  types:
+  - classic
+  tags:
+  - personnalite
+  - meme_internet
+- content: De quel site de poker et de paris sportifs Patrick Bruel est-il le propriétaire ?
+  answer:
+    answers:
+      qcm:
+        - content: Winamax
+          is_good_answer: true
+        - content: Unibet
+          is_good_answer: false
+        - content: PokerStars
+          is_good_answer: false
+        - content: Betclic
+          is_good_answer: false
+      input:
+        - content: Winamax
+        - content: De Winamax  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_web
+  - entreprise
+  - jeu_societe
+- content: Quelle Youtubeuse a fait scandale après avoir fait la promotion de masque à la cannelle ?
+  answer:
+    answers:
+      qcm:
+        - content: AndyRaconte
+          is_good_answer: false
+        - content: Sananas
+          is_good_answer: false
+        - content: EnjoyPhoenix
+          is_good_answer: true
+        - content: Elsa MakeUp
+          is_good_answer: false
+      input:
+        - content: EnjoyPhoenix
+        - content: Enjoy Phoenix
+        - content: Marie Lopez
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - youtube
+  - personnalite
+  - buzz
+- content: Quel influenceur aujourd'hui disparu s'est fait connaitre par Twitter pour ses commentaires décalés sur le sport ?
+  answer:
+    answers:
+      qcm:
+        - content: Philousports
+          is_good_answer: true
+        - content: René Malleville
+          is_good_answer: false
+        - content: Bengous
+          is_good_answer: false
+        - content: Mohamed Henni
+          is_good_answer: false
+      input:
+        - content: Philousports
+        - content: Philou sports
+        - content: Philippe Vignolo  
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - twitter
+  - personnalite
+  - france
+- content: Quel personnalité anime la plateforme vidéo jpp.fr ?
+  answer:
+    answers:
+      qcm:
+        - content: Jean-Pierre Foucault
+          is_good_answer: false
+        - content: Jamy Gourmaud
+          is_good_answer: false
+        - content: Jean-Pierre Pernaut
+          is_good_answer: true
+        - content: Samuel Etienne
+          is_good_answer: false
+      input:
+        - content: Jean-Pierre Pernaut
+        - content: Jean Pierre Pernaut
+        - content: Pernaut
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - personnalite
+  - site_web
+  - television
+- content: Quel anglicisme qualifie en France, un média exercant uniquement sur Internet ?
+  answer:
+    answers:
+      qcm:
+        - content: Open source
+          is_good_answer: false
+        - content: Pure player
+          is_good_answer: true
+        - content: Online
+          is_good_answer: false
+        - content: Over The Top (OTT)
+          is_good_answer: false
+      input:
+        - content: Pure player
+        - content: Tout en ligne
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - anglicisme
+  - france
+- content: Quel mot valise, issu de la contraction de broadcast et iPod désigne un contenu audio ou vidéo disponible sur Internet ?
+  answer:
+    answers:
+      qcm:
+        - content: Casty
+          is_good_answer: false
+        - content: iCast
+          is_good_answer: false
+        - content: Broady
+          is_good_answer: false
+        - content: Podcast
+          is_good_answer: true
+      input:
+        - content: Podcast
+          errorAllowedCount: 0   
+        - content: Un podcast
+          errorAllowedCount: 0   
+        - content: Le podcast
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+- content: Quelle application a donné son nom à un phénomène récent reposant sur la mise en relation directe entre prestataires de services et clients ?
+  answer:
+    answers:
+      qcm:
+        - content: Uber
+          is_good_answer: true
+        - content: Vinted
+          is_good_answer: false
+        - content: Yuka
+          is_good_answer: false
+        - content: Doctolib
+          is_good_answer: false
+      input:
+        - content: Uber   
+    additional:
+      response_media:
+        info: La fameuse ubérisation de la société.
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  #- societe
+  types:
+  - classic
+  tags:
+  - application
+  - societal
+- content: Comment appelle-t-on un individu dont la motivation première sur Internet est de générer des conflits ?
+  answer:
+    answers:
+      qcm:
+        - content: Un noob
+          is_good_answer: false
+        - content: Un weeb
+          is_good_answer: false
+        - content: Un troll
+          is_good_answer: true
+        - content: Un bouff
+          is_good_answer: false
+      input:
+        - content: Un troll
+        - content: Troll g
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+- content: À quel langage issu d'Internet, correspond la graphie suivante, "80NJ0Ur" ?
+  answer:
+    answers:
+      qcm:
+        - content: Le langage SMS
+          is_good_answer: false
+        - content: le kikoo-lol
+          is_good_answer: false
+        - content: Le Leet speak
+          is_good_answer: true
+        - content: Le hack dict
+          is_good_answer: false
+      input:
+        - content: Le Leet speak
+        - content: L'elite speak
+        - content: Leet speak
+        - content: elite speak
+        - content: 1337 5|*34|<  
+    additional:
+      response_media:
+        info: 1337 5|*34|< = Leet speak (dans sa forme la plus complexe)
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - langage
+- content: Quel duo de Youtubeurs affronte d'autres Youtubeurs lors des "Youtube Warrior" ?
+  answer:
+    answers:
+      qcm:
+        - content: Fred et Seb du Grenier
+          is_good_answer: false
+        - content: Michou et Inoxtag
+          is_good_answer: false
+        - content: Wankil
+          is_good_answer: false
+        - content: McFly et Carlito
+          is_good_answer: true
+      input:
+        - content: McFly et Carlito
+        - content: Carlito et McFly
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - youtube
+  - personnalite
+- content: Quelle appellation définit l'ensemble des sites web non indéxés sur les moteurs de recherche ?
+  answer:
+    answers:
+      qcm:
+        - content: Le web décentralisé
+          is_good_answer: false
+        - content: Le deep web
+          is_good_answer: true
+        - content: Le darknet
+          is_good_answer: false
+        - content: Le clearnet
+          is_good_answer: false
+      input:
+        - content: Le deep web
+        - content: Deep web
+        - content: Le web profond
+        - content: Web profond
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - informatique
+- content: Quelle plateforme de streaming a signé un contrat d'exclusivité avec le streamer Ninja en 2019 ?
+  answer:
+    answers:
+      qcm:
+        - content: Twitch
+          is_good_answer: false
+        - content: Facebook Gaming
+          is_good_answer: false
+        - content: Youtube Live
+          is_good_answer: false
+        - content: Mixer
+          is_good_answer: true
+      input:
+        - content: Mixer    
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  types:
+  - classic
+  tags:
+  - site_internet
+  - entreprise
+ # Qui est l'inventeur du world wide web
+ # Que signifie wi-fi
+ # Quel site de e-commerce est souvent critiquée pour la faible qualité des produits de ses marchands (wish)
+ # Quel sous domaine caractérise les sites du gouvernement
+ # (Question sur leLive)

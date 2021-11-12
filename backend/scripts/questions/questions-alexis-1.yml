@@ -1,0 +1,1430 @@
+---
+- content: Quelle ville située en Asie a prêté son nom à un type de balles de fusil ?
+  answer:
+    answers:
+      qcm:
+        - content: Fuzhou
+          is_good_answer: false
+        - content: Karaj
+          is_good_answer: false
+        - content: Dum Dum
+          is_good_answer: true
+        - content: Bombay
+          is_good_answer: false
+      input:
+        - content: Dum Dum
+          errorAllowedCount: 0    
+        - content: Dum-Dum
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: Dum Dum est un faubourg de Calcutta en Inde où se trouvait une manufacture d'armes.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  - divers
+  types:
+  - classic
+  tags:
+  - asie
+  - inde
+  - ville
+- content: Quel officier britannique est devenu en 1908 le père du scoutisme ?
+  answer:
+    answers:
+      qcm:
+        - content: Robert Baden-Powell
+          is_good_answer: true
+        - content: Arthur Wellesley de Wellington
+          is_good_answer: false
+        - content: Dwight D. Eisenhower
+          is_good_answer: false
+        - content: Andrew Carnegie
+          is_good_answer: false
+      input:
+        - content: Robert Baden-Powell
+        - content: Robert Baden Powell
+        - content: Baden-Powell
+        - content: Baden Powell   
+    additional:
+      response_media:
+        info: Santé, sens du concret, personnalité, service et sens de dieu. Tels sont les cinq valeurs du scoutisme.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - scoutisme
+  - uk
+  - personnalite
+  - armee
+- content: Quelle plante toxique servait de base au poison officiel des Athéniens ?
+  answer:
+    answers:
+      qcm:
+        - content: Le ricin
+          is_good_answer: false
+        - content: L'adonis
+          is_good_answer: false
+        - content: La belladonne
+          is_good_answer: false
+        - content: La ciguë
+          is_good_answer: true
+      input:
+        - content: La ciguë
+          errorAllowedCount: 0  
+        - content: ciguë
+          errorAllowedCount: 0 
+        - content: La grande ciguë
+        - content: Grande ciguë
+    additional:
+      response_media:
+        info: La plus célèbre victime fut le philosophe Socrate.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  #- sciences
+  types:
+  - classic
+  tags:
+  - végétal
+  - poison
+  - grece
+  - antiquite
+  - athenes
+- content: Combien de pions possède chaque joueur au début d'une partie de dames ?
+  answer:
+    answers:
+      qcm:
+        - content: 12
+          is_good_answer: false
+        - content: 20
+          is_good_answer: true
+        - content: 15
+          is_good_answer: false
+        - content: 18
+          is_good_answer: false
+      input:
+        - content: 20
+          errorAllowedCount: 0   
+        - content: Vingt
+          errorAllowedCount: 0
+        - content: 20 pions
+          errorAllowedCount: 0
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - jeu_societe
+- content: Comment s'appelle la ville dans laquelle Jean-Charles Pellerin a créé une illustre fabrique d'images ? 
+  answer:
+    answers:
+      qcm:
+        - content: Strasbourg
+          is_good_answer: false
+        - content: Cabourg
+          is_good_answer: false
+        - content: Sarlat-la-Canéda
+          is_good_answer: false
+        - content: Épinal
+          is_good_answer: true
+      input:
+        - content: Épinal
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: D'où l'expression, "une image d'Épinal".
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  #- arts
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - ville
+  - vosges
+  - grand_est
+- content: Quelle figure du "Printemps de Prague", Gustáv Husák a-t-il remplacé à la tête du parti communique tchèque ?
+  answer:
+    answers:
+      qcm:
+        - content: Slobodan Milošević
+          is_good_answer: false
+        - content: Alexander Dubček
+          is_good_answer: true
+        - content: Dušan Popov
+          is_good_answer: false
+        - content: Antonín Novotný
+          is_good_answer: false
+      input:
+        - content: Alexander Dubček
+        - content: Dubček
+    additional:
+      response_media:
+        info: Premier secrétaire du Parti communiste tchécoslovaque entre 1968 et 1969.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  #- politique-citoyennete
+  types:
+  - classic
+  tags:
+  - communisme
+  - tchequie
+  - 20_eme_siecle
+- content: Qu'est ce qui relie Jean de La Fontaine à Ésope ?
+  answer:
+    answers:
+      qcm:
+        - content: La fable
+          is_good_answer: true
+        - content: La nouvelle
+          is_good_answer: false
+        - content: Le roman
+          is_good_answer: false
+        - content: La poésie
+          is_good_answer: false
+      input:
+        - content: La fable
+          errorAllowedCount: 0    
+        - content: Les fables
+          errorAllowedCount: 0    
+        - content: Des fables
+          errorAllowedCount: 0    
+        - content: fable
+          errorAllowedCount: 0    
+        - content: fables
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: Esope est considéré comme le créateur du genre.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  #- arts
+  types:
+  - classic
+  tags:
+  - litterature
+  - la_fontaine
+- content: Quel pays fut le vainqueur de la coupe du monde de football 1978 ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Allemagne (RFA)
+          is_good_answer: false
+        - content: L'Italie
+          is_good_answer: false
+        - content: L'Argentine
+          is_good_answer: true
+        - content: La Hongrie
+          is_good_answer: false
+      input:
+        - content: L'Argentine
+        - content: Argentine  
+    additional:
+        info: 3-1 en finale contre les Pays-Bas.
+  status: approved
+  isHardcore: false
+  categories:
+  - sport
+  types:
+  - classic
+  tags:
+  - football
+  - fifa_world_cup
+  - pays
+- content: Pour quelle île, Tino Rossi a-t-il chanté son amour ?
+  answer:
+    answers:
+      qcm:
+        - content: La Sardaigne
+          is_good_answer: false
+        - content: La Corse
+          is_good_answer: true
+        - content: La Sicile
+          is_good_answer: false
+        - content: La Crête
+          is_good_answer: false
+      input:
+        - content: La Corse
+          errorAllowedCount: 0
+        - content: Corse
+          errorAllowedCount: 0
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - ile
+  - chanson_francaise
+- content: Quel pays s'appelait autrefois le Bechuanaland ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Botswana
+          is_good_answer: true
+        - content: Le Sierra Leone
+          is_good_answer: false
+        - content: Le Nigeria
+          is_good_answer: false
+        - content: Le Burkina Faso
+          is_good_answer: false
+      input:
+        - content: Le Botswana
+        - content: Botswana
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - afrique
+  - pays
+- content: Qui pris la suite de Joseph Staline à la tête du parti communiste d'URSS ?
+  answer:
+    answers:
+      qcm:
+        - content: Léonid Brejnev
+          is_good_answer: false
+        - content: Mikhaïl Gorbatchev
+          is_good_answer: false
+        - content: Iouri Andropov
+          is_good_answer: false
+        - content: Nikita Khrouchtchev
+          is_good_answer: true
+      input:
+        - content: Nikita Khrouchtchev
+          errorAllowedCount: 2
+        - content: Khrouchtchev
+          errorAllowedCount: 2   
+        - content: Khrushchev
+        - content: Nikita Khrushchev 
+    additional:
+      response_media:
+        info: Du 14 septembre 1953 au 14 octobre 1964
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - urss
+  - 20_eme_siecle
+  - communisme
+- content: Quel fleuve se dispute le titre de "fleuve le plus long" avec le Nil ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Amazone
+          is_good_answer: true
+        - content: Yangzi Jiang (fleuve bleu)
+          is_good_answer: false
+        - content: Mississippi
+          is_good_answer: false
+        - content: Mékong
+          is_good_answer: false
+      input:
+        - content: L'Amazone
+        - content: Amazone
+        - content: Le fleuve Amazone
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: La longueur d'un cours d'eau dépend de l'identification de sa source, c'est cet élément qui fait débat depuis plus d'un siècle.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - fleuve
+- content: Quelle ville des États-Unis a été ravagée par un séisme en 1906
+  answer:
+    answers:
+      qcm:
+        - content: Atlantic City
+          is_good_answer: false
+        - content: La Nouvelle-Orléans
+          is_good_answer: false
+        - content: San Francisco
+          is_good_answer: true
+        - content: Los Angeles
+          is_good_answer: false
+      input:
+        - content: San Francisco  
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - amerique_nord
+  - usa
+  - ville
+  - catastrophe_naturelle
+- content: Quelle "merveille" des "sept Merveilles du monde antique", pouvez-vous encore visiter ?
+  answer:
+    answers:
+      qcm:
+        - content: La pyramide de Khéops
+          is_good_answer: true
+        - content: Le temple d'Artémis
+          is_good_answer: false
+        - content: Le colosse de Rhodes
+          is_good_answer: false
+        - content: Le mausolée d'Halicarnasse
+          is_good_answer: false
+      input:
+        - content: La pyramide de Khéops
+        - content: Pyramide de Khéops
+        - content: Grande pyramide de Gizeh
+        - content: La grande pyramide de Gizeh
+    additional:
+      response_media:
+        info: C'est aussi la "merveille" la plus ancienne.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - egypte
+  - antiquite
+  - monument
+- content: Quel single peut être considéré comme le premier "hit" des Beatles ?
+  answer:
+    answers:
+      qcm:
+        - content: Yesterday
+          is_good_answer: false
+        - content: Come Together
+          is_good_answer: false
+        - content: (I Can't Get No) Satisfaction
+          is_good_answer: false
+        - content: Please Please Me
+          is_good_answer: true
+      input:
+        - content: Please Please Me
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_britannique
+  - beatles
+- content: Au large de quel pays Européen trouve-t-on l'île de Santorin ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Italie
+          is_good_answer: false
+        - content: La Grèce
+          is_good_answer: false
+        - content: La France
+          is_good_answer: false
+        - content: La Croatie
+          is_good_answer: false
+      input:
+        - content: La Grèce
+          errorAllowedCount: 0
+        - content: Grèce
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - ile
+  - pays
+  - mediterranee
+- content: Combien d'étoiles trouve-t-on sur le drapeau de la Chine ?
+  answer:
+    answers:
+      qcm:
+        - content: 1
+          is_good_answer: false
+        - content: 3
+          is_good_answer: false
+        - content: 5
+          is_good_answer: true
+        - content: 10
+          is_good_answer: false
+      input:
+        - content: 5
+          errorAllowedCount: 0  
+        - content: Cinq
+          errorAllowedCount: 0
+        - content: 5 étoiles
+          errorAllowedCount: 0
+    additional:
+      response_media:
+        url: http://example.com/calculatrice.png
+        info: La grande étoile symbolise le parti communiste chinois, les petites représentent les classes sociales du peuple chinois selon Mao.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  - divers
+  types:
+  - classic
+  tags:
+  - asie
+  - chine
+  - communisme
+  - drapeau
+- content: Quel gentilé donne-t-on aux habitants des Bouches-Du-Rhône ?
+  answer:
+    answers:
+      qcm:
+        - content: Bucco-rhonéen
+          is_good_answer: false
+        - content: Bucco-rhodanien
+          is_good_answer: true
+        - content: Bucco-rhodanéen
+          is_good_answer: false
+        - content: Bucco-rhodénien
+          is_good_answer: false
+      input:
+        - content: Bucco-rhodanien
+        - content: Bucco rhodanien 
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - gentile
+  - departement
+- content: Quel monument protège selon les locaux, la ville de Marseille ?
+  answer:
+    answers:
+      qcm:
+        - content: La basilique Notre-Dame-de-la-Garde
+          is_good_answer: true
+        - content: Le stade Vélodrome
+          is_good_answer: false
+        - content: Le palais du Pharo
+          is_good_answer: false
+        - content: Le fort Saint-Jean
+          is_good_answer: false
+      input:
+        - content: La basilique Notre-Dame-de-la-Garde
+        - content: La basilique Notre Dame de la Garde
+        - content: Notre-Dame-de-la-Garde
+        - content: Notre Dame de la Garde
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - marseille
+  - monument
+- content: De quelle pays est originaire la garde chargée de la sécurité du Pape ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Italie
+          is_good_answer: false
+        - content: La Suisse
+          is_good_answer: true
+        - content: L'Espagne
+          is_good_answer: false
+        - content: L'Andorre
+          is_good_answer: false
+      input:
+        - content: La Suisse
+          errorAllowedCount: 0
+        - content: Suisse
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: Fondée le 22 janvier 1506 sur ordre de Jules II.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - vatican
+  - pays
+  - religion
+  - catholicisme
+  - armee
+- content: Comment appelle-t-on la succession d'anses et de criques que l'on peut trouver dans le sud de la France ?
+  answer:
+    answers:
+      qcm:
+        - content: La grande baie
+          is_good_answer: false
+        - content: Les anses
+          is_good_answer: false
+        - content: Les bassins
+          is_good_answer: false
+        - content: Les calanques
+          is_good_answer: true
+      input:
+        - content: Les calanques
+        - content: Calanques
+        - content: Les calanques de Marseille
+        - content: Calanques de Marseille
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - marseille
+- content: Dans quel pays a eu lieu le tournage de la trilogie du Seigneur des anneaux ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Irlande
+          is_good_answer: false
+        - content: La Nouvelle-Zélande
+          is_good_answer: true
+        - content: L'Islande
+          is_good_answer: false
+        - content: La Pologne
+          is_good_answer: false
+      input:
+        - content: La Nouvelle-Zélande
+        - content: La Nouvelle Zélande
+        - content: Nouvelle-Zélande
+        - content: Nouvelle Zélande
+        - content: En Nouvelle-Zélande
+        - content: En Nouvelle Zélande
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  #- cinema
+  types:
+  - classic
+  tags:
+  - oceanie
+  - pays
+  - lotr
+- content: Quel pays faut-il visiter pour contempler le Salto Ángel ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Vénézuéla
+          is_good_answer: true
+        - content: La Bolivie
+          is_good_answer: false
+        - content: Le Paraguay
+          is_good_answer: false
+        - content: L'Argentine
+          is_good_answer: false
+      input:
+        - content: Le Vénézuéla
+        - content: Vénézuéla
+    additional:
+      response_media:
+        info: Le Salto Ángel est la plus haute chute d'eau du monde, avec une hauteur de 979 m.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - amerique_sud
+- content: Quelle ville Italienne se situe à proximité du Vésuve ?
+  answer:
+    answers:
+      qcm:
+        - content: Catane
+          is_good_answer: false
+        - content: Bari
+          is_good_answer: false
+        - content: Rome
+          is_good_answer: false
+        - content: Naples
+          is_good_answer: true
+      input:
+        - content: Naples
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - italie
+  - ville
+  - volcan
+- content: Quel pays abrite le temple d'Angkor ?
+  answer:
+    answers:
+      qcm:
+        - content: La Thaïlande
+          is_good_answer: false
+        - content: Le Cambodge
+          is_good_answer: true
+        - content: Le Vietnam
+          is_good_answer: false
+        - content: Le Laos
+          is_good_answer: false
+      input:
+        - content: Le Cambodge
+        - content: Cambodge
+        - content: Au Cambodge 
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - asie
+  - pays
+  - monument
+- content: Dans les roches de quel pays la cité antique de Petra a-t-elle été taillée ?
+  answer:
+    answers:
+      qcm:
+        - content: La Jordanie
+          is_good_answer: true
+        - content: Israël
+          is_good_answer: false
+        - content: L'Égypte
+          is_good_answer: false
+        - content: La Turquie
+          is_good_answer: false
+      input:
+        - content: La Jordanie
+        - content: Jordanie
+        - content: De la Jordanie
+    additional:
+      response_media:
+        info: Fondée vers la fin du VIIIe siècle av. J.-C., par les Édomites.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  - geographie
+  types:
+  - classic
+  tags:
+  - asie
+  - jordanie
+  - monument
+- content: Dans quel pays se trouve le Kilimandjaro ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Malawi
+          is_good_answer: false
+        - content: Le Tchad
+          is_good_answer: false
+        - content: La Namibie
+          is_good_answer: false
+        - content: La Tanzanie
+          is_good_answer: true
+      input:
+        - content: La Tanzanie
+        - content: Tanzanie
+        - content: En Tanzanie
+    additional:
+      response_media:
+        info: Ses 3 962 mètres d'altitude en font le point culminant de l'Afrique.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - afrique
+  - pays
+  - montagne
+- content: Hormis la France, où peut-on trouver des "Alpes du Sud" ?
+  answer:
+    answers:
+      qcm:
+        - content: En Suisse
+          is_good_answer: false
+        - content: En Autriche
+          is_good_answer: false
+        - content: En Nouvelle-Zélande
+          is_good_answer: true
+        - content: Au Kenya
+          is_good_answer: false
+      input:
+        - content: En Nouvelle-Zélande
+        - content: En Nouvelle Zélande
+        - content: Nouvelle-Zélande
+        - content: Nouvelle Zélande
+        - content: La Nouvelle-Zélande
+        - content: La Nouvelle Zélande
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - oceanie
+  - montagne
+- content: Dans quelle ville peut-on trouver statue représentant un enfant urinant à la vue de tous ?
+  answer:
+    answers:
+      qcm:
+        - content: Bruxelles
+          is_good_answer: true
+        - content: Stockholm
+          is_good_answer: false
+        - content: Amsterdam
+          is_good_answer: false
+        - content: Londres
+          is_good_answer: false
+      input:
+        - content: Bruxelles
+        - content: Ville de Bruxelles   
+    additional:
+        info: Le Manneken-Pis.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  #- arts
+  types:
+  - classic
+  tags:
+  - europe
+  - belgique
+  - ville
+  - statue
+- content: Dans quelle région française se trouverait la mythique forêt de Brocéliande ?
+  answer:
+    answers:
+      qcm:
+        - content: En Aquitaine
+          is_good_answer: false
+        - content: En Normandie
+          is_good_answer: false
+        - content: En Bretagne
+          is_good_answer: true
+        - content: En Bourgogne
+          is_good_answer: false
+      input:
+        - content: En Bretagne
+        - content: Bretagne
+        - content: La Bretagne
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - region
+  - foret
+- content: Dans quelle ville d'Europe la Cour pénale internationale a-t-elle élu domicile ?
+  answer:
+    answers:
+      qcm:
+        - content: Paris
+          is_good_answer: false
+        - content: Strasbourg
+          is_good_answer: false
+        - content: Vienne
+          is_good_answer: false
+        - content: La Haye
+          is_good_answer: true
+      input:
+        - content: La Haye
+        - content: à La Haye   
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  #- politique-citoyennete
+  types:
+  - classic
+  tags:
+  - europe
+  - pays-bas
+  - ville
+  - droit
+- content: Si vous êtes au Stade de France, dans quelle ville vous trouvez-vous ?
+  answer:
+    answers:
+      qcm:
+        - content: À Bagneux
+          is_good_answer: true
+        - content: À Nanterre
+          is_good_answer: false
+        - content: À Saint-Denis
+          is_good_answer: true
+        - content: À Paris
+          is_good_answer: false
+      input:
+        - content: À Saint-Denis
+        - content: À Saint Denis
+        - content: Saint-Denis
+        - content: Saint Denis
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  - sport
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - ville
+  - monument
+- content: Quel pays est le berceau du shintoïsme ?
+  answer:
+    answers:
+      qcm:
+        - content: La Corée du Sud
+          is_good_answer: false
+        - content: Le Japon
+          is_good_answer: true
+        - content: L'Inde
+          is_good_answer: false
+        - content: Le Népal
+          is_good_answer: false
+      input:
+        - content: Le Japon
+          errorAllowedCount: 0 
+        - content: Japon
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - asie
+  - pays
+  - religion
+  - shintoisme
+- content: Les deux principales variétés de café sont l'arabica et ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Liberica
+          is_good_answer: false
+        - content: Le Robusta
+          is_good_answer: true
+        - content: L'Indica
+          is_good_answer: false
+        - content: Le Caribica
+          is_good_answer: false
+      input:
+        - content: Le Robusta
+        - content: Robusta
+        - content: Le Canephora
+        - content: Canephora   
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - vegetal
+  - cuisine
+- content: Quelle ville a servi de modèle d'urbanisme à Washington ? 
+  answer:
+    answers:
+      qcm:
+        - content: Atlantic City
+          is_good_answer: false
+        - content: Paris
+          is_good_answer: true
+        - content: Londres
+          is_good_answer: false
+        - content: Dublin
+          is_good_answer: false
+      input:
+        - content: Paris
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - usa
+  - ville
+- content: Quel désert couvre une partie de la Mongolie et de la Chine ?
+  answer:
+    answers:
+      qcm:
+        - content: Le désert de Gobi
+          is_good_answer: true
+        - content: Le désert du Thar
+          is_good_answer: false
+        - content: Le désert d'Atacama
+          is_good_answer: false
+        - content: Le désert du Karakoum
+          is_good_answer: false
+      input:
+        - content: Le désert de Gobi
+          errorAllowedCount: 0  
+        - content: Désert de Gobi
+          errorAllowedCount: 0  
+        - content: Gobi
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - asie
+  - chine
+  - mongolie
+  - desert
+- content: Quel animal endémique de l'Australie retrouve-t-on sur ses armoiries ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Ornithorynque
+          is_good_answer: false
+        - content: Le Koala
+          is_good_answer: false
+        - content: Le Wombat
+          is_good_answer: false
+        - content: Le Kangourou
+          is_good_answer: true
+      input:
+        - content: Le Kangourou
+        - content: Kangourou
+        - content: Un Kangourou
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - oceanie
+  - australie
+  - animal
+- content: Dans quelle ville se trouve La Sagrada Familia ?
+  answer:
+    answers:
+      qcm:
+        - content: Lisbonne
+          is_good_answer: false
+        - content: Barcelone
+          is_good_answer: true
+        - content: Porto
+          is_good_answer: false
+        - content: Séville
+          is_good_answer: false
+      input:
+        - content: Barcelone
+        - content: À Barcelone  
+    additional:
+      response_media:
+        info: Antoni Gaudí entama sa construction en 1882.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - espagne
+  - monument
+  - ville
+- content: Dans quelle ville a été ouvert le premier Hard Rock Café en 1971 ?
+  answer:
+    answers:
+      qcm:
+        - content: Birmingham
+          is_good_answer: false
+        - content: Los Angeles
+          is_good_answer: false
+        - content: Londres
+          is_good_answer: true
+        - content: Seattle
+          is_good_answer: false
+      input:
+        - content: Londres
+          errorAllowedCount: 0
+        - content: À Londres
+          errorAllowedCount: 0 
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - europe
+  - uk
+  - ville
+- content: Dans quel pays la Meuse prends sa source ?
+  answer:
+    answers:
+      qcm:
+        - content: La Belgique
+          is_good_answer: false
+        - content: Les Pays-Bas
+          is_good_answer: false
+        - content: L'Allemagne
+          is_good_answer: false
+        - content: La France
+          is_good_answer: true
+      input:
+        - content: La France
+          errorAllowedCount: 0   
+        - content: France
+          errorAllowedCount: 0   
+        - content: En France
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: Avant de finalement se jeter dans la mer du Nord.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - pays
+  - fleuve
+- content: Dans quelle mer se jette le Nil ?
+  answer:
+    answers:
+      qcm:
+        - content: La mer Rouge
+          is_good_answer: false
+        - content: La mer Morte
+          is_good_answer: false
+        - content: La mer d'Arabie
+          is_good_answer: false
+        - content: La Méditerranée
+          is_good_answer: true
+      input:
+        - content: La Méditerranée
+        - content: Dans la Méditerranée
+        - content: La mer Méditerranée
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - afrique
+  - europe
+  - egypte
+  - mer
+  - fleuve
+- content: Dans quelle région d'Italie se trouve Turin ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Piémont
+          is_good_answer: true
+        - content: La Toscane
+          is_good_answer: false
+        - content: L'Émilie-Romagne
+          is_good_answer: false
+        - content: La Lombardie
+          is_good_answer: false
+      input:
+        - content: Le Piémont
+        - content: Piemont
+        - content: Dans le Piémont
+    additional:
+      response_media:
+        info: Turin en est même la capitale.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - italie
+  - region
+- content: Dans quel département trouve-t-on la ville de Fort-de-France ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Île-de-France
+          is_good_answer: false
+        - content: La Provence-Alpes-Côte d'Azur
+          is_good_answer: false
+        - content: La Martinique
+          is_good_answer: true
+        - content: La Guadeloupe
+          is_good_answer: false
+      input:
+        - content: La Martinique
+          errorAllowedCount: 0
+        - content: Martinique
+          errorAllowedCount: 0
+        - content: En Martinique
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: La préfecture du département.
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - departement
+  - caraibes
+- content: À proximité de quelle ville le centre spatial guyanais est-il installé ?
+  answer:
+    answers:
+      qcm:
+        - content: Cayenne
+          is_good_answer: false
+        - content: Pointe-à-Pitre
+          is_good_answer: false
+        - content: Kourou
+          is_good_answer: true
+        - content: Saint-François
+          is_good_answer: false
+      input:
+        - content: À Kourou
+        - content: Kourou
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - amerique_sud
+  - france
+  - guyane
+  - ville
+- content: Que signifie un "V" inversé sur une carte ?
+  answer:
+    answers:
+      qcm:
+        - content: Une montagne
+          is_good_answer: false
+        - content: Un camping
+          is_good_answer: true
+        - content: Une aire d'autoroute
+          is_good_answer: false
+        - content: Un panorama
+          is_good_answer: false
+      input:
+        - content: Un camping
+          errorAllowedCount: 0
+        - content: camping
+          errorAllowedCount: 0 
+        - content: Le camping
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  types:
+  - classic
+  tags:
+  - cartographie
+  - symbole
+- content: Que doit-on briser à la fin d'un mariage juif ?
+  answer:
+    answers:
+      qcm:
+        - content: Une assiette
+          is_good_answer: false
+        - content: Un verre
+          is_good_answer: true
+        - content: Une hanoukkia
+          is_good_answer: false
+        - content: Une horloge
+          is_good_answer: false
+      input:
+        - content: Un verre
+          errorAllowedCount: 0 
+        - content: Verre
+          errorAllowedCount: 0 
+        - content: Le verre
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: Le rituel du bris de verre.
+  status: approved
+  isHardcore: false
+  categories:
+  - divers
+  #- societe
+  types:
+  - classic
+  tags:
+  - religion
+  - judaisme
+  - mariage
+- content: Quel canal relie entre eux les océans Atlantique et Pacifique ?
+  answer:
+    answers:
+      qcm:
+        - content: Le canal de Suez
+          is_good_answer: false
+        - content: Le canal de Panama
+          is_good_answer: true
+        - content: Le canal de Kiel
+          is_good_answer: false
+        - content: Le canal d'Elblag
+          is_good_answer: false
+      input:
+        - content: Canal de Panama
+          errorAllowedCount: 0  
+        - content: Le canal de Panama
+          errorAllowedCount: 0  
+        - content: Panama
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - amerique_nord
+  - ocean
+- content: Un seul comté du Royaume-Uni possède deux côtes, lequel ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Derbyshire
+          is_good_answer: false
+        - content: L'Essex
+          is_good_answer: false
+        - content: Le Kent
+          is_good_answer: false
+        - content: Le Devon
+          is_good_answer: true
+      input:
+        - content: Le Devon
+          errorAllowedCount: 0  
+        - content: Devon
+          errorAllowedCount: 0            
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - uk
+  - departement
+- content: Quelle détroit sépare Istanbul en deux ?
+  answer:
+    answers:
+      qcm:
+        - content: Le détroit des Dardanelles
+          is_good_answer: false
+        - content: Le détroit de Béring
+          is_good_answer: false
+        - content: Le détroit de Malacca
+          is_good_answer: false
+        - content: Le détroit du Bosphore
+          is_good_answer: true
+      input:
+        - content: Le détroit du Bosphore
+        - content: Détroit du Bosphore
+        - content: Bosphore
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - asie
+  - turquie
+  - detroit
+- content: Quel pays d'Europe est le plus montagneux ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Autriche
+          is_good_answer: false
+        - content: La Roumanie
+          is_good_answer: false
+        - content: La Suisse
+          is_good_answer: false
+        - content: L'Andorre
+          is_good_answer: false
+      input:
+        - content: La Suisse
+          errorAllowedCount: 0    
+        - content: Suisse
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - geographie
+  types:
+  - classic
+  tags:
+  - europe
+  - pays
+  - montagne
+  
+  

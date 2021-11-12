@@ -1,0 +1,1295 @@
+---
+- content: Dans le film "Jean-Philippe", de qui Fabrice Luchini est-il fan ?
+  answer:
+    answers:
+      qcm:
+        - content: Plastic Bertrand
+          is_good_answer: false
+        - content: M
+          is_good_answer: false
+        - content: Johnny Hallyday
+          is_good_answer: false
+        - content: Calogero
+          is_good_answer: false
+      input:
+        - content: Johnny Hallyday
+        - content: De Johnny Hallyday
+        - content: Hallyday
+        - content: De Hallyday
+        - content: Johnny
+        - content: De Johnny
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  #- cinema
+  types:
+  - classic
+  tags:
+  - personnalite
+  - chanteur
+- content: Qui interprète le single "Petite Soeur" en 2005 ?
+  answer:
+    answers:
+      qcm:
+        - content: Amel Bent
+          is_good_answer: false
+        - content: Sheryfa Luna
+          is_good_answer: false
+        - content: Lââm
+          is_good_answer: true
+        - content: Vitaa
+          is_good_answer: false
+      input:
+        - content: Lââm
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - personnalite
+  - chanson_francaise
+  - rnb
+- content: Quel est le premier single de l'album 13'Organisé ?
+  answer:
+    answers:
+      qcm:
+        - content: Bande organisée
+          is_good_answer: true
+        - content: L'Étoile sur le maillot 
+          is_good_answer: false
+        - content: Je suis Marseille
+          is_good_answer: false
+        - content: War Zone
+          is_good_answer: false
+      input:
+        - content: Bande organisée 
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_francaise
+  - france
+  - rap
+- content: Quel groupe britannique évoque-t-on lorsque que l'on parle des frères Gallagher ?
+  answer:
+    answers:
+      qcm:
+        - content: The Who
+          is_good_answer: false
+        - content: Oasis
+          is_good_answer: true
+        - content: Black Sabbath
+          is_good_answer: false
+        - content: The Verve
+          is_good_answer: false
+      input:
+        - content: Oasis
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_britannique
+  - uk
+  - groupe_musique
+  - rock
+- content: À qui doit-on "Sonate au Clair de Lune" ?
+  answer:
+    answers:
+      qcm:
+        - content: Johannes Brahms
+          is_good_answer: false
+        - content: Ludwig van Beethoven
+          is_good_answer: false
+        - content: Jean-Sébastien Bach
+          is_good_answer: false
+        - content: Wolfgang Amadeus Mozart
+          is_good_answer: false
+      input:
+        - content: Beethoven
+        - content: Ludwig van Beethoven
+        - content: van Beethoven
+        - content: À Beethoven
+        - content: À Ludwig van Beethoven
+        - content: À van Beethoven  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - musique_classique
+  - personnalite
+- content: Quelle chanteuse nous "laisse le reste" en 2021 ?
+  answer:
+    answers:
+      qcm:
+        - content: Angèle
+          is_good_answer: false
+        - content: Anne Sila
+          is_good_answer: false
+        - content: Zaz
+          is_good_answer: false
+        - content: Clara Luciani
+          is_good_answer: true
+      input:
+        - content: Clara Luciani
+        - content: Luciani
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_francaise
+  - personnalite
+  - pop
+  - chanteur
+- content: Qui interprète "Sexual Healing" ?
+  answer:
+    answers:
+      qcm:
+        - content: Barry White
+          is_good_answer: false
+        - content: Marvin Gaye
+          is_good_answer: true
+        - content: James Brown
+          is_good_answer: false
+        - content: Stevie Wonder
+          is_good_answer: false
+      input:
+        - content: Marvin Gaye
+        - content: Gaye  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_americaine
+  - soul
+  - personnalite
+  - usa
+  - chanteur
+- content: Quel américain a produit les albums "Off The Wall", "Thriller" et "Bad" de Michael Jackson ?
+  answer:
+    answers:
+      qcm:
+        - content: Phil Spector
+          is_good_answer: false
+        - content: Dr. Dre
+          is_good_answer: false
+        - content: Quincy Jones
+          is_good_answer: true
+        - content: Clive Davis
+          is_good_answer: false
+      input:
+        - content: Quincy Jones
+        - content: Jones
+          errorAllowedCount: 0
+        - content: Quincy Delight Jones Jr.  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - producteur_musique
+  - usa
+  - personnalite
+  - chanson_americaine
+- content: De quelle couleur les Rolling Stones veulent peindre cette porte rouge ?
+  answer:
+    answers:
+      qcm:
+        - content: En rose
+          is_good_answer: true
+        - content: En noir
+          is_good_answer: false
+        - content: En blanc
+          is_good_answer: false
+        - content: En bleu
+          is_good_answer: false
+      input:
+        - content: En noir
+        - content: Noir
+        - content: Noire
+        - content: Le noir
+        - content: Black   
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_britannique
+  - uk
+  - rock
+- content: Quel rappeur est mort dans d'étranges circonstances à Las Vegas en 1996 ?
+  answer:
+    answers:
+      qcm:
+        - content: Notorious B.I.G
+          is_good_answer: false
+        - content: Big L
+          is_good_answer: false
+        - content: Big Punisher
+          is_good_answer: false
+        - content: 2Pac
+          is_good_answer: true
+      input:
+        - content: 2Pac
+        - content: Tupac
+        - content: Tupac Shakur
+        - content: Tupac Amaru Shakur
+        - content: Lesane Parish Crooks  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_americaine
+  - usa
+  - chanteur
+  - rap
+- content: De quel pays est originaire la musique raga ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Inde
+          is_good_answer: true
+        - content: La Jamaïque
+          is_good_answer: false
+        - content: Le Brésil
+          is_good_answer: false
+        - content: L'Australie
+          is_good_answer: false
+      input:
+        - content: Inde
+        - content: L'Inde
+        - content: De l'Inde
+        - content: République de l'Inde
+        - content: La république de l'Inde
+        - content: De la république de l'Inde  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - genre_musical
+  - pays
+- content: De quel pays est originaire la musique ragga ?
+  answer:
+    answers:
+      qcm:
+        - content: L'Inde
+          is_good_answer: false
+        - content: La Jamaïque
+          is_good_answer: true
+        - content: Le Brésil
+          is_good_answer: false
+        - content: L'Australie
+          is_good_answer: false
+      input:
+        - content: Jamaïque
+        - content: La Jamaïque
+        - content: De la Jamaïque
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - genre_musical
+  - pays
+- content: Quel chanteuse se fait connaître via TikTok avec son titre "Anissa" ?
+  answer:
+    answers:
+      qcm:
+        - content: Aya Nakamura
+          is_good_answer: false
+        - content: Wejdene
+          is_good_answer: true
+        - content: Marwa Loud
+          is_good_answer: false
+        - content: Eva
+          is_good_answer: false
+      input:
+        - content: Wejdene
+        - content: Wejdene Chaïb   
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_française
+  - personnalite
+  - france
+  - chanteur
+  - rnb
+- content: Quel influenceur sort son premier album "Double V" en 2017 ?
+  answer:
+    answers:
+      qcm:
+        - content: mistermv
+          is_good_answer: false
+        - content: Valouzz
+          is_good_answer: false
+        - content: Vilbrequin
+          is_good_answer: false
+        - content: Mister V
+          is_good_answer: true
+      input:
+        - content: Mister V
+        - content:  Yvick Letexier   
+  status: approved
+  isHardcore: false
+  categories:
+  - internet
+  - musique
+  types:
+  - classic
+  tags:
+  - personnalite
+  - influenceur
+  - chanson_francaise
+  - rap
+- content: Quel nom donnait-on aux danseuses qui accompagnaient Claude François lors de ses prestations ?
+  answer:
+    answers:
+      qcm:
+        - content: Les Fléchettes
+          is_good_answer: false
+        - content: Les Claudettes
+          is_good_answer: true
+        - content: Les Mignonnes
+          is_good_answer: false
+        - content: Les Mauviettes
+          is_good_answer: false
+      input:
+        - content: Les Claudettes
+        - content: Claudettes
+        - content: Les Clodettes
+        - content: Clodettes
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_francaise
+  - danse
+  - variete_francaise
+- content: Quel groupe sort "Radioactive" en 2012 ?
+  answer:
+    answers:
+      qcm:
+        - content: Coldplay
+          is_good_answer: false
+        - content: Maroon 5
+          is_good_answer: false
+        - content: Imagine Dragons
+          is_good_answer: true
+        - content: U2
+          is_good_answer: false
+      input:
+        - content: Imagine Dragons   
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - groupe_musique
+  - pop
+  - rock
+- content: Quel chanteur se voyait déjà en haut de l'affiche, en dix fois plus gros que n'importe qui ?
+  answer:
+    answers:
+      qcm:
+        - content: Lomepal
+          is_good_answer: false
+        - content: Charles Aznavour
+          is_good_answer: true
+        - content: Michel Sardou
+          is_good_answer: false
+        - content: Jacques Brel
+          is_good_answer: false
+      input:
+        - content: Charles Aznavour
+        - content: Aznavour
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_francaise
+  - france
+  - chanteur
+  - personnalite
+  - variete_francaise
+- content: Quel artiste sort l'album "Cyborg" en 2016 ?
+  answer:
+    answers:
+      qcm:
+        - content: Booba
+          is_good_answer: false
+        - content: Ninho
+          is_good_answer: false
+        - content: Orelsan
+          is_good_answer: false
+        - content: Nekfeu
+          is_good_answer: true
+      input:
+        - content: Nekfeu
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_francaise
+  - france
+  - chanteur
+  - rap
+  - personnalite
+- content: Qui est le leader du groupe Dire Straits ?
+  answer:
+    answers:
+      qcm:
+        - content: Liam Gallagher
+          is_good_answer: false
+        - content: Jim Morrison
+          is_good_answer: false
+        - content: Jimmy Page
+          is_good_answer: false
+        - content: Mark Knopfler
+          is_good_answer: false
+      input:
+        - content: Mark Knopfler
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - groupe_musique
+  - personnalite
+  - chanteur
+- content: Par quel compositeur l'opéra "La Traviata" a-t-il été composé ?
+  answer:
+    answers:
+      qcm:
+        - content: Antonio Vivaldi
+          is_good_answer: false
+        - content: Giuseppe Verdi
+          is_good_answer: true
+        - content: Georg Friedrich Haendel
+          is_good_answer: false
+        - content: Richard Wagner
+          is_good_answer: false
+      input:
+        - content: Giuseppe Verdi
+        - content: Verdi
+        - content: Par Giuseppe Verdi
+        - content: Par Verdi
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - opera
+  - compositeur
+  - europe
+  - personnalite
+- content: Qui a composé la majorité des thèmes de la saga Star Wars ?
+  answer:
+    answers:
+      qcm:
+        - content: Hans Zimmer
+          is_good_answer: false
+        - content: Ennio Morricone
+          is_good_answer: false
+        - content: Yuki Hayashi
+          is_good_answer: false
+        - content: John Williams
+          is_good_answer: true
+      input:
+        - content: John Williams
+        - content: Williams
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  #- cinema
+  types:
+  - classic
+  tags:
+  - compositeur
+  - ost
+  - star_wars
+- content: Quel nom donnait-on à la troupe de musiciens accompagnant Bob Marley pendant sa carrière ?
+  answer:
+    answers:
+      qcm:
+        - content: E Street Band
+          is_good_answer: false
+        - content: The Revolutionaries
+          is_good_answer: false
+        - content: Shot in the Dark
+          is_good_answer: false
+        - content: The Wailers
+          is_good_answer: true
+      input:
+        - content: The Wailers
+        - content: Les Wailers
+        - content: Wailers  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - groupe_musique
+  - reggae
+- content: Quel groupe est considéré comme le pionnier du cloud rap en France ?
+  answer:
+    answers:
+      qcm:
+        - content: Djadja & Dinaz
+          is_good_answer: false
+        - content: PNL
+          is_good_answer: true
+        - content: DTF
+          is_good_answer: false
+        - content: MMZ
+          is_good_answer: false
+      input:
+        - content: PNL
+        - content: Peace N' Lovés
+        - content: Peace N'Lovés   
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - groupe_musique
+  - france
+  - rap
+- content: Quel titre de l'album "Hybrid Theory" est considéré comme le premier succès mondial de Linkin Park ?
+  answer:
+    answers:
+      qcm:
+        - content: Crawling
+          is_good_answer: false
+        - content: Somewhere I Belong
+          is_good_answer: false
+        - content: Numb
+          is_good_answer: false
+        - content: In the End
+          is_good_answer: true
+      input:
+        - content: In the End
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_americaine
+  - groupe_musique
+  - nu-metal
+  - rock
+- content: Quel DJ français sort "Rock This Party" en featuring avec Big Ali en 2006 ?
+  answer:
+    answers:
+      qcm:
+        - content: Martin Solveig
+          is_good_answer: false
+        - content: David Guetta
+          is_good_answer: false
+        - content: Bob Sinclar
+          is_good_answer: true
+        - content: Joachim Garraud
+          is_good_answer: false
+      input:
+        - content: Bob Sinclar
+        - content: Sinclar
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - personnalite
+  - dj
+  - france
+- content: Dans quelle chanson Yannick Noah incite les gens à préserver la planète ?
+  answer:
+    answers:
+      qcm:
+        - content: Ose
+          is_good_answer: false
+        - content: Les Lionnes
+          is_good_answer: false
+        - content: Aux arbres citoyens
+          is_good_answer: true
+        - content: Simon Papa Tara
+          is_good_answer: false
+      input:
+        - content: Aux arbres citoyens
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_francaise
+  - france
+  - ecologie
+- content: De quel groupe Angus Young est-il le guitariste ?
+  answer:
+    answers:
+      qcm:
+        - content: AC/DC
+          is_good_answer: true
+        - content: Metallica
+          is_good_answer: false
+        - content: Pink Floyd
+          is_good_answer: false
+        - content: Led Zeppelin
+          is_good_answer: false
+      input:
+        - content: AC/DC
+          errorAllowedCount: 0    
+        - content: ACDC
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - groupe_musique
+  - rock
+- content: Dans la bande originale de quel film peut-on entendre "Push it to the Limit" ?
+  answer:
+    answers:
+      qcm:
+        - content: Casino
+          is_good_answer: false
+        - content: Ocean's Eleven
+          is_good_answer: false
+        - content: Scarface
+          is_good_answer: true
+        - content: Donnie Brasco
+          is_good_answer: false
+      input:
+        - content: Scarface
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+   #- cinema
+  types:
+  - classic
+  tags:
+  - ost
+  - film
+- content: De qui "Back to Black" est-il le deuxieme et dernier album ?
+  answer:
+    answers:
+      qcm:
+        - content: Daft Punk
+          is_good_answer: false
+        - content: 2Pac
+          is_good_answer: false
+        - content: Amy Winehouse
+          is_good_answer: true
+        - content: AC/DC
+          is_good_answer: false
+      input:
+        - content: Amy Winehouse
+        - content: D'Amy Winehouse
+        - content: De Amy Winehouse
+        - content: Winehouse
+        - content: De Winehouse
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - album_musical
+  - chanteur
+  - personnalite
+- content: Quel artiste français a enregistré le plus grand nombre d'albums studios ?
+  answer:
+    answers:
+      qcm:
+        - content: Francis Cabrel
+          is_good_answer: false
+        - content: Charles Aznavour
+          is_good_answer: false
+        - content: Jacques Dutronc
+          is_good_answer: false
+        - content: Johnny Hallyday
+          is_good_answer: true
+      input:
+        - content: Johnny Hallyday
+        - content: Johnny
+        - content: Hallyday 
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - france
+  - chanteur
+  - personnalite
+  - chanson_francaise
+  - record
+- content: Avec quel groupe Phil Collins a-t-il connu un succès international ?
+  answer:
+    answers:
+      qcm:
+        - content: Genesis
+          is_good_answer: true
+        - content: King Crimson
+          is_good_answer: false
+        - content: Journey
+          is_good_answer: false
+        - content: 'Yes'
+          is_good_answer: false
+      input:
+        - content: Genesis
+        - content: Avec Genesis
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - groupe_musique
+  - chanson_britannique
+  - rock
+- content: Sur quel album des Black Eyed Peas trouve-t-on les singles "Hey Mama", "Shut up" ou "Let's Get It Started" ?
+  answer:
+    answers:
+      qcm:
+        - content: The END
+          is_good_answer: false
+        - content: Elephunk
+          is_good_answer: true
+        - content: Monkey Business
+          is_good_answer: false
+        - content: The Beginning
+          is_good_answer: false
+      input:
+        - content: Elephunk
+        - content: Sur Elephunk
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - musique_americaine
+  - album_musical
+  - pop
+  - rap
+- content: Quelle note de musique est la première ?
+  answer:
+    answers:
+      qcm:
+        - content: Sol
+          is_good_answer: false
+        - content: Do
+          is_good_answer: true
+        - content: Si
+          is_good_answer: false
+        - content: Mi
+          is_good_answer: false
+      input:
+        - content: Do
+        - content: Le do   
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - solfege
+- content: Quel artiste américain indissociable de son harmonica, a remporté le prix Nobel de littérature en 2016 ?
+  answer:
+    answers:
+      qcm:
+        - content: Johnny Cash
+          is_good_answer: false
+        - content: Prince
+          is_good_answer: false
+        - content: Greg Szlapczynski
+          is_good_answer: false
+        - content: Bob Dylan
+          is_good_answer: true
+      input:
+        - content: Bob Dylan
+        - content: Dylan
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  - divers
+  types:
+  - classic
+  tags:
+  - chanson_americaine
+  - personnalite
+  - chanteur
+- content: Quel groupe de metal américain est essentiellement composé de membres d'origine arménienne ?
+  answer:
+    answers:
+      qcm:
+        - content: Korn
+          is_good_answer: false
+        - content: Slipknot
+          is_good_answer: false
+        - content: System of a Down
+          is_good_answer: true
+        - content: Rage against the Machine
+          is_good_answer: false
+      input:
+        - content: System of a Down   
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - groupe_musique
+  - usa
+  - chanson_americaine
+  - metal
+- content: De quel artiste "Levels" et "Seek Bromance" sont des titres ? 
+  answer:
+    answers:
+      qcm:
+        - content: Lady Gaga
+          is_good_answer: false
+        - content: Rihanna
+          is_good_answer: false
+        - content: Avicii
+          is_good_answer: true
+        - content: Jimmy Sommerville
+          is_good_answer: false
+      input:
+        - content: Avicii
+        - content: Tim Berg
+        - content: Tom Hangs
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - dj
+  - house
+  - personnalite
+- content: Quel groupe de rap français scande "Gloire à l'art de rue" en 2001 ?
+  answer:
+    answers:
+      qcm:
+        - content: IAM
+          is_good_answer: false
+        - content: Fonky Family
+          is_good_answer: true
+        - content: Arsenik
+          is_good_answer: false
+        - content: Scred Connexion
+          is_good_answer: false
+      input:
+        - content: Fonky Family
+        - content: La Fonky Family
+        - content: FF
+        - content: La FF
+        - content: F.F
+        - content: La F.F
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - rap
+  - groupe_musique
+  - france
+  - chanson_francaise
+- content: Quelle artiste a déclaré avoir un alter-ego du nom de Sasha Fierce ?
+  answer:
+    answers:
+      qcm:
+        - content: Beyoncé
+          is_good_answer: true
+        - content: Britney Spears
+          is_good_answer: false
+        - content: Katy Perry
+          is_good_answer: false
+        - content: Billy Eilish
+          is_good_answer: false
+      input:
+        - content: Beyoncé
+        - content: Beyoncé Knowles  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - pop
+  - personnalite
+  - chanson_americaine
+  - chanteur
+- content: Qui interprète "I don't care" avec Justin Bieber en 2019 ?
+  answer:
+    answers:
+      qcm:
+        - content: Justin Timberlake
+          is_good_answer: false
+        - content: Shawn Mendes
+          is_good_answer: false
+        - content: The Weeknd
+          is_good_answer: false
+        - content: Ed Sheeran
+          is_good_answer: true
+      input:
+        - content: Ed Sheeran  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - personnalite
+  - chanteur
+- content: Quel DJ a composé le titre dubstep « Bangarang » ? 
+  answer:
+    answers:
+      qcm:
+        - content: Skrillex
+          is_good_answer: true
+        - content: Diplo
+          is_good_answer: false
+        - content: Madeon
+          is_good_answer: false
+        - content: Deadmau5
+          is_good_answer: false
+      input:
+        - content: Skrillex  
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - dj
+  - personnalite
+  - dubstep
+  - chanson_americaine
+- content: Quel chanteur interprète en featuring avec Alicia Keys le titre « My boo » en 2004 ?
+  answer:
+    answers:
+      qcm:
+        - content: Chris Brown
+          is_good_answer: false
+        - content: Akon
+          is_good_answer: false
+        - content: Usher
+          is_good_answer: true
+        - content: Jason Derulo
+          is_good_answer: false
+      input:
+        - content: Usher
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanteur
+  - personnalite
+  - rnb
+  - chanson_americaine
+- content: Les lacs de quelle région ont été chanté par Michel Sardou ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Poitou
+          is_good_answer: false
+        - content: La Lombardie
+          is_good_answer: false
+        - content: Le Michigan
+          is_good_answer: false
+        - content: Le Connemara
+          is_good_answer: true
+      input:
+        - content: Le Connemara
+        - content: Connemara
+        - content: Les lacs du Connemara
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  - geographie
+  types:
+  - classic
+  tags:
+  - region
+  - chanson_francaise
+  - variete_francaise
+- content: Quel single est considéré comme le premier tube de l’été en France ?
+  answer:
+    answers:
+      qcm:
+        - content: Macarena
+          is_good_answer: false
+        - content: La Lambada
+          is_good_answer: true
+        - content: Suavemente
+          is_good_answer: false
+        - content: Aserejé (The Ketchup Song)
+          is_good_answer: false
+      input:
+        - content: La Lambada
+        - content: Lambada
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  #- societe
+  types:
+  - classic
+  tags:
+  - pop
+  - tube_ete
+- content: De quel groupe Jacob Desvarieux était-il membre ?
+  answer:
+    answers:
+      qcm:
+        - content: La compagnie créole
+          is_good_answer: false
+        - content: Zouk Machine
+          is_good_answer: false
+        - content: Kassav
+          is_good_answer: true
+        - content: Experience 7
+          is_good_answer: false
+      input:
+        - content: Kassav
+        - content: De Kassav
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_francaise
+  - groupe_musique
+  - zouk
+- content: Quel album est considéré comme le premier classique de la trap française ?
+  answer:
+    answers:
+      qcm:
+        - content: Or Noir
+          is_good_answer: true
+        - content: Lunatic
+          is_good_answer: false
+        - content: My World
+          is_good_answer: false
+        - content: Capitale du crime 4
+          is_good_answer: false
+      input:
+        - content: Or Noir
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - rap
+  - album_musical
+  - chanson_francaise
+- content: De quel instrument joue Julien Doré ?
+  answer:
+    answers:
+      qcm:
+        - content: Le banjo
+          is_good_answer: false
+        - content: La mandoline
+          is_good_answer: false
+        - content: Le ukulélé
+          is_good_answer: true
+        - content: Le luth
+          is_good_answer: false
+      input:
+        - content: Ukulélé
+        - content: Le Ukulélé
+        - content: Un Ukulélé
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - instrument_musique
+  - chanson_francaise
+- content: Comment appelle-t-on un court motif sonore utilisé comme signature musicale d’une marque ou d’une émission ?
+  answer:
+    answers:
+      qcm:
+        - content: Un générique
+          is_good_answer: false
+        - content: Un riff
+          is_good_answer: false
+        - content: Un gimmick
+          is_good_answer: false
+        - content: Un jingle
+          is_good_answer: true
+      input:
+        - content: Un jingle
+        - content: Jingle
+        - content: Le jingle
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  - divers
+  types:
+  - classic
+  tags:
+  - television
+  - ost
+- content: Quel label de musique fondé par Berry Gordy a signé des artistes comme Michael Jackson , Marvin Gaye ou Stevie Wonder ?
+  answer:
+    answers:
+      qcm:
+        - content: Motown
+          is_good_answer: true
+        - content: Interscope records
+          is_good_answer: false
+        - content: Def Jam recordings
+          is_good_answer: false
+        - content: Atlantic records
+          is_good_answer: false
+      input:
+        - content: Motown
+        - content: La Motown
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - chanson_americaine
+  - label_musical
+- content: Quel groupe suédois remporte l’Eurovision en 1974 avec Waterloo ?
+  answer:
+    answers:
+      qcm:
+        - content: A-ha
+          is_good_answer: false
+        - content: ABBA
+          is_good_answer: true
+        - content: Alphaville
+          is_good_answer: false
+        - content: Rednex
+          is_good_answer: false
+      input:
+        - content: ABBA
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  types:
+  - classic
+  tags:
+  - eurovision
+  - groupe_musique
+- content: Quel phénomène de mode du milieu des années 2000 se distinguait par le port de vêtements fluos et de crête punk ?
+  answer:
+    answers:
+      qcm:
+        - content: Le hardstyle
+          is_good_answer: false
+        - content: Le boho-chic
+          is_good_answer: false
+        - content: La tecktonik
+          is_good_answer: true
+        - content: Le new punk
+          is_good_answer: false
+      input:
+        - content: La tecktonik
+        - content: Tecktonik
+  status: approved
+  isHardcore: false
+  categories:
+  - musique
+  #- societe
+  types:
+  - classic
+  tags:
+  - genre_musical
+  - societal
+  - danse

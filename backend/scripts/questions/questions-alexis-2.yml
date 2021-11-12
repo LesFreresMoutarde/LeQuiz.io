@@ -1,0 +1,1428 @@
+---
+- content: Quel roi de France autorise en 1598, la pratique de la religion protestante ?
+  answer:
+    answers:
+      qcm:
+        - content: Henri IV
+          is_good_answer: true
+        - content: Louis XI
+          is_good_answer: false
+        - content: Louis XVI
+          is_good_answer: false
+        - content: François II
+          is_good_answer: false
+      input:
+        - content: Henri IV
+        - content: Henri 4
+        - content: Henri de Bourbon
+        - content: Henri III de Navarre    
+    additional:
+      response_media:
+        info: Par l'Édit de Nantes.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - monarque
+  - personnalite
+  - bourbon
+  - 16_eme_siecle
+- content: Par quel ministre l'école fut-elle rendu obligatoire en 1882 pour les enfants de 6 à 13 ans.
+  answer:
+    answers:
+      qcm:
+        - content: Victor Hugo
+          is_good_answer: false
+        - content: Léon Gambetta
+          is_good_answer: false
+        - content: Jules Ferry
+          is_good_answer: true
+        - content: Aristide Briand
+          is_good_answer: false
+      input:
+        - content: Jules Ferry
+        - content: Ferry
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - personnalite
+  - troisieme_republique
+  - 19_eme_siecle
+- content: Le schisme de 1054 consacre la séparation de L'Église catholique et de ...
+  answer:
+    answers:
+      qcm:
+        - content: L'Église orthodoxe
+          is_good_answer: true
+        - content: L'Église protestante
+          is_good_answer: false
+        - content: L'Église anglicane
+          is_good_answer: false
+        - content: Judaïsme (du)
+          is_good_answer: false
+      input:
+        - content: L'Église orthodoxe
+        - content: Les orthodoxes
+        - content: L'Orthodoxie
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - religion
+  - christianisme
+  - 11_eme_siecle
+- content: Quel pape fut à l'origine de la première croisade ?
+  answer:
+    answers:
+      qcm:
+        - content: Pie V
+          is_good_answer: false
+        - content: Urbain II
+          is_good_answer: true
+        - content: Calixte II
+          is_good_answer: false
+        - content: Gregoire III
+          is_good_answer: false
+      input:
+        - content: Urbain II
+        - content: Urbain 2  
+    additional:
+      response_media:
+        info: L'appel de Clermont, 1095.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - religion
+  - catholicisme
+  - pape
+  - 11_eme_siecle
+- content: Quel nom donnait-on à Paris dans l'Antiquité ?
+  answer:
+    answers:
+      qcm:
+        - content: Parisii
+          is_good_answer: false
+        - content: Alésia
+          is_good_answer: false
+        - content: Lutèce
+          is_good_answer: true
+        - content: Lugdunum
+          is_good_answer: false
+      input:
+        - content: Lutèce
+          errorAllowedCount: 0      
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - paris
+  - antiquite
+  - ville
+- content: Quel est le plus grand château de la Loire ?
+  answer:
+    answers:
+      qcm:
+        - content: Chambord
+          is_good_answer: true
+        - content: Amboise
+          is_good_answer: false
+        - content: Chenonceau
+          is_good_answer: false
+        - content: Chinon
+          is_good_answer: false
+      input:
+        - content: Chambord
+        - content: Le château de Chambord
+        - content: Château de Chambord  
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - monument
+- content: Quel "livre programme" écrit par Adolf Hitler a été publié en 1925 ?
+  answer:
+    answers:
+      qcm:
+        - content: Gedanken und Erinnerungen
+          is_good_answer: false
+        - content: Phänomenologie des Geistes
+          is_good_answer: false
+        - content: Mein Kampf
+          is_good_answer: true
+        - content: Über das Pathos der Wahrheit
+          is_good_answer: false
+      input:
+        - content: Mein Kampf
+        - content: Mon combat
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: Mon combat en français.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - allemagne
+  - 20_eme_siecle
+- content: À quelle religion Clovis I s'était-il converti ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Judaïsme
+          is_good_answer: false
+        - content: Le Christianisme
+          is_good_answer: true
+        - content: L'Arianisme
+          is_good_answer: false
+        - content: Le Paganisme
+          is_good_answer: false
+      input:
+        - content: Le Christianisme
+        - content: Christianisme
+        - content: Le Catholicisme
+        - content: Catholicisme
+    additional:
+      response_media:
+        info: Le baptême a eu lieu entre 496 et 506 selon les historiens.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - religion
+  - 5_eme_siecle
+  - monarque
+- content: Lors des guerres de Religion du XVIème siècle, quelle communauté fut persécutée ?
+  answer:
+    answers:
+      qcm:
+        - content: Les protestants
+          is_good_answer: true
+        - content: Les catholiques
+          is_good_answer: false
+        - content: Les orthodoxes
+          is_good_answer: false
+        - content: Les juifs
+          is_good_answer: false
+      input:
+        - content: Les protestants
+        - content: Protestants
+        - content: La communauté protestante
+        - content: Le Protestantisme
+        - content: Protestantisme 
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - religion
+  - guerre
+  - 16_eme_siecle
+- content: Quel siècle est celui de la Révolution industrielle en France ?
+  answer:
+    answers:
+      qcm:
+        - content: Le XXème
+          is_good_answer: false
+        - content: Le XVIIIème
+          is_good_answer: false
+        - content: Le XIXème
+          is_good_answer: false
+        - content: Le XXIème
+          is_good_answer: false
+      input:
+        - content: Le XIXème
+          errorAllowedCount: 0   
+        - content: Le XIXème siècle
+          errorAllowedCount: 0   
+        - content: Le 19ème siècle
+          errorAllowedCount: 0
+        - content: XIXème
+          errorAllowedCount: 0   
+        - content: XIXème siècle
+          errorAllowedCount: 0   
+        - content: 19ème siècle
+          errorAllowedCount: 0
+        - content: Au XIXème
+          errorAllowedCount: 0   
+        - content: Au XIXème siècle
+          errorAllowedCount: 0   
+        - content: Au 19ème siècle
+          errorAllowedCount: 0
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - revolution
+- content: Dans quel pays actuel, les Étrusques se sont-ils installés vers 900 avant J-C ?
+  answer:
+    answers:
+      qcm:
+        - content: La Turquie
+          is_good_answer: false
+        - content: La Grèce
+          is_good_answer: false
+        - content: La Croatie
+          is_good_answer: false
+        - content: L'Italie
+          is_good_answer: true
+      input:
+        - content: L'Italie
+          errorAllowedCount: 0 
+        - content: Italie
+          errorAllowedCount: 0 
+        - content: En Italie
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - antiquite
+  - peuple
+- content: Quel peuple est l'inventeur du tonneau ? 
+  answer:
+    answers:
+      qcm:
+        - content: Les Wisigoth
+          is_good_answer: false
+        - content: Les Gaulois
+          is_good_answer: true
+        - content: Les Romains
+          is_good_answer: false
+        - content: Les Ostrogoths
+          is_good_answer: false
+      input:
+        - content: Les Gaulois
+          errorAllowedCount: 0 
+        - content: Gaulois
+          errorAllowedCount: 0 
+        - content: Peuple Gaulois
+          errorAllowedCount: 0 
+        - content: Le peuple Gaulois
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - peuple
+  - antiquite
+- content: En 1066, l'Angleterre fut conquise. Par quel peuple ?
+  answer:
+    answers:
+      qcm:
+        - content: Les Romains
+          is_good_answer: false
+        - content: Les Francs
+          is_good_answer: false
+        - content: Les Alamans
+          is_good_answer: false
+        - content: Les Normands
+          is_good_answer: true
+      input:
+        - content: Les Normands
+          errorAllowedCount: 0
+        - content: Normands
+          errorAllowedCount: 0
+        - content: Normand
+          errorAllowedCount: 0
+        - content: Le peuple Normand
+          errorAllowedCount: 0
+        - content: Peuple Normand
+          errorAllowedCount: 0
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - uk
+  - 11_eme_siecle
+  - peuple
+- content: Quel monarque dirigeait la France sous le Second Empire ?
+  answer:
+    answers:
+      qcm:
+        - content: Louis-Philippe I
+          is_good_answer: false
+        - content: Napoléon III
+          is_good_answer: true
+        - content: Napoléon I
+          is_good_answer: false
+        - content: Louis XVIII
+          is_good_answer: false
+      input:
+        - content: Napoléon III
+          errorAllowedCount: 0 
+        - content: Louis-Napoléon Bonaparte
+        - content: Napoléon 3
+          errorAllowedCount: 0    
+    additional:
+      response_media:
+        info: De 1852 à 1870, le dernier monarque de l'histoire de France.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - monarque
+  - second_empire
+  - 19_eme_siecle
+- content: Quel est le nom de la caraque sur laquelle Christophe Colomb a traversé l'Atlantique en 1492 ?
+  answer:
+    answers:
+      qcm:
+        - content: La Santa María
+          is_good_answer: true
+        - content: La Victoria
+          is_good_answer: false
+        - content: Le São Martinão
+          is_good_answer: false
+        - content: La Niña
+          is_good_answer: false
+      input:
+        - content: Santa María
+        - content: Santa-María
+        - content: La Santa María
+        - content: La Santa-María
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - espagne
+  - 15_eme_siecle
+  - bateau
+- content: De quel homme politique français parle-t-on quand on évoque "le Tigre" ?
+  answer:
+    answers:
+      qcm:
+        - content: Philippe Pétain
+          is_good_answer: false
+        - content: Jean Jaurès
+          is_good_answer: false
+        - content: Léon Blum
+          is_good_answer: false
+        - content: Georges Clemenceau
+          is_good_answer: true
+      input:
+        - content: Georges Clemenceau
+        - content: Clemenceau
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - personnalite
+  - 19_eme_siecle
+  - 20_eme_siecle
+- content: Qui était la déesse grecque de l'Amour et de la Beauté ?
+  answer:
+    answers:
+      qcm:
+        - content: Vénus
+          is_good_answer: false
+        - content: Artémis
+          is_good_answer: false
+        - content: Aphrodite
+          is_good_answer: true
+        - content: Hestia
+          is_good_answer: false
+      input:
+        - content: Aphrodite
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - grece
+  - mythologie
+  - antiquite
+  - divinite
+- content: Comment appelait-on, jusqu'en 1917, les empereurs russes ?
+  answer:
+    answers:
+      qcm:
+        - content: Les Doges
+          is_good_answer: false
+        - content: Les Tsars
+          is_good_answer: true
+        - content: Les Grand-ducs
+          is_good_answer: false
+        - content: Les Jarls
+          is_good_answer: false
+      input:
+        - content: Les Tsars
+          errorAllowedCount: 0  
+        - content: Tsars
+          errorAllowedCount: 0  
+        - content: Le Tsar
+          errorAllowedCount: 0  
+        - content: Tsar
+          errorAllowedCount: 0    
+    type: image/png
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - russie
+- content: Quelle ville arrive tout en haut du classement des lieux saints de l'Islam ?
+  answer:
+    answers:
+      qcm:
+        - content: Médine
+          is_good_answer: false
+        - content: La Mecque
+          is_good_answer: true
+        - content: Jérusalem
+          is_good_answer: false
+        - content: Damas
+          is_good_answer: false
+      input:
+        - content: La Mecque   
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - asie
+  - religion
+  - ville
+  - islam
+- content: Sous quel autre nom connait-on Charles I le Grand ?
+  answer:
+    answers:
+      qcm:
+        - content: Charlemagne
+          is_good_answer: true
+        - content: Clovis
+          is_good_answer: false
+        - content: Charles Martel
+          is_good_answer: false
+        - content: Childéric I
+          is_good_answer: false
+      input:
+        - content: Charlemagne
+        - content: Carolus Magnus
+        - content: Karolus Magnus
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - personnalite
+  - monarque
+- content: Quelle époque vient après le paléolithique ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Néolithique
+          is_good_answer: false
+        - content: L'Âge du bronze
+          is_good_answer: false
+        - content: L'Âge du fer
+          is_good_answer: false
+        - content: Le Mésolitique
+          is_good_answer: true
+      input:
+        - content: Le Néolitique
+        - content: Néolithique   
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - prehistoire
+- content: Quelle profession exercait Vasco de Gama ?
+  answer:
+    answers:
+      qcm:
+        - content: Astronome
+          is_good_answer: false
+        - content: Officier militaire
+          is_good_answer: false
+        - content: Navigateur
+          is_good_answer: true
+        - content: Médecin
+          is_good_answer: false
+      input:
+        - content: Navigateur
+        - content: Navigation
+        - content: La navigation
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - portugal
+  - 15_eme_siecle
+  - 16_eme_siecle
+- content: En quelle année Adolf Hitler accède-t-il au pouvoir en Allemagne ?
+  answer:
+    answers:
+      qcm:
+        - content: En 1929
+          is_good_answer: false
+        - content: En 1933
+          is_good_answer: true
+        - content: En 1941
+          is_good_answer: false
+        - content: En 1938
+          is_good_answer: false
+      input:
+        - content: 1933
+          errorAllowedCount: 0
+        - content: En 1933
+          errorAllowedCount: 0    
+  isHardcore: false
+  status: approved
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - allemagne
+  - nazisme
+  - 20_eme_siecle
+- content: Qui est ce prêtre français qui lança, en février 1954, un appel à la solidarité ?
+  answer:
+    answers:
+      qcm:
+        - content: Urbain Grandier
+          is_good_answer: false
+        - content: Michel Bonnet
+          is_good_answer: false
+        - content: L'abbé Pierre
+          is_good_answer: true
+        - content: Frère Jacques
+          is_good_answer: false
+      input:
+        - content: L'abbé Pierre
+        - content: Abbé Pierre
+        - content: Marie Joseph Henri Grouès   
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - religion
+  - christianisme
+  - catholicisme
+  - personnalite
+- content: Quelle cité grècque vainquit Athènes lors de la guerre du Péloponnèse ?
+  answer:
+    answers:
+      qcm:
+        - content: Corinthe
+          is_good_answer: false
+        - content: Troie
+          is_good_answer: false
+        - content: Sparte
+          is_good_answer: true
+        - content: Samos
+          is_good_answer: false
+      input:
+        - content: Sparte
+        - content: La cité de Sparte
+        - content: Les spartiates
+        - content: Spartiates  
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - grece
+  - antiquite
+  - guerre
+- content: Quelle période succède au "Premier Empire" ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Second Empire
+          is_good_answer: false
+        - content: La Restauration
+          is_good_answer: true
+        - content: La Troisième République
+          is_good_answer: false
+        - content: Le Consulat
+          is_good_answer: false
+      input:
+        - content: La Restauration
+        - content: Restauration   
+    additional:
+      response_media:
+        info: Louis XVIII monte sur le trône.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - 19_eme_siecle
+- content: Quel moine Allemand publie ses "95 Thèses" qui conduiront à la fondation du Protestantisme ?
+  answer:
+    answers:
+      qcm:
+        - content: Ulrich Zwingli
+          is_good_answer: false
+        - content: Martin Luther
+          is_good_answer: true
+        - content: Nicolas Copernic
+          is_good_answer: false
+        - content: Érasme
+          is_good_answer: false
+      input:
+        - content: Martin Luther
+        - content: Luther
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - allemagne
+  - religion
+  - protestantisme
+- content: Quelle base navale américaine est démolie par l'aviation Japonaise en 1941 ?
+  answer:
+    answers:
+      qcm:
+        - content: Iwo Jima
+          is_good_answer: false
+        - content: Pearl Harbor
+          is_good_answer: false
+        - content: Guam
+          is_good_answer: false
+        - content: Norfolk
+          is_good_answer: false
+      input:
+        - content: Pearl Harbor
+        - content: Le Pearl Harbor
+        - content: La base du Pearl Harbor
+        - content: La base navale du Pearl Harbor
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - amerique_nord
+  - ww2
+  - 20_eme_siecle
+  - guerre
+  - armee
+  - japon
+- content: George W. Bush accède à la Maison-Blanche en 2001, qui était son prédecesseur ?
+  answer:
+    answers:
+      qcm:
+        - content: Bill Clinton
+          is_good_answer: true
+        - content: George H. W. Bush
+          is_good_answer: false
+        - content: Ronald Reagan
+          is_good_answer: false
+        - content: Jimmy Carter
+          is_good_answer: false
+      input:
+        - content: Bill Clinton
+        - content: Clinton  
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - amerique_nord
+  - usa
+  - president
+  - personnalite
+- content: Qui traversa les Alpes à dos d'éléphant en 218 av. J.-C. afin d'en découdre avec Rome ?
+  answer:
+    answers:
+      qcm:
+        - content: Charlemagne
+          is_good_answer: false
+        - content: Tamerlan
+          is_good_answer: false
+        - content: Attila
+          is_good_answer: false
+        - content: Hannibal Barca
+          is_good_answer: false
+      input:
+        - content: Hannibal
+        - content: Hannibal Barca
+        - content: Annibal
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - italie
+  - antiquite
+  - carthage
+- content: Quelle tapisserie relate la conquête de l'Angleterre par Guillaume le Conquérant en 1066 ?
+  answer:
+    answers:
+      qcm:
+        - content: La tapisserie de Baldishol
+          is_good_answer: false
+        - content: La tapisserie de Bayeux
+          is_good_answer: true
+        - content: La tapisserie des Cerfs ailés
+          is_good_answer: false
+        - content: La tapisserie de l'Union
+          is_good_answer: false
+      input:
+        - content: La tapisserie de Bayeux
+        - content: Tapisserie de Bayeux
+        - content: De Bayeux
+        - content: Bayeux
+        - content: La tapisserie de la reine Mathilde
+        - content: Tapisserie de la reine Mathilde
+        - content: De la reine Mathilde
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  #- arts
+  types:
+  - classic
+  tags:
+  - europe
+  - uk
+  - oeuvre
+  - 11_eme_siecle
+- content: À la cour mérovingienne, qui est le plus haut dignitaire du royaume juste après le roi ?
+  answer:
+    answers:
+      qcm:
+        - content: L'intendant du roi
+          is_good_answer: false
+        - content: Le maire du palais
+          is_good_answer: true
+        - content: Le boyard
+          is_good_answer: false
+        - content: Le chambellan
+          is_good_answer: false
+      input:
+        - content: Le maire du palais
+        - content: Maire du palais
+    additional:
+      response_media:
+        url: Le plus célèbre est Charles Martel.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - merovingiens
+- content: Quel autre nom donne-t-on à l'Empire romain d'Orient
+  answer:
+    answers:
+      qcm:
+        - content: L'Empire achéménide
+          is_good_answer: false
+        - content: L'Empire séleucide
+          is_good_answer: false
+        - content: L'Empire byzantin
+          is_good_answer: true
+        - content: Le Saint-Empire
+          is_good_answer: false
+      input:
+        - content: L'Empire byzantin
+        - content: Empire byzantin
+        - content: Byzantin
+        - content: Byzance
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - asie
+  - rome
+  - empire
+- content: Quel pays formait avec l'Allemagne et l'Italie, la "Triple Alliance" lors de la première guerre mondiale ?
+  answer:
+    answers:
+      qcm:
+        - content: La Bulgarie
+          is_good_answer: false
+        - content: La Russie
+          is_good_answer: false
+        - content: Le Japon
+          is_good_answer: false
+        - content: L'Autriche-Hongrie
+          is_good_answer: true
+      input:
+        - content: L'Autriche-Hongrie
+        - content: Autriche-Hongrie
+        - content: L'Autriche Hongrie
+        - content: Autriche Hongrie
+        - content: L'Empire d'Autriche-Hongrie
+        - content: L'Empire austro-hongrois
+        - content: Empire d'Autriche-Hongrie
+        - content: Empire austro-hongrois
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  - name_cat_2
+  types:
+  - classic
+  tags:
+  - europe
+  - pays
+  - 20_eme_siecle
+  - guerre
+  - ww1
+- content: Quel syndicat s'opposa, dans les années 80, au régime communiste de la Pologne ? 
+  answer:
+    answers:
+      qcm:
+        - content: Maïdan
+          is_good_answer: false
+        - content: Solidarność
+          is_good_answer: true
+        - content: Glasnost
+          is_good_answer: false
+        - content: Charte 77
+          is_good_answer: false
+      input:
+        - content: Solidarność  
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - pologne
+  - communisme
+  - 20_eme_siecle
+- content: Commment appelle-t-on les billets émis pendant la Révolution française ?
+  answer:
+    answers:
+      qcm:
+        - content: Les billets de monnoye
+          is_good_answer: false
+        - content: Les florins
+          is_good_answer: false
+        - content: Les liards
+          is_good_answer: false
+        - content: Les assignats
+          is_good_answer: true
+      input:
+        - content: Les Assignats
+        - content: Assignats
+        - content: Assignat
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - economie
+  - 18_eme_siecle
+- content: Dans quelle ville française logeaient les antipapes lors du Grand schisme d'Occident ?
+  answer:
+    answers:
+      qcm:
+        - content: Paris
+          is_good_answer: false
+        - content: Chartres
+          is_good_answer: false
+        - content: Avignon
+          is_good_answer: true
+        - content: Lourdes
+          is_good_answer: false
+      input:
+        - content: Avignon
+        - content: À Avignon 
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - ville
+  - 14_eme_siecle
+  - religion
+  - christianisme
+  - catholicisme
+- content: Qui était la femme du roi guillotiné ?
+  answer:
+    answers:
+      qcm:
+        - content: Marguerite de France
+          is_good_answer: false
+        - content: Marie-Antoinette d'Autriche
+          is_good_answer: true
+        - content: Catherine de Médicis
+          is_good_answer: false
+        - content: Anne d'Autriche
+          is_good_answer: false
+      input:
+        - content: Marie-Antoinette
+        - content: Marie Antoinette
+        - content: Marie-Antoinette d'Autriche
+        - content: Marie Antoinette d'Autriche
+        - content: Marie-Antoinette de Hasbbourg-Lorraine
+        - content: Marie Antoinette de Hasbbourg-Lorraine
+    additional:
+      response_media:
+        info: Elle partagera le même sort que son mari, le roi Louis XVI.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - autriche
+  - 18_eme_siecle
+  - personnalite
+  - monarque
+- content: Qui fut sacré empereur le 2 décembre 1804 ?
+  answer:
+    answers:
+      qcm:
+        - content: Alexandre I
+          is_good_answer: false
+        - content: Mahmoud II
+          is_good_answer: false
+        - content: Napoléon I
+          is_good_answer: true
+        - content: Napoléon III
+          is_good_answer: false
+      input:
+        - content: Napoléon I
+        - content: Napoléon Bonaparte
+        - content: Napoléon
+        - content: Bonaparte
+  isHardcore: false
+  status: approved
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - 19_eme_siecle
+  - personnalite
+  - monarque
+- content: En quelle année a été proclamée la première république française ?
+  answer:
+    answers:
+      qcm:
+        - content: 1789
+          is_good_answer: false
+        - content: 1804
+          is_good_answer: false
+        - content: 1792
+          is_good_answer: true
+        - content: 1848
+          is_good_answer: false
+      input:
+        - content: 1792
+          errorAllowedCount: 0
+        - content: En 1792
+          errorAllowedCount: 0    
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - 18_eme_siecle
+  - revolution
+- content: Quel roi subit une lourde défaite en 778 à la bataille de Ronceveaux ?
+  answer:
+    answers:
+      qcm:
+        - content: Hugues Capet
+          is_good_answer: false
+        - content: Charlemagne
+          is_good_answer: true
+        - content: Lothaire
+          is_good_answer: false
+        - content: Louis V
+          is_good_answer: false
+      input:
+        - content: Charlemagne
+        - content: Charles I
+        - content: Charles le Grand
+        - content: Charles I le Grand
+    additional:
+      response_media:
+        info: Il deviendra "Empereur d'Occident" en 800.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - monarque
+  - personnalite
+  - 8eme_siecle
+  - guerre
+- content: Dans quelle région historique, la civilisation sumérienne, s'est-elle dévelopée ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Caucase
+          is_good_answer: false
+        - content: La Judée
+          is_good_answer: false
+        - content: La Ruthénie
+          is_good_answer: false
+        - content: La Mésopotamie
+          is_good_answer: true
+      input:
+        - content: La Mésopotamie
+        - content: En Mésopotamie
+        - content: Mésopotamie
+        - content: Sumer
+        - content: Au Sumer
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - asie
+  - antiquite
+  - region
+- content: Comment nomme-t-on, le phénomène de migration massive, des campagnards vers les villes ?
+  answer:
+    answers:
+      qcm:
+        - content: L'exode rural
+          is_good_answer: true
+        - content: La désertification
+          is_good_answer: false
+        - content: l'exil champêtre
+          is_good_answer: false
+        - content: La désertion rurale
+          is_good_answer: false
+      input:
+        - content: L'exode rural
+        - content: Exode rural
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  #-politique-citoyennete 
+  types:
+  - classic
+  tags:
+  - societal
+- content: Selon la légende, Rome a été fondée par deux frères, Rémus et ...
+  answer:
+    answers:
+      qcm:
+        - content: Ralus
+          is_good_answer: false
+        - content: Rodemus
+          is_good_answer: false
+        - content: Rumus
+          is_good_answer: false
+        - content: Romulus
+          is_good_answer: true
+      input:
+        - content: Romulus
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - rome
+  - antiquite
+- content: Quelle région de France fut cédée aux Vikings au Xème siècle ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Nord
+          is_good_answer: false
+        - content: La Bretagne
+          is_good_answer: false
+        - content: La Normandie
+          is_good_answer: true
+        - content: L'Aquitaine
+          is_good_answer: false
+      input:
+        - content: La Normandie
+        - content: Normandie   
+    additional:
+      response_media:
+        info: Normand = Homme du nord.
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - france
+  - 10_eme_siecle
+  - region
+  - vikings
+- content: Quelle surnom donne-t-on à la première phase de la Seconde Guerre mondiale ?
+  answer:
+    answers:
+      qcm:
+        - content: La drôle de guerre
+          is_good_answer: true
+        - content: Le calme avant la tempête
+          is_good_answer: false
+        - content: La guerre fantôme
+          is_good_answer: false
+        - content: La fausse guerre
+          is_good_answer: false
+      input:
+        - content: La drôle de guerre
+        - content: Drôle de guerre
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - ww2
+  - guerre
+  - 20_eme_siecle
+- content: Comment surnommait-on Mao Zedong ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Guide suprême
+          is_good_answer: false
+        - content: Le père des peuples
+          is_good_answer: false
+        - content: Le Grand Timonier
+          is_good_answer: true
+        - content: Le Tigre du Jiang Dong
+          is_good_answer: false
+      input:
+        - content: Le Grand Timonier
+        - content: Grand Timonier    
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - asie
+  - chine
+  - communisme
+  - 20_eme_siecle
+- content: Dans quelle ville se trouvait la capitale de L'empire de Charlemagne ?
+  answer:
+    answers:
+      qcm:
+        - content: Paris
+          is_good_answer: false
+        - content: Reims
+          is_good_answer: false
+        - content: Salzsbourg
+          is_good_answer: false
+        - content: Aix-la-Chapelle
+          is_good_answer: true
+      input:
+        - content: Aix-la-Chapelle
+        - content: Aix la Chapelle
+        - content: À Aix-la-Chapelle
+        - content: À Aix la Chapelle
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - allemagne
+  - ville
+  - empire
+- content: Dans quelle ville américaine a été assassiné John Fitzgerald Kennedy en 1963 ?
+  answer:
+    answers:
+      qcm:
+        - content: Memphis
+          is_good_answer: false
+        - content: Indianapolis
+          is_good_answer: false
+        - content: Dallas
+          is_good_answer: true
+        - content: Santa Monica
+          is_good_answer: false
+      input:
+        - content: Dallas
+        - content: À Dallas  
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - amerique_nord
+  - usa
+  - ville
+  - 20_eme_siecle
+- content: Comment s'appelait les fortifications construites par les romains aux frontières de leur empire ?
+  answer:
+    answers:
+      qcm:
+        - content: Le Scutum Romanus
+          is_good_answer: false
+        - content: Les Limes
+          is_good_answer: true
+        - content: Les Remparts Éternels
+          is_good_answer: false
+        - content: Le Civilis Terminus
+          is_good_answer: false
+      input:
+        - content: Les Limes
+        - content: Limes
+  status: approved
+  isHardcore: false
+  categories:
+  - histoire
+  types:
+  - classic
+  tags:
+  - europe
+  - rome
+  - antiquite
