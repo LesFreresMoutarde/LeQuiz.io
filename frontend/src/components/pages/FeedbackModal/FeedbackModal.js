@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import ApiUtil from "../../../util/ApiUtil";
 import {app} from "../../App";
+import QuitCross from "../../misc/QuitCross";
 
 const FeedbackModal = ({closeModal}) => {
 
@@ -38,9 +39,12 @@ const FeedbackModal = ({closeModal}) => {
             <div className="feedback-modal"
                  onClick={(e) => {e.stopPropagation()}}
             >
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
-                    <p style={{fontSize: '1.4em', marginBottom: 20}}>Feedback</p>
-                    <button type="button" onClick={() => closeModal()}>X</button>
+                <div className="feedback-modal-close-cross-container">
+                    <QuitCross onClick={closeModal} />
+                </div>
+
+                <div className="feedbacl-modal-title">
+                    Feedback
                 </div>
 
                 <div style={{marginBottom: 20}}>
