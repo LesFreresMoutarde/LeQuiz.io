@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {app} from "../../App";
 import ApiUtil from "../../../util/ApiUtil";
 import AuthUtil from "../../../util/AuthUtil";
+import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 
 const Contact = () => {
 
@@ -28,6 +29,10 @@ const Contact = () => {
         if (app.state.user) fetchEmail()
 
     }, [])
+
+    useEffect(() => {
+        app.showBackArrow(true, ON_CLICK_GO_BACK);
+    }, []);
 
     const formElements = {
         'username': {label: 'nom d \'utilisateur', value: username},
@@ -79,13 +84,13 @@ const Contact = () => {
     }
 
     return (
-        <>
-            <a href="/">Home</a>
+        <div className="text-center">
             <h1 className="mb">{title}</h1>
-            <form onSubmit={(e) => submitForm(e)}>
+            <form id="contact-form" onSubmit={(e) => submitForm(e)}>
                 <div className="mb">
                     <input type="text"
-                           placeholder="nom d'utilisateur"
+                           className="full-width"
+                           placeholder="Nom d'utilisateur"
                            value={username}
                            onChange={(e) => setUsername(e.target.value)}
                            autoFocus={!app.state.user}
@@ -94,7 +99,8 @@ const Contact = () => {
                 </div>
                 <div className="mb">
                     <input type="email"
-                           placeholder="adresse email"
+                           className="full-width"
+                           placeholder="Adresse email"
                            value={email}
                            onChange={(e) => setEmail(e.target.value)}
                            readOnly={fetchedEmail}
@@ -102,24 +108,26 @@ const Contact = () => {
                 </div>
                 <div className="mb">
                     <input type="text"
-                           placeholder="sujet"
+                           className="full-width"
+                           placeholder="Sujet"
                            value={subject}
                            onChange={(e) => setSubject(e.target.value)}
                     />
                 </div>
                 <div className="mb">
-                    <textarea cols="100"
-                              rows="10"
-                              placeholder="message"
+                    <textarea rows="10"
+                              className="full-width"
+                              placeholder="Message"
                               value={message}
                               onChange={(e) => setMessage(e.target.value)}
+                              style={{resize: 'none'}}
                     />
                 </div>
                 <div>
-                    <input type="submit" value="Envoyer"/>
+                    <button type="submit" className="button large green">Envoyer</button>
                 </div>
             </form>
-        </>
+        </div>
     )
 
 }
