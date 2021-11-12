@@ -272,7 +272,7 @@ a:hover {
     padding-bottom: 20px;
 }
 
-input {
+input, textarea {
     position: relative;
 
     border: 1px solid rgba(200, 200, 200, 0.3);
@@ -285,16 +285,16 @@ input {
     transition: background-color 0.1s ease-out;
 }
 
-input.error {
+input.error, textarea.error {
     color: #bb1717;
     background-color: #f0d3d3;
 }
 
-input::placeholder {
+input::placeholder, textarea::placeholder {
     color: rgba(0, 0, 0, 0.4)
 }
 
-input:focus {
+input:focus, textarea:focus {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     outline: none;
 }
@@ -600,9 +600,26 @@ button {
     transform-origin: top right;
 }
 
-.feedbacl-modal-title {
+.feedback-modal-title {
     font-size: 1.4em;
     margin-bottom: 40px;
+}
+
+.feedback-modal-subject-input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.feedback-modal-message-textarea {
+    width: 100%;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+.feedback-modal-submit-button-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 #lobby-hover-to-show-code {

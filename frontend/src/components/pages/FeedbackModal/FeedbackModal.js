@@ -43,29 +43,28 @@ const FeedbackModal = ({closeModal}) => {
                     <QuitCross onClick={closeModal} />
                 </div>
 
-                <div className="feedbacl-modal-title">
+                <div className="feedback-modal-title">
                     Feedback
                 </div>
 
-                <div style={{marginBottom: 20}}>
-                    <input type="text"
-                           style={{width:'80%'}}
-                           value={subject}
-                           placeholder="sujet"
-                           autoFocus={true}
-                           onChange={(e) => setSubject(e.target.value)}
-                           onKeyPress={(e) => handleKeyPress(e.charCode)}
-                    />
+                <input type="text"
+                       className="feedback-modal-subject-input"
+                       value={subject}
+                       placeholder="Sujet"
+                       autoFocus={true}
+                       onChange={(e) => setSubject(e.target.value)}
+                       onKeyPress={(e) => handleKeyPress(e.charCode)}
+                />
+
+                <textarea className="feedback-modal-message-textarea"
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
+                          placeholder="Message"
+                          rows="8"/>
+
+                <div className="feedback-modal-submit-button-container">
+                    <button type="submit" className="button green" onClick={() => {sendFeedback()}}>Envoyer</button>
                 </div>
-                <div style={{marginBottom: 20}}>
-                    <textarea value={message}
-                              style={{width:'80%'}}
-                              onChange={(e) => setMessage(e.target.value)}
-                              placeholder="message"
-                              cols="30"
-                              rows="10"/>
-                </div>
-                <button type="submit" onClick={() => {sendFeedback()}}>Envoyer</button>
             </div>
         </div>
 
