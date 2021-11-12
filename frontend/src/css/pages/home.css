@@ -4,6 +4,11 @@
     margin-top: 50px;
 }
 
+#homepage-logo {
+    margin: 0 auto;
+    display: block;
+}
+
 .home-create-room-button {
     display: block;
     background-color: var(--button-blue-color);
