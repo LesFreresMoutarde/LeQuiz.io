@@ -33,6 +33,7 @@
     "socket.io": "^4.0.0"
   },
   "devDependencies": {
+    "js-yaml": "^4.1.0",
     "nodemon": "^2.0.6",
     "sequelize-cli": "^6.2.0"
   }
