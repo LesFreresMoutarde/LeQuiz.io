@@ -47,6 +47,10 @@ const FeedbackModal = ({closeModal}) => {
                     Feedback
                 </div>
 
+                <div className="feedback-modal-text">
+                    Faites-nous part de vos idées d'amélioration pour leQuiz.io
+                </div>
+
                 <input type="text"
                        className="feedback-modal-subject-input"
                        value={subject}
@@ -60,7 +64,7 @@ const FeedbackModal = ({closeModal}) => {
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
                           placeholder="Message"
-                          rows="8"/>
+                          rows="5"/>
 
                 <div className="feedback-modal-submit-button-container">
                     <button type="submit" className="button green" onClick={() => {sendFeedback()}}>Envoyer</button>

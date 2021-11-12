@@ -601,8 +601,15 @@ button {
 }
 
 .feedback-modal-title {
-    font-size: 1.4em;
-    margin-bottom: 40px;
+    font-size: 1.6em;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.feedback-modal-text {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .feedback-modal-subject-input {
