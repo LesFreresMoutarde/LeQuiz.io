@@ -2,30 +2,6 @@ import React, {useState} from "react";
 import ApiUtil from "../../../util/ApiUtil";
 import {app} from "../../App";
 
-
-const overlayStyle = {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 1,
-    padding: 30,
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end'
-};
-
-const modalStyle = {
-    position: 'absolute',
-    height: 500,
-    width: 450,
-    backgroundColor: '#1e8eb5',
-    zIndex: 2,
-    border: '4px white solid',
-    borderRadius: 10,
-    padding: 30,
-}
-
 const FeedbackModal = ({closeModal}) => {
 
     const [subject, setSubject] = useState('');
@@ -58,10 +34,8 @@ const FeedbackModal = ({closeModal}) => {
     }
 
     return (
-        <div onClick={() => closeModal()}
-             style={overlayStyle}
-        >
-            <div style={modalStyle}
+        <div className="feedback-modal-app-overlay" onClick={closeModal}>
+            <div className="feedback-modal"
                  onClick={(e) => {e.stopPropagation()}}
             >
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
