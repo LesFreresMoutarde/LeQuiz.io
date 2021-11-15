@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import EmailSettings from "./views/EmailSettings";
 import PasswordSettings from "./views/PasswordSettings";
 import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
@@ -11,9 +11,22 @@ const CONTENT_PASSWORD = "password";
 
 const Settings = () => {
 
+    const [contentDisplay, setContentDisplay] = useState(CONTENT_EMAIL);
+
     useEffect(() => {
         app.showBackArrow(true, ON_CLICK_GO_BACK);
     }, []);
+
+    const onMenuButtonClick = (e) => {
+        switch (e.target.name) {
+            case CONTENT_EMAIL:
+            case CONTENT_PASSWORD:
+                setContentDisplay(e.target.name);
+                break;
+            default:
+                console.error('Unknown content display mode');
+        }
+    };
 
     return (
         <div className="settings-container">
@@ -23,10 +36,22 @@ const Settings = () => {
             <div className="settings-mobile-scrollable-container">
                 <div className="settings-data-container">
                     <aside className="settings-desktop-menu-container">
-                        Lateral menu
+                        <button className={`settings-desktop-menu-button ${contentDisplay === CONTENT_EMAIL ? 'active' : ''}`}
+                                onClick={onMenuButtonClick}
+                                name={CONTENT_EMAIL}
+                        >
+                            Adresse email
+                        </button>
+                        <button className={`settings-desktop-menu-button ${contentDisplay === CONTENT_PASSWORD ? 'active' : ''}`}
+                                onClick={onMenuButtonClick}
+                                name={CONTENT_PASSWORD}
+                        >
+                            Mot de passe
+                        </button>
                     </aside>
                     <div className="settings-main-data">
                         Settings
+                        {contentDisplay}
                     </div>
                     <aside className="settings-desktop-menu-counterbalance">
 
