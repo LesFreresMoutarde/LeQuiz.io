@@ -1,0 +1,80 @@
+.settings-container {
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-title {
+    text-align: center;
+}
+
+.settings-mobile-scrollable-container {
+    height: 100%;
+
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.settings-data-container {
+    height: 0;
+    flex: 1;
+
+    display: flex;
+}
+
+.settings-main-data {
+    flex: 1;
+
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.settings-desktop-menu-container,
+.settings-desktop-menu-counterbalance {
+    width: 280px;
+}
+
+.settings-main-data,
+.settings-desktop-menu-container,
+.settings-desktop-menu-counterbalance {
+    height: 100%;
+    overflow: auto;
+
+    border: 3px solid red;
+}
+
+@media screen and (min-width: 993px) {
+    .settings-mobile-scrollable-container {
+        display: flex;
+        flex-direction: column;
+
+        overflow-y: auto;
+    }
+
+    .settings-main-data {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .settings-desktop-menu-container,
+    .settings-desktop-menu-counterbalance {
+        width: 230px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .settings-data-container {
+        flex-direction: column;
+
+        height: auto;
+    }
+
+    .settings-desktop-menu-container,
+    .settings-desktop-menu-counterbalance {
+        display: none;
+    }
+}

@@ -4,6 +4,7 @@ import PasswordSettings from "./views/PasswordSettings";
 import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 import UserAccessUtil from "../../../util/UserAccessUtil";
 import {app} from "../../App";
+import '../../../css/pages/settings.css';
 
 const CONTENT_EMAIL = "email";
 const CONTENT_PASSWORD = "password";
