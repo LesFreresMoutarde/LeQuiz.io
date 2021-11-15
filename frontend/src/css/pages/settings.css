@@ -34,14 +34,13 @@
 .settings-desktop-menu-container,
 .settings-desktop-menu-counterbalance {
     width: 280px;
+    overflow: auto;
 }
 
 .settings-main-data,
 .settings-desktop-menu-container,
 .settings-desktop-menu-counterbalance {
     height: 100%;
-    overflow: auto;
-
     border: 3px solid red;
 }
 
@@ -71,6 +70,13 @@
         flex-direction: column;
 
         height: auto;
+    }
+
+    .settings-main-data {
+        flex: 1;
+
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .settings-desktop-menu-container,
