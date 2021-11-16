@@ -50,8 +50,27 @@ const Settings = () => {
                         </button>
                     </aside>
                     <div className="settings-main-data">
-                        Settings
-                        {contentDisplay}
+                        <button className={`settings-mobile-section-display-button ${contentDisplay === CONTENT_EMAIL ? 'active' : ''}`}
+                                onClick={onMenuButtonClick}
+                                name={CONTENT_EMAIL}
+                        >
+                            Adresse email
+                        </button>
+
+                        {contentDisplay === CONTENT_EMAIL &&
+                            <EmailSettings/>
+                        }
+
+                        <button className={`settings-mobile-section-display-button ${contentDisplay === CONTENT_PASSWORD ? 'active' : ''}`}
+                                onClick={onMenuButtonClick}
+                                name={CONTENT_PASSWORD}
+                        >
+                            Mot de passe
+                        </button>
+
+                        {contentDisplay === CONTENT_PASSWORD &&
+                            <PasswordSettings/>
+                        }
                     </div>
                     <aside className="settings-desktop-menu-counterbalance">
 

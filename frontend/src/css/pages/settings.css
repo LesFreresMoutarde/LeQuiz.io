@@ -41,7 +41,6 @@
 .settings-desktop-menu-container,
 .settings-desktop-menu-counterbalance {
     height: 100%;
-    border: 3px solid red;
 }
 
 .settings-desktop-menu-button {
@@ -54,28 +53,76 @@
 
     font-size: 1.4em;
 
-    color: #fff;
     border: 4px solid #fff;
     border-radius: 20px;
-
-    background-color: var(--element-primary-background-color);
-    transition: background-color 0.1s ease-out;
-}
-
-.settings-desktop-menu-button.active {
-    background-color: var(--button-pink-color);
 }
 
 .settings-desktop-menu-button:not(:first-child) {
     margin-top: 30px;
 }
 
-.settings-desktop-menu-button:hover {
+.settings-mobile-section-display-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 70px;
+
+    font-size: 1.2em;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    border: 5px solid #fff;
+    border-radius: 12px;
+}
+
+.settings-desktop-menu-button,
+.settings-mobile-section-display-button {
+    color: #fff;
+
+    background-color: var(--element-primary-background-color);
+    transition: background-color 0.1s ease-out;
+}
+
+.settings-desktop-menu-button.active,
+.settings-mobile-section-display-button.active {
+    background-color: var(--button-pink-color);
+}
+
+.settings-desktop-menu-button:hover,
+.settings-mobile-section-display-button:hover {
     cursor: pointer;
 }
 
-.settings-desktop-menu-button:not(.active):hover {
+.settings-desktop-menu-button:not(.active):hover,
+.settings-mobile-section-display-button:not(.active):hover {
     background-color: var(--element-primary-background-color-lighter);
+}
+
+.settings-section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.email-settings-form-container,
+.password-settings-form-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#email-settings-form,
+#password-settings-form {
+    flex: 1;
+    max-width: 600px;
+}
+
+.settings-form-submit-button-container {
+    display: flex;
+    justify-content: center;
 }
 
 @media screen and (min-width: 993px) {
@@ -89,6 +136,10 @@
     .settings-main-data {
         padding-left: 10px;
         padding-right: 10px;
+    }
+
+    .settings-mobile-section-display-button {
+        display: none;
     }
 }
 
