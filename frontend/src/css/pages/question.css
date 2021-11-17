@@ -162,11 +162,15 @@
     cursor: pointer;
 }
 
+.question-answer-qcm-answer:disabled {
+    cursor: default;
+}
+
 .qcm-answer-color-1 {
     background-color: #F03C70;
 }
 
-.qcm-answer-color-1:hover {
+.qcm-answer-color-1:hover:not([disabled]) {
     background-color: #ff7fa3;
 }
 
@@ -174,7 +178,7 @@
     background-color: #15CCC6;
 }
 
-.qcm-answer-color-2:hover {
+.qcm-answer-color-2:hover:not([disabled]) {
     background-color: #35e8e2;
 }
 
@@ -182,7 +186,7 @@
     background-color: #305EF0;
 }
 
-.qcm-answer-color-3:hover {
+.qcm-answer-color-3:hover:not([disabled]) {
     background-color: #5c81f6;
 }
 
@@ -190,8 +194,12 @@
     background-color: #F0613C;
 }
 
-.qcm-answer-color-4:hover {
+.qcm-answer-color-4:hover:not([disabled]) {
     background-color: #f19b85;
+}
+
+.qcm-answer-disabled {
+    opacity: 0.7;
 }
 
 .question-scores-container {
