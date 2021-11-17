@@ -7,6 +7,12 @@ import ScoresTable from "../components/Answer/ScoresTable";
 
 const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}) => {
 
+    const displayQuestionCounter = () => {
+            return currentQuestion.round === quizLength
+                ? 'Partie terminée'
+                : `Question ${currentQuestion.round} sur ${quizLength}`;
+    }
+
     return (
         <div className="question-screen-container">
             <QuestionDesktopHeader question={currentQuestion} />
@@ -22,7 +28,7 @@ const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLen
                         <div className="question-content-container">
                             <QuestionContent content={currentQuestion.content} />
                             <div className="question-counter">
-                                Question {currentQuestion.round} sur {quizLength}
+                                {displayQuestionCounter()}
                             </div>
                         </div>
                         <div className="classic-question-good-answer">
