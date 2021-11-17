@@ -5,7 +5,7 @@ const Footer = ({displayFeedbackModal, isMobile}) => {
 
     if (isMobile) {
         return (
-            <footer style={{display: 'flex', flexDirection: 'column'}}>
+            <footer className="mobile-footer">
                 <span className="footer-text-item mb">© LeQuiz.io {(new Date()).getFullYear()}</span>
                 <span className="mb">
                     <span className="footer-text-item"><a href="/mentions-legales" className="no-underline" target="_blank">Mentions légales</a></span>
