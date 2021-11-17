@@ -59,8 +59,6 @@ class ForgotPassword extends React.Component {
                 app.toastr.error(`Veuillez patienter ${responseJson.minutesToWait} minute${responseJson.minutesToWait > 1 ? 's' : ''} avant de demander un nouvel email de réinitialisation.`);
                 break;
         }
-
-        console.log(response.status, responseJson)
     }
 }
 
