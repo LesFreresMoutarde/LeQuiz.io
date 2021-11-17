@@ -91,8 +91,10 @@ class ClientSocket {
             roomComponent.setState({gameConfiguration});
         });
 
-        this.socket.on('receive-quiz', (quiz) => {
+        this.socket.on('receive-quiz', ({quiz, room}) => {
             Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
+
+            roomComponent.setState({roomData: room});
 
             this.socket.emit('receive-quiz-confirmation', roomComponent.roomId)
         });

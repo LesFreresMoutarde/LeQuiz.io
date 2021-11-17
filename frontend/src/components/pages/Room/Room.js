@@ -242,7 +242,6 @@ class Room extends React.Component {
         this.setState({isQcmEnabled: true});
     }
 
-
     componentWillUnmount() {
         Util.clearSessionStorage();
 
@@ -259,6 +258,7 @@ class Room extends React.Component {
             currentPlayer, isHost, currentQuestion, timeLeft,
             questionInputDisabled, isQcmEnabled
         } = this.state;
+
         if (isLoading) {
             return (
                 <>

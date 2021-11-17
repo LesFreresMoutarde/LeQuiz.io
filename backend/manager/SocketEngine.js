@@ -80,7 +80,8 @@ module.exports = (server) => {
 
                 room.game.quiz = quiz;
                 room.game.quizLength = quiz.length;
-                io.to(room.id).emit('receive-quiz', quiz);
+
+                io.to(room.id).emit('receive-quiz', {quiz, room: RoomManager.formatRoomForEmit(room)});
             } catch (error) {
                 socket.emit('force-disconnection');
             }
