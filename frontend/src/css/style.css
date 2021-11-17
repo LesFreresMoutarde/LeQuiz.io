@@ -485,7 +485,7 @@ button {
 
 .button.red:hover,
 .quit-cross-button:hover {
-    background-color: #e7356a;
+    background-color: #ee2c66;
 }
 
 .button:disabled {
