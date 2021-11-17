@@ -246,6 +246,11 @@ a:hover {
     margin-right: 5px;
 }
 
+footer.mobile-footer {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer-feedback-button {
     font-size: 1rem;
     background-color: #fff;
