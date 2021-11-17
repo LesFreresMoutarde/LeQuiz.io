@@ -87,7 +87,7 @@ const Contact = () => {
         <div className="text-center">
             <h1 className="mb">{title}</h1>
             <form id="contact-form" onSubmit={(e) => submitForm(e)}>
-                <div className="mb">
+                <div className="mb3">
                     <input type="text"
                            className="full-width"
                            placeholder="Nom d'utilisateur"
@@ -97,7 +97,7 @@ const Contact = () => {
                            readOnly={app.state.user}
                     />
                 </div>
-                <div className="mb">
+                <div className="mb3">
                     <input type="email"
                            className="full-width"
                            placeholder="Adresse email"
@@ -106,7 +106,7 @@ const Contact = () => {
                            readOnly={fetchedEmail}
                     />
                 </div>
-                <div className="mb">
+                <div className="mb3">
                     <input type="text"
                            className="full-width"
                            placeholder="Sujet"
@@ -114,7 +114,7 @@ const Contact = () => {
                            onChange={(e) => setSubject(e.target.value)}
                     />
                 </div>
-                <div className="mb">
+                <div className="mb3">
                     <textarea rows="10"
                               className="full-width"
                               placeholder="Message"
