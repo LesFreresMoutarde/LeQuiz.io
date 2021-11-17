@@ -479,13 +479,13 @@ button {
 
 .button.red,
 .quit-cross-button {
-    background-color: #b91414;
+    background-color: #DB2557;
     color: #f8f8f8;
 }
 
 .button.red:hover,
 .quit-cross-button:hover {
-    background-color: #d01a1a;
+    background-color: #ee2c66;
 }
 
 .button:disabled {
