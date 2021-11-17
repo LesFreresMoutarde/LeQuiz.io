@@ -212,7 +212,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer displayFeedbackModal={this.displayFeedbackModal}/>
+                    <Footer displayFeedbackModal={this.displayFeedbackModal} isMobile={isMobileOnly}/>
                 </div>
             );
         }
