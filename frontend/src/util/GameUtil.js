@@ -97,7 +97,7 @@ class GameUtil {
                     categoriesCouple,
                     withHardcoreQuestions
                 );
-                console.log(max, categoriesCoupleQuestionCount);
+
                 max -= categoriesCoupleQuestionCount;
 
                 if (max > GameUtil.MAX_QUESTIONS[gameMode]) max = GameUtil.MAX_QUESTIONS[gameMode];
@@ -213,8 +213,7 @@ class GameUtil {
         let questionInCoupleCount = 0;
 
         const pickedCategoriesName = pickedCategories.map(category => category.name).sort();
-        console.log("catCoup", categoriesCouples);
-        console.log('pickedCate', pickedCategoriesName);
+
         categoriesCouples.forEach(couple => {
             const [firstCategory, secondCategory] = couple.name.split('|');
 
@@ -226,7 +225,7 @@ class GameUtil {
                 )
             }
         })
-        console.log("return", questionInCoupleCount);
+
         return questionInCoupleCount;
     }
 
@@ -244,7 +243,7 @@ class GameUtil {
                 count += countPerDifficulty
             }
         })
-        console.log("count", count);
+
         return count;
     }
 
