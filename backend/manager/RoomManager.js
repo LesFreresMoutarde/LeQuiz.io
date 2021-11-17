@@ -171,7 +171,7 @@ class RoomManager {
         room.game.scores.push({
             player: player,
             value: 0,
-            rank: 0,
+            rank: room.players.length,
             lastAnswer: null,
         });
     };
