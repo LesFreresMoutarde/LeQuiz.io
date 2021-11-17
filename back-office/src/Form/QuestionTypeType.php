@@ -15,7 +15,6 @@ class QuestionTypeType extends AbstractType
         $builder
             ->add('name')
             ->add('label')
-            ->add('isChild')
             ->add('submit', SubmitType::class)
         ;
     }

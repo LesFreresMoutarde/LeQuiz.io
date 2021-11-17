@@ -2,25 +2,15 @@
   {
     "model": "QuestionType",
     "data": {
-      "name": "qcm",
-      "label": "QCM",
-      "isChild": false
-    }
-  },
-  {
-    "model": "QuestionType",
-    "data": {
-      "name": "input",
-      "label": "Réponse libre",
-      "isChild": false
+      "name": "classic",
+      "label": "Classique"
     }
   },
   {
     "model": "QuestionType",
     "data": {
       "name": "blind-test",
-      "label": "Blind Test",
-      "isChild": true
+      "label": "Blind Test"
     }
   }
 ]

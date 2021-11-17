@@ -64,21 +64,6 @@
             )}}
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col-6">
-            {{ form_errors(form.isChild) }}
-            {{ form_widget(form.isChild,
-                {'attr':
-                    {
-                        'class': 'form-check-input',
-                        'id': 'questionType-isChild',
-                        'disabled': context == 'show' ? true : false
-                    }
-                }
-            )}}
-            {{ form_label(form.isChild, 'Type enfant', {'label_attr': {'class': 'form-check-label'}}) }}
-        </div>
-    </div>
     <div class="d-flex mt-4">
         {{ form_widget(form.submit,
             {'attr':

@@ -1,9 +1,8 @@
 import React from "react";
 import Loader from "../../../misc/Loader";
 
-import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../../App";
 
 class EmailSettings extends React.Component {
     constructor(props) {
@@ -86,7 +85,7 @@ class EmailSettings extends React.Component {
         newEmailInput.value = '';
         passwordInput.value = '';
 
-        toastr.success('Votre adresse email a été mise à jour');
+        app.toastr.success('Votre adresse email a été mise à jour');
     }
 
     handleErrors = (errors) => {
@@ -95,14 +94,16 @@ class EmailSettings extends React.Component {
         this.setState(state);
 
         for(const field in this.state.formErrors) {
-            toastr.error(this.state.formErrors[field]);
+            app.toastr.error(this.state.formErrors[field]);
         }
     }
 
     render = () => {
         if(this.state.isLoading) {
             return(
-                <Loader width="50px"/>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <Loader width="50px"/>
+                </div>
             )
         } else if(this.state.error) {
             return(
@@ -110,18 +111,22 @@ class EmailSettings extends React.Component {
             )
         } else {
             return(
-                <>
+                <div className="settings-section-container">
                     <p>Votre adresse email actuelle est <strong>{this.state.email}</strong></p>
-                    <form id="email-settings-form" onSubmit={this.onEmailFormSubmit} style={{maxWidth: '600px'}}>
-                        <div className="mb3 mt3">
-                            <input className={"full-width" + (this.state.formErrors.newEmail ? ' error' : '')} id="new-email-input" type="email" name="newEmail" placeholder="Nouvelle adresse email" autoComplete="email" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="current-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <button type="submit" className="button green mb3">Changer d'adresse email</button>
-                    </form>
-                </>
+                    <div className="email-settings-form-container">
+                        <form id="email-settings-form" onSubmit={this.onEmailFormSubmit}>
+                            <div className="mb3 mt3">
+                                <input className={"full-width" + (this.state.formErrors.newEmail ? ' error' : '')} id="new-email-input" type="email" name="newEmail" placeholder="Nouvelle adresse email" autoComplete="email" required onInput={this.onInputUpdate}/>
+                            </div>
+                            <div className="mb3">
+                                <input className={"full-width" + (this.state.formErrors.password ? ' error' : '')} id="password-input" type="password" name="password" placeholder="Mot de passe" autoComplete="current-password" required onInput={this.onInputUpdate}/>
+                            </div>
+                            <div className="settings-form-submit-button-container">
+                                <button type="submit" className="button green mb3">Changer d'adresse email</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             )
         }
     }

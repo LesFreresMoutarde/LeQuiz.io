@@ -1,0 +1,260 @@
+.lobby-container {
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.lobby-title {
+    text-align: center;
+}
+
+.lobby-data-mobile-scrollable-container {
+    height: 100%;
+
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.lobby-data-container {
+    height: 0;
+    flex: 1;
+
+    display: flex;
+}
+
+.lobby-main-data {
+    flex: 1;
+
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.lobby-secondary-data {
+    width: 280px;
+}
+
+.lobby-main-data,
+.lobby-secondary-data {
+    height: 100%;
+    overflow: auto;
+}
+
+.lobby-footer {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 10px;
+}
+
+.lobby-box-header {
+    font-weight: 500;
+    font-size: 1.7em;
+    margin-bottom: 20px;
+
+    text-align: center;
+}
+
+.lobby-box-content {
+    background-color: var(--element-primary-background-color);
+    border: 4px solid #fff;
+    border-radius: 15px;
+
+    padding: 30px 15px;
+}
+
+.lobby-box-content.wide-borders {
+    border: 6px solid #fff;
+    border-radius: 30px;
+}
+
+.lobby-box-scrollable-content {
+    height: 100%;
+    overflow: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.lobby-box-players {
+    height: 100%;
+}
+
+.lobby-box-players .lobby-box-content {
+    height: calc(100% - 60px);
+}
+
+.lobby-player-line-wrapper {
+    background-color: #fff;
+    border-radius: 12px;
+    color: #333;
+    padding: 15px 20px;
+}
+
+.lobby-player-line-wrapper.current-player {
+    background-color: var(--button-pink-color);
+    color: #fff;
+}
+
+.lobby-player-line-wrapper:not(:last-child) {
+    margin-bottom: 30px;
+}
+
+.lobby-box-edit-button {
+    border: 2px solid #fff;
+    border-radius: 6px;
+    background-color: var(--button-pink-color);
+    transition: background-color 0.1s ease-out;
+    padding: 0;
+    margin-right: 10px;
+
+    height: 26px;
+    width: 26px;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    top: 2px;
+}
+
+.lobby-box-edit-button:hover {
+    cursor: pointer;
+    background-color: var(--button-pink-color-lighter);
+}
+
+.lobby-box-edit-button img {
+    width: 24px;
+    position: relative;
+    top: 1px;
+}
+
+.lobby-box-gamemode .lobby-box-content {
+    font-size: 1.7em;
+
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.lobby-box-categories {
+    margin-top: 50px;
+}
+
+.lobby-box-categories .lobby-box-content {
+    height: 250px;
+}
+
+.lobby-box-categories .lobby-box-content,
+.lobby-box-options .lobby-box-content {
+    padding: 30px 25px;
+}
+
+.lobby-box-categories-scrollable-container {
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.lobby-categories-category,
+.lobby-options-question-type,
+.lobby-options-with-hardcore-questions-value {
+    border: 3px solid #fff;
+    background-color: var(--button-pink-color);
+    border-radius: 10px;
+    text-align: center;
+    padding: 6px 3px;
+    font-size: 1.2em;
+}
+
+.lobby-categories-category:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.lobby-box-options .lobby-box-content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.lobby-options-label {
+    text-align: center;
+}
+
+.lobby-options-question-types-container,
+.lobby-options-with-hardcore-questions-value-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.lobby-options-question-type {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.lobby-options-with-hardcore-questions-value-container {
+    display: flex;
+    justify-content: center;
+}
+
+.lobby-options-with-hardcore-questions-value {
+    display: inline-block;
+    padding: 6px 6px;
+}
+
+.lobby-options-win-criterion {
+    font-size: 2em;
+    text-align: center;
+}
+
+@media screen and (min-width: 993px) {
+    .lobby-data-mobile-scrollable-container {
+        display: flex;
+        flex-direction: column;
+        
+        overflow-y: auto;
+    }
+
+    .lobby-main-data,
+    .lobby-secondary-data {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .lobby-secondary-data {
+        width: 230px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .lobby-data-container {
+        flex-direction: column;
+
+        height: auto;
+    }
+
+    .lobby-main-data {
+        margin-left: 0;
+        margin-right: 0;
+
+        order: -1;
+    }
+
+    .lobby-main-data,
+    .lobby-secondary-data {
+        height: auto;
+        width: 100%;
+        flex: 1;
+    }
+
+    .lobby-box-players .lobby-box-content {
+        margin-bottom: 50px;
+    }
+
+    .lobby-box-categories .lobby-box-content {
+        height: auto;
+        margin-bottom: 50px;
+    }
+}

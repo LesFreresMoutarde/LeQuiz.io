@@ -1,8 +1,7 @@
 import React from "react";
 
-import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../../App";
 
 class PasswordSettings extends React.Component {
     constructor(props) {
@@ -63,7 +62,7 @@ class PasswordSettings extends React.Component {
         newPasswordInput.value = '';
         confirmNewPasswordInput.value = '';
 
-        toastr.success('Votre mot de passe a été mis à jour');
+        app.toastr.success('Votre mot de passe a été mis à jour');
     }
 
     handleErrors = (errors) => {
@@ -72,7 +71,7 @@ class PasswordSettings extends React.Component {
         this.setState(state);
 
         for(const field in this.state.formErrors) {
-            toastr.error(this.state.formErrors[field]);
+            app.toastr.error(this.state.formErrors[field]);
         }
     }
 
@@ -83,20 +82,25 @@ class PasswordSettings extends React.Component {
             )
         } else {
             return(
-                <>
-                    <form id="password-settings-form" onSubmit={this.onPasswordFormSubmit} style={{maxWidth: '600px'}}>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.currentPassword ? ' error' : '')} id="current-password-input" type="password" name="currentPassword" placeholder="Mot de passe actuel" autoComplete="current-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.newPassword ? ' error' : '')} id="new-password-input" type="password" name="newPassword" placeholder="Nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <div className="mb3">
-                            <input className={"full-width" + (this.state.formErrors.confirmNewPassword ? ' error' : '')} id="confirm-new-password-input" type="password" name="confirmNewPassword" placeholder="Confirmation du nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
-                        </div>
-                        <button type="submit" className="button green mb3">Changer de mot de passe</button>
-                    </form>
-                </>
+                <div className="settings-section-container">
+                    <div className="password-settings-form-container">
+                        <form id="password-settings-form" onSubmit={this.onPasswordFormSubmit}>
+                            <div className="mb3 mt3">
+                                <input className={"full-width" + (this.state.formErrors.currentPassword ? ' error' : '')} id="current-password-input" type="password" name="currentPassword" placeholder="Mot de passe actuel" autoComplete="current-password" required onInput={this.onInputUpdate}/>
+                            </div>
+                            <div className="mb3">
+                                <input className={"full-width" + (this.state.formErrors.newPassword ? ' error' : '')} id="new-password-input" type="password" name="newPassword" placeholder="Nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
+                            </div>
+                            <div className="mb3">
+                                <input className={"full-width" + (this.state.formErrors.confirmNewPassword ? ' error' : '')} id="confirm-new-password-input" type="password" name="confirmNewPassword" placeholder="Confirmation du nouveau mot de passe" autoComplete="new-password" required onInput={this.onInputUpdate}/>
+                            </div>
+
+                            <div className="settings-form-submit-button-container">
+                                <button type="submit" className="button green mb3">Changer de mot de passe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             )
         }
     }

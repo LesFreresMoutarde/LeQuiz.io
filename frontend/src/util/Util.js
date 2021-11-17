@@ -3,8 +3,6 @@ import AuthUtil from "./AuthUtil";
 class Util {
     static isVerbose = true; // TODO env
 
-    static bgColors = ['red-pink-bg', 'brown-bg', 'deep-blue-bg', 'yellow-bg', 'green-bg'];
-
     static verbose = (...items) => {
         if(!Util.isVerbose) {
             return;
@@ -68,20 +66,13 @@ class Util {
         return JSON.parse(sessionStorage.getItem(key));
     }
 
-    static getRandomColor = () => {
-        return Util.bgColors[Math.floor(Math.random() * Util.bgColors.length)];
-    }
-
-    static getRandomColors = (nb) => {
-        let color = Util.getRandomColor();
-        const colorsUsed = [color];
-        for (let i = 0; i < nb - 1; i++) {
-            while (colorsUsed.includes(color)) {
-                color = Util.getRandomColor();
-            }
-            colorsUsed.push(color)
+    static randomizeArray = (array) => {
+        for (let i = array.length - 1; i > 0; --i) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
-        return colorsUsed;
+
+        return array;
     }
 }
 

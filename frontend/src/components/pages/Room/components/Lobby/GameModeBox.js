@@ -1,17 +1,17 @@
 import React from "react";
-import EditLobbyButton from "./EditLobbyButton";
+import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
 
-const GameModeBox = ({gameMode, changeOptions, displayClass}) => {
+const GameModeBox = ({gameMode, changeOptions, userCanEdit}) => {
     return (
-        <div className="lobby-box">
+        <div className="lobby-box lobby-box-gamemode">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Mode de jeu</p>
-                <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('gameMode')}>
-                    <EditLobbyButton/>
-                </button>
+                {userCanEdit &&
+                <LobbyEditSettingsButton onClick={() => changeOptions('gameMode')}/>
+                }
+                <span className="lobby-box-header-label">Mode</span>
             </div>
             <div className="lobby-box-content">
-                <p className="lobby-game-mode">{gameMode.label}</p>
+                <span>{gameMode.label}</span>
             </div>
 
         </div>

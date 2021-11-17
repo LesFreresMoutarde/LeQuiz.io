@@ -1,25 +1,50 @@
 import React from "react";
-import EditLobbyButton from "./EditLobbyButton";
-import LobbyValue from "./LobbyValue";
+import LobbyEditSettingsButton from "./LobbyEditSettingsButton";
 
-const OptionsBox = ({questionTypes, winCriterion, changeOptions, displayClass}) => {
+const OptionsBox = ({questionTypes, winCriterion, withHardcoreQuestions, changeOptions, userCanEdit}) => {
     return (
-        <div className="lobby-box">
+        <div className="lobby-box lobby-box-options">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Options de jeu</p>
-                <button className={`${displayClass} lobby-edit-button`} onClick={() => changeOptions('options')}>
-                    <EditLobbyButton/>
-                </button>
+                {userCanEdit &&
+                    <LobbyEditSettingsButton onClick={() => changeOptions('options')} />
+                }
+                <span className="lobby-box-header-label">Options</span>
             </div>
             <div className="lobby-box-content">
-                <p className="lobby-options-label">Nombre de questions <span className="lobby-win-criterion">{winCriterion}</span></p>
-                <p className="lobby-options-label">Types de questions</p>
-                <div className="lobby-value-container">
-                    {questionTypes.map((questionType, index) => (
-                        <LobbyValue key={index} value={questionType.label}/>
-                        )
-                     )}
-                </div>
+                <section>
+                    <div className="lobby-options-label">Types de questions</div>
+                    <div className="lobby-options-question-types-container">
+                        {questionTypes.map((questionType, index) => (
+                            <div className="lobby-options-question-type" key={index}>
+                                {questionType.label}
+                            </div>
+                            )
+                        )}
+                    </div>
+                </section>
+
+                <section>
+                    <div className="lobby-options-label">Questions "hardcore"</div>
+                    <div className="lobby-options-with-hardcore-questions-value-container">
+                        <div className="lobby-options-with-hardcore-questions-value">
+                            {withHardcoreQuestions &&
+                            "Avec"
+                            }
+
+                            {!withHardcoreQuestions &&
+                            "Sans"
+                            }
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div className="lobby-options-label">Nombre de questions</div>
+                    <div className="lobby-value-container lobby-options-win-criterion">
+                        {winCriterion}
+                    </div>
+                </section>
+
             </div>
         </div>
     )

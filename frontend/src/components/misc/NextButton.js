@@ -1,13 +1,14 @@
 import React from "react";
 
-const NextButton = ({sizeClass, disabled, onClick, content, displayClass}) => {
-
-
+const NextButton = ({className, disabled, onClick, content}) => {
     return (
-        <button className={`float-right next-button ${sizeClass} ${displayClass}`}
+        <button className={`next-button ${className}`}
                 disabled={disabled}
-                onClick={() => onClick()}>{content}</button>
-    )
+                onClick={() => onClick()}
+        >
+            {content}
+        </button>
+    );
 };
 
 export default NextButton;

@@ -7,14 +7,13 @@ import WinCriterion from "../components/WinCriterion";
 
 import NextButton from "../../../misc/NextButton";
 import QuestionTypes from "../components/QuestionTypes";
-import BackArrow from "../../../misc/BackArrow";
-import Toastr from "toastr2";
 import ApiUtil from "../../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../../App";
+import AddHardcoreQuestions from "../components/AddHardcoreQuestions";
 
 export default class ChooseOptions extends React.Component {
 
-    static TITLE = 'Options de jeu';
+    static TITLE = 'Options';
 
     constructor(props) {
         super(props);
@@ -36,8 +35,11 @@ export default class ChooseOptions extends React.Component {
             try {
 
                 let { winCriterionInputValue, withHardcoreQuestions } = this.state;
+
                 const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
+
                 const categoriesId = gameConfiguration.categories.map((category) => (category.id));
+
                 const gameMode = gameConfiguration.gameMode.classname;
 
                 const response = await ApiUtil.sendJsonToAPI('/game/options', {gameMode: gameMode, categories: categoriesId});
@@ -74,11 +76,14 @@ export default class ChooseOptions extends React.Component {
                     showHardcoreQuestionsInput: this.isHardcoreSettingsVisible(gameConfiguration.categories)
                 });
 
-                this.evaluateWinCriterionMaxValue();
+                const winCriterionMaxValue = this.evaluateWinCriterionMaxValue();
 
+                if (winCriterionInputValue === 0) {
+                    this.updateWinCriterionValue(Math.min(20, winCriterionMaxValue));
+                }
 
             } catch (error) {
-                toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
+                app.toastr.error('Impossible d\'afficher les options de jeu, réessayez ultérieurement')
             }
         })();
     }
@@ -100,7 +105,7 @@ export default class ChooseOptions extends React.Component {
             this.evaluateWinCriterionMaxValue()
 
         } catch (error) {
-            toastr.error('Ce type de question n\'existe pas')
+            app.toastr.error('Ce type de question n\'existe pas')
         }
     }
 
@@ -122,6 +127,7 @@ export default class ChooseOptions extends React.Component {
         (
             gameConfiguration.gameMode.classname,
             gameConfiguration.categories,
+            gameConfiguration.categoriesCouple,
             questionTypesAvailable,
             pickedQuestionTypes,
             withHardcoreQuestions
@@ -131,6 +137,7 @@ export default class ChooseOptions extends React.Component {
 
         this.validateWinCriterionValue(winCriterionMaxValue);
 
+        return winCriterionMaxValue;
     };
 
 
@@ -148,9 +155,16 @@ export default class ChooseOptions extends React.Component {
 
         if (winCriterionInputValue > 0)  nextButtonDisabled = false;
 
-        this.setState({winCriterionInputValue, nextButtonDisabled})
+        this.updateWinCriterionValue(winCriterionInputValue);
 
     };
+
+    updateWinCriterionValue = (newValue) => {
+        this.setState({
+            winCriterionInputValue: newValue,
+            nextButtonDisabled: newValue <= 0,
+        })
+    }
 
     isHardcoreSettingsVisible = (categories) => {
         return categories.some(category => {
@@ -165,26 +179,22 @@ export default class ChooseOptions extends React.Component {
     submitGameOptions = async () => {
         const { questionTypes, winCriterionInputValue, withHardcoreQuestions } = this.state;
 
+        const pickedQuestionTypes = [];
+
         questionTypes.forEach(questionType => {
             if (questionType.checked) {
-                delete questionType.checked;
+                pickedQuestionTypes.push(questionType);
             }
         });
 
         this.props.submit(questionTypes, winCriterionInputValue, withHardcoreQuestions);
-
     };
-
-    goBack = () => {
-        this.props.goBack('chooseOptions')
-    }
 
     render() {
         if (this.state.isLoading) {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
                     <div className="app loading">
@@ -208,35 +218,38 @@ export default class ChooseOptions extends React.Component {
             return (
                 <>
                     <div className="create-game-header">
-                        <BackArrow onClick={this.goBack}/>
                         <Title title={ChooseOptions.TITLE}/>
                     </div>
-                    <div className="game-options-container">
-                        <WinCriterion
-                            winCriterion={gameOptions.winCriterion}
-                            winCriterionMaxValue={winCriterionMaxValue}
-                            winCriterionInputValue={winCriterionInputValue}
-                            validateWinCriterionValue={this.validateWinCriterionValue}
-                        />
-                        <QuestionTypes questionTypes={questionTypes}
-                                       pickQuestionType={this.pickQuestionType}
-                        />
+
+                    <div className="game-options-container flex-item-full-space zero-height flex-container-column">
+
+                        <div className="game-options-container-main-row">
+                            <QuestionTypes questionTypes={questionTypes}
+                                           pickQuestionType={this.pickQuestionType}
+                            />
+
+                            <WinCriterion
+                                winCriterion={gameOptions.winCriterion}
+                                winCriterionMaxValue={winCriterionMaxValue}
+                                winCriterionInputValue={winCriterionInputValue}
+                                validateWinCriterionValue={this.validateWinCriterionValue}
+                            />
+                        </div>
+
                         {showHardcoreQuestionsInput &&
-                            <>
-                                <p>Ajouter les questions "hardcore"</p>
-                                <input type="checkbox"
-                                       style={{opacity: 1}}
-                                       onChange={(e) => this.onHardcoreQuestionsChange(e)}
-                                       checked={withHardcoreQuestions}
-                                />
-                            </>
+                            <AddHardcoreQuestions withHardcoreQuestions={withHardcoreQuestions}
+                                                  onHardcoreQuestionsChange={this.onHardcoreQuestionsChange}
+                            />
                         }
                     </div>
-                    <NextButton disabled={nextButtonDisabled}
-                                onClick={this.submitGameOptions}
-                                sizeClass="large-button"
-                                content="Suivant"
-                                displayClass="visible"/>
+
+                    <div className="create-game-footer">
+                        <NextButton disabled={nextButtonDisabled}
+                                    onClick={this.submitGameOptions}
+                                    className="button large green"
+                                    content="Suivant"
+                        />
+                    </div>
                 </>
             )
         }

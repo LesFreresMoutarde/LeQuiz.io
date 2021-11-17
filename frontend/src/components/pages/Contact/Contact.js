@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
-import App from "../../App";
-import Toastr from "toastr2";
+import {app} from "../../App";
 import ApiUtil from "../../../util/ApiUtil";
 import AuthUtil from "../../../util/AuthUtil";
+import {ON_CLICK_GO_BACK} from "../../misc/BackArrow";
 
 const Contact = () => {
 
     const title = 'Contact';
 
-    const [username, setUsername] = useState(App.GLOBAL.state.user ? App.GLOBAL.state.user.username : '');
+    const [username, setUsername] = useState(app.state.user ? app.state.user.username : '');
     const [email, setEmail] = useState('');
     const [fetchedEmail, setFetchedEmail] = useState(false);
     const [subject, setSubject] = useState('');
@@ -26,9 +26,13 @@ const Contact = () => {
             setFetchedEmail(data.email);
         }
 
-        if (App.GLOBAL.state.user) fetchEmail()
+        if (app.state.user) fetchEmail()
 
     }, [])
+
+    useEffect(() => {
+        app.showBackArrow(true, ON_CLICK_GO_BACK);
+    }, []);
 
     const formElements = {
         'username': {label: 'nom d \'utilisateur', value: username},
@@ -36,8 +40,6 @@ const Contact = () => {
         'subject': {label: 'sujet', value: subject},
         'message': {label: 'message', value: message}
     };
-
-    const toastr = new Toastr();
 
     const submitForm = async (evt) => {
         evt.preventDefault()
@@ -54,7 +56,7 @@ const Contact = () => {
             if (!email.match(/\S+@\S+\.\S+/))
                 errors.push(`${formElements.email.value} n'est pas une adresse valide`);
 
-            if (App.GLOBAL.state.user) {
+            if (app.state.user) {
 
                 if (fetchedEmail) {
                     if (username !== AuthUtil.accessTokenPayload.user.username || email !== fetchedEmail)
@@ -71,33 +73,34 @@ const Contact = () => {
             if (!response.ok)
                 throw new Error('Impossible d\'envoyer votre message. Réessayez ultérieurement');
 
-            toastr.success('Votre message a été envoyé. Nous vous répondrons dans les plus bref délais');
+            app.toastr.success('Votre message a été envoyé. Nous vous répondrons dans les plus bref délais');
 
         } catch (error) {
             const errors = error.message.split('#');
             errors.reverse().forEach(error => {
-                toastr.error(error)
+                app.toastr.error(error)
             })
         }
     }
 
     return (
-        <>
-            <a href="/">Home</a>
+        <div className="text-center">
             <h1 className="mb">{title}</h1>
-            <form onSubmit={(e) => submitForm(e)}>
+            <form id="contact-form" onSubmit={(e) => submitForm(e)}>
                 <div className="mb">
                     <input type="text"
-                           placeholder="nom d'utilisateur"
+                           className="full-width"
+                           placeholder="Nom d'utilisateur"
                            value={username}
                            onChange={(e) => setUsername(e.target.value)}
-                           autoFocus={!App.GLOBAL.state.user}
-                           readOnly={App.GLOBAL.state.user}
+                           autoFocus={!app.state.user}
+                           readOnly={app.state.user}
                     />
                 </div>
                 <div className="mb">
                     <input type="email"
-                           placeholder="adresse email"
+                           className="full-width"
+                           placeholder="Adresse email"
                            value={email}
                            onChange={(e) => setEmail(e.target.value)}
                            readOnly={fetchedEmail}
@@ -105,24 +108,26 @@ const Contact = () => {
                 </div>
                 <div className="mb">
                     <input type="text"
-                           placeholder="sujet"
+                           className="full-width"
+                           placeholder="Sujet"
                            value={subject}
                            onChange={(e) => setSubject(e.target.value)}
                     />
                 </div>
                 <div className="mb">
-                    <textarea cols="100"
-                              rows="10"
-                              placeholder="message"
+                    <textarea rows="10"
+                              className="full-width"
+                              placeholder="Message"
                               value={message}
                               onChange={(e) => setMessage(e.target.value)}
+                              style={{resize: 'none'}}
                     />
                 </div>
                 <div>
-                    <input type="submit" value="Envoyer"/>
+                    <button type="submit" className="button large green">Envoyer</button>
                 </div>
             </form>
-        </>
+        </div>
     )
 
 }

@@ -73,17 +73,14 @@ module.exports = (server) => {
 
 
         socket.on('generate-quiz', async ({gameConfiguration, roomId}) => {
-
             try {
                 const room = RoomManager.findRoom(roomId);
 
-                const quizQuery = GameUtil.generateQuizQuery(gameConfiguration);
-                const quiz = await GameUtil.executeQuizQuery(quizQuery);
+                const quiz = await GameUtil.generateQuiz(gameConfiguration);
 
                 room.game.quiz = quiz;
                 room.game.quizLength = quiz.length;
                 io.to(room.id).emit('receive-quiz', quiz);
-
             } catch (error) {
                 socket.emit('force-disconnection');
             }
@@ -115,10 +112,10 @@ module.exports = (server) => {
             }
         });
 
-        socket.on('send-player-result', ({result}) => {
+        socket.on('send-player-result', ({roundPoints}) => {
 
             try {
-                const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, result);
+                const {receivedAllAnswers, room} = RoomManager.handlePlayerResult(socket.id, roundPoints);
 
                 if (receivedAllAnswers) {
                     room.state = RoomManager.ANSWER_ROOM_STATE;

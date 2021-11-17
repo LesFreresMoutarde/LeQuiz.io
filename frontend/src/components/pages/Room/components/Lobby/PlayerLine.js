@@ -1,9 +1,9 @@
 import React from "react";
 
-const PlayerLine = ({player}) => {
+const PlayerLine = ({player, isCurrentPlayer}) => {
     return (
-      <div className="player-line-wrapper">
-          <p className="player-line">{player}</p>
+      <div className={`lobby-player-line-wrapper ${isCurrentPlayer ? 'current-player' : ''}`}>
+          <span className="lobby-player-line-name">{player.username}</span>
       </div>
     );
 };

@@ -2,28 +2,41 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Combien fait 1 + 4 ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "5"
-          },{
-            "is_good_answer": false,
-            "content": "3"
-          },
-          {
-            "is_good_answer": false,
-            "content": "4"
-          },{
-            "is_good_answer": false,
-            "content": "6"
-          }
-        ],
+        "answers": {
+          "qcm": [
+            {
+              "content":"5",
+              "is_good_answer":true
+            },
+            {
+              "content":"3",
+              "is_good_answer":false
+            },
+            {
+              "content":"4",
+              "is_good_answer":false
+            },
+            {
+              "content":"6",
+              "is_good_answer":false
+            }
+          ],
+          "input": [
+            {
+              "content": "5",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "Cinq"
+            }
+          ]
+        },
         "additional": {
           "response_media": {
             "url": "http://example.com/toto.png",
@@ -36,98 +49,156 @@
         "type": "image/png",
         "url": "http://example.com/calculatrice.png"
       },
-      "categories": [{"name": "histoire"}]
+      "categories": [{"name": "histoire"}, {"name": "automobile"}]
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "En quelle année, Mao a-t-il lancé sa révolution culturelle ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "1814"
-          },{
-            "is_good_answer": false,
-            "content": "1865"
-          },
-          {
-            "is_good_answer": false,
-            "content": "1920"
-          },{
-            "is_good_answer": true,
-            "content": "1966"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "content":"1814",
+              "is_good_answer": false
+            },
+            {
+              "content":"1865",
+              "is_good_answer": false
+            },
+            {
+              "content":"1920",
+              "is_good_answer": false
+            },
+            {
+              "content":"1966",
+              "is_good_answer": true
+            }
+          ],
+          "input": [
+            {
+              "content": "1966",
+              "errorAllowedCount": 0
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "histoire"}]
+      "categories": [{"name": "histoire"}, {"name": "automobile"}]
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "En quelle année les États-Unis ont-ils pris part à la Première Guerre mondiale ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "1918"
-          },{
-            "is_good_answer": false,
-            "content": "1915"
-          },
-          {
-            "is_good_answer": true,
-            "content": "1917"
-          },{
-            "is_good_answer": false,
-            "content": "1916"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "content":"1918",
+              "is_good_answer": false
+            },
+            {
+              "content":"1915",
+              "is_good_answer": false
+            },
+            {
+              "content":"1917",
+              "is_good_answer": true
+            },
+            {
+              "content":"1916",
+              "is_good_answer": false
+            }
+          ],
+          "input": [
+            {
+              "content": "1916",
+              "errorAllowedCount": 0
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "histoire"}]
+      "categories": [{"name": "histoire"}, {"name": "sport"}]
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quels Jeux olympiques ont été supprimés à cause de la Seconde Guerre mondiale ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "1936 et 1940"
-          },{
-            "is_good_answer": false,
-            "content": "1944 et 1948"
-          },
-          {
-            "is_good_answer": true,
-            "content": "1940 et 1944"
-          },{
-            "is_good_answer": false,
-            "content": "1932 et 1936"
-          }
-        ],
+        "answers": {
+          "qcm": [
+            {
+              "content":"1936 et 1940",
+              "is_good_answer": false
+            },
+            {
+              "content":"1944 et 1948",
+              "is_good_answer": false
+            },
+            {
+              "content":"1940 et 1944",
+              "is_good_answer": true
+            },
+            {
+              "content":"1932 et 1936",
+              "is_good_answer": false
+            }
+          ],
+          "input": [
+            {
+              "content": "1940 et 1944",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "1940 1944",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "1940, 1944",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "1940,1944",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "1944 et 1940",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "1944 1940",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "1944, 1940",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "1944,1940",
+              "errorAllowedCount": 0
+            }
+          ]
+        },
         "additional": {
           "response_media": {
             "url": null,
@@ -145,28 +216,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans les plaines de quel champ de bataille se dresse la Butte du Lion ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Verdun"
-          },{
-            "is_good_answer": true,
-            "content": "Waterloo"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Austerlitz"
-          },{
-            "is_good_answer": false,
-            "content": "Valmy"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "content":"Verdun",
+              "is_good_answer": false
+            },
+            {
+              "content":"Waterloo",
+              "is_good_answer": true
+            },
+            {
+              "content":"Austerlitz",
+              "is_good_answer": false
+            },
+            {
+              "content":"Valmy",
+              "is_good_answer": false
+            }
+          ],
+          "input": [
+            {
+              "content": "Waterloo"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -177,28 +257,43 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quelle ligne de défense française fut contournée par les Allemands en 1940 ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "La ligne Siegfried"
-          },{
-            "is_good_answer": true,
-            "content": "La ligne Maginot"
-          },
-          {
-            "is_good_answer": false,
-            "content": "La ligne Verte"
-          },{
-            "is_good_answer": false,
-            "content": "La ligne Daladier"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "content":"La ligne Siegfried",
+              "is_good_answer": false
+            },
+            {
+              "content":"La ligne Maginot",
+              "is_good_answer": true
+            },
+            {
+              "content":"La ligne verte",
+              "is_good_answer": false
+            },
+            {
+              "content":"La ligne Daladier",
+              "is_good_answer": false
+            }
+          ],
+          "input": [
+            {
+              "content": "La ligne Maginot"
+            },
+            {
+              "content": "Ligne Maginot"
+            },
+            {
+              "content": "Maginot"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -209,28 +304,43 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Le général Cambronne, qui commandait la vieille garde, eut une conduite héroïque à...",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Wagram"
-          },{
-            "is_good_answer": false,
-            "content": "Iena"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Midway"
-          },{
-            "is_good_answer": true,
-            "content": "Waterloo"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "content":"Wagram",
+              "is_good_answer": false
+            },
+            {
+              "content":"Iena",
+              "is_good_answer": false
+            },
+            {
+              "content":"Midway",
+              "is_good_answer": false
+            },
+            {
+              "content":"Waterloo",
+              "is_good_answer": true
+            }
+          ],
+          "input": [
+            {
+              "content": "Waterloo"
+            },
+            {
+              "content": "La bataille de Waterloo"
+            },
+            {
+              "content": "Bataille de Waterloo"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -241,28 +351,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Où a eu lieu le grand procès des criminels de guerre nazis ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Berlin"
-          },{
-            "is_good_answer": true,
-            "content": "Nuremberg"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Hambourg"
-          },{
-            "is_good_answer": false,
-            "content": "Munich"
-          }
-        ],
+        "answers": {
+          "qcm": [
+            {
+              "content":"Berlin",
+              "is_good_answer": false
+            },
+            {
+              "content":"Nuremberg",
+              "is_good_answer": true
+            },
+            {
+              "content":"Hambourg",
+              "is_good_answer": false
+            },
+            {
+              "content":"Munich",
+              "is_good_answer": false
+            }
+          ],
+          "input": [
+            {
+              "content": "Nuremberg"
+            },
+            {
+              "content": "à Nuremberg"
+            }
+          ]
+        },
         "additional": {
           "response_media": {
             "url": null,
@@ -282,32 +404,39 @@
     "data": {
       "types": [
         {
-          "name": "qcm"
+          "name": "classic"
         }
       ],
       "isHardcore": false,
-      "content": "Qui fut vainqueur de la Guerre de Troie, conflit légendaire de la mythologie grecque ?",
+      "content": "Qui est le personnage princiapl de l'Odysée d'Homère ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Sophocle"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Ajax"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Ulysse"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Arkantos"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Sophocle"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Ajax"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Ulysse"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Arkantos"
+            }
+          ],
+          "input": [
+            {
+              "content": "Ulysse"
+            }
+          ]
+        }
       },
       "media": {
       },
@@ -322,28 +451,38 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "En quelle année la bataille de Waterloo a-t-elle eu lieu, à vingt kilomètres au sud de Bruxelles ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "1815"
-          },{
-            "is_good_answer": false,
-            "content": "1831"
-          },
-          {
-            "is_good_answer": false,
-            "content": "1809"
-          },{
-            "is_good_answer": false,
-            "content": "1824"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "1815"
+            },
+            {
+              "is_good_answer": false,
+              "content": "1831"
+            },
+            {
+              "is_good_answer": false,
+              "content": "1809"
+            },
+            {
+              "is_good_answer": false,
+              "content": "1824"
+            }
+          ],
+          "input": [
+            {
+              "content": "1815",
+              "errorAllowedCount": 0
+            }
+          ]
+        }
       },
       "media": {
 
@@ -355,28 +494,39 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel basketteur américain a été champion NBA en 1998 pour la sixième fois de sa carrière ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Patrick Ewing"
-          },{
-            "is_good_answer": false,
-            "content": "Karl Malone"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Charles Barkley"
-          },{
-            "is_good_answer": true,
-            "content": "Michael Jordan"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Patrick Ewing"
+            },{
+              "is_good_answer": false,
+              "content": "Karl Malone"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Charles Barkley"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Michael Jordan"
+            }
+          ],
+          "input": [
+            {
+              "content": "Michael Jordan"
+            },
+            {
+              "content": "Jordan"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -388,28 +538,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans quelle pays est né le joueur de basket-ball professionnel Tony Parker ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Belgique"
-          },{
-            "is_good_answer": false,
-            "content": "USA"
-          },
-          {
-            "is_good_answer": false,
-            "content": "France"
-          },{
-            "is_good_answer": false,
-            "content": "Pologne"
-          }
-        ],
+        "answers": {
+          "qcm": [
+            {
+              "content":"Belgique",
+              "is_good_answer":true
+            },
+            {
+              "content":"USA",
+              "is_good_answer":false
+            },
+            {
+              "content":"France",
+              "is_good_answer":false
+            },
+            {
+              "content":"Pologne",
+              "is_good_answer":false
+            }
+          ],
+          "input": [
+            {
+              "content": "en Belgique"
+            },
+            {
+              "content": "Belgique"
+            }
+          ]
+        },
         "additional": {
           "response_media": {
             "url": null,
@@ -428,28 +590,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Qui a été élu joueur de la décennie 2000 suite à un sondage du site officiel NBA ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Derek Fisher"
-          },{
-            "is_good_answer": false,
-            "content": "Ron Harper"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Kobe Bryant"
-          },{
-            "is_good_answer": false,
-            "content": "Rick Fox"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Derek Fisher"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Ron Harper"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Kobe Bryant"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Rick Fox"
+            }
+          ],
+          "input": [
+            {
+              "content": "Kobe Bryant"
+            },
+            {
+              "content": "Bryant"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -461,28 +635,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel concours de dunks est organisé par la NBA durant le NBA All-Star Week-end ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Skills Challenge"
-          },{
-            "is_good_answer": true,
-            "content": "Slam Dunk Contest"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Three-point Shootout"
-          },{
-            "is_good_answer": false,
-            "content": "All-Star Game"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Skills Challenge"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Slam Dunk Contest"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Three-point Shootout"
+            },
+            {
+              "is_good_answer": false,
+              "content": "All-Star Game"
+            }
+          ],
+          "input": [
+            {
+              "content": "Slam Dunk Contest"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -494,28 +677,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel basketteur américain a réalisé en 2000 un 360 degrés inversé mythique ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Jarnell Stokes"
-          },{
-            "is_good_answer": true,
-            "content": "Vince Carter"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Marc Gasol"
-          },{
-            "is_good_answer": false,
-            "content": "Andrew Harrison"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Jarnell Stokes"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Vince Carter"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Marc Gasol"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Andrew Harrison"
+            }
+          ],
+          "input": [
+            {
+              "content": "Vince Carter"
+            },
+            {
+              "content": "Carter"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -527,28 +722,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel joueur de NBA se définit lui-même comme un « viking africain » ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Derrick Rose"
-          },{
-            "is_good_answer": false,
-            "content": "Pau Gasol"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Aaron Brooks"
-          },{
-            "is_good_answer": true,
-            "content": "Joakim Noah"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Derrick Rose"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Pau Gasol"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Aaron Brooks"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Joakim Noah"
+            }
+          ],
+          "input": [
+            {
+              "content": "Joakim Noah"
+            },
+            {
+              "content": "Noah"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -560,28 +767,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel événement annuel majeur de la NBA est comparable à une bourse de joueurs ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "La franchise"
-          },{
-            "is_good_answer": false,
-            "content": "Les playoffs"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Le ballotage"
-          },{
-            "is_good_answer": true,
-            "content": "La draft"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "La franchise"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Les playoffs"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Le ballotage"
+            },
+            {
+              "is_good_answer": true,
+              "content": "La draft"
+            }
+          ],
+          "input": [
+            {
+              "content": "La Draft"
+            },
+            {
+              "content": "Draft"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -593,28 +812,41 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Combien de titres de champion NBA Michael Jordan a-t-il obtenu ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Cinq"
-          },{
-            "is_good_answer": false,
-            "content": "Sept"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Six"
-          },{
-            "is_good_answer": false,
-            "content": "Quatre"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Cinq"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Sept"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Six"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Quatre"
+            }
+          ],
+          "input": [
+            {
+              "content": "Six"
+            },
+            {
+              "content": "6",
+              "errorAllowedCount": 0
+            }
+          ]
+        }
       },
       "media": {
 
@@ -626,28 +858,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Qui est le premier joueur français à avoir été sacré champion NBA ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Joe Dumars"
-          },{
-            "is_good_answer": false,
-            "content": "Paul Pierce"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Tony Parker"
-          },{
-            "is_good_answer": false,
-            "content": "Tim Duncan"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Joe Dumars"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Paul Pierce"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Tony Parker"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Tim Duncan"
+            }
+          ],
+          "input": [
+            {
+              "content": "Tony Parker"
+            },
+            {
+              "content": "Parker"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -659,28 +903,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Qui a été élu deux fois meilleur joueur de la NBA, en 2005 et 2006 ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Jeff Brown"
-          },{
-            "is_good_answer": false,
-            "content": "Dana Jones"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Marlon Garnett"
-          },{
-            "is_good_answer": true,
-            "content": "Steve Nash"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Jeff Brown"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Dana Jones"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Marlon Garnett"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Steve Nash"
+            }
+          ],
+          "input": [
+            {
+              "content": "Steve Nash"
+            },
+            {
+              "content": "Nash"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -692,28 +948,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel gagnant de la « Nouvelle Star », diffusée sur M6, est surnommé « La Tortue » ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Christophe Willem"
-          },{
-            "is_good_answer": false,
-            "content": "Julien Doré"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Jonatan Cerrada"
-          },{
-            "is_good_answer": false,
-            "content": "Steeve Estatof"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Christophe Willem"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Julien Doré"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Jonatan Cerrada"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Steeve Estatof"
+            }
+          ],
+          "input": [
+            {
+              "content": "Christophe Willem"
+            },
+            {
+              "content": "Willem"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -725,28 +993,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "En 1991, quel tube Yannick Noah a-t-il associé à la victoire de la France en coupe Davis ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Vagabond"
-          },{
-            "is_good_answer": false,
-            "content": "Les Lionnes"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Saga Africa"
-          },{
-            "is_good_answer": false,
-            "content": "Ose"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Vagabond"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Les Lionnes"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Saga Africa"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Ose"
+            }
+          ],
+          "input": [
+            {
+              "content": "Saga Africa"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -758,28 +1035,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel chanteur prénommé Mathieu a émergé du succès remporté par les Linkup ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Corneille"
-          },{
-            "is_good_answer": false,
-            "content": "Keen'V"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Raphaël"
-          },{
-            "is_good_answer": true,
-            "content": "M. Pokora"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Corneille"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Keen'V"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Raphaël"
+            },
+            {
+              "is_good_answer": true,
+              "content": "M. Pokora"
+            }
+          ],
+          "input": [
+            {
+              "content": "M. Pokora"
+            },
+            {
+              "content": "Matt Pokora"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -791,28 +1080,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel est le style musical de l'album de Rohff, « La fierté des années » ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "La Techno"
-          },{
-            "is_good_answer": false,
-            "content": "Le tango"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Le disco"
-          },{
-            "is_good_answer": true,
-            "content": "Le rap"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "La Techno"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Le tango"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Le disco"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Le rap"
+            }
+          ],
+          "input": [
+            {
+              "content": "Le rap"
+            },
+            {
+              "content": "Rap"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -824,28 +1125,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel Américano-Libanais est entré dans les charts avec « Life in Cartoon Motion » ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Mika"
-          },{
-            "is_good_answer": false,
-            "content": "Iwan"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Rida"
-          },{
-            "is_good_answer": false,
-            "content": "K. Maro"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Mika"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Iwan"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Rida"
+            },
+            {
+              "is_good_answer": false,
+              "content": "K. Maro"
+            }
+          ],
+          "input": [
+            {
+              "content": "Mika"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -857,28 +1167,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Qui a chanté au pied de …onnes le 10 juin 2000 ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Eddy Mitchell"
-          },{
-            "is_good_answer": false,
-            "content": "Patrick Bruel"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Christophe Maé"
-          },{
-            "is_good_answer": true,
-            "content": "Johnny Hallyday"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Eddy Mitchell"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Patrick Bruel"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Christophe Maé"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Johnny Hallyday"
+            }
+          ],
+          "input": [
+            {
+              "content": "Johnny Hallyday"
+            },
+            {
+              "content": "Johnny"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -890,28 +1212,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Sous quel nom le rappeur et homme d'affaires américain Curtis Jackson fait-il carrière ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "50 cent"
-          },{
-            "is_good_answer": false,
-            "content": "Fat Joe"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Big Sean"
-          },{
-            "is_good_answer": false,
-            "content": "Mike D"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "50 cent"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Fat Joe"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Big Sean"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Mike D"
+            }
+          ],
+          "input": [
+            {
+              "content": "50 cent"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -923,28 +1254,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Avec quel chanteur le top model Heidi Klum a-t-elle été mariée durant sept ans ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Seal"
-          },{
-            "is_good_answer": false,
-            "content": "Paul McCartney"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Sean Paul"
-          },{
-            "is_good_answer": false,
-            "content": "Robbie Williams"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Seal"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Paul McCartney"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Sean Paul"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Robbie Williams"
+            }
+          ],
+          "input": [
+            {
+              "content": "Seal"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -956,28 +1296,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel DJ a repris un titre des années 80 pour faire un tube avec « Living On Video » ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Pakito"
-          },{
-            "is_good_answer": false,
-            "content": "Vitalic"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Madeon"
-          },{
-            "is_good_answer": false,
-            "content": "Brodinski"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Pakito"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Vitalic"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Madeon"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Brodinski"
+            }
+          ],
+          "input": [
+            {
+              "content": "Pakito"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -989,28 +1338,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel chanteur a sorti « Musicology » puis « 3121 » deux ans plus tard ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Bob James"
-          },{
-            "is_good_answer": false,
-            "content": "Al Jarreau"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Prince"
-          },{
-            "is_good_answer": false,
-            "content": "James Brown"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Bob James"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Al Jarreau"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Prince"
+            },
+            {
+              "is_good_answer": false,
+              "content": "James Brown"
+            }
+          ],
+          "input": [
+            {
+              "content": "Prince"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1022,358 +1380,512 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans quel pays se situe le circuit de course automobile du Mans ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Pays-Bas"
-          },{
-            "is_good_answer": false,
-            "content": "Suisse"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Belgique"
-          },{
-            "is_good_answer": true,
-            "content": "France"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Pays-Bas"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Suisse"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Belgique"
+            },
+            {
+              "is_good_answer": true,
+              "content": "France"
+            }
+          ],
+          "input": [
+            {
+              "content": "France"
+            },
+            {
+              "content": "La France"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [
+        {
+          "name": "automobile"
+        },
+        {
+          "name": "sport"
+        }
+      ]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "À quel modèle de voiture ressemble le vieux tacot jaune que conduit Gaston Lagaffe ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Rolls-Royce"
-          },{
-            "is_good_answer": false,
-            "content": "Citroën B10"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Fiat 509"
-          },{
-            "is_good_answer": false,
-            "content": "Jeep"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Rolls-Royce"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Citroën B10"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Fiat 509"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Jeep"
+            }
+          ],
+          "input": [
+            {
+              "content": "Fiat 509"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel sport automobile consiste à accélérer le plus rapidement possible avec son véhicule ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Le trial"
-          },{
-            "is_good_answer": false,
-            "content": "Le Drift"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Le Monster truck"
-          },{
-            "is_good_answer": true,
-            "content": "Le Dragster"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Le trial"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Le Drift"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Le Monster truck"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Le Dragster"
+            }
+          ],
+          "input": [
+            {
+              "content": "Le Dragster"
+            },
+            {
+              "content": "Dragster"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Comment s'appelle le véhicule du personnage de bande dessinée Batman ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "La BatDrive"
-          },{
-            "is_good_answer": false,
-            "content": "La Batauto"
-          },
-          {
-            "is_good_answer": false,
-            "content": "La Batcar"
-          },{
-            "is_good_answer": true,
-            "content": "La Batmobile"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "La BatDrive"
+            },
+            {
+              "is_good_answer": false,
+              "content": "La Batauto"
+            },
+            {
+              "is_good_answer": false,
+              "content": "La Batcar"
+            },
+            {
+              "is_good_answer": true,
+              "content": "La Batmobile"
+            }
+          ],
+          "input": [
+            {
+              "content": "La Batmobile"
+            },
+            {
+              "content": "Batmobile"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "De quand date le Duster, véhicule utilitaire sport vendu par la marque roumaine Dacia ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "2006"
-          },{
-            "is_good_answer": false,
-            "content": "2008"
-          },
-          {
-            "is_good_answer": true,
-            "content": "2010"
-          },{
-            "is_good_answer": false,
-            "content": "2012"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "2006"
+            },
+            {
+              "is_good_answer": false,
+              "content": "2008"
+            },
+            {
+              "is_good_answer": true,
+              "content": "2010"
+            },
+            {
+              "is_good_answer": false,
+              "content": "2012"
+            }
+          ],
+          "input": [
+            {
+              "content": "2010",
+              "errorAllowedCount": 0
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "En France, refuser une priorité peut vous coûter combien de points sur le permis ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "6 points"
-          },{
-            "is_good_answer": false,
-            "content": "8 points"
-          },
-          {
-            "is_good_answer": true,
-            "content": "4 points"
-          },{
-            "is_good_answer": false,
-            "content": "2 points"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "6 points"
+            },
+            {
+              "is_good_answer": false,
+              "content": "8 points"
+            },
+            {
+              "is_good_answer": true,
+              "content": "4 points"
+            },
+            {
+              "is_good_answer": false,
+              "content": "2 points"
+            }
+          ],
+          "input": [
+            {
+              "content": "4 points",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "4",
+              "errorAllowedCount": 0
+            },
+            {
+              "content": "quatre"
+            },
+            {
+              "content": "quatre points"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quelle principauté accueille l'un des plus prestigieux Grand Prix de Formule 1 ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Liechtenstein"
-          },{
-            "is_good_answer": false,
-            "content": "Andorre"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Mantoue"
-          },{
-            "is_good_answer": true,
-            "content": "Monaco"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Liechtenstein"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Andorre"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Mantoue"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Monaco"
+            }
+          ],
+          "input": [
+            {
+              "content": "Monaco"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans le monde automobile, quel sigle correspond au Grand Tourisme Injection ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "sport"
-          },{
-            "is_good_answer": true,
-            "content": "Gti"
-          },
-          {
-            "is_good_answer": false,
-            "content": "TT"
-          },{
-            "is_good_answer": false,
-            "content": "Turbo"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "sport"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Gti"
+            },
+            {
+              "is_good_answer": false,
+              "content": "TT"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Turbo"
+            }
+          ],
+          "input": [
+            {
+              "content": "GTI",
+              "errorAllowedCount": 0
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quelle société appartenant au groupe Belron « répare et remplace » votre pare-brise ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Carglass"
-          },{
-            "is_good_answer": false,
-            "content": "Midas"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Speedy"
-          },{
-            "is_good_answer": false,
-            "content": "Norauto"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Carglass"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Midas"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Speedy"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Norauto"
+            }
+          ],
+          "input": [
+            {
+              "content": "Carglass"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quelle firme automobile, filiale française de FIAT, a ensuite intégré le groupe Chrysler ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Simca"
-          },{
-            "is_good_answer": false,
-            "content": "Hommell"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Packard"
-          },{
-            "is_good_answer": false,
-            "content": "Triumph"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Simca"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Hommell"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Packard"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Triumph"
+            }
+          ],
+          "input": [
+            {
+              "content": "Simca"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "automobile"}]
-
+      "categories": [{"name": "automobile"},
+        {
+          "name": "sport"
+        }]
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans quel jeu peux on voir des Chocobos ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Breath of fire"
-          },{
-            "is_good_answer": true,
-            "content": "Final Fantasy"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Secret of Mana"
-          },{
-            "is_good_answer": false,
-            "content": "Golden stun"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Breath of fire"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Final Fantasy"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Secret of Mana"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Golden stun"
+            }
+          ],
+          "input": [
+            {
+              "content": "Final Fantasy"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1385,28 +1897,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Salamèche évolue en ",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Dracaufeu"
-          },{
-            "is_good_answer": true,
-            "content": "Reptincel"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Magna"
-          },{
-            "is_good_answer": false,
-            "content": "Ptera"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Dracaufeu"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Reptincel"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Magna"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Ptera"
+            }
+          ],
+          "input": [
+            {
+              "content": "Reptincel"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1418,28 +1939,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Zelda est un jeu du genre",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Aventure"
-          },{
-            "is_good_answer": false,
-            "content": "RPG"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Course"
-          },{
-            "is_good_answer": false,
-            "content": "Simulation"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Aventure"
+            },
+            {
+              "is_good_answer": false,
+              "content": "RPG"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Course"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Simulation"
+            }
+          ],
+          "input": [
+            {
+              "content": "Aventure"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1451,28 +1981,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Sur quelle plateforme le jeu Tekken est sorti en premier ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "La borne d'arcade"
-          },{
-            "is_good_answer": false,
-            "content": "NES"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Playstation"
-          },{
-            "is_good_answer": false,
-            "content": "Gamecube"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "La borne d'arcade"
+            },
+            {
+              "is_good_answer": false,
+              "content": "NES"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Playstation"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Gamecube"
+            }
+          ],
+          "input": [
+            {
+              "content": "La borne d'arcade"
+            },
+            {
+              "content": "Borne d'arcade"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1484,28 +2026,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans quel jeu le personnage de Mario a-t-il été développé en premier ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Super Mario"
-          },{
-            "is_good_answer": false,
-            "content": "Super Mario Bros"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Donkey Kong"
-          },{
-            "is_good_answer": false,
-            "content": "Mario Party"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Super Mario"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Super Mario Bros"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Donkey Kong"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Mario Party"
+            }
+          ],
+          "input": [
+            {
+              "content": "Donkey Kong"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1517,28 +2068,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "La série Fallout est la suite « spirituelle » de quel jeu ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Wasteland"
-          },{
-            "is_good_answer": false,
-            "content": "Homeland"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Falland"
-          },{
-            "is_good_answer": false,
-            "content": "Skyrim"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Wasteland"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Homeland"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Falland"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Skyrim"
+            }
+          ],
+          "input": [
+            {
+              "content": "Wasteland"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1550,28 +2110,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Que signifie le nom de la serie GTA ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Burnout"
-          },{
-            "is_good_answer": false,
-            "content": "Conduite dangeureuse"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Vol de voiture"
-          },{
-            "is_good_answer": false,
-            "content": "Voiture customisé"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Burnout"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Conduite dangeureuse"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Vol de voiture"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Voiture customisé"
+            }
+          ],
+          "input": [
+            {
+              "content": "Vol de voiture"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1583,28 +2152,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Le jeu Counter Strike dérive de quel autre jeu ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Half Life"
-          },{
-            "is_good_answer": false,
-            "content": "Splinter Cell"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Doom"
-          },{
-            "is_good_answer": false,
-            "content": "Call of Duty"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Half Life"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Splinter Cell"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Doom"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Call of Duty"
+            }
+          ],
+          "input": [
+            {
+              "content": "Half Life"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1616,28 +2194,40 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans Pac man qu'est ce qui hante le labyrinthe ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Des plantes carnivores"
-          },{
-            "is_good_answer": true,
-            "content": "Des fantômes"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Des squelettes"
-          },{
-            "is_good_answer": false,
-            "content": "Des zombies"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Des plantes carnivores"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Des fantômes"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Des squelettes"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Des zombies"
+            }
+          ],
+          "input": [
+            {
+              "content": "Des fantômes"
+            },
+            {
+              "content": "Fantômes"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1649,28 +2239,37 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Dans la légende de Zelda, comment s'appelle le héros ?",
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Zelda"
-          },{
-            "is_good_answer": false,
-            "content": "Bruno"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Ganondorf"
-          },{
-            "is_good_answer": true,
-            "content": "Link"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Zelda"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Bruno"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Ganondorf"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Link"
+            }
+          ],
+          "input": [
+            {
+              "content": "Link"
+            }
+          ]
+        }
       },
       "media": {
 
@@ -1682,112 +2281,183 @@
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "input"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Qui est le compagnon de Batman ?",
       "status": "pending",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Robin"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": true,
+              "content": "Robin"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Le Joker"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Leroy"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Clark Kent"
+            }
+          ],
+          "input": [
+            {
+              "content": "Robin"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
-
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "input"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel super héros ne se sépare jamais de son marteau forgé par les nains ",
       "status": "pending",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Thor"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Hulk"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Aquaman"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Rhino"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Thor"
+            }
+          ],
+          "input": [
+            {
+              "content": "Thor"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel super-héros à la force surhumaine ressemble à un être de pierre ?",
       "status": "disapproved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Hawkman"
-          },{
-            "is_good_answer": false,
-            "content": "Plastic Man"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Superboy"
-          },{
-            "is_good_answer": true,
-            "content": "La Chose"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Hawkman"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Plastic Man"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Superboy"
+            },
+            {
+              "is_good_answer": true,
+              "content": "La Chose"
+            }
+          ],
+          "input": [
+            {
+              "content": "La Chose"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
 
     }
   },
   {
     "model": "Question",
     "data": {
-      "types": [{"name": "qcm"}],
+      "types": [{"name": "classic"}],
       "isHardcore": false,
       "content": "Quel super-héros porte un costume inspiré du drapeau américain ?",
       "status": "disapproved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": false,
-            "content": "Tigra"
-          },{
-            "is_good_answer": false,
-            "content": "Iron Man"
-          },
-          {
-            "is_good_answer": false,
-            "content": "Blade"
-          },{
-            "is_good_answer": true,
-            "content": "Captain America"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Tigra"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Iron Man"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Blade"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Captain America"
+            }
+          ],
+          "input": [
+            {
+              "content": "Captain America"
+            }
+          ]
+        }
       },
       "media": {
 
       },
-      "categories": [{"name": "cinema"}]
+      "categories": [
+        {
+          "name": "cinema"
+        }
+      ]
     }
   },
   {
@@ -1795,7 +2465,7 @@
     "data": {
       "types": [
         {
-          "name": "input"
+          "name": "classic"
         }
       ],
       "isHardcore": false,
@@ -1803,20 +2473,37 @@
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Jean de La Fontaine"
-          },
-          {
-            "is_good_answer": true,
-            "content": "de La Fontaine"
-          },
-          {
-            "is_good_answer": true,
-            "content": "La Fontaine"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Pierre Corneille"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Esope"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Jean Racine"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Jean de La Fontaine"
+            }
+          ],
+          "input": [
+            {
+              "content": "Jean de La Fontaine"
+            },
+            {
+              "content": "de La Fontaine"
+            },
+            {
+              "content": "La Fontaine"
+            }
+          ]
+        }
       },
       "media": {
       },
@@ -1832,7 +2519,7 @@
     "data": {
       "types": [
         {
-          "name": "input"
+          "name": "classic"
         }
       ],
       "isHardcore": true,
@@ -1840,20 +2527,38 @@
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "le Zinc"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Zinc"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Zn"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "L'argent"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Le zinc"
+            },
+            {
+              "is_good_answer": false,
+              "content": "le carbone"
+            },
+            {
+              "is_good_answer": false,
+              "content": "le soufre"
+            }
+          ],
+          "input": [
+            {
+              "content": "Le zinc"
+            },
+            {
+              "content": "Zinc"
+            },
+            {
+              "content": "Zn",
+              "errorAllowedCount": 0
+            }
+          ]
+        }
       },
       "media": {
       },
@@ -1869,7 +2574,7 @@
     "data": {
       "types": [
         {
-          "name": "input"
+          "name": "classic"
         }
       ],
       "isHardcore": true,
@@ -1877,28 +2582,43 @@
       "status": "approved",
       "customQuizId": null,
       "answer": {
-        "answers": [
-          {
-            "is_good_answer": true,
-            "content": "Georges Castriote Skanderbeg"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Georges Castriote"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Castriote"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Scanderbeg"
-          },
-          {
-            "is_good_answer": true,
-            "content": "Skanderberg"
-          }
-        ]
+        "answers": {
+          "qcm": [
+            {
+              "is_good_answer": false,
+              "content": "Vlad Tepes"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Ivan Sirkhov"
+            },
+            {
+              "is_good_answer": true,
+              "content": "Skanderbeg"
+            },
+            {
+              "is_good_answer": false,
+              "content": "Baybars"
+            }
+          ],
+          "input": [
+            {
+              "content": "Georges Castriote Skanderbeg"
+            },
+            {
+              "content": "Georges Castriote"
+            },
+            {
+              "content": "Castriote"
+            },
+            {
+              "content": "Scanderbeg"
+            },
+            {
+              "content": "Skanderbeg"
+            }
+          ]
+        }
       },
       "media": {
       },

@@ -3,20 +3,21 @@ import PlayerLine from "./PlayerLine";
 
 const PlayersBox = ({players, host, currentPlayer}) => {
     return (
-        <div className="lobby-box">
+        <div className="lobby-box lobby-box-players">
             <div className="lobby-box-header">
-                <p className="lobby-box-header-label">Joueurs</p>
+                <span className="lobby-box-header-label">Joueurs</span>
             </div>
-            <div className="lobby-box-content">
+            <div className="lobby-box-content wide-borders">
+                <div className="lobby-box-scrollable-content">
                     {players.map((player, index) => {
-                        let playerData = player.username;
-                        if (player.socketId === currentPlayer.socketId) playerData += ' (Vous)';
-                        if (host.socketId === player.socketId) playerData += ' (Host)';
                         return (
-                            <PlayerLine key={index} player={playerData}/>
+                            <PlayerLine key={index}
+                                        player={player}
+                                        isCurrentPlayer={player.socketId === currentPlayer.socketId}
+                            />
                         )
-
                     })}
+                </div>
             </div>
         </div>
     )

@@ -2,8 +2,7 @@ import * as socketIoClient from 'socket.io-client';
 import Util from "../util/Util";
 import GameUtil from "../util/GameUtil";
 import env from "../config/env";
-import Toastr from "toastr2";
-const toastr = new Toastr();
+import {app} from "../components/App";
 
 class ClientSocket {
 
@@ -21,7 +20,7 @@ class ClientSocket {
 
         this.socket.on('connection-failure', () => {
 
-            toastr.error('Impossible de rejoindre cette room');
+            app.toastr.error('Impossible de rejoindre cette room');
 
             roomComponent.props.history.replace('/');
 
@@ -159,13 +158,13 @@ class ClientSocket {
         })
 
         this.socket.on('force-disconnection', () => {
-            toastr.error('Vous avez été déconnecté');
+            app.toastr.error('Vous avez été déconnecté');
             roomComponent.props.history.replace('/');
             this.destructor()
         })
 
         this.socket.on('error', () => {
-            toastr.error('Vous avez été déconnecté');
+            app.toastr.error('Vous avez été déconnecté');
             roomComponent.props.history.replace('/');
             this.destructor()
         })
@@ -176,14 +175,13 @@ class ClientSocket {
 
     };
 
-
     generateQuiz = (roomId) => {
         const gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
         this.socket.emit('generate-quiz', {gameConfiguration, roomId})
     };
 
-    sendResult = ({result, roomId}) => {
-        this.socket.emit('send-player-result', {result, roomId});
+    sendResult = ({roundPoints, roomId}) => {
+        this.socket.emit('send-player-result', {roundPoints, roomId});
     };
 
     updateGameConfiguration = (roomId) => {

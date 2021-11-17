@@ -8,10 +8,9 @@ import GameUtil from "../../../util/GameUtil";
 import Question from "./views/Question";
 import Answer from "./views/Answer";
 import CreateGame from "../CreateGame/CreateGame";
-import Toastr from "toastr2";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
-const toastr = new Toastr();
+import {app} from "../../App";
 
 class Room extends React.Component {
 
@@ -38,7 +37,13 @@ class Room extends React.Component {
             gameConfiguration: false,
             currentPlayer: false,
             currentQuestion: false,
-            questionInputDisabled: false
+            lastQuestionAnswer: {
+                answer: null,
+                wasCorrect: false,
+                wasQcm: false,
+            },
+            questionInputDisabled: false,
+            isQcmEnabled: false
         }
     }
 
@@ -85,11 +90,12 @@ class Room extends React.Component {
 
                 this.setState({socketOpen: true});
             } catch (error) {
-                toastr.error('Impossible de rejoindre cette room');
+                app.toastr.error('Impossible de rejoindre cette room');
                 this.props.history.replace('/');
             }
         })()
 
+        app.showBackArrow(false);
     }
 
 
@@ -118,35 +124,47 @@ class Room extends React.Component {
                 answer: false,
                 gameOptions: false,
             },
-            currentQuestion
+            currentQuestion,
+            lastQuestionAnswer: {
+                answer: null,
+                wasCorrect: false,
+                wasQcm: false,
+            },
         });
     };
 
     submitAnswer = (answer = null) => {
-        let isGoodAnswer = false;
+        const { isQcmEnabled } = this.state;
+        let roundPoints = 0;
 
         if (answer) {
-            this.setState({questionInputDisabled: true});
             const { currentQuestion } = this.state;
-            isGoodAnswer = GameUtil.verifyAnswer(answer, currentQuestion);
+            roundPoints = GameUtil.getRoundPoints(answer, currentQuestion, isQcmEnabled);
+            this.setState({
+                questionInputDisabled: true,
+                lastQuestionAnswer: {
+                    answer: isQcmEnabled ? answer.content : answer,
+                    wasCorrect: roundPoints > 0,
+                    wasQcm: isQcmEnabled,
+                },
+            });
         }
 
-        this.clientSocket.sendResult({result: isGoodAnswer, roomId: this.roomId})
+        this.clientSocket.sendResult({roundPoints: roundPoints, roomId: this.roomId})
     };
 
     displayScores = (roomData) => {
-        this.setState(
-            {
-                display: {
-                    lobby: false,
-                    question: false,
-                    answer: true,
-                    gameOptions: false,
-                },
-                roomData,
-                questionInputDisabled: false,
-            }
-        );
+        this.setState({
+            display: {
+                lobby: false,
+                question: false,
+                answer: true,
+                gameOptions: false,
+            },
+            roomData,
+            questionInputDisabled: false,
+            isQcmEnabled: false
+        });
     };
 
     endGame = (roomData) => {
@@ -220,6 +238,10 @@ class Room extends React.Component {
         return generatedState;
     };
 
+    enableQcm = () => {
+        this.setState({isQcmEnabled: true});
+    }
+
 
     componentWillUnmount() {
         Util.clearSessionStorage();
@@ -235,7 +257,7 @@ class Room extends React.Component {
         const {
             isLoading, display, roomData, gameConfiguration,
             currentPlayer, isHost, currentQuestion, timeLeft,
-            questionInputDisabled
+            questionInputDisabled, isQcmEnabled
         } = this.state;
         if (isLoading) {
             return (
@@ -277,21 +299,28 @@ class Room extends React.Component {
             return (
                 <>
                     <Question currentQuestion={currentQuestion}
+                              quizLength={roomData.quizLength}
                               submitAnswer={this.submitAnswer}
                               timeLeft={timeLeft}
                               questionInputDisabled={questionInputDisabled}
                               leaveRoom={this.leaveRoom}
+                              isQcmEnabled={isQcmEnabled}
+                              enableQcm={this.enableQcm}
                     />
                 </>
             )
 
         } else if (display.answer) {
 
+            const {lastQuestionAnswer} = this.state;
+
             return (
                 <>
                     <Answer roomData={roomData}
                             currentQuestion={currentQuestion}
+                            quizLength={roomData.quizLength}
                             currentPlayer={currentPlayer}
+                            playerAnswer={lastQuestionAnswer}
                             timeLeft={timeLeft}
                             leaveRoom={this.leaveRoom}
                     />
