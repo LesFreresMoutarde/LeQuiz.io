@@ -185,7 +185,7 @@ class App extends React.Component {
             );
         } else {
             return (
-                <div className={`app ${hideFooter ? 'no-footer' : ''}`}>
+                <div className={`app ${hideFooter ? 'no-footer' : ''} ${isMobileOnly ? 'mobile' : ''}`}>
                     {showFeedbackModal &&
                         <FeedbackModal closeModal={this.closeFeedbackModal}/>
                     }
@@ -212,7 +212,7 @@ class App extends React.Component {
                             </Switch>
                         </div>
                     </div>
-                    <Footer displayFeedbackModal={this.displayFeedbackModal}/>
+                    <Footer displayFeedbackModal={this.displayFeedbackModal} mobile={isMobileOnly}/>
                 </div>
             );
         }
