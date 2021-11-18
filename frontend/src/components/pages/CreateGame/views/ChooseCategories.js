@@ -126,7 +126,7 @@ export default class ChooseCategories extends React.Component {
     }
 
     submitCategories = () => {
-        this.props.submit(this.getPickedCategories());
+        this.props.submit('categories', this.getPickedCategories());
     };
 
     render() {
