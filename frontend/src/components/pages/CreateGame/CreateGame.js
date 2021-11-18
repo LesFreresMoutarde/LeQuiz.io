@@ -56,119 +56,104 @@ export default class CreateGame extends React.Component {
         }
     };
 
-    submitGameMode = (gameMode) => {
+    submitGameConfigurationElement = (elementName, elementValue) => {
         let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        gameConfiguration.gameMode = gameMode;
 
-        if (!this.props.fromRoom) {
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+        switch (elementName) {
+            case 'gameMode':
+            case 'categories':
+                gameConfiguration[elementName] = elementValue;
+                this.goNext(gameConfiguration, elementName);
+                break;
+            case 'options':
+                const { questionTypes, winCriterionInputValue, withHardcoreQuestions } = elementValue;
 
-            this.setState({
-                display: {
-                    gameMode: false,
-                    categories: true,
-                    options: false
-                }
-            })
-        } else {
-            gameConfiguration = GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
+                gameConfiguration.winCriterion = parseInt(winCriterionInputValue, 10);
+                gameConfiguration.questionTypes = questionTypes;
+                gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
 
-            this.props.roomInstance.setState({
-                display: {
-                    lobby: true,
-                    question: false,
-                    answer: false,
-                    gameOptions: false,
-                },
-                gameConfiguration
-            });
-
-            app.showBackArrow(false);
-
-            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId);
+                this.goNext(gameConfiguration, elementName);
+                break;
+            default:
+                this.props.history.replace('/');
+                break;
         }
-    };
 
-    submitCategories = (categories) => {
-        let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-        gameConfiguration.categories = categories;
+    }
 
+    goNext = (gameConfiguration, elementName) => {
+        // Traditional user journey
         if (!this.props.fromRoom) {
-            Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+            const navigationFlow = ['gameMode', 'categories', 'options', 'lobby'];
+            const nextPage = navigationFlow[navigationFlow.indexOf(elementName) + 1];
 
-            this.setState({
-                display: {
-                    gameMode: false,
-                    categories: false,
-                    options: true,
-                }
-            })
-        } else {
-            gameConfiguration = GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
-
-            this.props.roomInstance.setState({
-                display: {
-                    lobby: true,
-                    question: false,
-                    answer: false,
-                    gameOptions: false,
-                },
-                gameConfiguration
-            });
-
-            app.showBackArrow(false);
-
-            this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId);
-        }
-    };
-
-    submitOptions = async (questionTypes, winCriterionValue, withHardcoreQuestions) => {
-
-        try {
-
-            let gameConfiguration = Util.getObjectFromSessionStorage(GameUtil.GAME_CONFIGURATION.key);
-            gameConfiguration.winCriterion = parseInt(winCriterionValue, 10);
-            gameConfiguration.questionTypes = questionTypes;
-            gameConfiguration.withHardcoreQuestions = withHardcoreQuestions;
-
-            if (!this.props.fromRoom) {
-
-                const response = await ApiUtil.performAPIRequest('game/rooms/create');
-
-                if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
-
-                const responseData = await response.json();
-
-                const roomCode = responseData.roomCode;
-
-                gameConfiguration.roomCode = roomCode;
-
+            // Simple navigation "push"
+            if (nextPage !== 'lobby') {
                 Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
 
-                this.props.history.push(`/room/${roomCode}`);
-
-            } else {
-                gameConfiguration = GameUtil.validateInRoomModifiedGameConfiguration(JSON.parse(JSON.stringify(gameConfiguration)));
-
-                this.props.roomInstance.setState({
+                this.setState({
                     display: {
-                        lobby: true,
-                        question: false,
-                        answer: false,
-                        gameOptions: false,
-                    },
-                    gameConfiguration
-                });
+                        gameMode: 'gameMode' === nextPage,
+                        categories: 'categories' === nextPage,
+                        options: 'options' === nextPage,
+                    }
+                })
 
-                app.showBackArrow(false);
-
-                this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
+                return;
             }
-        } catch (e) {
-            app.toastr.error('Impossible de créer un salon, réessayez ultérieurement')
+
+            // Room Creation
+            (async () => {
+                try {
+                    await this.handleGoNextToLobby(gameConfiguration)
+                } catch (e) {
+                    app.toastr.error('Impossible de créer un salon, réessayez ultérieurement\'')
+                    this.props.history.replace('/');
+                }
+            })();
+
+            return;
         }
 
-    };
+        // User came from lobby
+        this.handleGoNextFromLobby(gameConfiguration);
+    }
+
+    handleGoNextToLobby = async (gameConfiguration) => {
+        const response = await ApiUtil.performAPIRequest('game/rooms/create');
+
+        if (!response.ok) throw new Error('Failed to generate an unique identifier for this room');
+
+        const responseData = await response.json();
+
+        const roomCode = responseData.roomCode;
+
+        gameConfiguration.roomCode = roomCode;
+
+        Util.addObjectToSessionStorage(GameUtil.GAME_CONFIGURATION.key, gameConfiguration);
+
+        this.props.history.push(`/room/${roomCode}`);
+    }
+
+    handleGoNextFromLobby = (gameConfiguration) => {
+        const validGameConfiguration = GameUtil.validateInRoomModifiedGameConfiguration(
+            JSON.parse(JSON.stringify(gameConfiguration))
+        );
+
+        this.props.roomInstance.setState({
+            display: {
+                lobby: true,
+                question: false,
+                answer: false,
+                gameOptions: false,
+            },
+            gameConfiguration: validGameConfiguration
+        });
+
+        app.showBackArrow(false);
+
+        this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId);
+    }
 
     goBack = () => {
         const { display } = this.state;
