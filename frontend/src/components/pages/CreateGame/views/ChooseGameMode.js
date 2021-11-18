@@ -52,7 +52,7 @@ export default class ChooseGameMode extends React.Component {
     };
 
     pickGameMode = (gameMode) => {
-       this.props.submit(gameMode);
+       this.props.submit('gameMode', gameMode);
     };
 
     render() {
