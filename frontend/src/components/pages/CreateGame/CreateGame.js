@@ -83,6 +83,8 @@ export default class CreateGame extends React.Component {
                 gameConfiguration
             });
 
+            app.showBackArrow(false);
+
             this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId);
         }
     };
@@ -113,6 +115,8 @@ export default class CreateGame extends React.Component {
                 },
                 gameConfiguration
             });
+
+            app.showBackArrow(false);
 
             this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId);
         }
@@ -156,6 +160,8 @@ export default class CreateGame extends React.Component {
                     gameConfiguration
                 });
 
+                app.showBackArrow(false);
+
                 this.props.roomInstance.clientSocket.updateGameConfiguration(this.props.roomInstance.roomId)
             }
         } catch (e) {
@@ -178,6 +184,8 @@ export default class CreateGame extends React.Component {
                         answer: false,
                         gameOptions: false,
                     }})
+
+                app.showBackArrow(false);
             }
 
             return;
@@ -201,6 +209,8 @@ export default class CreateGame extends React.Component {
                         answer: false,
                         gameOptions: false,
                     }})
+
+                app.showBackArrow(false);
             }
 
             return;
@@ -224,6 +234,8 @@ export default class CreateGame extends React.Component {
                         answer: false,
                         gameOptions: false,
                     }})
+
+                app.showBackArrow(false);
             }
         }
     }
