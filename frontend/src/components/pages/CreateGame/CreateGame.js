@@ -158,71 +158,35 @@ export default class CreateGame extends React.Component {
     goBack = () => {
         const { display } = this.state;
 
-        if (display.gameMode) {
-            if (!this.props.fromRoom) {
-                this.props.history.replace('/');
-            } else {
-                this.props.roomInstance.setState({
-                    display: {
-                        lobby: true,
-                        question: false,
-                        answer: false,
-                        gameOptions: false,
-                    }})
+        const navigationFlow = ['home', 'gameMode', 'categories', 'options'];
 
-                app.showBackArrow(false);
-            }
+        const currentPage = Object.entries(display).find(([page, value]) => value === true)[0];
 
+        const previousPage = navigationFlow[navigationFlow.indexOf(currentPage) - 1];
+
+        if (this.props.fromRoom) {
+
+            this.props.roomInstance.setState({
+                display: {
+                    lobby: true,
+                    question: false,
+                    answer: false,
+                    gameOptions: false,
+                }})
+
+            app.showBackArrow(false);
             return;
         }
 
-        if (display.categories) {
-            if (!this.props.fromRoom) {
-                this.setState({
-                    display: {
-                        gameMode: true,
-                        categories: false,
-                        options: false,
-                    }
+        if (previousPage === 'home') this.props.history.replace('/');
 
-                })
-            } else {
-                this.props.roomInstance.setState({
-                    display: {
-                        lobby: true,
-                        question: false,
-                        answer: false,
-                        gameOptions: false,
-                    }})
-
-                app.showBackArrow(false);
+        this.setState({
+            display: {
+                gameMode: 'gameMode' === previousPage,
+                categories: 'categories' === previousPage,
+                options: false // Cannot happened
             }
-
-            return;
-        }
-
-        if (display.options) {
-            if (!this.props.fromRoom) {
-                this.setState({
-                    display: {
-                        gameMode: false,
-                        categories: true,
-                        options: false,
-                    }
-
-                })
-            } else {
-                this.props.roomInstance.setState({
-                    display: {
-                        lobby: true,
-                        question: false,
-                        answer: false,
-                        gameOptions: false,
-                    }})
-
-                app.showBackArrow(false);
-            }
-        }
+        })
     }
 
     componentWillUnmount() {
