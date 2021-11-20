@@ -11,6 +11,7 @@ const Footer = ({displayFeedbackModal, mobile}) => {
                 </div>
                 <div>
                     <span className="footer-text-item"><a href="/mentions-legales" className="no-underline" target="_blank">Mentions légales</a></span>
+                    -
                     <span className="footer-text-item"><Link to="/contact" className="no-underline">Contact</Link></span>
                 </div>
                 <div>

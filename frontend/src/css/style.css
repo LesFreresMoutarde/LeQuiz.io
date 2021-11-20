@@ -20,6 +20,10 @@
     --a-hover-color: #b1e7fa;
 }
 
+.app.mobile {
+    --app-footer-height: 110px;
+}
+
 * {
     scrollbar-color: #FCFCFC #16AFD9;
 }
@@ -235,6 +239,11 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.app.mobile > footer {
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .app.no-footer > footer {
