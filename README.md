@@ -1,4 +1,4 @@
-# <p style="text-align: center"><img src="logo.png" alt="leQuiz.io"></p>
+# <p style="text-align: center"><img src="logo-readme.png" alt="leQuiz.io"></p>
 
 ## Mise en route
 
