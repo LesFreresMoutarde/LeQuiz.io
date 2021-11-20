@@ -3,6 +3,7 @@ import Util from "../util/Util";
 import GameUtil from "../util/GameUtil";
 import env from "../config/env";
 import {app} from "../components/App";
+import AudioPlayer from "./AudioPlayer";
 
 class ClientSocket {
 
@@ -55,6 +56,7 @@ class ClientSocket {
         })
 
         this.socket.on('receive-new-player', (roomData) => {
+            AudioPlayer.playSound('enterRoom');
 
             roomComponent.setState({
                 roomData
@@ -93,6 +95,8 @@ class ClientSocket {
 
         this.socket.on('receive-quiz', ({quiz, room}) => {
             Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
+
+            AudioPlayer.playSound('startGame');
 
             roomComponent.setState({roomData: room});
 
@@ -172,6 +176,8 @@ class ClientSocket {
         })
 
         this.socket.on('player-disconnected', (roomData) => {
+            AudioPlayer.playSound('leaveRoom');
+
             roomComponent.handlePlayerDisconnect(roomData)
         })
 
