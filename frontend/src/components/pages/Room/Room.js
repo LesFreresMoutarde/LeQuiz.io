@@ -11,6 +11,7 @@ import CreateGame from "../CreateGame/CreateGame";
 import AuthUtil from "../../../util/AuthUtil";
 import ApiUtil from "../../../util/ApiUtil";
 import {app} from "../../App";
+import AudioPlayer from "../../../manager/AudioPlayer";
 
 class Room extends React.Component {
 
@@ -89,6 +90,9 @@ class Room extends React.Component {
                 this.clientSocket.handleSocketCommunication(this);
 
                 this.setState({socketOpen: true});
+
+                AudioPlayer.playSound('enterRoom');
+
             } catch (error) {
                 app.toastr.error('Impossible de rejoindre cette room');
                 this.props.history.replace('/');
@@ -97,7 +101,6 @@ class Room extends React.Component {
 
         app.showBackArrow(false);
     }
-
 
     startQuiz = () => {
         //TODO V2 verifier que le Host a les droits pour le mode de jeu !!
@@ -139,7 +142,11 @@ class Room extends React.Component {
 
         if (answer) {
             const { currentQuestion } = this.state;
+
             roundPoints = GameUtil.getRoundPoints(answer, currentQuestion, isQcmEnabled);
+
+            AudioPlayer.playSound('sendAnswer');
+
             this.setState({
                 questionInputDisabled: true,
                 lastQuestionAnswer: {
@@ -154,6 +161,9 @@ class Room extends React.Component {
     };
 
     displayScores = (roomData) => {
+
+        this.playSoundAtDisplayScores(roomData.quizLength);
+
         this.setState({
             display: {
                 lobby: false,
@@ -166,6 +176,19 @@ class Room extends React.Component {
             isQcmEnabled: false
         });
     };
+
+    playSoundAtDisplayScores = (quizLength) => {
+        const { lastQuestionAnswer, currentQuestion } = this.state;
+
+        if (currentQuestion.round === quizLength) {
+            AudioPlayer.playSound('endGame');
+        } else {
+            lastQuestionAnswer.wasCorrect
+                ? AudioPlayer.playSound('goodAnswer')
+                : AudioPlayer.playSound('badAnswer')
+            ;
+        }
+    }
 
     endGame = (roomData) => {
         clearInterval(this.timer);
@@ -193,6 +216,8 @@ class Room extends React.Component {
         this.timer = setInterval(() => {
 
             time -= 1000;
+
+            if (time === 3000 && this.state.display.question) AudioPlayer.playSound('timer');
 
             time > 0 ? timeToDisplay = time / 1000 : timeToDisplay = 1
 
@@ -242,14 +267,15 @@ class Room extends React.Component {
         this.setState({isQcmEnabled: true});
     }
 
-    componentWillUnmount() {
+    async componentWillUnmount() {
         Util.clearSessionStorage();
 
-        if(this.state.socketOpen) {
+        AudioPlayer.killPlayers();
+
+        if (this.state.socketOpen) {
             this.clientSocket.destructor(this.roomId);
             clearInterval(this.timer);
         }
-
     }
 
     render() {
