@@ -39,6 +39,9 @@
 
 .question-screen-clock-container {
     width: 120px;
+
+    position: relative;
+    top: -100px;
 }
 
 .classic-question-container {
@@ -370,6 +373,10 @@
 
     .question-screen-center {
         flex: 1;
+    }
+
+    .question-screen-clock-container {
+        top: 0;
     }
 
     .question-content-container .question-content {
