@@ -436,7 +436,7 @@
 }
 
 @media screen and (max-width: 992px),
-       screen and (max-height: 980px) {
+       screen and (max-height: 840px) {
     .question-scores-table-title {
         display: none;
     }
