@@ -13,6 +13,7 @@ const PlayersBox = ({players, host, currentPlayer}) => {
                         return (
                             <PlayerLine key={index}
                                         player={player}
+                                        isHost={host.socketId === player.socketId}
                                         isCurrentPlayer={player.socketId === currentPlayer.socketId}
                             />
                         )
