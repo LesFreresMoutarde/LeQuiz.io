@@ -4,29 +4,29 @@ class AudioPlayer {
 
     static sounds = {
         badAnswer: {
-            path: '/sounds/bad_answer.wav'
+            path: '/sounds/bad_answer.mp3'
         },
         endGame: {
-            path: '/sounds/end_game.wav'
+            path: '/sounds/end_game.mp3'
         },
         enterRoom: {
-            path: '/sounds/enter_room.wav'
+            path: '/sounds/enter_room.mp3'
         },
         goodAnswer: {
-            path: '/sounds/good_answer.wav'
+            path: '/sounds/good_answer.mp3'
         },
         leaveRoom: {
-            path: '/sounds/leave_room.wav'
+            path: '/sounds/leave_room.mp3'
         },
         sendAnswer: {
-            path: '/sounds/send_answer.wav',
+            path: '/sounds/send_answer.mp3',
             interruptedBy: ['goodAnswer', 'badAnswer', 'endGame']
         },
         startGame: {
-            path: '/sounds/start_game.wav'
+            path: '/sounds/start_game.mp3'
         },
         timer: {
-            path: '/sounds/timer.wav',
+            path: '/sounds/timer.mp3',
             interruptedBy: ['goodAnswer', 'badAnswer', 'endGame']
         },
     };
