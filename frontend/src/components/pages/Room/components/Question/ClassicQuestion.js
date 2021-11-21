@@ -15,12 +15,10 @@ const ClassicQuestion = ({question, quizLength, submitAnswer, userCanSubmit, isQ
 
             <div className="question-answers-container">
                 <div className={`question-answers ${isQcmEnabled ? 'qcm' : ''}`}>
-                    {!isQcmEnabled &&
-                    <QuestionAnswerField enableQcm={enableQcm} submitAnswer={submitAnswer} />
-                    }
-
-                    {isQcmEnabled &&
-                    <QuestionAnswerQCM question={question} submitAnswer={submitAnswer} userCanSubmit={userCanSubmit} />
+                    {isQcmEnabled ?
+                        <QuestionAnswerQCM question={question} submitAnswer={submitAnswer} userCanSubmit={userCanSubmit}/>
+                    :
+                        <QuestionAnswerField enableQcm={enableQcm} submitAnswer={submitAnswer} />
                     }
                 </div>
             </div>

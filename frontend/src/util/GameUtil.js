@@ -6,10 +6,6 @@ class GameUtil {
 
     static QUIZ_SESSION_STORAGE_KEY = 'quiz';
 
-    static ROUND_TIME = 12*1000;
-
-    static SCORES_TIME = 5*1000;
-
     static HARDCORE_DIFFICULTY = 'hardcore';
 
     static STANDARD_DIFFICULTY = 'standard';
