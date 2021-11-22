@@ -437,10 +437,13 @@
 }
 
 @media screen and (max-height: 840px) {
-
     .create-game-footer-counterbalance,
     .selected-categories-container {
         display: none;
+    }
+
+    .create-game-footer.select-categories-create-game-footer {
+        justify-content: flex-end;
     }
 }
 
