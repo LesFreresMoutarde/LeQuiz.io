@@ -25,7 +25,7 @@ const GameMode = ({gameMode, pickGameMode}) => {
             <>
                 {label}
                 {!allowed && (
-                    <img className="game-mode-label-disabled-desktop" src="/img/icons/locked.svg" />
+                    <img className="game-mode-label-disabled-desktop" src="/img/icons/work-in-progress.svg" />
                 )}
             </>
         )
@@ -47,7 +47,7 @@ const GameMode = ({gameMode, pickGameMode}) => {
         >
             {!allowed && (
                 <img className="game-mode-disabled-mobile"
-                     src="/img/icons/locked.svg"
+                     src="/img/icons/work-in-progress.svg"
                      style={{
                          maxHeight: 20,
                          maxWidth: 20,
