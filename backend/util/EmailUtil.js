@@ -1,28 +1,8 @@
-const nodemailer = require('nodemailer');
 const env = require('../config/env');
+const FormData = require("form-data");
+const fetch = require("node-fetch");
 
 class EmailUtil {
-    static FROM_NAME = 'LeQuiz.io';
-    static FROM_NOREPLY_ADDRESS = 'noreply@lequiz.io';
-    static CONTACT_ADDRESS = 'contact@lequiz.io';
-
-    static transport = null; // Initialized by createTransport function
-
-    static createTransport = () => {
-        const transport = nodemailer.createTransport(env.email);
-
-        console.log('Verifying email transport');
-        transport.verify((error, success) => {
-            if (error) {
-                throw new Error(error);
-            } else {
-                console.log('Email transport is ready');
-            }
-        });
-
-        return transport;
-    }
-
     /**
      * @param {string} email
      * @return {boolean}
@@ -36,37 +16,32 @@ class EmailUtil {
         return !!email.match(regex);
     }
 
-    /**
-     * @param {object} message The message options
-     * @param {string} message.from The sender
-     * @param {string} message.to The recipients, comma-separated
-     * @param {string} message.subject The email subject
-     * @param {string} message.text The email text content
-     * @param {string} message.html The email html content
-     * @param message
-     * @return {Promise}
-     * @throws {Error} if the email cannot be sent
-     */
-    static sendEmail = (message = {}) => {
-        return EmailUtil.transport.sendMail(message);
+    static sendResetPasswordEmail = async (email, username, resetPasswordUrl) => {
+        const url = `${env.privateApiUrl}/email/send-reset-password-email`;
+
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('resetPasswordUrl', resetPasswordUrl);
+
+        await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
     }
 
-    /**
-     *
-     * @param {object} message The message options
-     * @param {string} message.to The recipients, comma-separated
-     * @param {string} message.subject The email subject
-     * @param {string} message.text The email text content
-     * @param {string} message.html The email html content
-     * @returns {Promise}
-     */
-    static sendEmailFromNoreply = async (message = {}) => {
-        message.from = `"${EmailUtil.FROM_NAME}" <${EmailUtil.FROM_NOREPLY_ADDRESS}>`;
+    static sendWelcomeEmail = async (email, username) => {
+        const url = `${env.privateApiUrl}/email/send-welcome-email`;
 
-        return await EmailUtil.sendEmail(message);
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+
+        await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
     }
 }
-
-EmailUtil.transport = EmailUtil.createTransport();
 
 module.exports = EmailUtil;

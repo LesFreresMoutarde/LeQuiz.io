@@ -9,6 +9,8 @@ use PrivateApi\PrivateApi;
 
 class Email
 {
+    public const CONTACT_EMAIL_ADDRESS = 'contact@lequiz.io';
+
     private const FROM_EMAIL_ADDRESS = 'noreply@lequiz.io';
     private const FROM_NAME = 'leQuiz.io';
 

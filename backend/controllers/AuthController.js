@@ -563,30 +563,13 @@ class AuthController extends MainController {
     }
 
     sendResetPasswordEmailToUser = async (user) => {
-        const url = `${env.privateApiUrl}/email/send-reset-password-email`;
+        const resetPasswordUrl = `${env.frontUrl}/reset-password/${user.passwordResetToken}`
 
-        const formData = new FormData();
-        formData.append('username', user.username);
-        formData.append('email', user.email);
-        formData.append('resetPasswordUrl', `${env.frontUrl}/reset-password/${user.passwordResetToken}`);
-
-        await fetch(url, {
-            method: 'POST',
-            body: formData,
-        });
+        await EmailUtil.sendResetPasswordEmail(user.email, user.username, resetPasswordUrl);
     }
 
     sendWelcomeEmailToUser = async (user) => {
-        const url = `${env.privateApiUrl}/email/send-welcome-email`;
-
-        const formData = new FormData();
-        formData.append('username', user.username);
-        formData.append('email', user.email);
-
-        await fetch(url, {
-            method: 'POST',
-            body: formData,
-        });
+        await EmailUtil.sendWelcomeEmail(user.email, user.username);
     }
 }
 
