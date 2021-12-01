@@ -1,7 +1,7 @@
 import AuthUtil from "./AuthUtil";
 
 class Util {
-    static isVerbose = true; // TODO env
+    static isVerbose = process.env.NODE_ENV !== 'production';
 
     static verbose = (...items) => {
         if(!Util.isVerbose) {
