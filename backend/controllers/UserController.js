@@ -29,21 +29,23 @@ class UserController extends MainController {
     }
 
     actionFeedback = async ({subject, message}) => {
-
         if (message === '') throw new EmptyBodyError();
 
-        await EmailUtil.sendEmailFromNoreply({
-            to: EmailUtil.CONTACT_ADDRESS,
-            subject: `Un feedback a été envoyé ${subject ? `: ${subject}` : ''}`,
-            html:
-`<p style="font-size: 1.4em; margin-bottom: 20px">Un feedback a été envoyé ${subject ? `: ${subject}` : ''}</p>
-<p style="margin-bottom: 30px">${message}</p>`,
-            text:
-`Un feedback a été envoyé ${subject ? `: ${subject}` : ''}.
-${message}.`
-        })
-    }
+        const url = `${env.privateApiUrl}/receive-feedback-message`;
 
+        const formData = new FormData();
+
+        if (subject) {
+            formData.append('subject', subject);
+        }
+
+        formData.append('message', message);
+
+        await fetch (url, {
+            method: 'POST',
+            body: formData,
+        });
+    }
 }
 
 module.exports = UserController;
