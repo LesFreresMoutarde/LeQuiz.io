@@ -76,6 +76,14 @@
     background-color: var(--button-blue-color-lighter);
 }
 
+@media screen and (max-width: 1024px) {
+    .home-create-room-button {
+        font-size: 3em;
+        padding: 55px;
+        border-radius: 70px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .home-create-room-button {
         font-size: 3em;
