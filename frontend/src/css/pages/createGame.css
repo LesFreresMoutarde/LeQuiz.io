@@ -354,7 +354,7 @@
 
 .search-categories-input {
     margin-left: 15px;
-
+    min-width: 250px;
     padding: 6px 12px;
 }
 
