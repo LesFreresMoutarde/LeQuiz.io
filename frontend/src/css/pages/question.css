@@ -500,7 +500,7 @@
 }
 
 @media screen and (max-width: 360px),
-       screen and (max-height: 720px) {
+       screen and (max-height: 720px) and (max-width: 992px) {  /* exclude Ipad and tablets */
     .question-scores-container .question-content-container {
         display: none;
     }
