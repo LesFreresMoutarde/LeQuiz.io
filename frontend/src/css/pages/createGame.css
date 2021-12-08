@@ -354,7 +354,7 @@
 
 .search-categories-input {
     margin-left: 15px;
-
+    min-width: 250px;
     padding: 6px 12px;
 }
 
@@ -423,6 +423,18 @@
         margin-top: 5px;
         margin-bottom: 5px;
     }
+}
+
+@media screen and (max-width: 576px) {
+    .category-container-header {
+        flex-wrap: wrap;
+    }
+
+    .search-categories-input {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
 }
 
 @media screen and (max-width: 375px) {
