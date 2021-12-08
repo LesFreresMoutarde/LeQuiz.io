@@ -1,11 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
 import QuestionDesktopHeader from "../components/Shared/QuestionDesktopHeader";
 import Clock from "../components/Shared/Clock";
 import QuitCross from "../../../misc/QuitCross";
 import QuestionContent from "../components/Question/QuestionContent";
 import ScoresTable from "../components/Answer/ScoresTable";
+import {app} from "../../../App";
 
 const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}) => {
+    useEffect(() => {
+        app.showQuitCross(true, leaveRoom);
+
+        return () => {
+            app.showQuitCross(false);
+        };
+    }, []);
 
     const displayQuestionCounter = () => {
             return currentQuestion.round === quizLength
