@@ -468,6 +468,11 @@
 
 /** CHOOSE OPTIONS */
 
+.game-options-container {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 .game-options-container-main-row {
     width: 100%;
     display: flex;
