@@ -352,7 +352,7 @@
 }
 
 /* Cheap laptops sold with a 1080p screen but zoomed by default and resolution is 1536*864 + basic Ipad (tablets) */
-@media screen and (max-height: 619px) and (min-width: 1024px) {
+@media screen and (max-height: 768px) and (min-width: 1024px) {
     .question-answer-qcm-answer-container {
         padding: 30px;
     }
