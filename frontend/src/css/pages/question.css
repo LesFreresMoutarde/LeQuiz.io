@@ -352,9 +352,13 @@
 }
 
 /* Cheap laptops sold with a 1080p screen but zoomed by default and resolution is 1536*864 + basic Ipad (tablets) */
-@media screen and (max-height: 864px) {
+@media screen and (max-height: 768px) and (min-width: 1024px) {
     .question-answer-qcm-answer-container {
         padding: 30px;
+    }
+
+    .question-scores-table-item-container {
+        min-height: 25px;
     }
 }
 
@@ -496,7 +500,7 @@
 }
 
 @media screen and (max-width: 360px),
-       screen and (max-height: 720px) {
+       screen and (max-height: 720px) and (max-width: 992px) {  /* exclude Ipad and tablets */
     .question-scores-container .question-content-container {
         display: none;
     }
