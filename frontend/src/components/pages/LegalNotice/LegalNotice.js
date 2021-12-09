@@ -101,6 +101,52 @@ const LegalNotice = () => {
                 Les responsables de publication peuvent être contactés à cette adresse : contact@lequiz.io.
             </p>
             <p style={titleStyle}>Crédits</p>
+            <p style={paraStyle}>
+                <strong>Vecteurs</strong><br/>
+                <ul style={{listStyle: 'disc', paddingInlineStart: 40}}>
+                    <li>saturn by good ware</li>
+                    <li>electric guitar by freepik</li>
+                    <li>tennis racket by freepik</li>
+                    <li>pizza slice by freepik</li>
+                    <li>eiffel tower by smashicons</li>
+                    <li>trophy by freepik</li>
+                    <li>amphora by freepik</li>
+                    <li>mona lisa by freepik</li>
+                    <li>microscope by dino soft labs</li>
+                    <li>roman helmet by smashicons</li>
+                    <li>gameboy by freepik</li>
+                    <li>vynil by darius dan</li>
+                    <li>geography by freepik</li>
+                    <li>clapperboard by monkik</li>
+                    <li>eye mask by bqlqn</li>
+                    <li>camera by monkik</li>
+                    <li>playing cards by bqlqn</li>
+                    <li>settings pixel perfect</li>
+                    <li>logout by praveen patchu from the Noun Project</li>
+                    <li>play-roundicons</li>
+                    <li>straight-right-arrow-freepik</li>
+                    <li>lock-pixel-perfect</li>
+                    <li>chalkboard by pixel buddha</li>
+                    <li>mountain by freepik</li>
+                    <li>rope by freepik</li>
+                    <li>alarm clock by freepik</li>
+                    <li>tree by smashicons</li>
+                    <li>crocodile by freepik</li>
+                    <li>running by monkik</li>
+                    <li>checked-those-icons</li>
+                    <li>close-pixel-perfect</li>
+                    <li>medal-vectors-market</li>
+                    <li>crown-freepik</li>
+                    <li>pencil-edit by Adrien Coquet from the Noun Project</li>
+                    <li>timer-freepik</li>
+                    <li>barrier Icon by Twitter Emoji</li>
+                </ul>
+                <strong>Sons</strong><br/>
+                <ul style={{listStyle: 'disc', paddingInlineStart: 40}}>
+                    <li>mixkit.com</li>
+                    <li>GUI_Sound_Effects by_lokif opengameart.com</li>
+                </ul>
+            </p>
         </div>
     )
 }
