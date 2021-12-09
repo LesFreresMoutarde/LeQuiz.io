@@ -686,6 +686,11 @@ button {
     font-size: 2.4em;
 }
 
+.legal-notice-container {
+    max-height: 100%;
+    overflow-y: auto;
+}
+
 @media screen and (max-width: 576px),
        screen and (max-height: 640px) {
     .feedback-modal {
