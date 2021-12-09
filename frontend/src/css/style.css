@@ -640,17 +640,23 @@ button {
     justify-content: center;
 }
 
-#lobby-hover-to-show-code {
+.lobby-hover-to-show-code {
     position: relative;
 }
 
-#lobby-hover-to-show-code #lobby-hidden-code-message,
-#lobby-hover-to-show-code #lobby-room-code {
+.lobby-hover-to-show-code .lobby-hidden-code-message,
+.lobby-hover-to-show-code .lobby-room-code {
     display: inline-block;
+    width: 100%;
+    text-align: center;
     cursor: default;
 }
 
-#lobby-hover-to-show-code #lobby-hidden-code-message {
+.lobby-hover-to-show-code .lobby-hidden-code-message {
+    font-size: 1.5em;
+    padding-top: 30px;
+    padding-bottom: 20px;
+
     transition: transform 0.1s;
     user-select: none;
     -moz-user-select: none;
@@ -658,26 +664,27 @@ button {
     -webkit-user-select: none;
 }
 
-#lobby-hover-to-show-code #lobby-hidden-code-message.is-hover {
+.lobby-hover-to-show-code .lobby-hidden-code-message.is-hover {
     transform: scale(0.95);
-    transition: transform 0.4s ease-in;
+    transition: transform 0.5s ease-in;
 }
 
-/*#hover-to-show-code #hidden-code-message,*/
-#lobby-hover-to-show-code #lobby-room-code {
+.lobby-hover-to-show-code .lobby-room-code {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
 
+    padding-top: 20px;
+
     transition: opacity 0s;
 }
 
-#lobby-hover-to-show-code #lobby-room-code.visible {
+.lobby-hover-to-show-code .lobby-room-code.visible {
     transition: opacity 0.2s ease-in;
 }
 
-#lobby-hidden-code-message:not(.visible),
-#lobby-room-code:not(.visible) {
+.lobby-hidden-code-message:not(.visible),
+.lobby-room-code:not(.visible) {
     opacity: 0;
 }
 

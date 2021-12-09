@@ -18,27 +18,6 @@ class Lobby extends React.Component {
         this.roomCodeHoverTimeout = null;
     }
 
-    onRoomCodeMouseEnter = () => {
-        const hiddenCodeMessage = document.getElementById('lobby-hidden-code-message');
-        const codeSpan = document.getElementById('lobby-room-code');
-
-        hiddenCodeMessage.classList.add('is-hover');
-        this.roomCodeHoverTimeout = setTimeout(() => {
-            codeSpan.classList.add('visible');
-            hiddenCodeMessage.classList.remove('visible');
-        }, 300);
-    };
-
-    onRoomCodeMouseLeave = () => {
-        const hiddenCodeMessage = document.getElementById('lobby-hidden-code-message');
-        const codeSpan = document.getElementById('lobby-room-code');
-
-        clearTimeout(this.roomCodeHoverTimeout);
-        hiddenCodeMessage.classList.remove('is-hover');
-        codeSpan.classList.remove('visible');
-        hiddenCodeMessage.classList.add('visible');
-    }
-
     render() {
         const { roomData, gameConfiguration, currentPlayer,
             isHost, startQuiz, changeOptions, leaveRoom, roomId } = this.props;
