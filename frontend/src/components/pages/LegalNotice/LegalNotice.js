@@ -18,7 +18,7 @@ const LegalNotice = () => {
     }, []);
 
     return (
-        <>
+        <div className="legal-notice-container">
             <h1 style={{marginBottom: 40}}>Mentions légales</h1>
             <p style={titleStyle}>Identité</p>
             <p style={paraStyle}><strong>Nom du site web</strong> : leQuiz.io<br/>
@@ -101,7 +101,7 @@ const LegalNotice = () => {
                 Les responsables de publication peuvent être contactés à cette adresse : contact@lequiz.io.
             </p>
             <p style={titleStyle}>Crédits</p>
-        </>
+        </div>
     )
 }
 
