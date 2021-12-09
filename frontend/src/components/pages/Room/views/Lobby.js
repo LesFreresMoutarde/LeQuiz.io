@@ -6,6 +6,7 @@ import CategoriesBox from "../components/Lobby/CategoriesBox";
 import NextButton from "../../../misc/NextButton";
 import LeaveButton from "../components/Lobby/LeaveButton";
 import '../../../../css/pages/lobby.css';
+import RoomCode from "../components/Lobby/RoomCode";
 
 class Lobby extends React.Component {
 
@@ -62,6 +63,7 @@ class Lobby extends React.Component {
                         </aside>
                         <div className="lobby-main-data">
                             <PlayersBox players={roomData.players} host={roomData.host} currentPlayer={currentPlayer}/>
+                            <RoomCode code={roomId} />
                         </div>
                         <aside className="lobby-secondary-data">
                             <OptionsBox questionTypes={gameConfiguration.questionTypes}
