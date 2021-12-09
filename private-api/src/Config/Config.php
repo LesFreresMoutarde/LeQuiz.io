@@ -208,19 +208,19 @@ class Config
         }
 
         if (!is_string($emailConfigArray[$emailHostParam])) {
-            throw new \RuntimeException("'{$emailHostParam}.{$emailHostParam}' parameter in configuration file must be a string");
+            throw new \RuntimeException("'{$emailParam}.{$emailHostParam}' parameter in configuration file must be a string");
         }
 
         if (!is_int($emailConfigArray[$emailPortParam])) {
-            throw new \RuntimeException("'{$emailHostParam}.{$emailPortParam}' parameter in configuration file must be an integer");
+            throw new \RuntimeException("'{$emailParam}.{$emailPortParam}' parameter in configuration file must be an integer");
         }
 
         if (!is_string($emailConfigArray[$emailUsernameParam])) {
-            throw new \RuntimeException("'{$emailHostParam}.{$emailUsernameParam}' parameter in configuration file must be a string");
+            throw new \RuntimeException("'{$emailParam}.{$emailUsernameParam}' parameter in configuration file must be a string");
         }
 
         if (!is_string($emailConfigArray[$emailPasswordParam])) {
-            throw new \RuntimeException("'{$emailHostParam}.{$emailPasswordParam}' parameter in configuration file must be a string");
+            throw new \RuntimeException("'{$emailParam}.{$emailPasswordParam}' parameter in configuration file must be a string");
         }
 
         $this->emailHost = $emailConfigArray[$emailHostParam];
