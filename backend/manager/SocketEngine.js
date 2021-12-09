@@ -80,7 +80,8 @@ module.exports = (server) => {
 
                 room.game.quiz = quiz;
                 room.game.quizLength = quiz.length;
-                io.to(room.id).emit('receive-quiz', quiz);
+
+                io.to(room.id).emit('receive-quiz', {quiz, room: RoomManager.formatRoomForEmit(room)});
             } catch (error) {
                 socket.emit('force-disconnection');
             }
@@ -170,9 +171,18 @@ module.exports = (server) => {
 
         clearTimeout(room.game.timer);
 
-        let time = GameUtil.ROUND_TIME;
+        let time;
 
-        if (event !== "ask-question") time = GameUtil.SCORES_TIME
+        switch (event) {
+            case 'ask-question':
+                time = GameUtil.ROUND_TIME;
+                break;
+            case 'display-scores':
+                time = GameUtil.SCORES_TIME;
+                break;
+            case 'end-game':
+                time = GameUtil.END_GAME_TIME
+        }
 
         const clientRoom = RoomManager.formatRoomForEmit(room);
 

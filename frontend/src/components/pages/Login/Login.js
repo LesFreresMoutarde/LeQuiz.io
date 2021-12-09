@@ -84,8 +84,8 @@ class Login extends React.Component {
                 })
                 break;
             case 403:
-                console.log(responseJson);
-                app.toastr.error("Vous avez été banni jusqu'à TODO");
+                //TODO banni jusqu'à ?
+                app.toastr.error("Vous avez été banni");
                 break;
             case 404:
                 app.toastr.error('Ces identifiants sont incorrects');

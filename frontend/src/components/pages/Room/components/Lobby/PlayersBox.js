@@ -2,10 +2,6 @@ import React from "react";
 import PlayerLine from "./PlayerLine";
 
 const PlayersBox = ({players, host, currentPlayer}) => {
-    for (let i = 0; i < 20; ++i) {
-        players.push(players[0]);
-    }
-
     return (
         <div className="lobby-box lobby-box-players">
             <div className="lobby-box-header">
@@ -17,6 +13,7 @@ const PlayersBox = ({players, host, currentPlayer}) => {
                         return (
                             <PlayerLine key={index}
                                         player={player}
+                                        isHost={host.socketId === player.socketId}
                                         isCurrentPlayer={player.socketId === currentPlayer.socketId}
                             />
                         )

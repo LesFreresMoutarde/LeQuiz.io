@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 
 const QuestionAnswerField = ({enableQcm, submitAnswer}) => {
     const [answerInputValue, setAnswerInputValue] = useState('');
+    const [areInputsDisabled, setAreInputsDisabled] = useState(false);
 
     let answerInputRef = null;
     let validateButtonRef = null;
@@ -22,6 +23,11 @@ const QuestionAnswerField = ({enableQcm, submitAnswer}) => {
         validateButtonRef.click();
     }
 
+    const submitButtonAndDisableInputs = () => {
+        setAreInputsDisabled(true);
+        submitAnswer(answerInputValue);
+    }
+
     return (
         <div className="question-answer-input-container">
             <input type="text"
@@ -30,12 +36,14 @@ const QuestionAnswerField = ({enableQcm, submitAnswer}) => {
                    value={answerInputValue}
                    onChange={e => {setAnswerInputValue(e.target.value)}}
                    onKeyUp={onAnswerInputKeyUp}
+                   disabled={areInputsDisabled}
             />
 
             <div className="question-answer-input-validate-button-container">
                 <button className="button large green"
                         ref={button => validateButtonRef = button}
-                        onClick={() => {submitAnswer(answerInputValue)}}
+                        onClick={submitButtonAndDisableInputs}
+                        disabled={areInputsDisabled}
                 >
                     Valider
                 </button>

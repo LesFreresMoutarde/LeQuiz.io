@@ -100,6 +100,13 @@
     margin-bottom: 30px;
 }
 
+.lobby-player-line-wrapper img {
+    position: relative;
+    top: 0.14em;
+    height: 1.2em;
+    margin-left: 5px;
+}
+
 .lobby-box-edit-button {
     border: 2px solid #fff;
     border-radius: 6px;
@@ -153,8 +160,7 @@
 
 .lobby-box-categories-scrollable-container {
     height: 100%;
-    overflow-y: scroll;
-    padding-right: 10px;
+    overflow-y: auto;
 }
 
 .lobby-categories-category,
@@ -256,5 +262,15 @@
     .lobby-box-categories .lobby-box-content {
         height: auto;
         margin-bottom: 50px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .lobby-footer {
+        flex-direction: column-reverse;
+    }
+
+    .next-button {
+        margin-bottom: 10px;
     }
 }

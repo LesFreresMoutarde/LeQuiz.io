@@ -20,25 +20,30 @@
     --a-hover-color: #b1e7fa;
 }
 
+.app.mobile {
+    --app-footer-height: 110px;
+}
+
 * {
     scrollbar-color: #FCFCFC #16AFD9;
 }
 
 ::-webkit-scrollbar {
-    background-color: #16AFD9;
-    width: 15px;
+    border-right: 15px solid #16AFD9;
+    width: 25px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #FCFCFC;
+    /*background-color: #FCFCFC;*/
+    border-right: 15px solid #FCFCFC;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #e6f5fa;
+    border-right-color: #e6f5fa;
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background-color: #d6f0f8;
+    border-right-color: #d6f0f8;
 }
 
 @font-face {
@@ -237,6 +242,11 @@ a:hover {
     justify-content: center;
 }
 
+.app.mobile > footer {
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .app.no-footer > footer {
     display: none;
 }
@@ -272,7 +282,7 @@ a:hover {
     padding-bottom: 20px;
 }
 
-input {
+input, textarea {
     position: relative;
 
     border: 1px solid rgba(200, 200, 200, 0.3);
@@ -285,16 +295,16 @@ input {
     transition: background-color 0.1s ease-out;
 }
 
-input.error {
+input.error, textarea.error {
     color: #bb1717;
     background-color: #f0d3d3;
 }
 
-input::placeholder {
+input::placeholder, textarea::placeholder {
     color: rgba(0, 0, 0, 0.4)
 }
 
-input:focus {
+input:focus, textarea:focus {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     outline: none;
 }
@@ -432,7 +442,8 @@ button {
 #login-form,
 #register-form,
 #forgot-password-form,
-#reset-password-form {
+#reset-password-form,
+#contact-form {
     max-width: 460px;
     margin: auto;
 }
@@ -478,13 +489,13 @@ button {
 
 .button.red,
 .quit-cross-button {
-    background-color: #b91414;
+    background-color: #DB2557;
     color: #f8f8f8;
 }
 
 .button.red:hover,
 .quit-cross-button:hover {
-    background-color: #d01a1a;
+    background-color: #ee2c66;
 }
 
 .button:disabled {
@@ -569,119 +580,64 @@ button {
     outline: none;
 }
 
-.homepage-button {
-    width: 40%;
-    padding: 80px;
-    border-radius: 40px;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.feedback-modal-app-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #00000088;
+    z-index: 1;
 }
 
-.homepage-button:hover {
-    filter: brightness(95%);
-    cursor: pointer;
+.feedback-modal {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+
+    height: 500px;
+    width: 450px;
+
+    background-color: var(--element-primary-background-color);
+    border: 4px solid #fff;
+    border-radius: 10px;
+    padding: 30px;
 }
 
-.homepage-button:focus {
-    outline: none;
+.feedback-modal-close-cross-container {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+    transform: scale(0.5);
+    transform-origin: top right;
 }
 
-.create-room-button {
-    background-color: #217D9E;
-}
-
-.join-room-button {
-    background-color: #f7c634;
-}
-
-.homepage-button-label {
-    font-size: 3em;
-    color: white;
-}
-
-.answer-container {
-    display: flex;
-}
-
-.answer-screen-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.answer-screen-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: auto
-}
-
-.answer-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 50px;
-}
-
-.answer-result {
-    font-size: 2.5em;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.answer-round {
-    font-size: 1.4em;
-}
-
-.answer-content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* ROW IN V2 */
-}
-
-.good-answer {
-    font-size: 2.3em;
+.feedback-modal-title {
+    font-size: 1.6em;
+    font-weight: 700;
+    text-align: center;
     margin-bottom: 30px;
 }
 
-.scores-container {
-    display: flex;
-    flex-direction: column;
+.feedback-modal-text {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.feedback-modal-subject-input {
+    width: 100%;
     margin-bottom: 20px;
 }
 
-.player-score-container {
-    display: flex;
-    align-items: center;
+.feedback-modal-message-textarea {
+    width: 100%;
     margin-bottom: 20px;
+    resize: none;
 }
 
-.player-box {
-    border-radius: 10px;
-    font-size: 1.6em;
-}
-
-.player-rank-box {
-    padding: 20px 20px;
-}
-
-.player-score-info-container {
+.feedback-modal-submit-button-container {
     display: flex;
-    align-items: center;
-    margin-left: 40px;
-}
-
-.player-score-info {
-    padding: 20px 10px;
-    width: 100%;
-}
-
-.player-username {
-    margin-right: 150px;
-    width: 100%;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 #lobby-hover-to-show-code {
@@ -730,158 +686,24 @@ button {
     font-size: 2.4em;
 }
 
-/* --------------------- RESPONSIVE SECTION --------------------- */
-
-/* Large */
-@media screen and (max-width: 1200px) {
-
-    /* Homepage */
-    .homepage-button {
-        width: 40%;
-        padding: 50px;
-    }
-
-    /* Game Options */
-    .win-criterion-input {
-        width: 25%;
-    }
+.legal-notice-container {
+    max-height: 100%;
+    overflow-y: auto;
 }
 
-/* Medium */
-@media screen and (max-width: 992px) {
-
-    /* Homepage */
-    .homepage-button {
-        width: 70%;
-        margin-bottom: 60px;
+@media screen and (max-width: 576px),
+       screen and (max-height: 640px) {
+    .feedback-modal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 0;
+        border-radius: 0;
+        height: 100%;
+        width: 100%;
     }
-
-    /* Game Options */
-    .win-criterion-input {
-        width: 30%;
-    }
-
-    /* Answer */
-    .player-box {
-        font-size: 1.3em;
-    }
-
-    .good-answer {
-        font-size: 1.8em;
-    }
-}
-
-/* Small */
-@media screen and (max-width: 768px) {
-
-    /* Homepage */
-    .homepage-button {
-        width: 80%;
-    }
-
-
-    /* Answer */
-    .answer-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .answer-screen-left {
-        flex-direction: row-reverse;
-        margin-bottom: 30px;
-    }
-
-    .scores-container {
-        margin-bottom: 0;
-    }
-
-    .good-answer {
-        font-size: 1.5em;
-    }
-
-}
-
-/* X-Small */
-@media screen and (max-width: 576px) {
-
-    /* Homepage */
-    .homepage-button-label {
-        font-size: 1.8em;
-    }
-
-    .pick-buttons {
-        width: 30%;
-    }
-
-    /* Game Options */
-    .win-criterion-input {
-        width: 50%;
-    }
-
-
-    /* Answer */
-
-    .player-username {
-        margin-right: 30px;
-    }
-
-    .player-box {
-        font-size: 1.1em;
-    }
-
-    .answer-result {
-        font-size: 2em;
-    }
-
-    .good-answer {
-        font-size: 1.3em;
-    }
-}
-
-.join-room-div {
-    margin: 0 auto;
-    width: 35vw;
-    max-width: 80%;
-    text-align: center;
-    min-width: 250px;
-}
-
-.join-room-label {
-    font-size: 1.7em;
-}
-
-#join-room-input {
-    width: 80%;
-    height: 50px;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    text-align: center;
-    font-size: 1.5em;
-}
-
-.join-room-enter {
-    width: 40%;
-    border-radius: 10px;
-    height: 50px;
-    background: #217D9E;
-    outline: none;
-    border: none;
-    font-size: 1em;
-    color: white;
-}
-
-.join-room-enter:hover {
-    filter: brightness(95%);
-    cursor: pointer;
-}
-
-#join-room-input::placeholder {
-    margin: auto;
-}
-
-#logo {
-    margin: 0 auto;
-    display: block;
 }
 
 @media screen and (max-height: 768px) {

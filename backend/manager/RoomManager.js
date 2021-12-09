@@ -16,7 +16,6 @@ class RoomManager {
 
         room.state = RoomManager.LOBBY_ROOM_STATE;
         room.game.quizLength = 0;
-        room.game.round = 0;
         room.game.quiz = [];
         room.game.hasAnswered = [];
         room.game.scores.forEach((scoreLine) => {
@@ -171,7 +170,7 @@ class RoomManager {
         room.game.scores.push({
             player: player,
             value: 0,
-            rank: 0,
+            rank: room.players.length,
             lastAnswer: null,
         });
     };
@@ -263,7 +262,6 @@ class RoomManager {
             if (receivedAllAnswers) {
                 room.game.quiz.shift();
                 room.game.hasAnswered = [];
-                room.game.round++;
             }
 
             return {receivedAllAnswers, room};
@@ -301,7 +299,6 @@ class RoomManager {
             host: room.host,
             players: room.players,
             quizLength: room.game.quizLength,
-            round: room.game.round,
             scores: room.game.scores
         };
     }

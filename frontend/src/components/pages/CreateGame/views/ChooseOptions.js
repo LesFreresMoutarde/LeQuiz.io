@@ -187,7 +187,7 @@ export default class ChooseOptions extends React.Component {
             }
         });
 
-        this.props.submit(questionTypes, winCriterionInputValue, withHardcoreQuestions);
+        this.props.submit('options', {questionTypes, winCriterionInputValue, withHardcoreQuestions});
     };
 
     render() {

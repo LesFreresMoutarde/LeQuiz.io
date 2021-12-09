@@ -1,11 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import QuestionDesktopHeader from "../components/Shared/QuestionDesktopHeader";
 import Clock from "../components/Shared/Clock";
 import QuitCross from "../../../misc/QuitCross";
 import QuestionContent from "../components/Question/QuestionContent";
 import ScoresTable from "../components/Answer/ScoresTable";
+import {app} from "../../../App";
 
 const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLength, timeLeft, leaveRoom}) => {
+    useEffect(() => {
+        app.showQuitCross(true, leaveRoom);
+
+        return () => {
+            app.showQuitCross(false);
+        };
+    }, []);
+
+    const displayQuestionCounter = () => {
+            return currentQuestion.round === quizLength
+                ? 'Partie terminée'
+                : `Question ${currentQuestion.round} sur ${quizLength}`;
+    }
 
     return (
         <div className="question-screen-container">
@@ -22,7 +36,7 @@ const Answer = ({roomData, currentPlayer, currentQuestion, playerAnswer, quizLen
                         <div className="question-content-container">
                             <QuestionContent content={currentQuestion.content} />
                             <div className="question-counter">
-                                Question {currentQuestion.round} sur {quizLength}
+                                {displayQuestionCounter()}
                             </div>
                         </div>
                         <div className="classic-question-good-answer">

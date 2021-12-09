@@ -3,6 +3,7 @@ import Util from "../util/Util";
 import GameUtil from "../util/GameUtil";
 import env from "../config/env";
 import {app} from "../components/App";
+import AudioPlayer from "./AudioPlayer";
 
 class ClientSocket {
 
@@ -55,6 +56,7 @@ class ClientSocket {
         })
 
         this.socket.on('receive-new-player', (roomData) => {
+            AudioPlayer.playSound('enterRoom');
 
             roomComponent.setState({
                 roomData
@@ -91,8 +93,12 @@ class ClientSocket {
             roomComponent.setState({gameConfiguration});
         });
 
-        this.socket.on('receive-quiz', (quiz) => {
+        this.socket.on('receive-quiz', ({quiz, room}) => {
             Util.addObjectToSessionStorage(GameUtil.QUIZ_SESSION_STORAGE_KEY, quiz);
+
+            AudioPlayer.playSound('startGame');
+
+            roomComponent.setState({roomData: room});
 
             this.socket.emit('receive-quiz-confirmation', roomComponent.roomId)
         });
@@ -134,13 +140,13 @@ class ClientSocket {
 
         this.socket.on('start-time', ({time, event, room}) => {
 
-            if (event === "ask-question")
+            if (event === "ask-question") {
                 roomComponent.askQuestion();
-            else
-                roomComponent.displayScores(room)
+            } else {
+                roomComponent.displayScores(room);
+            }
 
             roomComponent.handleTimeLeft(time);
-
         });
 
         this.socket.on('force-answer', () => {
@@ -170,6 +176,8 @@ class ClientSocket {
         })
 
         this.socket.on('player-disconnected', (roomData) => {
+            AudioPlayer.playSound('leaveRoom');
+
             roomComponent.handlePlayerDisconnect(roomData)
         })
 

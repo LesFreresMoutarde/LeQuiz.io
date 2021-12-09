@@ -4,10 +4,6 @@ module.exports = {
     frontUrl: 'APP_FRONT_URL', // Without trailing slash, example: 'https://www.example.com'
     privateApiUrl: 'PRIVATE_API_URL', // Without trailing slash, example: 'https://www.example.com:9000'
     jwtSecret: 'SuperSecret', // Change this in production, it is the secret signing key for JWTs
-    email: {
-        host: 'mailhog',
-        port: '1025',
-    },
     database: {
         development: {
             username: "admin",
