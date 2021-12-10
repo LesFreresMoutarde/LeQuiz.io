@@ -1359,7 +1359,7 @@ const fs = require('fs');
                     content: question.content,
                     isHardcore: question.isHardcore,
                     status: question.status,
-                    answer: JSON.stringify(question.answer)
+                    answer: question.answer
                 })
 
                 for (const type of question.types) {
