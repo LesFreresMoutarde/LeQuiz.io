@@ -533,7 +533,6 @@ class QuestionController extends AbstractController
                 if ($formInput !== '') $answers[$firstKey][$midKey][$lastKey] = $formInput;
             }
         }
-        dd($answers);
         return $answers;
     }
 
