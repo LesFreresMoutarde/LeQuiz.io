@@ -20,6 +20,10 @@ class Email
     {
         $this->mail = new PHPMailer(true);
         $this->mail->isSMTP();
+        if (PrivateApi::$static->getConfig()->getEmailSsl()) {
+            $this->mail->SMTPAuth = true;
+            $this->mail->SMTPSecure = "ssl";
+        }
         $this->mail->CharSet = PHPMailer::CHARSET_UTF8;
         $this->mail->Host = PrivateApi::$static->getConfig()->getEmailHost();
         $this->mail->Port = PrivateApi::$static->getConfig()->getEmailPort();
