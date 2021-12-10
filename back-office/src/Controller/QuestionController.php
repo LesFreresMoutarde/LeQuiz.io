@@ -508,7 +508,7 @@ class QuestionController extends AbstractController
                 $answerId = $parsedFormInput[count($parsedFormInput) - 1];
 
                 if (array_key_exists('answers-is_good_answer-'.$answerId, $_POST)) {
-                    $answers['answers']['qcm'][] = ['content' => $formInput, 'is_good_answer' => $_POST['answers-is_good_answer-'.$answerId]];
+                    $answers['answers']['qcm'][] = ['content' => $formInput, 'is_good_answer' => !!$_POST['answers-is_good_answer-'.$answerId]];
                     continue;
                 }
 
@@ -533,6 +533,7 @@ class QuestionController extends AbstractController
                 if ($formInput !== '') $answers[$firstKey][$midKey][$lastKey] = $formInput;
             }
         }
+        dd($answers);
         return $answers;
     }
 
