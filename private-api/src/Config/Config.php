@@ -19,6 +19,7 @@ class Config
     private int $emailPort;
     private string $emailUsername;
     private string $emailPassword;
+    private bool $emailSsl;
 
     private string $frontUrl;
 
@@ -72,6 +73,11 @@ class Config
     public function getEmailUsername(): string
     {
         return $this->emailUsername;
+    }
+
+    public function getEmailSsl(): bool
+    {
+        return $this->emailSsl;
     }
 
     public function getFrontUrl(): string
@@ -180,6 +186,7 @@ class Config
         $emailPortParam = 'port';
         $emailUsernameParam = 'username';
         $emailPasswordParam = 'password';
+        $emailSslParam = 'ssl';
 
         if (!isset($configArray[$emailParam])) {
             throw new \RuntimeException("Configuration file must contain a '{$emailParam}' parameter");
@@ -207,6 +214,10 @@ class Config
             throw new \RuntimeException("Configuration file must contain a '{$emailParam}.{$emailPasswordParam}' parameter");
         }
 
+        if (!isset($emailConfigArray[$emailSslParam])) {
+            throw new \RuntimeException("Configuration file must contain a '{$emailParam}.{$emailSslParam}' parameter");
+        }
+
         if (!is_string($emailConfigArray[$emailHostParam])) {
             throw new \RuntimeException("'{$emailParam}.{$emailHostParam}' parameter in configuration file must be a string");
         }
@@ -223,9 +234,14 @@ class Config
             throw new \RuntimeException("'{$emailParam}.{$emailPasswordParam}' parameter in configuration file must be a string");
         }
 
+        if (!is_bool($emailConfigArray[$emailSslParam])) {
+            throw new \RuntimeException("'{$emailParam}.{$emailSslParam}' parameter in configuration file must be a boolean");
+        }
+
         $this->emailHost = $emailConfigArray[$emailHostParam];
         $this->emailPort = $emailConfigArray[$emailPortParam];
         $this->emailUsername = $emailConfigArray[$emailUsernameParam];
         $this->emailPassword = $emailConfigArray[$emailPasswordParam];
+        $this->emailSsl = $emailConfigArray[$emailSslParam];
     }
 }

@@ -15,5 +15,6 @@ return [
         'port' => 1025,
         'username' => '',
         'password' => '',
+        'ssl' => false,
     ]
 ];
