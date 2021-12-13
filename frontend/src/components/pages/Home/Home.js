@@ -53,7 +53,7 @@ const Home = () => {
                            onKeyUp={onJoinRoomInputKeyUp}
                            value={joinRoomCode}
                     />
-                    <Link to={`/room/${joinRoomCode}`} id="home-join-room-button"
+                    <Link to={`/room/${joinRoomCode.toLowerCase()}`} id="home-join-room-button"
                           ref={button => joinRoomButtonRef = button}
                           role="button"
                           onClick={onJoinRoomButtonClick}
