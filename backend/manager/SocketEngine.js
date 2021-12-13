@@ -66,11 +66,9 @@ module.exports = (server) => {
 
         })
 
-
         socket.on('update-game-config', ({gameConfiguration, roomId}) => {
             socket.to(roomId).emit('receive-new-game-config', gameConfiguration);
         })
-
 
         socket.on('generate-quiz', async ({gameConfiguration, roomId}) => {
             try {
@@ -139,8 +137,8 @@ module.exports = (server) => {
             }
         })
 
-        socket.on('disconnect', () => {
-            console.log("disconnect")
+        socket.on('disconnect', (reason) => {
+
             try {
                 const {
                     hasRoomToBeUpdated,
@@ -155,6 +153,8 @@ module.exports = (server) => {
                 }
 
                 if (hasScoresToBeDisplayed) {
+                    room.game.quiz.shift(); // Shift current question from quiz (Usual functioning);
+
                     const eventToEmit = getEventToEmit(room);
 
                     emitEventAndTimeSignal(room, eventToEmit);
