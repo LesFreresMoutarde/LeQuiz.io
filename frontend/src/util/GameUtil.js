@@ -111,7 +111,7 @@ class GameUtil {
                 throw new Error('Invalid Game Mode')
         }
 
-        return max;
+        return max > 0 ? max : 0;
     }
 
     static validateInRoomModifiedGameConfiguration = (updatedGameConfiguration) => {
