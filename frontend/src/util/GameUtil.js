@@ -202,7 +202,7 @@ class GameUtil {
             ? answer[GameUtil.ERRORS_ALLOWED_COUNT_PROPERTY_NAME]
             : 1;
 
-        return distance(latinize(proposition.toLowerCase()), latinize(answer.content.toLowerCase())) <= errorAllowedCount;
+        return distance(latinize(proposition.toLowerCase()), latinize(String(answer.content).toLowerCase())) <= errorAllowedCount;
     }
 
     static getCategoriesCoupleQuestionCount = (pickedCategories, categoriesCouples, withHardcoreQuestions) => {
