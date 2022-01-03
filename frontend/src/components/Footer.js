@@ -23,7 +23,7 @@ const Footer = ({displayFeedbackModal, mobile}) => {
 
     return (
         <footer>
-            <span className="footer-text-item">© LeQuiz.io {(new Date()).getFullYear()}</span>
+            <span className="footer-text-item">© leQuiz.io {(new Date()).getFullYear()}</span>
             <span className="footer-text-item"><a href="/mentions-legales" className="no-underline" target="_blank">Mentions légales</a></span>
             <span className="footer-text-item"><Link to="/contact" className="no-underline">Contact</Link></span>
             <button className="footer-text-item footer-feedback-button" onClick={() => displayFeedbackModal()}>Feedback</button>
