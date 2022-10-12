@@ -22,7 +22,7 @@
         "bootstrap": "^5.0.0-beta2",
         "bootstrap-icons": "^1.5.0",
         "flatpickr": "^4.6.9",
-        "node-sass": "^4.14.1",
+        "node-sass": "^7.0.3",
         "postcss-loader": "^5.2.0",
         "toastr2": "^3.0.0-alpha.18",
         "uuid": "^8.3.2"
