@@ -23,7 +23,7 @@ import Room from "./pages/Room/Room";
 import AuthUtil from "../util/AuthUtil";
 import ApiUtil from "../util/ApiUtil";
 import FeedbackModal from "./pages/FeedbackModal/FeedbackModal";
-import Contact from "./pages/Contact/Contact";
+// import Contact from "./pages/Contact/Contact";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
 import {isMobileOnly} from "react-device-detect";
 
@@ -82,7 +82,7 @@ class App extends React.Component {
     }
 
     displayFeedbackModal = () => {
-        this.setState({showFeedbackModal: true});
+        // this.setState({showFeedbackModal: true});
     }
 
     closeFeedbackModal = () => {
@@ -206,7 +206,7 @@ class App extends React.Component {
                                 <Route exact path="/settings" component={Settings}/>
                                 <Route path="/create-room/" component={CreateGame}/>
                                 <Route path="/room/:id" component={Room}/>
-                                <Route path="/contact" component={Contact}/>
+                                {/*<Route path="/contact" component={Contact}/>*/}
                                 <Route path="/mentions-legales" component={LegalNotice}/>
                                 <Route component={NotFound}/>
                             </Switch>

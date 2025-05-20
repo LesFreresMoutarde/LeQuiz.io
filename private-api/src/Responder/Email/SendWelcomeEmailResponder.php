@@ -20,6 +20,8 @@ class SendWelcomeEmailResponder implements ResponderInterface
 {
     public function respond(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
+        return Util::writeJsonResponse($response); // Hibernation
+
         $post = $request->getParsedBody();
 
         $paramsValidator = new ParamsValidator([
