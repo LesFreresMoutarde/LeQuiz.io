@@ -9,6 +9,8 @@ const fetch = require("node-fetch");
 class UserController extends MainController {
 
     actionContact = async ({username, email, subject, message}) => {
+        return; // Hibernation
+
         if (!EmailUtil.isEmailAddressValid(email)) throw new InvalidEmailError();
 
         // TODO check username, subject & message max length
@@ -29,6 +31,8 @@ class UserController extends MainController {
     }
 
     actionFeedback = async ({subject, message}) => {
+        return; // Hibernation
+
         if (message === '') throw new EmptyBodyError();
 
         const url = `${env.privateApiUrl}/receive-feedback-message`;
